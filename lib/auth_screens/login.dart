@@ -2,6 +2,10 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+import 'package:main_venture/auth_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -86,10 +90,16 @@ class _LoginScreenState extends State<LoginScreen> {
           const SizedBox(
             height: 10,
           ),
+          GestureDetector(
+              onTap: () {
+               const AuthScreen().signInWithGoogle();
+              },
+              child: const Image(width: 100, image: AssetImage('assets/google.png'))),
         ],
       ),
     );
   }
+
 
   Future signIn() async {
     try {
