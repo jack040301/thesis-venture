@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Flutter Log In & Sign up Authentication with FireBase",
+      title: "Venture",
       home: AuthScreen(),
     );
   }
