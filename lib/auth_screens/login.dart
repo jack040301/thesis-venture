@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:main_venture/auth_screen.dart';
+import 'package:main_venture/auth_screens/forgot_password.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -80,9 +81,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(color: Colors.white, fontSize: 18.0)),
             ),
           ),
-          const Text(
-            "Dont Remember Password? ",
-            style: TextStyle(color: Colors.blue),
+          Container(
+            width: double.infinity,
+            child: RawMaterialButton(
+              fillColor: const Color.fromARGB(255, 52, 107, 185),
+              onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ForgotPasswordScreen())),
+              elevation: 0.0,
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0)),
+              child: const Text("Forgot Password",
+                  style: TextStyle(color: Colors.white, fontSize: 18.0)),
+            ),
           ),
           const SizedBox(
             height: 88.0,
@@ -92,14 +105,14 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           GestureDetector(
               onTap: () {
-               const AuthScreen().signInWithGoogle();
+                const AuthScreen().signInWithGoogle();
               },
-              child: const Image(width: 100, image: AssetImage('assets/google.png'))),
+              child: const Image(
+                  width: 100, image: AssetImage('assets/images/google.png'))),
         ],
       ),
     );
   }
-
 
   Future signIn() async {
     try {
