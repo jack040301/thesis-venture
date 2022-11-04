@@ -16,7 +16,7 @@ function App() {
       <div class="wrapper">
         <Header />
         {/* <Home /> */}
-        {/* <SideNav /> */}
+         <SideNav /> 
         {/* <Footer /> */}
         <Router>
           <Routes>
