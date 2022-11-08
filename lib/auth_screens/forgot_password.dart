@@ -16,27 +16,52 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final _emailForgotController = TextEditingController();
 
   var tSnackBar = const SnackBar(
-    content: Text('Email field Must Fill!'),
+    content: Text('Email Field Must Fill!'),
   );
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+        body: Padding(
+        padding: EdgeInsets.all(25.0),
+      child: SingleChildScrollView(
         child: Column(children: <Widget>[
+          SizedBox(
+            height: 40.0,
+          ),
           TextField(
             decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Email ID',
+          hintText: "Enter Your Email Address",
+          filled: true,
+          fillColor: Color.fromARGB(255, 230, 230, 230),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            borderSide: BorderSide(color:Color.fromARGB(255, 230, 230, 230).withOpacity(0.5), width: 2),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            borderSide: BorderSide(color: Color.fromARGB(255, 230, 230, 230).withOpacity(0.5)),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            borderSide: BorderSide(color: Colors.redAccent.withOpacity(0.5)),
+          ),
+
             ),
             controller: _emailForgotController,
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 10),
           ElevatedButton(
             onPressed: resetPass,
             child: const Text('Forgot Password'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color.fromARGB(255, 0, 110, 195),
+              foregroundColor: Colors.white,
+            ),
           ),
+
         ]),
       ),
+        ),
     );
   }
 

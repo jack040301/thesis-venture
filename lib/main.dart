@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Flutter Log In & Sign up Authentication with FireBase",
-      theme: ThemeData(),
+      theme: ThemeData(fontFamily: 'Questrial'),
       home: SplashScreen(),
     );
   }
