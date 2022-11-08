@@ -1,14 +1,10 @@
 // ignore_for_file: unnecessary_const, empty_catches
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:main_venture/auth_screen.dart';
-import 'package:main_venture/profile_screen.dart';
-import 'package:main_venture/splash_screen.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:main_venture/screens/home_page.dart';
 import 'package:lottie/lottie.dart';
 
 void main() async {
