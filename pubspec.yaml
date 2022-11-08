@@ -80,6 +80,7 @@ flutter:
     - assets/animassets/mapanimation.json
     - assets/mapicons/
     - assets/images/google.png
+    - assets/images/pic.png
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
