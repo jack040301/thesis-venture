@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:main_venture/auth_screen.dart';
+import 'package:main_venture/screens/home_page.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -18,6 +20,8 @@ Future<void> logOut() async {
     print("error in sign in $e");
   }
 }
+
+
 
 class _ProfileScreenState extends State<ProfileScreen> {
 
@@ -40,11 +44,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ElevatedButton(
                 onPressed: logOut, child: Text("Logout Account")
             ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage ()));
+                },
+                child: Text("Map")
+            ),
           ],
         ),
       ),
 
     );
   }
-}
 
