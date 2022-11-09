@@ -47,8 +47,8 @@ dependencies:
   flutter_rating_stars:
   flip_card:
 
-  firebase_core: ^1.24.0
-  firebase_auth: ^3.11.2
+  firebase_core: ^2.1.1
+  firebase_auth: ^4.1.1
   google_sign_in: ^5.4.2
   flutter_bloc: ^8.1.0
 
@@ -80,7 +80,13 @@ flutter:
     - assets/animassets/mapanimation.json
     - assets/mapicons/
     - assets/images/google.png
+
     - assets/images/pic.png
+
+    - assets/images/google2.png
+    - assets/images/VentureLogo.png
+
+
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
@@ -97,6 +103,9 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
+    - family: Questrial
+      fonts:
+        - asset: assets/fonts/Questrial-Regular.ttf
     - family: WorkSans
       fonts:
         - asset: assets/fonts/WorkSans-Regular.ttf

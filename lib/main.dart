@@ -1,14 +1,10 @@
 // ignore_for_file: unnecessary_const, empty_catches
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:main_venture/auth_screen.dart';
-import 'package:main_venture/profile_screen.dart';
-import 'package:main_venture/splash_screen.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:main_venture/screens/home_page.dart';
 import 'package:lottie/lottie.dart';
 
 void main() async {
@@ -27,12 +23,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Flutter Log In & Sign up Authentication with FireBase",
+      title: "Venture",
       theme: ThemeData(),
       home: SplashScreen(),
     );
   }
 }
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -46,7 +43,8 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
     Future.delayed(Duration(seconds: 5)).then((value) => Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => AuthScreen())));
+        .pushReplacement(
+            MaterialPageRoute(builder: (context) => AuthScreen())));
   }
 
   @override

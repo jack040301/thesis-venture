@@ -1,9 +1,5 @@
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:main_venture/auth_screen.dart';
 import 'package:main_venture/auth_screens/forgot_password.dart';
@@ -21,95 +17,200 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
 
   var fSnackBar = const SnackBar(
-    content: Text('The Email & Password fields Must Fill!'),
+    content: Text('The Email & Password Fields Must Fill!'),
   );
 
   /// Email Fill & Password Empty
   var sSnackBar = const SnackBar(
-    content: Text('Password field Must Fill!'),
+    content: Text('Password Field Must Fill!'),
   );
 
   /// Email Empty & Password Fill
   var tSnackBar = const SnackBar(
-    content: Text('Email field Must Fill!'),
+    content: Text('Email Field Must Fill!'),
   );
 
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text("Login Page",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 28.0,
-                  fontWeight: FontWeight.bold)),
-          const SizedBox(
-            height: 44.0,
+    return Scaffold(
+      body: Padding(
+        padding: EdgeInsets.all(30.0),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 20.0,
+              ),
+              Align(alignment: Alignment.topRight, child: Icon(Icons.close)),
+              Ink.image(
+                  image: AssetImage('assets/images/VentureLogo.png'),
+                  height: 50),
+              const Text("Login",
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 74, 74, 74),
+                      fontSize: 28.0,
+                      fontWeight: FontWeight.bold,
+                      height: 1.5)),
+              const SizedBox(
+                height: 20.0,
+              ),
+              const Text("Email Address",
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 74, 74, 74),
+                    fontSize: 14.0,
+                  )),
+              const SizedBox(
+                height: 4.0,
+              ),
+              TextField(
+                controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  hintText: "Email",
+                  filled: true,
+                  fillColor: Color.fromARGB(255, 230, 230, 230),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    borderSide: BorderSide(
+                        color:
+                            Color.fromARGB(255, 230, 230, 230).withOpacity(0.5),
+                        width: 2),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    borderSide: BorderSide(
+                        color: Color.fromARGB(255, 230, 230, 230)
+                            .withOpacity(0.5)),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    borderSide:
+                        BorderSide(color: Colors.redAccent.withOpacity(0.5)),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 15.0,
+              ),
+              const Text("Password",
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 74, 74, 74),
+                    fontSize: 14.0,
+                  )),
+              const SizedBox(
+                height: 4.0,
+              ),
+              TextField(
+                enableSuggestions: false,
+                autocorrect: false,
+                controller: _passwordController,
+                obscureText: true,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Password",
+                  filled: true,
+                  fillColor: Color.fromARGB(255, 230, 230, 230),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    borderSide: BorderSide(
+                        color:
+                            Color.fromARGB(255, 230, 230, 230).withOpacity(0.5),
+                        width: 2),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    borderSide: BorderSide(
+                        color: Color.fromARGB(255, 230, 230, 230)
+                            .withOpacity(0.5)),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    borderSide:
+                        BorderSide(color: Colors.redAccent.withOpacity(0.5)),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20.0,
+              ),
+              Container(
+                width: double.infinity,
+                child: RawMaterialButton(
+                  fillColor: const Color.fromARGB(255, 0, 110, 195),
+                  onPressed: signIn,
+                  elevation: 0.0,
+                  padding: const EdgeInsets.symmetric(vertical: 15.0),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.0)),
+                  child: Text("Login",
+                      style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                ),
+              ),
+              const SizedBox(
+                height: 15.0,
+              ),
+              const Text("Don't have an account yet? Sign up",
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 74, 74, 74),
+                    fontSize: 14.0,
+                  )),
+              Container(
+                child: RawMaterialButton(
+                  onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ForgotPasswordScreen())),
+                  child: const Text("Forgot Password?",
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 0, 110, 195),
+                          fontSize: 14.0)),
+                ),
+              ),
+              Row(children: <Widget>[
+                Expanded(
+                  child: Divider(
+                      color: Color.fromARGB(255, 105, 105, 105), endIndent: 20),
+                ),
+                Text(
+                  "or",
+                  style: TextStyle(color: Color.fromARGB(255, 74, 74, 74)),
+                ),
+                Expanded(
+                  child: Divider(
+                      color: Color.fromARGB(255, 105, 105, 105), indent: 20),
+                ),
+              ]),
+              const SizedBox(
+                height: 20.0,
+              ),
+              GestureDetector(
+                onTap: () {
+                  const AuthScreen().signInWithGoogle();
+                },
+                child: Material(
+                  color: Color.fromARGB(255, 0, 110, 195),
+                  elevation: 8,
+                  borderRadius: BorderRadius.circular(5.0),
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Ink.image(
+                          image: AssetImage('assets/images/google2.png'),
+                          height: 40,
+                          width: 30),
+                      SizedBox(width: 10.0, height: 50),
+                      Text('Sign in with Google',
+                          style:
+                              TextStyle(color: Colors.white, fontSize: 14.0)),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-          TextField(
-            controller: _emailController,
-            keyboardType: TextInputType.emailAddress,
-            decoration: const InputDecoration(
-              hintText: "Email",
-              prefixIcon: Icon(Icons.mail, color: Colors.black),
-            ),
-          ),
-          const SizedBox(
-            height: 26.0,
-          ),
-          TextField(
-            controller: _passwordController,
-            obscureText: true,
-            decoration: const InputDecoration(
-              hintText: "Password",
-              prefixIcon: Icon(Icons.security, color: Colors.black),
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            child: RawMaterialButton(
-              fillColor: const Color.fromARGB(255, 52, 107, 185),
-              onPressed: signIn,
-              elevation: 0.0,
-              padding: const EdgeInsets.symmetric(vertical: 20.0),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0)),
-              child: const Text("Login",
-                  style: TextStyle(color: Colors.white, fontSize: 18.0)),
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            child: RawMaterialButton(
-              fillColor: const Color.fromARGB(255, 52, 107, 185),
-              onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ForgotPasswordScreen())),
-              elevation: 0.0,
-              padding: const EdgeInsets.symmetric(vertical: 20.0),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0)),
-              child: const Text("Forgot Password",
-                  style: TextStyle(color: Colors.white, fontSize: 18.0)),
-            ),
-          ),
-          const SizedBox(
-            height: 88.0,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          GestureDetector(
-              onTap: () {
-                const AuthScreen().signInWithGoogle();
-              },
-              child: const Image(
-                  width: 100, image: AssetImage('assets/images/google.png'))),
-        ],
+        ),
       ),
     );
   }
