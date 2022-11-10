@@ -37,24 +37,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-
-            //FirebaseAuth.instance.currentUser!.photoURL == null ? const Text("No Image") : Image.network(FirebaseAuth.instance.currentUser!.photoURL??""),
             FirebaseAuth.instance.currentUser!.photoURL == null ? const Image(image: AssetImage('assets/images/pic.png')) : Image.network(FirebaseAuth.instance.currentUser!.photoURL??""),
             Text(
               FirebaseAuth.instance.currentUser!.displayName ?? "Default Name",
-              style: const TextStyle(fontSize: 30,
-
-            Image.network(FirebaseAuth.instance.currentUser!.photoURL ?? ""),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              FirebaseAuth.instance.currentUser!.displayName ?? "",
               style: const TextStyle(
-                  fontSize: 30,
-
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87),
+                fontSize: 30,),
             ),
             const SizedBox(
               height: 10,
