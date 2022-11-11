@@ -42,7 +42,7 @@ class _AuthScreenState extends State<AuthScreen> {
             return const ProfileScreen();
             //login
           } else {
-            return const SignupWidget();
+            return const LoginScreen();
             //no user
           }
         },
