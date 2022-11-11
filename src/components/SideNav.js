@@ -1,11 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 const SideNav = () => {
   return (
     <div>
       <aside className="main-sidebar sidebar-dark-primary elevation-4">
-        <a href="index3.html" className="brand-link">
+        <a href="/Dashboard" className="brand-link">
           <img
             src="dist/img/Venture.png"
             alt="AdminLTE Logo"
@@ -53,6 +52,11 @@ const SideNav = () => {
                 <a href="/Configuration" className="nav-link">
                   <i className="nav-icon fas fa-tools" />
                   <p>Configuration</p>
+                </a>
+              </li>
+              <li className="nav-item">
+                <a href="#" className="nav-link">
+                  <p>Logout</p>
                 </a>
               </li>
             </ul>
