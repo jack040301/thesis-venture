@@ -28,12 +28,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Venture",
-<<<<<<< Updated upstream
-      theme: ThemeData(),
-=======
       theme: ThemeData(fontFamily: 'Questrial'),
->>>>>>> Stashed changes
       home: SplashScreen(),
+
     );
   }
 }
@@ -50,22 +47,18 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-<<<<<<< Updated upstream
-    Future.delayed(Duration(seconds: 5)).then((value) => Navigator.of(context)
-        .pushReplacement(
-            MaterialPageRoute(builder: (context) => AuthScreen())));
-=======
+
     Future.delayed(const Duration(seconds: 5)).then((value) =>
         Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const SignupWidget())));
->>>>>>> Stashed changes
+            MaterialPageRoute(builder: (context) => const AuthScreen())));
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Container(
+        child: SizedBox(
             height: 200.0,
             width: 200.0,
             child: LottieBuilder.asset('assets/animassets/mapanimation.json')),

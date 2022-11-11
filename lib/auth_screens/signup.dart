@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:getwidget/getwidget.dart';
 import 'package:main_venture/auth_screens/login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+
 
 
 class SignupWidget extends StatefulWidget {
@@ -39,6 +41,7 @@ class _SignupWidgetState extends State<SignupWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: Padding(
         padding: const EdgeInsets.all(30.0),
         child: SingleChildScrollView(
@@ -48,12 +51,14 @@ class _SignupWidgetState extends State<SignupWidget> {
             children: [
               const SizedBox(
                 height: 20.0,
+
               ),
               const Align(
                   alignment: Alignment.topRight, child: Icon(Icons.close)),
               Ink.image(
                   image: const AssetImage('assets/images/VentureLogo.png'),
                   height: 50),
+
               const Text("Sign Up",
                   style: TextStyle(
                       fontSize: 28.0,
@@ -322,4 +327,5 @@ class _SignupWidgetState extends State<SignupWidget> {
 
 
   } */
+
 }

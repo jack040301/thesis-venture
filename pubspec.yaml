@@ -52,7 +52,7 @@ dependencies:
   firebase_auth: ^4.1.1
   google_sign_in: ^5.4.2
   flutter_bloc: ^8.1.0
-
+  cloud_firestore: ^4.0.5
 
 dev_dependencies:
   flutter_test:
@@ -81,7 +81,6 @@ flutter:
     - assets/animassets/mapanimation.json
     - assets/mapicons/
     - assets/images/google.png
-
     - assets/images/pic.png
 
     - assets/images/google2.png
