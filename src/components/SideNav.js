@@ -50,7 +50,7 @@ const SideNav = () => {
                 </a>
               </li>
               <li className="nav-item">
-                <a href="/Configuration" className="nav-link">
+                <a href="/form" className="nav-link">
                   <i className="nav-icon fas fa-tools" />
                   <p>Configuration</p>
                 </a>

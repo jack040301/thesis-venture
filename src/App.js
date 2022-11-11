@@ -8,7 +8,7 @@ import Rentals from "./pages/Rentals";
 import Users from "./pages/Users";
 import Requests from "./pages/Requests";
 import Configuration from "./pages/Configuration";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Form } from "react-router-dom";
 
 function App() {
   return (
@@ -18,6 +18,8 @@ function App() {
         {/* <Home /> */}
          <SideNav /> 
         {/* <Footer /> */}
+
+      
         <Router>
           <Routes>
             <Route path="/dashboard" element={<Dashboard />} />
@@ -25,8 +27,11 @@ function App() {
             <Route path="/users" element={<Users />} />
             <Route path="/requests" element={<Requests />} />
             <Route path="/configuration" element={<Configuration />} />
+            <Route path="/form" element={<Form />} />
           </Routes>
         </Router>
+
+       
       </div>
     </>
   );
