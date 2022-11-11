@@ -6,7 +6,9 @@ import Rentals from "./pages/Rentals";
 import Users from "./pages/Users";
 import Requests from "./pages/Requests";
 import Configuration from "./pages/Configuration";
-import Login from "./Login";
+import Form from "./pages/Form";
+
+import Login from "./auth/Login";
 /* import Home from "./Home"; */
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -14,7 +16,7 @@ function App() {
   return (
     <>
       <div class="wrapper">
-        {/* <Login /> */}
+       <Login /> 
         <Header />
         <SideNav />
         {/* <Home /> */}

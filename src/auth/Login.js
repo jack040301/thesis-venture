@@ -1,5 +1,7 @@
-import React from "react";
+import React,  { useEffect, useState } from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
+import { logInWithEmailAndPassword} from '../firebase'
+
 /* import { useNavigate } from "react-router-dom"; */
 
 import {
@@ -15,6 +17,18 @@ import {
 } from "mdb-react-ui-kit";
 
 function Login() {
+
+
+  const [email, setEmail] = useState("");
+
+  const [password, setPassword] = useState("");
+ 
+  const Login = () => {
+    logInWithEmailAndPassword(email, password);
+  };
+
+
+
   /* let navigate = useNavigate();
   navigate("/dashboard"); */
 
@@ -38,6 +52,7 @@ function Login() {
                 id="formControlLg"
                 type="email"
                 size="lg"
+                value={email} onChange={(e) => setEmail(e.target.value)}
               />
               <MDBInput
                 wrapperClass="mb-4 w-100"
@@ -45,6 +60,8 @@ function Login() {
                 id="formControlLg"
                 type="password"
                 size="lg"
+                value={password} onChange={(e) => setPassword(e.target.value)}
+
               />
 
               <MDBCheckbox
@@ -54,8 +71,8 @@ function Login() {
                 label="Remember password"
               />
               <br></br>
-
-              <MDBBtn size="lg">Login</MDBBtn>
+              <MDBBtn  size="lg">Login</MDBBtn>
+            {/*   <MDBBtn onClick={Login}  size="lg">Login</MDBBtn> */}
 
               {/* <button
               onClick={() => {

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import Login from "./Login";
+import Login from "./auth/Login";
 import App from "./App";
 import Dashboard from "./pages/Dashboard";
 import reportWebVitals from "./reportWebVitals";
