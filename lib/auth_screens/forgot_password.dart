@@ -10,42 +10,42 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
-  @override
   final _emailForgotController = TextEditingController();
 
   var tSnackBar = const SnackBar(
     content: Text('Email Field Must Fill!'),
   );
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(25.0),
+        padding: const EdgeInsets.all(25.0),
         child: SingleChildScrollView(
           child: Column(children: <Widget>[
-            SizedBox(
+            const SizedBox(
               height: 40.0,
             ),
             TextField(
               decoration: InputDecoration(
                 hintText: "Enter Your Email Address",
                 filled: true,
-                fillColor: Color.fromARGB(255, 230, 230, 230),
+                fillColor: const Color.fromARGB(255, 230, 230, 230),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                   borderSide: BorderSide(
-                      color:
-                          Color.fromARGB(255, 230, 230, 230).withOpacity(0.5),
+                      color: const Color.fromARGB(255, 230, 230, 230)
+                          .withOpacity(0.5),
                       width: 2),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                   borderSide: BorderSide(
-                      color:
-                          Color.fromARGB(255, 230, 230, 230).withOpacity(0.5)),
+                      color: const Color.fromARGB(255, 230, 230, 230)
+                          .withOpacity(0.5)),
                 ),
                 errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                   borderSide:
                       BorderSide(color: Colors.redAccent.withOpacity(0.5)),
                 ),
@@ -55,11 +55,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: resetPass,
-              child: const Text('Forgot Password'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 0, 110, 195),
+                backgroundColor: const Color.fromARGB(255, 0, 110, 195),
                 foregroundColor: Colors.white,
               ),
+              child: const Text('Forgot Password'),
             ),
           ]),
         ),

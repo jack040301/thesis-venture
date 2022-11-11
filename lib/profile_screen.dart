@@ -19,7 +19,7 @@ Future<void> logOut() async {
     await GoogleSignIn().signOut();
     await FirebaseAuth.instance.signOut();
   } catch (e) {
-    print("error in sign in $e");
+    // print("error in sign in $e");
   }
 }
 
