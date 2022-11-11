@@ -1,27 +1,39 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import Header from "./components/Header";
 import Dashboard from "./pages/Dashboard";
 import SideNav from "./components/SideNav";
-import Footer from "./components/Footer";
 import Rentals from "./pages/Rentals";
 import Users from "./pages/Users";
 import Requests from "./pages/Requests";
 import Configuration from "./pages/Configuration";
-import { BrowserRouter as Router, Routes, Route, Form } from "react-router-dom";
+import Login from "./Login";
+/* import Home from "./Home"; */
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <>
       <div class="wrapper">
+        {/* <Login /> */}
         <Header />
+        <SideNav />
         {/* <Home /> */}
-         <SideNav /> 
         {/* <Footer /> */}
 
-      
+        {/* <Routes> */}
+        {/* <Router> */}
+        {/* <Route exact path="/login" component={Login} />
+          <Route
+            exact
+            path="/dashboard"
+            component={() => <Dashboard authorized={false} />}
+          /> */}
+        {/* </Routes> */}
+        {/* </Router> */}
+
         <Router>
           <Routes>
+            <Route index element={<Dashboard />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/rentals" element={<Rentals />} />
             <Route path="/users" element={<Users />} />

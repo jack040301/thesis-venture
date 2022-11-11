@@ -1,6 +1,6 @@
 import React from "react";
 
-function App() {
+function Home() {
   return (
     <>
       <div class="content-wrapper">
@@ -99,4 +99,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
