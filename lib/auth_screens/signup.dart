@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:main_venture/auth_screens/login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignupWidget extends StatefulWidget {
   const SignupWidget({Key? key}) : super(key: key);
@@ -293,14 +294,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                 ),
               ),
               ElevatedButton(
-                onPressed: () async {
-                  await users.add({
-                    'firstname': firstNameController.text,
-                    'lastname': lastNameController.text,
-                    'email': emailController.text,
-                    'password': passwordController.text,
-                  });
-                },
+                onPressed: () {},
                 style: ElevatedButton.styleFrom(
                     side: const BorderSide(
                   color: Colors.transparent,
@@ -315,23 +309,51 @@ class _SignupWidgetState extends State<SignupWidget> {
     );
   }
 
-  /* Future signIn() async {
- try {
-   
-    if(emailController.text.isNotEmpty & passwordController.text.isNotEmpty & firstNameController.text.isEmpty & lastNameController.text. isEmpty){
-     FirebaseFirestore db = FirebaseFirestore.instance;
-
-      final user = <String, String>{"email": emailController.text, "Passowrd": passwordController.text, "firstname": firstNameController.text, "lastname":lastNameController.text};
-
-      await Fire
-
-    }
-
+  Future createAccount() async {
+    try {
+      /// In the below, with if statement we have some simple validate
+      if (emailController.text.isNotEmpty &
+          passwordController.text.isNotEmpty &
+          firstNameController.text.isNotEmpty &
+          lastNameController.text.isNotEmpty) {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim(),
+        );
+        await users.add({
+          'firstname': firstNameController.text,
+          'lastname': lastNameController.text,
+          'email': emailController.text,
+          'password': passwordController.text,
+        });
+      }
     } catch (e) {
-    
-     
+      /// Showing Error with AlertDialog if the user enter the wrong Email and Password
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Error Happened'),
+            content: const SingleChildScrollView(
+              child: Text(
+                  "The Email and Password that you Entered is Not valid ,Try Enter a valid Email and Password."),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Got it'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  passwordController.clear();
+                  emailController.clear();
+                  firstNameController.clear();
+                  lastNameController.clear();
+                },
+              ),
+            ],
+          );
+        },
+      );
     }
-
-
-  } */
+  }
 }
