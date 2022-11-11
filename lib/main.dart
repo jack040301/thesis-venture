@@ -3,6 +3,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:main_venture/auth_screen.dart';
+import 'package:main_venture/auth_screens/signup.dart';
+import 'package:main_venture/navigation.dart';
+import 'package:main_venture/dialog.dart';
+import 'package:main_venture/dialogbutton.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
@@ -24,8 +28,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Venture",
-      theme: ThemeData(),
-      home: const SplashScreen(),
+      theme: ThemeData(fontFamily: 'Questrial'),
+      home: SplashScreen(),
+
     );
   }
 }
@@ -42,9 +47,11 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     Future.delayed(const Duration(seconds: 5)).then((value) =>
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const AuthScreen())));
+
   }
 
   @override
