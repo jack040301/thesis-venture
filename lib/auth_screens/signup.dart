@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:main_venture/auth_screens/login.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class SignupWidget extends StatefulWidget {
   const SignupWidget({Key? key}) : super(key: key);
@@ -9,27 +11,26 @@ class SignupWidget extends StatefulWidget {
 }
 
 class _SignupWidgetState extends State<SignupWidget> {
-  TextEditingController? textController1;
-  TextEditingController? textController2;
-  TextEditingController? textController3;
-  TextEditingController? textController4;
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    textController1 = TextEditingController();
-    textController2 = TextEditingController();
-    textController3 = TextEditingController();
-    textController4 = TextEditingController();
   }
 
   @override
   void dispose() {
-    textController1?.dispose();
-    textController2?.dispose();
-    textController3?.dispose();
-    textController4?.dispose();
+    firstNameController?.dispose();
+    lastNameController?.dispose();
+    emailController?.dispose();
+    passwordController?.dispose();
     super.dispose();
   }
 
@@ -83,7 +84,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                 child: SizedBox(
                   width: 300,
                   child: TextFormField(
-                    controller: textController1,
+                    controller: firstNameController,
                     autofocus: true,
                     obscureText: false,
                     decoration: InputDecoration(
@@ -134,7 +135,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                 child: SizedBox(
                   width: 300,
                   child: TextFormField(
-                    controller: textController2,
+                    controller: lastNameController,
                     autofocus: true,
                     obscureText: false,
                     decoration: InputDecoration(
@@ -185,7 +186,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                 child: SizedBox(
                   width: 300,
                   child: TextFormField(
-                    controller: textController3,
+                    controller: emailController,
                     autofocus: true,
                     obscureText: false,
                     decoration: InputDecoration(
@@ -236,7 +237,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                 child: SizedBox(
                   width: 300,
                   child: TextFormField(
-                    controller: textController4,
+                    controller: passwordController,
                     autofocus: true,
                     obscureText: false,
                     decoration: InputDecoration(
@@ -292,7 +293,14 @@ class _SignupWidgetState extends State<SignupWidget> {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  await users.add({
+                    'firstname': firstNameController.text,
+                    'lastname': lastNameController.text,
+                    'email': emailController.text,
+                    'password': passwordController.text,
+                  });
+                },
                 style: ElevatedButton.styleFrom(
                     side: const BorderSide(
                   color: Colors.transparent,
@@ -306,4 +314,24 @@ class _SignupWidgetState extends State<SignupWidget> {
       ),
     );
   }
+
+  /* Future signIn() async {
+ try {
+   
+    if(emailController.text.isNotEmpty & passwordController.text.isNotEmpty & firstNameController.text.isEmpty & lastNameController.text. isEmpty){
+     FirebaseFirestore db = FirebaseFirestore.instance;
+
+      final user = <String, String>{"email": emailController.text, "Passowrd": passwordController.text, "firstname": firstNameController.text, "lastname":lastNameController.text};
+
+      await Fire
+
+    }
+
+    } catch (e) {
+    
+     
+    }
+
+
+  } */
 }
