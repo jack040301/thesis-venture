@@ -3,10 +3,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:main_venture/auth_screen.dart';
-/* import 'package:main_venture/auth_screens/signup.dart';
-import 'package:main_venture/navigation.dart';
+import 'package:main_venture/auth_screens/signup.dart';
+/*import 'package:main_venture/navigation.dart';
 import 'package:main_venture/dialog.dart';
-import 'package:main_venture/dialogbutton.dart'; */
+import 'package:main_venture/dialogbutton.dart';*/
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
