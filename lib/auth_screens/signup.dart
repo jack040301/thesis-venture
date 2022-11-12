@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:getwidget/getwidget.dart';
+import 'package:main_venture/auth_screen.dart';
 import 'package:main_venture/auth_screens/login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class SignupWidget extends StatefulWidget {
   const SignupWidget({Key? key}) : super(key: key);
@@ -29,10 +28,10 @@ class _SignupWidgetState extends State<SignupWidget> {
 
   @override
   void dispose() {
-    firstNameController?.dispose();
-    lastNameController?.dispose();
-    emailController?.dispose();
-    passwordController?.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
@@ -231,7 +230,7 @@ class _SignupWidgetState extends State<SignupWidget> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const SignupWidget()),
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
                 );
               },
               child: const Text("Already have an account? Login",
@@ -261,7 +260,9 @@ class _SignupWidgetState extends State<SignupWidget> {
               height: 10.0,
             ),
             GestureDetector(
-                onTap: () {},
+                onTap: () async {
+                  await const AuthScreen().signInWithGoogle();
+                },
                 child: Material(
                   color: const Color.fromARGB(255, 0, 110, 195),
                   elevation: 8,
@@ -287,9 +288,11 @@ class _SignupWidgetState extends State<SignupWidget> {
     ));
   }
 
+//===========FUNCTIONS
+
   Future createAccount() async {
+    //only if all the fields is not empty
     try {
-      /// In the below, with if statement we have some simple validate
       if (emailController.text.isNotEmpty &
           passwordController.text.isNotEmpty &
           firstNameController.text.isNotEmpty &
