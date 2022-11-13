@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:getwidget/getwidget.dart';
-import 'package:main_venture/auth_screens/login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class SignupWidget extends StatefulWidget {
   const SignupWidget({Key? key}) : super(key: key);
@@ -29,10 +26,10 @@ class _SignupWidgetState extends State<SignupWidget> {
 
   @override
   void dispose() {
-    firstNameController?.dispose();
-    lastNameController?.dispose();
-    emailController?.dispose();
-    passwordController?.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
@@ -215,7 +212,10 @@ class _SignupWidgetState extends State<SignupWidget> {
               width: double.infinity,
               child: RawMaterialButton(
                 fillColor: const Color.fromARGB(255, 0, 110, 195),
-                onPressed: null,
+                onPressed: () {
+                  createAccount();
+                  print('test');
+                },
                 elevation: 0.0,
                 padding: const EdgeInsets.symmetric(vertical: 15.0),
                 shape: RoundedRectangleBorder(
@@ -287,7 +287,8 @@ class _SignupWidgetState extends State<SignupWidget> {
     ));
   }
 
-  Future createAccount() async {
+  Future<void> createAccount() async {
+    print('Create account executed');
     try {
       /// In the below, with if statement we have some simple validate
       if (emailController.text.isNotEmpty &

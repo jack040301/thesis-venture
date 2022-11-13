@@ -3,7 +3,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:main_venture/auth_screen.dart';
-import 'package:main_venture/auth_screens/signup.dart';
+
 /*import 'package:main_venture/navigation.dart';
 import 'package:main_venture/dialog.dart';
 import 'package:main_venture/dialogbutton.dart';*/
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "Venture",
       theme: ThemeData(fontFamily: 'Questrial'),
-      home: SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }
