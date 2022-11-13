@@ -1,6 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:main_venture/profile_screen.dart';
+import 'package:main_venture/screens/home_page.dart';
 
 class SignupWidget extends StatefulWidget {
   const SignupWidget({Key? key}) : super(key: key);
@@ -69,6 +72,7 @@ class _SignupWidgetState extends State<SignupWidget> {
               height: 4.0,
             ),
             TextField(
+              controller: firstNameController,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 hintText: "Nikki",
@@ -106,6 +110,7 @@ class _SignupWidgetState extends State<SignupWidget> {
               height: 4.0,
             ),
             TextField(
+              controller: lastNameController,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 hintText: "Ba-alan",
@@ -143,6 +148,7 @@ class _SignupWidgetState extends State<SignupWidget> {
               height: 4.0,
             ),
             TextField(
+              controller: emailController,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 hintText: "baalan.bscs2019@gmail.com",
@@ -180,6 +186,7 @@ class _SignupWidgetState extends State<SignupWidget> {
               height: 4.0,
             ),
             TextField(
+              controller: passwordController,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 hintText: "********",
@@ -295,6 +302,7 @@ class _SignupWidgetState extends State<SignupWidget> {
           passwordController.text.isNotEmpty &
           firstNameController.text.isNotEmpty &
           lastNameController.text.isNotEmpty) {
+        print('The fields is not empty');
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim(),
@@ -305,9 +313,12 @@ class _SignupWidgetState extends State<SignupWidget> {
           'email': emailController.text,
           'password': passwordController.text,
         });
+      } else {
+        print('Fields are empty');
       }
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
       /// Showing Error with AlertDialog if the user enter the wrong Email and Password
+      print('Signup exception: ${e.message}');
       showDialog<void>(
         context: context,
         barrierDismissible: false,
@@ -334,5 +345,40 @@ class _SignupWidgetState extends State<SignupWidget> {
         },
       );
     }
+
+    try {
+      String curUser =
+          FirebaseAuth.instance.currentUser?.email ?? 'no current user';
+      FirebaseAuth.instance.authStateChanges().listen((User? user) {
+        if (user == null) {
+          print('***************************************** User is null');
+          print('Current User: $curUser');
+        } else {
+          print('User: ${user.email}');
+          rmSignup(context);
+        }
+      });
+    } on FirebaseAuthException catch (e) {
+      String curUser =
+          FirebaseAuth.instance.currentUser?.email ?? 'no current user';
+      print('User Exeption: ${e.message}');
+      print('Current User: $curUser');
+    }
+  }
+}
+
+Future<void> rmSignup(BuildContext context) async {
+  try {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const ProfileScreen()),
+    );
+
+    /*Navigator.removeRoute(
+      context,
+      MaterialPageRoute(builder: (context) => const SignupWidget()),
+    );*/
+  } catch (e) {
+    print('Routing: removing signup screen exception => $e');
   }
 }
