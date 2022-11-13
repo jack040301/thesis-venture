@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:main_venture/auth_screen.dart';
 import 'package:main_venture/auth_screens/forgot_password.dart';
+import 'package:main_venture/auth_screens/signup.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,7 +13,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  @override
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -30,10 +30,11 @@ class _LoginScreenState extends State<LoginScreen> {
     content: Text('Email Field Must Fill!'),
   );
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(30.0),
+        padding: const EdgeInsets.all(30.0),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -42,9 +43,10 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 20.0,
               ),
-              Align(alignment: Alignment.topRight, child: Icon(Icons.close)),
+              const Align(
+                  alignment: Alignment.topRight, child: Icon(Icons.close)),
               Ink.image(
-                  image: AssetImage('assets/images/VentureLogo.png'),
+                  image: const AssetImage('assets/images/VentureLogo.png'),
                   height: 50),
               const Text("Login",
                   style: TextStyle(
@@ -69,22 +71,22 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: InputDecoration(
                   hintText: "Email",
                   filled: true,
-                  fillColor: Color.fromARGB(255, 230, 230, 230),
+                  fillColor: const Color.fromARGB(255, 230, 230, 230),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                     borderSide: BorderSide(
-                        color:
-                            Color.fromARGB(255, 230, 230, 230).withOpacity(0.5),
+                        color: const Color.fromARGB(255, 230, 230, 230)
+                            .withOpacity(0.5),
                         width: 2),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                     borderSide: BorderSide(
-                        color: Color.fromARGB(255, 230, 230, 230)
+                        color: const Color.fromARGB(255, 230, 230, 230)
                             .withOpacity(0.5)),
                   ),
                   errorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                     borderSide:
                         BorderSide(color: Colors.redAccent.withOpacity(0.5)),
                   ),
@@ -110,22 +112,22 @@ class _LoginScreenState extends State<LoginScreen> {
                   border: InputBorder.none,
                   hintText: "Password",
                   filled: true,
-                  fillColor: Color.fromARGB(255, 230, 230, 230),
+                  fillColor: const Color.fromARGB(255, 230, 230, 230),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                     borderSide: BorderSide(
-                        color:
-                            Color.fromARGB(255, 230, 230, 230).withOpacity(0.5),
+                        color: const Color.fromARGB(255, 230, 230, 230)
+                            .withOpacity(0.5),
                         width: 2),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                     borderSide: BorderSide(
-                        color: Color.fromARGB(255, 230, 230, 230)
+                        color: const Color.fromARGB(255, 230, 230, 230)
                             .withOpacity(0.5)),
                   ),
                   errorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                     borderSide:
                         BorderSide(color: Colors.redAccent.withOpacity(0.5)),
                   ),
@@ -134,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 20.0,
               ),
-              Container(
+              SizedBox(
                 width: double.infinity,
                 child: RawMaterialButton(
                   fillColor: const Color.fromARGB(255, 0, 110, 195),
@@ -143,31 +145,38 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 15.0),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.0)),
-                  child: Text("Login",
+                  child: const Text("Login",
                       style: TextStyle(color: Colors.white, fontSize: 15.0)),
                 ),
               ),
               const SizedBox(
                 height: 15.0,
               ),
-              const Text("Don't have an account yet? Sign up",
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 74, 74, 74),
-                    fontSize: 14.0,
-                  )),
-              Container(
-                child: RawMaterialButton(
-                  onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ForgotPasswordScreen())),
-                  child: const Text("Forgot Password?",
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 0, 110, 195),
-                          fontSize: 14.0)),
-                ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SignupWidget()),
+                  );
+                },
+                child: const Text("Don't have an account yet? Sign up",
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 74, 74, 74),
+                      fontSize: 14.0,
+                    )),
               ),
-              Row(children: <Widget>[
+              RawMaterialButton(
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ForgotPasswordScreen())),
+                child: const Text("Forgot Password?",
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 0, 110, 195),
+                        fontSize: 14.0)),
+              ),
+              Row(children: const <Widget>[
                 Expanded(
                   child: Divider(
                       color: Color.fromARGB(255, 105, 105, 105), endIndent: 20),
@@ -189,7 +198,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const AuthScreen().signInWithGoogle();
                 },
                 child: Material(
-                  color: Color.fromARGB(255, 0, 110, 195),
+                  color: const Color.fromARGB(255, 0, 110, 195),
                   elevation: 8,
                   borderRadius: BorderRadius.circular(5.0),
                   clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -197,11 +206,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Ink.image(
-                          image: AssetImage('assets/images/google2.png'),
+                          image: const AssetImage('assets/images/google2.png'),
                           height: 40,
                           width: 30),
-                      SizedBox(width: 10.0, height: 50),
-                      Text('Sign in with Google',
+                      const SizedBox(width: 10.0, height: 50),
+                      const Text('Sign in with Google',
                           style:
                               TextStyle(color: Colors.white, fontSize: 14.0)),
                     ],
@@ -214,6 +223,8 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
+  //===========FUNCTIONS
 
   Future signIn() async {
     try {
