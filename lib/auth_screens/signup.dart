@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:main_venture/profile_screen.dart';
 import 'package:main_venture/screens/home_page.dart';
+import 'package:flutter_password_strength/flutter_password_strength.dart';
+import 'package:main_venture/component/customComponent.dart';
 
 class SignupWidget extends StatefulWidget {
   const SignupWidget({Key? key}) : super(key: key);
@@ -21,6 +23,7 @@ class _SignupWidgetState extends State<SignupWidget> {
   final passwordController = TextEditingController();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -71,166 +74,203 @@ class _SignupWidgetState extends State<SignupWidget> {
             const SizedBox(
               height: 4.0,
             ),
-            TextField(
-              controller: firstNameController,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                hintText: "Nikki",
-                filled: true,
-                fillColor: const Color.fromARGB(255, 230, 230, 230),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  borderSide: BorderSide(
-                      color: const Color.fromARGB(255, 230, 230, 230)
-                          .withOpacity(0.5),
-                      width: 2),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  borderSide: BorderSide(
-                      color: const Color.fromARGB(255, 230, 230, 230)
-                          .withOpacity(0.5)),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  borderSide:
-                      BorderSide(color: Colors.redAccent.withOpacity(0.5)),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20.0,
-            ),
-            const Text("Last Name",
-                style: TextStyle(
-                  color: Color.fromARGB(255, 74, 74, 74),
-                  fontSize: 14.0,
+            Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      validator: (val) {
+                        if (val == null || val.isEmpty) {
+                          return 'Field cannot be empty';
+                        }
+                        return null;
+                      },
+                      controller: firstNameController,
+                      keyboardType: TextInputType.name,
+                      decoration: InputDecoration(
+                        hintText: "Nikki",
+                        filled: true,
+                        fillColor: const Color.fromARGB(255, 230, 230, 230),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 230, 230, 230)
+                                  .withOpacity(0.5),
+                              width: 2),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 230, 230, 230)
+                                  .withOpacity(0.5)),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(
+                              color: Colors.redAccent.withOpacity(0.5)),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    const Text("Last Name",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 74, 74, 74),
+                          fontSize: 14.0,
+                        )),
+                    const SizedBox(
+                      height: 4.0,
+                    ),
+                    TextFormField(
+                      validator: (val) {
+                        if (val == null || val.isEmpty) {
+                          return 'Field cannot be empty';
+                        }
+                        return null;
+                      },
+                      controller: lastNameController,
+                      keyboardType: TextInputType.name,
+                      decoration: InputDecoration(
+                        hintText: "Ba-alan",
+                        filled: true,
+                        fillColor: const Color.fromARGB(255, 230, 230, 230),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 230, 230, 230)
+                                  .withOpacity(0.5),
+                              width: 2),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 230, 230, 230)
+                                  .withOpacity(0.5)),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(
+                              color: Colors.redAccent.withOpacity(0.5)),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    const Text("Email Address",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 74, 74, 74),
+                          fontSize: 14.0,
+                        )),
+                    const SizedBox(
+                      height: 4.0,
+                    ),
+                    TextFormField(
+                      validator: (val) {
+                        if (val == null || val.isEmpty) {
+                          return 'Field cannot be empty';
+                        }
+                        return null;
+                      },
+                      controller: emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        hintText: "baalan.bscs2019@gmail.com",
+                        filled: true,
+                        fillColor: const Color.fromARGB(255, 230, 230, 230),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 230, 230, 230)
+                                  .withOpacity(0.5),
+                              width: 2),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 230, 230, 230)
+                                  .withOpacity(0.5)),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(
+                              color: Colors.redAccent.withOpacity(0.5)),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    const Text("Password",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 74, 74, 74),
+                          fontSize: 14.0,
+                        )),
+                    const SizedBox(
+                      height: 4.0,
+                    ),
+                    CustomPassField(
+                      onChanged: (value) {
+                        setState(() {
+                          passwordController
+                            ..text = value
+                            ..selection = TextSelection.collapsed(
+                                offset: passwordController.text.length);
+                        });
+                      },
+                      onSaved: (value) {
+                        setState(() {
+                          passwordController.text = value;
+                        });
+                      },
+                      cont: passwordController,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                      child: FlutterPasswordStrength(
+                        password: passwordController.text,
+                        strengthCallback: (strength) {
+                          debugPrint(strength.toString());
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: RawMaterialButton(
+                        fillColor: const Color.fromARGB(255, 0, 110, 195),
+                        onPressed: () {
+                          createAccount();
+                          if (_formKey.currentState!.validate()) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Processing Data')));
+                          }
+                        },
+                        elevation: 0.0,
+                        padding: const EdgeInsets.symmetric(vertical: 15.0),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0)),
+                        child: const Text("Sign Up",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 15.0)),
+                      ),
+                    ),
+                  ],
                 )),
-            const SizedBox(
-              height: 4.0,
-            ),
-            TextField(
-              controller: lastNameController,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                hintText: "Ba-alan",
-                filled: true,
-                fillColor: const Color.fromARGB(255, 230, 230, 230),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  borderSide: BorderSide(
-                      color: const Color.fromARGB(255, 230, 230, 230)
-                          .withOpacity(0.5),
-                      width: 2),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  borderSide: BorderSide(
-                      color: const Color.fromARGB(255, 230, 230, 230)
-                          .withOpacity(0.5)),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  borderSide:
-                      BorderSide(color: Colors.redAccent.withOpacity(0.5)),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20.0,
-            ),
-            const Text("Email Address",
-                style: TextStyle(
-                  color: Color.fromARGB(255, 74, 74, 74),
-                  fontSize: 14.0,
-                )),
-            const SizedBox(
-              height: 4.0,
-            ),
-            TextField(
-              controller: emailController,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                hintText: "baalan.bscs2019@gmail.com",
-                filled: true,
-                fillColor: const Color.fromARGB(255, 230, 230, 230),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  borderSide: BorderSide(
-                      color: const Color.fromARGB(255, 230, 230, 230)
-                          .withOpacity(0.5),
-                      width: 2),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  borderSide: BorderSide(
-                      color: const Color.fromARGB(255, 230, 230, 230)
-                          .withOpacity(0.5)),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  borderSide:
-                      BorderSide(color: Colors.redAccent.withOpacity(0.5)),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20.0,
-            ),
-            const Text("Password",
-                style: TextStyle(
-                  color: Color.fromARGB(255, 74, 74, 74),
-                  fontSize: 14.0,
-                )),
-            const SizedBox(
-              height: 4.0,
-            ),
-            TextField(
-              controller: passwordController,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                hintText: "********",
-                filled: true,
-                fillColor: const Color.fromARGB(255, 230, 230, 230),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  borderSide: BorderSide(
-                      color: const Color.fromARGB(255, 230, 230, 230)
-                          .withOpacity(0.5),
-                      width: 2),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  borderSide: BorderSide(
-                      color: const Color.fromARGB(255, 230, 230, 230)
-                          .withOpacity(0.5)),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  borderSide:
-                      BorderSide(color: Colors.redAccent.withOpacity(0.5)),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20.0,
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: RawMaterialButton(
-                fillColor: const Color.fromARGB(255, 0, 110, 195),
-                onPressed: () {
-                  createAccount();
-                  print('test');
-                },
-                elevation: 0.0,
-                padding: const EdgeInsets.symmetric(vertical: 15.0),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0)),
-                child: const Text("Sign Up",
-                    style: TextStyle(color: Colors.white, fontSize: 15.0)),
-              ),
-            ),
             const SizedBox(
               height: 15.0,
             ),
