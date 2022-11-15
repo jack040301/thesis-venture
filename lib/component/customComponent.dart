@@ -32,7 +32,7 @@ class _CustomPassFieldState extends State<CustomPassField> {
       textDirection: TextDirection.ltr,
       controller: widget.cont ?? widget.defaultCont,
       keyboardType: TextInputType.text,
-      obscureText: false,
+      obscureText: true,
       obscuringCharacter: '*',
       validator: validatePassword,
       autovalidateMode: AutovalidateMode.onUserInteraction,

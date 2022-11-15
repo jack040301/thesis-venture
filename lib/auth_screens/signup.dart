@@ -365,9 +365,8 @@ class _SignupWidgetState extends State<SignupWidget> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Error Happened'),
-            content: const SingleChildScrollView(
-              child: Text(
-                  "The Email and Password that you Entered is Not valid ,Try Enter a valid Email and Password."),
+            content: SingleChildScrollView(
+              child: Text("Error: ${e.message}"),
             ),
             actions: <Widget>[
               TextButton(
