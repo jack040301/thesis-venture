@@ -7,6 +7,7 @@ import 'package:main_venture/screens/home_page.dart';
 import 'package:flutter_password_strength/flutter_password_strength.dart';
 import 'package:main_venture/component/customComponent.dart';
 
+
 class SignupWidget extends StatefulWidget {
   const SignupWidget({Key? key}) : super(key: key);
 
@@ -278,7 +279,7 @@ class _SignupWidgetState extends State<SignupWidget> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const SignupWidget()),
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
                 );
               },
               child: const Text("Already have an account? Login",
@@ -308,7 +309,9 @@ class _SignupWidgetState extends State<SignupWidget> {
               height: 10.0,
             ),
             GestureDetector(
-                onTap: () {},
+                onTap: () async {
+                  await const AuthScreen().signInWithGoogle();
+                },
                 child: Material(
                   color: const Color.fromARGB(255, 0, 110, 195),
                   elevation: 8,
@@ -334,10 +337,11 @@ class _SignupWidgetState extends State<SignupWidget> {
     ));
   }
 
+
   Future<void> createAccount() async {
     print('Create account executed');
+
     try {
-      /// In the below, with if statement we have some simple validate
       if (emailController.text.isNotEmpty &
           passwordController.text.isNotEmpty &
           firstNameController.text.isNotEmpty &

@@ -224,6 +224,8 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  //===========FUNCTIONS
+
   Future signIn() async {
     try {
       /// In the below, with if statement we have some simple validate
