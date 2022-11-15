@@ -1,15 +1,14 @@
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import 'package:main_venture/models/auto_complete_results.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
-
 
 class MapServices {
   final String key = 'AIzaSyADCsauZ2OnwP2WH41KHAL6IgpG3Mnvl64';
   final String types = 'geocode';
 
-  Future<List<AutoCompleteResult>> searchPlaces (String searchInput) async {
+  Future<List<AutoCompleteResult>> searchPlaces(String searchInput) async {
     final String url =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$searchInput&types=$types&key=$key';
 
@@ -21,6 +20,7 @@ class MapServices {
 
     return results.map((e) => AutoCompleteResult.fromJson(e)).toList();
   }
+
   Future<Map<String, dynamic>> getPlace(String? input) async {
     final String url =
         'https://maps.googleapis.com/maps/api/place/details/json?place_id=$input&key=$key';
