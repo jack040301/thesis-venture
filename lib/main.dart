@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "Venture",
       theme: ThemeData(),
-      home: SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }
@@ -42,16 +42,16 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(Duration(seconds: 5)).then((value) => Navigator.of(context)
-        .pushReplacement(
-            MaterialPageRoute(builder: (context) => AuthScreen())));
+    Future.delayed(const Duration(seconds: 5)).then((value) =>
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const AuthScreen())));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Container(
+        child: SizedBox(
             height: 200.0,
             width: 200.0,
             child: LottieBuilder.asset('assets/animassets/mapanimation.json')),

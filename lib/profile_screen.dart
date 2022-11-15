@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:main_venture/auth_screen.dart';
+
 import 'package:main_venture/screens/home_page.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
-
 
 //final userphoto = FirebaseAuth.instance.currentUser!.photoURL??"";
 
@@ -15,8 +12,6 @@ class ProfileScreen extends StatefulWidget {
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
-
-
 }
 
 Future<void> logOut() async {
@@ -24,13 +19,14 @@ Future<void> logOut() async {
     await GoogleSignIn().signOut();
     await FirebaseAuth.instance.signOut();
   } catch (e) {
-    print("error in sign in $e");
+    // print("error in sign in $e");
   }
 }
 
 
 
 class _ProfileScreenState extends State<ProfileScreen> {
+<<<<<<< HEAD
 
   // List<ListItem> _dropdownItems = [
   //   ListItem(1, "GeeksforGeeks"),
@@ -139,6 +135,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
+=======
+>>>>>>> 1a74dfd71bc074279b309d859fec96cdde0c44a0
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -146,6 +144,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+<<<<<<< HEAD
             FirebaseAuth.instance.currentUser!.photoURL == null
                 ? const Image(image: AssetImage('assets/images/pic.png'))
                 : Image.network(FirebaseAuth.instance.currentUser!.photoURL??""),
@@ -154,10 +153,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
               style: const TextStyle(fontSize: 30,
                   fontWeight: FontWeight.bold,
                   color: Colors.black87),
+=======
+
+            FirebaseAuth.instance.currentUser!.photoURL == null ? const Image(image: AssetImage('assets/images/pic.png')) : Image.network(FirebaseAuth.instance.currentUser!.photoURL??""),
+            Text(
+              FirebaseAuth.instance.currentUser!.displayName ?? "Default Name",
+              style: const TextStyle(
+                fontSize: 30,),
+
+            //FirebaseAuth.instance.currentUser!.photoURL == null ? const Text("No Image") : Image.network(FirebaseAuth.instance.currentUser!.photoURL??""),
+            FirebaseAuth.instance.currentUser!.photoURL == null
+                ? const Image(image: AssetImage('assets/images/pic.png'))
+                : Image.network(
+                    FirebaseAuth.instance.currentUser!.photoURL ?? ""),
+            Text(
+              FirebaseAuth.instance.currentUser!.displayName ?? "Default Name",
+              style: const TextStyle(
+                fontSize: 30,
+              ),
+
+>>>>>>> 1a74dfd71bc074279b309d859fec96cdde0c44a0
             ),
             const SizedBox(
               height: 10,
             ),
+<<<<<<< HEAD
             // Text(
             //   FirebaseAuth.instance.currentUser!.uid,
             //   style: const TextStyle(fontSize: 30,
@@ -171,11 +191,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ElevatedButton(
                 onPressed: logOut, child: Text("Logout Account")
             ),
+=======
+            const ElevatedButton(
+                onPressed: logOut, child: Text("Logout Account")),
+>>>>>>> 1a74dfd71bc074279b309d859fec96cdde0c44a0
             ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomePage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomePage()));
                 },
+<<<<<<< HEAD
                 child: Text("Map")
             ),
             ElevatedButton(
@@ -184,12 +211,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 },
                 child: Text("Dialog")
             ),
+=======
+                child: const Text("Map")),
+>>>>>>> 1a74dfd71bc074279b309d859fec96cdde0c44a0
           ],
         ),
       ),
 
     );
   }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 1a74dfd71bc074279b309d859fec96cdde0c44a0
 }
