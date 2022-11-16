@@ -308,7 +308,8 @@ class _SignupWidgetState extends State<SignupWidget> {
     );
   }
 
-  /* Future signIn() async {
+
+  /*Future signIn() async {
  try {
    
     if(emailController.text.isNotEmpty & passwordController.text.isNotEmpty & firstNameController.text.isEmpty & lastNameController.text. isEmpty){
@@ -320,12 +321,9 @@ class _SignupWidgetState extends State<SignupWidget> {
 
     }
 
-    } catch (e) {
+    } catch (e) {*/
     
      
     }
 
 
-  } */
-
-}
