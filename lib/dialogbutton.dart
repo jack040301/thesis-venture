@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/types/gf_button_type.dart';
+<<<<<<< Updated upstream
+=======
+import 'package:decorated_dropdownbutton/decorated_dropdownbutton.dart';
+>>>>>>> Stashed changes
 
 class DialogVenture extends StatefulWidget {
   const DialogVenture({Key? key}) : super(key: key);
@@ -14,12 +18,20 @@ class DialogVenture extends StatefulWidget {
 class _DialogVentureState extends State<DialogVenture> {
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+<<<<<<< Updated upstream
+=======
+  String dropdownValue = 'Choose your business';
+>>>>>>> Stashed changes
 
   Future<void> showInformationDialog(BuildContext context) async {
     return await showDialog(context: context,
         builder: (context) {
           final TextEditingController _textEditingController = TextEditingController();
+<<<<<<< Updated upstream
           bool isChecked = false;
+=======
+          //bool isChecked = false;
+>>>>>>> Stashed changes
           return StatefulBuilder(builder: (context, setState) {
             return AlertDialog(
               content: Form(
@@ -32,6 +44,7 @@ class _DialogVentureState extends State<DialogVenture> {
                       ),
                       const Align(
                           alignment: Alignment.topRight, child: Icon(Icons.close)),
+<<<<<<< Updated upstream
 
                       //DROPDOWN
                       DropdownButton<String>(
@@ -88,6 +101,87 @@ class _DialogVentureState extends State<DialogVenture> {
 
                         ),
                       ),
+=======
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+
+
+                      const Text("What kind of business do you prefer?",
+
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 74, 74, 74),
+                            fontSize: 18.0,
+
+
+                          )),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+
+
+
+                      //DROPDOWN
+              DropdownButtonFormField(
+                icon: Icon(Icons.keyboard_arrow_down_rounded),
+                isExpanded: true,
+              decoration: InputDecoration(
+
+              contentPadding: EdgeInsets.all((15.0)),
+
+              enabledBorder: OutlineInputBorder(
+                borderRadius:
+                const BorderRadius.all(Radius.circular(5.0)),
+              borderSide: BorderSide(color: const Color.fromARGB(255, 230, 230, 230)
+                  .withOpacity(0.5),
+                  width: 2),
+              ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius:
+              const BorderRadius.all(Radius.circular(5.0)),
+              borderSide: BorderSide(
+                  color: const Color.fromARGB(255, 230, 230, 230)
+                      .withOpacity(0.5),
+                  width: 2),
+            ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius:
+                  const BorderRadius.all(Radius.circular(5.0)),
+                  borderSide: BorderSide(
+                      color: const Color.fromARGB(255, 230, 230, 230)
+                          .withOpacity(0.5),
+                      width: 2),
+                ),
+                filled: true,
+                fillColor: const Color.fromARGB(255, 230, 230, 230),
+              ),
+              dropdownColor: Color.fromARGB(255, 230, 230, 230),
+              value: dropdownValue,
+              onChanged: (String? newValue) {
+                setState(() {
+                  dropdownValue = newValue!;
+                });
+              },
+            items: <String>['Choose your business', 'Coffee Shop', 'Commercial Space', 'Boutique'].map<DropdownMenuItem<String>>((String value) {
+
+            return DropdownMenuItem<String>(
+
+            value: value,
+            child: Text(
+            value,
+                style: TextStyle(
+                color: Color.fromARGB(255, 74, 74, 74),
+              fontSize: 14.0,
+
+
+            )
+
+              ));
+
+            }).toList(),
+            ),
+
+>>>>>>> Stashed changes
 
 
 
@@ -98,10 +192,17 @@ class _DialogVentureState extends State<DialogVenture> {
                       const Text("Enter budget for the area (per square meter)?",
                           style: TextStyle(
                             color: Color.fromARGB(255, 74, 74, 74),
+<<<<<<< Updated upstream
                             fontSize: 19.0,
                           )),
                       const SizedBox(
                         height: 4.0,
+=======
+                            fontSize: 15.0,
+                          )),
+                      const SizedBox(
+                        height: 10.0,
+>>>>>>> Stashed changes
                       ),
                       TextFormField(
                           controller: _textEditingController,
@@ -140,6 +241,7 @@ class _DialogVentureState extends State<DialogVenture> {
                       const SizedBox(
                         height: 20.0,
                       ),
+<<<<<<< Updated upstream
                       const Text("Enter value of area (square meter)?",
                           style: TextStyle(
                             color: Color.fromARGB(255, 74, 74, 74),
@@ -147,6 +249,15 @@ class _DialogVentureState extends State<DialogVenture> {
                           )),
                       const SizedBox(
                         height: 4.0,
+=======
+                      const Text("Enter value of area (per square meter)?",
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 74, 74, 74),
+                            fontSize: 18.0,
+                          )),
+                      const SizedBox(
+                        height: 10.0,
+>>>>>>> Stashed changes
                       ),
                       TextFormField(
                           controller: _textEditingController,

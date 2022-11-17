@@ -38,6 +38,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   getwidget: ^3.0.1
+  decorated_dropdownbutton: ^0.0.3
 
   http:
   lottie:
