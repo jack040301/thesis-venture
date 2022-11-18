@@ -4,8 +4,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:main_venture/dialogbox.dart';
 import 'package:main_venture/auth_screen.dart';
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+=======
+>>>>>>> c37cb2890b12c7ac60dd941592c900627751ddc2
 /* import 'package:main_venture/auth_screens/signup.dart';
 import 'package:main_venture/navigation.dart';
 import 'package:main_venture/dialog.dart';
@@ -62,7 +65,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
     Future.delayed(const Duration(seconds: 5)).then((value) =>
         Navigator.of(context).pushReplacement(
+<<<<<<< HEAD
             MaterialPageRoute(builder: (context) => const DialogVenture())));
+=======
+            MaterialPageRoute(builder: (context) => const AuthScreen())));
+>>>>>>> c37cb2890b12c7ac60dd941592c900627751ddc2
   }
 
   @override
