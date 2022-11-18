@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/thesis-venture.iml" filepath="$PROJECT_DIR$/.idea/thesis-venture.iml" />
+      <module fileurl="file://$PROJECT_DIR$/try_lang.iml" filepath="$PROJECT_DIR$/try_lang.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/try_lang_android.iml" filepath="$PROJECT_DIR$/android/try_lang_android.iml" />
     </modules>
   </component>
 </project>
