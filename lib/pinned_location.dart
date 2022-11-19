@@ -59,11 +59,11 @@ class _PinnedLocationState extends State<PinnedLocation> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                         child: Row (
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Padding(
                               padding: const EdgeInsets.fromLTRB(0, 0, 0, 22),
-                              child: Image.asset('assets/images/icons/pin.png', height: 25, width: 24,),
+                              child: Image.asset('assets/images/icons/pin.png', height: 25, width: 18.6,),
                             ),
                             Column(
                               children: <Widget>[
@@ -73,7 +73,7 @@ class _PinnedLocationState extends State<PinnedLocation> {
                                     child: Column(
                                       children: [
                                         Text('NORTH CALOOCAN', style: TextStyle(fontSize: 15, color: Colors.black,fontFamily: 'Questrial',),),
-                                        Text('Q386+XCQ, Uyguanco Street, 188 Tala, Caloocan', style: TextStyle(fontSize: 10, color: Colors.black,fontFamily: 'Questrial',),),
+                                        SingleChildScrollView(child: Text('Q386+XCQ, Uyguanco Street, 188 Tala, Caloocan', style: TextStyle(fontSize: 10, color: Colors.black,fontFamily: 'Questrial',),),)
                                       ],
                                     ),
                                     onPressed: (){
@@ -87,7 +87,7 @@ class _PinnedLocationState extends State<PinnedLocation> {
                                                 children: [
                                                   Text(''),
                                                   const Padding(
-                                                    padding: EdgeInsets.fromLTRB(20, 0, 10.4, 0),
+                                                    padding: EdgeInsets.fromLTRB(20, 0, 5, 0),
                                                     child: Text('PINNED LOCATIONS', style: TextStyle(fontSize: 25,fontFamily: 'Questrial',),),
                                                   ),
                                                   Padding(
@@ -251,7 +251,7 @@ class _PinnedLocationState extends State<PinnedLocation> {
                               padding: EdgeInsets.fromLTRB(0, 0, 0, 22),
                               child: InkWell(
                                 child: Container(
-                                  child: Image.asset('assets/images/icons/share.png', height: 15, width: 11.7,),
+                                  child: Image.asset('assets/images/icons/share.png', height: 15, width: 10.7,),
                                 ),
                                 onTap: (){
                                   showDialog(context: context, builder: (context) => AlertDialog(
@@ -297,7 +297,7 @@ class _PinnedLocationState extends State<PinnedLocation> {
                               padding: EdgeInsets.fromLTRB(0, 0, 0, 22),
                               child: InkWell(
                                 child: Container(
-                                  child: Image.asset('assets/images/icons/delete.png', height: 15, width: 11.7,),
+                                  child: Image.asset('assets/images/icons/delete.png', height: 15, width: 10.7,),
                                 ),
                                 onTap: (){
                                   showDialog(context: context, builder: (context) => AlertDialog(
@@ -361,7 +361,7 @@ class _PinnedLocationState extends State<PinnedLocation> {
                       Padding(
                         padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                         child: Row (
-
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Padding(
                               padding: EdgeInsets.fromLTRB(0, 0, 0, 22),
@@ -376,7 +376,7 @@ class _PinnedLocationState extends State<PinnedLocation> {
                                     padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
                                     child: TextButton(
                                       child: Padding(
-                                        padding: EdgeInsets.fromLTRB(18, 0, 25, 0),
+                                        padding: EdgeInsets.fromLTRB(18, 0, 9.6, 0),
                                         child: Column(
                                           children: [
                                             Text('BAGONG SILANG', style: TextStyle(fontSize: 15, color: Colors.black,),),
@@ -395,7 +395,7 @@ class _PinnedLocationState extends State<PinnedLocation> {
                                                   children: [
                                                     Text(''),
                                                     const Padding(
-                                                      padding: EdgeInsets.fromLTRB(20, 0, 10.4, 0),
+                                                      padding: EdgeInsets.fromLTRB(20, 0, 5, 0),
                                                       child: Text('PINNED LOCATIONS', style: TextStyle(fontSize: 25,),),
                                                     ),
                                                     Padding(
@@ -670,7 +670,7 @@ class _PinnedLocationState extends State<PinnedLocation> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                         child: Row (
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Padding(
                               padding: const EdgeInsets.fromLTRB(0, 0, 0, 22),
@@ -701,7 +701,7 @@ class _PinnedLocationState extends State<PinnedLocation> {
                                                   children: [
                                                     const Text(''),
                                                     const Padding(
-                                                      padding: EdgeInsets.fromLTRB(20, 0, 10.4, 0),
+                                                      padding: EdgeInsets.fromLTRB(20, 0, 5, 0),
                                                       child: Text('PINNED LOCATIONS', style: TextStyle(fontSize: 25,),),
                                                     ),
                                                     Padding(

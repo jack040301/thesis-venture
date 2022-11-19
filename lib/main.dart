@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_const, empty_catches
 
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:main_venture/auth_screen.dart';
@@ -43,24 +44,21 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
 
-    Future.delayed(const Duration(seconds: 5)).then((value) =>
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const PinnedLocation())));
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: SizedBox(
-            height: 200.0,
-            width: 200.0,
-            child: LottieBuilder.asset('assets/animassets/mapanimation.json')),
+    return AnimatedSplashScreen(
+      splash: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset('assets/animassets/Logo.gif', width: 250,
+              height: 150)
+        ],
       ),
+      nextScreen: const PinnedLocation(),
+      splashIconSize: 250,
+      duration: 3400,
     );
   }
 }
