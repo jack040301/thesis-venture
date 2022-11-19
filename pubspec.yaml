@@ -92,7 +92,7 @@ flutter:
     - assets/mapicons/
     - assets/images/google.png
     - assets/images/pic.png
-
+    - assets/images/icons/
     - assets/images/google2.png
     - assets/images/VentureLogo.png
 
