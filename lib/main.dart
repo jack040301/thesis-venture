@@ -1,31 +1,33 @@
 // ignore_for_file: unnecessary_const, empty_catches
 
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:main_venture/dialogbox.dart';
 import 'package:main_venture/auth_screen.dart';
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
->>>>>>> c37cb2890b12c7ac60dd941592c900627751ddc2
+
+
 /* import 'package:main_venture/auth_screens/signup.dart';
 import 'package:main_venture/navigation.dart';
+
+
+/*import 'package:main_venture/navigation.dart';
+
 import 'package:main_venture/dialog.dart';
-import 'package:main_venture/dialogbutton.dart'; */
+import 'package:main_venture/dialogbutton.dart';*/
 
 =======
 /*import 'package:main_venture/navigation.dart';*/
 import 'package:main_venture/dialogbutton.dart';
->>>>>>> Stashed changes
-=======
+
 /*import 'package:main_venture/navigation.dart';
 import 'package:main_venture/dialog.dart';*/
 
 import 'package:main_venture/dialogbutton.dart';
->>>>>>> Stashed changes
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
+import 'package:main_venture/pinned_location.dart';
 
 
 void main() async {
@@ -46,7 +48,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "Venture",
       theme: ThemeData(fontFamily: 'Questrial'),
-      home: SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }
@@ -59,28 +61,29 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
+
 
     Future.delayed(const Duration(seconds: 5)).then((value) =>
         Navigator.of(context).pushReplacement(
-<<<<<<< HEAD
-            MaterialPageRoute(builder: (context) => const DialogVenture())));
-=======
+
             MaterialPageRoute(builder: (context) => const AuthScreen())));
->>>>>>> c37cb2890b12c7ac60dd941592c900627751ddc2
+
   }
+
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: SizedBox(
-            height: 200.0,
-            width: 200.0,
-            child: LottieBuilder.asset('assets/animassets/mapanimation.json')),
+    return AnimatedSplashScreen(
+      splash: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset('assets/animassets/Logo.gif', width: 250,
+              height: 150)
+        ],
       ),
+      nextScreen: const PinnedLocation(),
+      splashIconSize: 250,
+      duration: 3400,
     );
   }
 }

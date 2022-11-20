@@ -1,17 +1,22 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:main_venture/profile_screen.dart';
 import 'package:main_venture/auth_screen.dart';
 import 'package:main_venture/auth_screens/login.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-<<<<<<< HEAD
+
 import 'package:firebase_core/firebase_core.dart';
 
 
 import '../auth_screen.dart';
 import 'login.dart';
 
-=======
->>>>>>> c37cb2890b12c7ac60dd941592c900627751ddc2
+
+import 'package:flutter_password_strength/flutter_password_strength.dart';
+import 'package:main_venture/component/customComponent.dart';
 
 class SignupWidget extends StatefulWidget {
   const SignupWidget({Key? key}) : super(key: key);
@@ -29,6 +34,7 @@ class _SignupWidgetState extends State<SignupWidget> {
   final passwordController = TextEditingController();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -79,159 +85,203 @@ class _SignupWidgetState extends State<SignupWidget> {
             const SizedBox(
               height: 4.0,
             ),
-            TextField(
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                hintText: "Nikki",
-                filled: true,
-                fillColor: const Color.fromARGB(255, 230, 230, 230),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  borderSide: BorderSide(
-                      color: const Color.fromARGB(255, 230, 230, 230)
-                          .withOpacity(0.5),
-                      width: 2),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  borderSide: BorderSide(
-                      color: const Color.fromARGB(255, 230, 230, 230)
-                          .withOpacity(0.5)),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  borderSide:
-                      BorderSide(color: Colors.redAccent.withOpacity(0.5)),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20.0,
-            ),
-            const Text("Last Name",
-                style: TextStyle(
-                  color: Color.fromARGB(255, 74, 74, 74),
-                  fontSize: 14.0,
+            Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      validator: (val) {
+                        if (val == null || val.isEmpty) {
+                          return 'Field cannot be empty';
+                        }
+                        return null;
+                      },
+                      controller: firstNameController,
+                      keyboardType: TextInputType.name,
+                      decoration: InputDecoration(
+                        hintText: "Nikki",
+                        filled: true,
+                        fillColor: const Color.fromARGB(255, 230, 230, 230),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 230, 230, 230)
+                                  .withOpacity(0.5),
+                              width: 2),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 230, 230, 230)
+                                  .withOpacity(0.5)),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(
+                              color: Colors.redAccent.withOpacity(0.5)),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    const Text("Last Name",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 74, 74, 74),
+                          fontSize: 14.0,
+                        )),
+                    const SizedBox(
+                      height: 4.0,
+                    ),
+                    TextFormField(
+                      validator: (val) {
+                        if (val == null || val.isEmpty) {
+                          return 'Field cannot be empty';
+                        }
+                        return null;
+                      },
+                      controller: lastNameController,
+                      keyboardType: TextInputType.name,
+                      decoration: InputDecoration(
+                        hintText: "Ba-alan",
+                        filled: true,
+                        fillColor: const Color.fromARGB(255, 230, 230, 230),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 230, 230, 230)
+                                  .withOpacity(0.5),
+                              width: 2),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 230, 230, 230)
+                                  .withOpacity(0.5)),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(
+                              color: Colors.redAccent.withOpacity(0.5)),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    const Text("Email Address",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 74, 74, 74),
+                          fontSize: 14.0,
+                        )),
+                    const SizedBox(
+                      height: 4.0,
+                    ),
+                    TextFormField(
+                      validator: (val) {
+                        if (val == null || val.isEmpty) {
+                          return 'Field cannot be empty';
+                        }
+                        return null;
+                      },
+                      controller: emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        hintText: "baalan.bscs2019@gmail.com",
+                        filled: true,
+                        fillColor: const Color.fromARGB(255, 230, 230, 230),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 230, 230, 230)
+                                  .withOpacity(0.5),
+                              width: 2),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 230, 230, 230)
+                                  .withOpacity(0.5)),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(
+                              color: Colors.redAccent.withOpacity(0.5)),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    const Text("Password",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 74, 74, 74),
+                          fontSize: 14.0,
+                        )),
+                    const SizedBox(
+                      height: 4.0,
+                    ),
+                    CustomPassField(
+                      onChanged: (value) {
+                        setState(() {
+                          passwordController
+                            ..text = value
+                            ..selection = TextSelection.collapsed(
+                                offset: passwordController.text.length);
+                        });
+                      },
+                      onSaved: (value) {
+                        setState(() {
+                          passwordController.text = value;
+                        });
+                      },
+                      cont: passwordController,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                      child: FlutterPasswordStrength(
+                        password: passwordController.text,
+                        strengthCallback: (strength) {
+                          debugPrint(strength.toString());
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: RawMaterialButton(
+                        fillColor: const Color.fromARGB(255, 0, 110, 195),
+                        onPressed: () {
+                          createAccount();
+                          if (_formKey.currentState!.validate()) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Processing Data')));
+                          }
+                        },
+                        elevation: 0.0,
+                        padding: const EdgeInsets.symmetric(vertical: 15.0),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0)),
+                        child: const Text("Sign Up",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 15.0)),
+                      ),
+                    ),
+                  ],
                 )),
-            const SizedBox(
-              height: 4.0,
-            ),
-            TextField(
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                hintText: "Ba-alan",
-                filled: true,
-                fillColor: const Color.fromARGB(255, 230, 230, 230),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  borderSide: BorderSide(
-                      color: const Color.fromARGB(255, 230, 230, 230)
-                          .withOpacity(0.5),
-                      width: 2),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  borderSide: BorderSide(
-                      color: const Color.fromARGB(255, 230, 230, 230)
-                          .withOpacity(0.5)),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  borderSide:
-                      BorderSide(color: Colors.redAccent.withOpacity(0.5)),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20.0,
-            ),
-            const Text("Email Address",
-                style: TextStyle(
-                  color: Color.fromARGB(255, 74, 74, 74),
-                  fontSize: 14.0,
-                )),
-            const SizedBox(
-              height: 4.0,
-            ),
-            TextField(
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                hintText: "baalan.bscs2019@gmail.com",
-                filled: true,
-                fillColor: const Color.fromARGB(255, 230, 230, 230),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  borderSide: BorderSide(
-                      color: const Color.fromARGB(255, 230, 230, 230)
-                          .withOpacity(0.5),
-                      width: 2),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  borderSide: BorderSide(
-                      color: const Color.fromARGB(255, 230, 230, 230)
-                          .withOpacity(0.5)),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  borderSide:
-                      BorderSide(color: Colors.redAccent.withOpacity(0.5)),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20.0,
-            ),
-            const Text("Password",
-                style: TextStyle(
-                  color: Color.fromARGB(255, 74, 74, 74),
-                  fontSize: 14.0,
-                )),
-            const SizedBox(
-              height: 4.0,
-            ),
-            TextField(
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                hintText: "********",
-                filled: true,
-                fillColor: const Color.fromARGB(255, 230, 230, 230),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  borderSide: BorderSide(
-                      color: const Color.fromARGB(255, 230, 230, 230)
-                          .withOpacity(0.5),
-                      width: 2),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  borderSide: BorderSide(
-                      color: const Color.fromARGB(255, 230, 230, 230)
-                          .withOpacity(0.5)),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  borderSide:
-                      BorderSide(color: Colors.redAccent.withOpacity(0.5)),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20.0,
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: RawMaterialButton(
-                fillColor: const Color.fromARGB(255, 0, 110, 195),
-                onPressed: null,
-                elevation: 0.0,
-                padding: const EdgeInsets.symmetric(vertical: 15.0),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0)),
-                child: const Text("Sign Up",
-                    style: TextStyle(color: Colors.white, fontSize: 15.0)),
-              ),
-            ),
             const SizedBox(
               height: 15.0,
             ),
@@ -297,36 +347,17 @@ class _SignupWidgetState extends State<SignupWidget> {
     ));
   }
 
-<<<<<<< HEAD
 
-  /*Future signIn() async {
- try {
-   
-    if(emailController.text.isNotEmpty & passwordController.text.isNotEmpty & firstNameController.text.isEmpty & lastNameController.text. isEmpty){
-     FirebaseFirestore db = FirebaseFirestore.instance;
-
-      final user = <String, String>{"email": emailController.text, "Passowrd": passwordController.text, "firstname": firstNameController.text, "lastname":lastNameController.text};
-
-      await Fire
-
-    }
-
-    } catch (e) {*/
-    
-     
-    }
+  Future<void> createAccount() async {
+    print('Create account executed');
 
 
-=======
-//===========FUNCTIONS
-
-  Future createAccount() async {
-    //only if all the fields is not empty
     try {
       if (emailController.text.isNotEmpty &
           passwordController.text.isNotEmpty &
           firstNameController.text.isNotEmpty &
           lastNameController.text.isNotEmpty) {
+        print('The fields is not empty');
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim(),
@@ -337,18 +368,20 @@ class _SignupWidgetState extends State<SignupWidget> {
           'email': emailController.text,
           'password': passwordController.text,
         });
+      } else {
+        print('Fields are empty');
       }
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
       /// Showing Error with AlertDialog if the user enter the wrong Email and Password
+      print('Signup exception: ${e.message}');
       showDialog<void>(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Error Happened'),
-            content: const SingleChildScrollView(
-              child: Text(
-                  "The Email and Password that you Entered is Not valid ,Try Enter a valid Email and Password."),
+            content: SingleChildScrollView(
+              child: Text("Error: ${e.message}"),
             ),
             actions: <Widget>[
               TextButton(
@@ -366,5 +399,40 @@ class _SignupWidgetState extends State<SignupWidget> {
         },
       );
     }
+
+    try {
+      String curUser =
+          FirebaseAuth.instance.currentUser?.email ?? 'no current user';
+      FirebaseAuth.instance.authStateChanges().listen((User? user) {
+        if (user == null) {
+          print('***************************************** User is null');
+          print('Current User: $curUser');
+        } else {
+          print('User: ${user.email}');
+          rmSignup(context);
+        }
+      });
+    } on FirebaseAuthException catch (e) {
+      String curUser =
+          FirebaseAuth.instance.currentUser?.email ?? 'no current user';
+      print('User Exeption: ${e.message}');
+      print('Current User: $curUser');
+    }
   }
->>>>>>> c37cb2890b12c7ac60dd941592c900627751ddc2
+}
+
+Future<void> rmSignup(BuildContext context) async {
+  try {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const ProfileScreen()),
+    );
+
+    /*Navigator.removeRoute(
+      context,
+      MaterialPageRoute(builder: (context) => const SignupWidget()),
+    );*/
+  } catch (e) {
+    print('Routing: removing signup screen exception => $e');
+  }
+
