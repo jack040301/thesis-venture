@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:main_venture/auth_screen.dart';
@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   errorBorder: OutlineInputBorder(
                     borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                     borderSide:
-                        BorderSide(color: Colors.redAccent.withOpacity(0.5)),
+                    BorderSide(color: Colors.redAccent.withOpacity(0.5)),
                   ),
                 ),
               ),
@@ -129,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   errorBorder: OutlineInputBorder(
                     borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                     borderSide:
-                        BorderSide(color: Colors.redAccent.withOpacity(0.5)),
+                    BorderSide(color: Colors.redAccent.withOpacity(0.5)),
                   ),
                 ),
               ),
@@ -212,7 +212,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(width: 10.0, height: 50),
                       const Text('Sign in with Google',
                           style:
-                              TextStyle(color: Colors.white, fontSize: 14.0)),
+                          TextStyle(color: Colors.white, fontSize: 14.0)),
                     ],
                   ),
                 ),
@@ -230,19 +230,19 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       /// In the below, with if statement we have some simple validate
       if (_emailController.text.isNotEmpty &
-          _passwordController.text.isNotEmpty) {
+      _passwordController.text.isNotEmpty) {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
         );
       } else if (_emailController.text.isNotEmpty &
-          _passwordController.text.isEmpty) {
+      _passwordController.text.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(sSnackBar);
       } else if (_emailController.text.isEmpty &
-          _passwordController.text.isNotEmpty) {
+      _passwordController.text.isNotEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(tSnackBar);
       } else if (_emailController.text.isEmpty &
-          _passwordController.text.isEmpty) {
+      _passwordController.text.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(fSnackBar);
       }
     } catch (e) {
@@ -263,8 +263,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () {
                   Navigator.of(context).pop();
                   _emailController.clear();
-                  _passwordController.clear();
-                },
+                  _passwordController.clear(); */
+               /* },
               ),
             ],
           );
@@ -272,4 +272,4 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     }
   }
-}
+}*/
