@@ -102,6 +102,13 @@ flutter:
     - assets/images/icons/
     - assets/images/google2.png
     - assets/images/VentureLogo.png
+    - assets/images/device1.PNG
+    - assets/images/device2.PNG
+    - assets/images/icons/team.png
+    - assets/images/icons/venture.png
+    - assets/images/icons/note.png
+    - assets/images/icons/device.png
+    - assets/images/icons/close.png
 
 
   # assets:

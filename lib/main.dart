@@ -16,7 +16,8 @@ import 'package:main_venture/navigation.dart';
 import 'package:main_venture/dialog.dart';
 import 'package:main_venture/dialogbutton.dart';*/
 
-=======
+import 'package:main_venture/settings.dart';
+
 /*import 'package:main_venture/navigation.dart';*/
 import 'package:main_venture/dialogbutton.dart';
 
@@ -24,6 +25,7 @@ import 'package:main_venture/dialogbutton.dart';
 import 'package:main_venture/dialog.dart';*/
 
 import 'package:main_venture/dialogbutton.dart';
+
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
@@ -65,6 +67,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     Future.delayed(const Duration(seconds: 5)).then((value) =>
         Navigator.of(context).pushReplacement(
+
 
             MaterialPageRoute(builder: (context) => const AuthScreen())));
 
