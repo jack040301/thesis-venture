@@ -5,6 +5,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:main_venture/profile_screen.dart';
 import 'package:main_venture/auth_screen.dart';
 import 'package:main_venture/auth_screens/login.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:firebase_core/firebase_core.dart';
+
+
+import '../auth_screen.dart';
+import 'login.dart';
+
+
 import 'package:flutter_password_strength/flutter_password_strength.dart';
 import 'package:main_venture/component/customComponent.dart';
 
@@ -337,8 +347,10 @@ class _SignupWidgetState extends State<SignupWidget> {
     ));
   }
 
+
   Future<void> createAccount() async {
     print('Create account executed');
+
 
     try {
       if (emailController.text.isNotEmpty &
@@ -423,4 +435,4 @@ Future<void> rmSignup(BuildContext context) async {
   } catch (e) {
     print('Routing: removing signup screen exception => $e');
   }
-}
+
