@@ -253,11 +253,16 @@ class _SignupWidgetState extends State<SignupWidget> {
                       child: RawMaterialButton(
                         fillColor: const Color.fromARGB(255, 0, 110, 195),
                         onPressed: () {
-                          createAccount();
                           if (_formKey.currentState!.validate()) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                     content: Text('Processing Data')));
+                            createAccount();
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content:
+                                        Text('Fill out the required field')));
                           }
                         },
                         elevation: 0.0,
