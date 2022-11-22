@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:main_venture/profile_screen.dart';
 import 'package:flutter_password_strength/flutter_password_strength.dart';
 import 'package:main_venture/component/customComponent.dart';
 import 'package:main_venture/auth_screens/login.dart';
 import 'package:main_venture/auth_screen.dart';
+import 'package:main_venture/profile_screen.dart';
 
 class SignupWidget extends StatefulWidget {
   const SignupWidget({Key? key}) : super(key: key);
