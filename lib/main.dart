@@ -10,6 +10,8 @@ import 'package:main_venture/splash_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:main_venture/screens/home_page.dart';
 import 'package:lottie/lottie.dart';
+import 'package:main_venture/screens/home_page.dart';
+import 'package:main_venture/sample.dart';
 
 void main() async {
   /// initialize FireBase App
@@ -45,8 +47,16 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+<<<<<<< Updated upstream
     Future.delayed(Duration(seconds: 5)).then((value) => Navigator.of(context)
         .pushReplacement(MaterialPageRoute(builder: (context) => AuthScreen())));
+=======
+
+    Future.delayed(const Duration(seconds: 5)).then((value) =>
+        Navigator.of(context).pushReplacement(
+           // MaterialPageRoute(builder: (context) => const samples())));
+            MaterialPageRoute(builder: (context) => HomePage())));
+>>>>>>> Stashed changes
   }
 
   @override

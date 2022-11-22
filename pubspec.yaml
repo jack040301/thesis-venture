@@ -41,6 +41,7 @@ dependencies:
   lottie:
   dartz:
   google_maps_flutter:
+  geoflutterfire2: ^2.3.13
   flutter_riverpod:
   fab_circular_menu:
   flutter_polyline_points:

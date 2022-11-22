@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+
 class AutoCompleteResult {
   String? description;
   List<MatchedSubstrings>? matchedSubstrings;
@@ -164,4 +167,52 @@ class MainTextMatchedSubstrings {
     data['offset'] = this.offset;
     return data;
   }
+
 }
+class markers{
+  String id;
+  final String place;
+
+  markers({
+    this.id = '',
+    required this.place,
+});
+
+  Map<String, dynamic> toJson() =>{
+    'id': id,
+    'place': place,
+  };
+  static markers fromJson(Map<String, dynamic> json) => markers(
+    id: json['id'],
+    place: json['place'],
+
+  );
+}
+class markerss{
+  String id;
+  final String place;
+  final String coords;
+//  final double coordss;
+//  final double coordsss;
+  markerss({
+    this.id = '',
+    required this.place,
+    required this.coords,
+//    required this.coordss,
+//    required this.coordsss,
+  });
+  Map<String, dynamic> toJson() =>{
+  //Set<GeoPoint> toJson() =>{
+ //GeoPoint (coords.latitude, coords.longitude),
+    'coords': coords,
+    'place':place,
+   'id': id,
+  };
+  static markerss fromJson(Map<String, dynamic> json) => markerss(
+   coords: json['coords'],
+   id: json['id'],
+  place: json['place'],
+
+  );
+}
+

@@ -212,6 +212,23 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+<<<<<<< Updated upstream
+=======
+  geoflutterfire2:
+    dependency: "direct main"
+    description:
+      name: geoflutterfire2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.3.13"
+  getwidget:
+    dependency: "direct main"
+    description:
+      name: getwidget
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.1"
+>>>>>>> Stashed changes
   google_maps_flutter:
     dependency: "direct main"
     description:
@@ -379,7 +396,18 @@ packages:
       name: riverpod
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< Updated upstream
     version: "2.0.2"
+=======
+    version: "2.1.1"
+  rxdart:
+    dependency: transitive
+    description:
+      name: rxdart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.27.7"
+>>>>>>> Stashed changes
   sky_engine:
     dependency: transitive
     description: flutter

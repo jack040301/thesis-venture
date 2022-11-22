@@ -3,7 +3,12 @@ import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'package:fab_circular_menu/fab_circular_menu.dart';
+<<<<<<< Updated upstream
 import 'package:flip_card/flip_card.dart';
+=======
+import 'package:firebase_core/firebase_core.dart';
+
+>>>>>>> Stashed changes
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
@@ -12,6 +17,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:main_venture/models/auto_complete_results.dart';
 import 'package:main_venture/providers/search_places.dart';
 import 'package:main_venture/services/maps_services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'dart:ui' as ui;
 class HomePage extends ConsumerStatefulWidget {
@@ -35,8 +41,16 @@ class _HomePageState extends ConsumerState<HomePage> {
   bool getDirections = false;
 
 // Markers set
+<<<<<<< Updated upstream
 Set<Marker> _markers = Set<Marker>();
 Set<Polyline> _polylines = Set<Polyline>();
+=======
+  Set<Marker> _markers = Set<Marker>();
+  List<Marker> _marker = [];
+
+  Map<MarkerId , Marker> _markerss = <MarkerId , Marker>{};
+  Set<Polyline> _polylines = Set<Polyline>();
+>>>>>>> Stashed changes
   int markerIdCounter = 1;
   int polylineIdCounter = 1;
 
@@ -65,7 +79,12 @@ TextEditingController _destinationController = TextEditingController();
 
   }
 
+<<<<<<< Updated upstream
   void _setPolyline(List<PointLatLng> points){
+=======
+
+  void _setPolyline(List<PointLatLng> points) {
+>>>>>>> Stashed changes
     final String polylineIdVal = 'polyline_$polylineIdCounter';
 
     polylineIdCounter++;
@@ -77,6 +96,56 @@ TextEditingController _destinationController = TextEditingController();
         points: points.map((e) => LatLng(e.latitude, e.longitude)).toList()
     ));
 
+  }
+/*
+  Widget loadMap (){
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance.collection('markers').snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) return Text('Loading maps... Please Wait');
+          for (int i=0; i<snapshot.data.docs.length; i++){
+            _marker.add(new Marker (
+              width: 45.0,
+              height: 45.0,
+              point: new LatLng(snapshot.data.documents[i]['coords'].latitude,
+                  snapshot.data.documents[i]['coords'].longitude),
+              builder: (context) => new Container(
+                child: IconButton(
+                  icon: Icon(Icons.location_on),
+                  color: Colors.blue,
+                  iconSize: 45.0,
+                  onPressed: () {
+                    print(snapshot.data.documents[i] ['place']);
+                  },
+                ),
+              )));
+          }
+        },
+    );
+  } */
+
+  getMarkerData() async {
+    FirebaseFirestore.instance.collection('markers').get().then((markers) {
+      if(markers.docs.isNotEmpty) {
+        for(int i = 0; i < markers.docs.length ; i++){
+          initMarker(markers.docs[i].data , markers.docs[i].id);
+        }
+      }
+    });
+  }
+
+
+  void initMarker(specify , specifyId) async {
+    var markerIdVal = specifyId;
+    final MarkerId markerId = MarkerId(markerIdVal);
+    final Marker marker = Marker(
+      markerId: markerId,
+      position: LatLng(specify['coords'].latitude , specify['coords'].longitude),
+      infoWindow: InfoWindow(title: 'place' ),
+    );
+    setState(() {
+      _markerss[markerId] = marker;
+    });
   }
 
   @override
@@ -99,7 +168,8 @@ TextEditingController _destinationController = TextEditingController();
                 width: screenWidth,
                   child: GoogleMap(
                     mapType: MapType.normal,
-                    markers: _markers,
+                   // markers: _markerss,
+                    markers: Set<Marker>.of(_markerss.values),
                     polylines: _polylines,
                     initialCameraPosition: _kGooglePlex,
                     onMapCreated: (GoogleMapController controller){
