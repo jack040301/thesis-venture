@@ -1,22 +1,11 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:main_venture/profile_screen.dart';
-import 'package:main_venture/auth_screen.dart';
-import 'package:main_venture/auth_screens/login.dart';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'package:firebase_core/firebase_core.dart';
-
-
-import '../auth_screen.dart';
-import 'login.dart';
-
-
 import 'package:flutter_password_strength/flutter_password_strength.dart';
 import 'package:main_venture/component/customComponent.dart';
+import 'package:main_venture/auth_screens/login.dart';
+import 'package:main_venture/auth_screen.dart';
+import 'package:main_venture/profile_screen.dart';
 
 class SignupWidget extends StatefulWidget {
   const SignupWidget({Key? key}) : super(key: key);
@@ -264,11 +253,16 @@ class _SignupWidgetState extends State<SignupWidget> {
                       child: RawMaterialButton(
                         fillColor: const Color.fromARGB(255, 0, 110, 195),
                         onPressed: () {
-                          createAccount();
                           if (_formKey.currentState!.validate()) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                     content: Text('Processing Data')));
+                            createAccount();
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content:
+                                        Text('Fill out the required field')));
                           }
                         },
                         elevation: 0.0,
@@ -347,10 +341,8 @@ class _SignupWidgetState extends State<SignupWidget> {
     ));
   }
 
-
   Future<void> createAccount() async {
     print('Create account executed');
-
 
     try {
       if (emailController.text.isNotEmpty &
@@ -435,4 +427,4 @@ Future<void> rmSignup(BuildContext context) async {
   } catch (e) {
     print('Routing: removing signup screen exception => $e');
   }
-
+}
