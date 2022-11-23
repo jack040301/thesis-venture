@@ -100,6 +100,9 @@ flutter:
     - assets/images/icons/
     - assets/images/google2.png
     - assets/images/VentureLogo.png
+
+    - assets/images/icons/upgrade.png
+
     - assets/images/device1.PNG
     - assets/images/device2.PNG
     - assets/images/icons/team.png
@@ -107,7 +110,6 @@ flutter:
     - assets/images/icons/note.png
     - assets/images/icons/device.png
     - assets/images/icons/close.png
-
 
   # assets:
   #   - images/a_dot_burr.jpeg
