@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:main_venture/auth_screen.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:main_venture/screens/home_page.dart';
 
 //IMPORT YOUR FILE HERE IF YOU DONT WANT TO GO TO THE LOGIN PAGE STATE
 //DO NOT CHANGE AUTH SCREEN AFTER THE SPLASH SCREEN IF YOU ARE ACCESSING PROFILE SCREEN PAGE, YOU MUST LOGIN FIRST
@@ -56,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
         ],
       ),
       nextScreen:
-          const AuthScreen(), //CHANGE HERE IF YOU WANT TO SEE YOUR SCREEN IMMEDIATELY
+          const HomePage(), //CHANGE HERE IF YOU WANT TO SEE YOUR SCREEN IMMEDIATELY
       splashIconSize: 250,
       duration: 3400,
     );
