@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:main_venture/auth_screen.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:main_venture/pinned_location.dart';
+import 'package:main_venture/feat_screens/pinned_location.dart';
+import 'package:main_venture/feat_screens/dialogbutton.dart';
+import 'package:main_venture/feat_screens/settings.dart';
+import 'package:main_venture/feat_screens/upgrade_account.dart';
 
 void main() async {
   /// initialize FireBase App
@@ -40,14 +43,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
-  void initState() {
-    super.initState();
-    Future.delayed(const Duration(seconds: 5)).then((value) =>
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const AuthScreen())));
-  }
-
-  @override
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
       splash: Column(
@@ -56,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Image.asset('assets/animassets/Logo.gif', width: 250, height: 150)
         ],
       ),
-      nextScreen: const PinnedLocation(),
+      nextScreen: const UpgradeAccScreen(),
       splashIconSize: 250,
       duration: 3400,
     );

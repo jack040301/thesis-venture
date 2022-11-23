@@ -5,7 +5,7 @@ import 'package:flutter_password_strength/flutter_password_strength.dart';
 import 'package:main_venture/component/customComponent.dart';
 import 'package:main_venture/auth_screens/login.dart';
 import 'package:main_venture/auth_screen.dart';
-import 'package:main_venture/profile_screen.dart';
+import 'package:main_venture/feat_screens/profile_screen.dart';
 
 class SignupWidget extends StatefulWidget {
   const SignupWidget({Key? key}) : super(key: key);

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:getwidget/components/button/gf_button.dart';
-import 'package:getwidget/types/gf_button_type.dart';
-import 'package:decorated_dropdownbutton/decorated_dropdownbutton.dart';
 
 class DialogVenture extends StatefulWidget {
   const DialogVenture({Key? key}) : super(key: key);
@@ -54,7 +51,7 @@ class _DialogVentureState extends State<DialogVenture> {
                         icon: Icon(Icons.keyboard_arrow_down_rounded),
                         isExpanded: true,
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all((15.0)),
+                          contentPadding: const EdgeInsets.all((15.0)),
                           enabledBorder: OutlineInputBorder(
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(5.0)),
@@ -82,7 +79,7 @@ class _DialogVentureState extends State<DialogVenture> {
                           filled: true,
                           fillColor: const Color.fromARGB(255, 230, 230, 230),
                         ),
-                        dropdownColor: Color.fromARGB(255, 230, 230, 230),
+                        dropdownColor: const Color.fromARGB(255, 230, 230, 230),
                         value: dropdownValue,
                         onChanged: (String? newValue) {
                           setState(() {
@@ -98,7 +95,7 @@ class _DialogVentureState extends State<DialogVenture> {
                           return DropdownMenuItem<String>(
                               value: value,
                               child: Text(value,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Color.fromARGB(255, 74, 74, 74),
                                     fontSize: 14.0,
                                   )));
@@ -239,7 +236,7 @@ class _DialogVentureState extends State<DialogVenture> {
             onPressed: () async {
               await showInformationDialog(context);
             },
-            child: Text(
+            child: const Text(
               "Click Me",
               style: TextStyle(color: Colors.white, fontSize: 16),
 
