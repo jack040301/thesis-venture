@@ -1,15 +1,36 @@
 // ignore_for_file: unnecessary_const, empty_catches
 
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:main_venture/dialogbox.dart';
 import 'package:main_venture/auth_screen.dart';
-import 'package:main_venture/profile_screen.dart';
-import 'package:main_venture/splash_screen.dart';
+
+
+/* import 'package:main_venture/auth_screens/signup.dart';
+import 'package:main_venture/navigation.dart';
+
+
+/*import 'package:main_venture/navigation.dart';
+
+import 'package:main_venture/dialog.dart';
+import 'package:main_venture/dialogbutton.dart';*/
+
+import 'package:main_venture/settings.dart';
+
+/*import 'package:main_venture/navigation.dart';*/
+import 'package:main_venture/dialogbutton.dart';
+
+/*import 'package:main_venture/navigation.dart';
+import 'package:main_venture/dialog.dart';*/
+
+import 'package:main_venture/dialogbutton.dart';
+
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:main_venture/screens/home_page.dart';
 import 'package:lottie/lottie.dart';
+import 'package:main_venture/pinned_location.dart';
+
 
 void main() async {
   /// initialize FireBase App
@@ -27,12 +48,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Flutter Log In & Sign up Authentication with FireBase",
+      title: "Venture",
       theme: ThemeData(fontFamily: 'Questrial'),
-      home: SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -41,23 +63,30 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    Future.delayed(Duration(seconds: 5)).then((value) => Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => AuthScreen())));
+
+
+    Future.delayed(const Duration(seconds: 5)).then((value) =>
+        Navigator.of(context).pushReplacement(
+
+
+            MaterialPageRoute(builder: (context) => const AuthScreen())));
+
   }
+
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Container(
-            height: 200.0,
-            width: 200.0,
-            child: LottieBuilder.asset('assets/animassets/mapanimation.json')),
+    return AnimatedSplashScreen(
+      splash: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset('assets/animassets/Logo.gif', width: 250,
+              height: 150)
+        ],
       ),
+      nextScreen: const PinnedLocation(),
+      splashIconSize: 250,
+      duration: 3400,
     );
   }
 }
