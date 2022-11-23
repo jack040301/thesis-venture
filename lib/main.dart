@@ -6,11 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:main_venture/auth_screen.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:main_venture/feat_screens/pinned_location.dart';
+
+//IMPORT YOUR FILE HERE IF YOU DONT WANT TO GO TO THE LOGIN PAGE STATE
+//DO NOT CHANGE AUTH SCREEN AFTER THE SPLASH SCREEN IF YOU ARE ACCESSING PROFILE SCREEN PAGE, YOU MUST LOGIN FIRST
+/* import 'package:main_venture/feat_screens/pinned_location.dart';
 import 'package:main_venture/feat_screens/dialogbutton.dart';
 import 'package:main_venture/feat_screens/profile_screen.dart';
 import 'package:main_venture/feat_screens/settings.dart';
-import 'package:main_venture/feat_screens/upgrade_account.dart';
+import 'package:main_venture/feat_screens/upgrade_account.dart'; */
 
 void main() async {
   /// initialize FireBase App
@@ -52,7 +55,8 @@ class _SplashScreenState extends State<SplashScreen> {
           Image.asset('assets/animassets/Logo.gif', width: 250, height: 150)
         ],
       ),
-      nextScreen: const PinnedLocation(),
+      nextScreen:
+          const AuthScreen(), //CHANGE HERE IF YOU WANT TO SEE YOUR SCREEN IMMEDIATELY
       splashIconSize: 250,
       duration: 3400,
     );
