@@ -14,6 +14,10 @@ import 'package:main_venture/providers/search_places.dart';
 import 'package:main_venture/services/maps_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'package:main_venture/feat_screens/settings.dart';
+
+import '../feat_screens/pinned_location.dart';
+
 //import 'dart:ui' as ui;
 
 class HomePage extends ConsumerStatefulWidget {
@@ -397,9 +401,26 @@ class _HomePageState extends ConsumerState<HomePage> {
                   getMarkerData(); //function the marker from the firestore database
                 },
                 icon: const Icon(Icons.map)),
+            IconButton(
+                onPressed: () {
+                  SetDialog().showMyDialog(context);
+                },
+                icon: const Icon(Icons.settings)),
+            IconButton(
+                onPressed: () {
+                  PinnedLocation().showPinnedLocation(context);
+                },
+                icon: const Icon(Icons.pin_drop_outlined)),
           ]),
     );
   }
+
+  /* void _showAction(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      builder: (context) => Settings(),
+    );
+  } */
 
   gotoPlace(double lat, double lng, double endLat, double endLng,
       Map<String, dynamic> boundNe, Map<String, dynamic> boundSw) async {
