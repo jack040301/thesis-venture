@@ -52,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Image.asset('assets/animassets/Logo.gif', width: 250, height: 150)
         ],
       ),
-      nextScreen: const ProfileScreen(),
+      nextScreen: const PinnedLocation(),
       splashIconSize: 250,
       duration: 3400,
     );

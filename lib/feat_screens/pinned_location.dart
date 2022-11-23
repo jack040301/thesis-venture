@@ -83,8 +83,8 @@ class _PinnedLocationState extends State<PinnedLocation> {
                                   ),
                                   child: TextButton(
                                     child: Column(
-                                      children: [
-                                        const Text(
+                                      children: const [
+                                        Text(
                                           'NORTH CALOOCAN',
                                           style: TextStyle(
                                             fontSize: 15,
@@ -92,7 +92,7 @@ class _PinnedLocationState extends State<PinnedLocation> {
                                             fontFamily: 'Questrial',
                                           ),
                                         ),
-                                        const SingleChildScrollView(
+                                        SingleChildScrollView(
                                           child: Text(
                                             'Q386+XCQ, Uyguanco Street, 188 Tala, Caloocan',
                                             style: TextStyle(
