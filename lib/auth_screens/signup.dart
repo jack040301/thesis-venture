@@ -320,7 +320,8 @@ class _SignupWidgetState extends State<SignupWidget> {
           email: emailController.text.trim(),
           password: passwordController.text.trim(),
         );
-        await users.add({
+
+        await users.doc(FirebaseAuth.instance.currentUser!.uid).set({
           'firstname': firstNameController.text,
           'lastname': lastNameController.text,
           'email': emailController.text,
