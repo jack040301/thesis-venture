@@ -89,7 +89,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                       controller: firstNameController,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
-                        hintText: "Nikki",
+                        hintText: "Firstname",
                         filled: true,
                         fillColor: const Color.fromARGB(255, 230, 230, 230),
                         enabledBorder: OutlineInputBorder(
@@ -136,7 +136,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                       controller: lastNameController,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
-                        hintText: "Ba-alan",
+                        hintText: "Lastname",
                         filled: true,
                         fillColor: const Color.fromARGB(255, 230, 230, 230),
                         enabledBorder: OutlineInputBorder(
@@ -183,7 +183,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                       controller: emailController,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
-                        hintText: "baalan.bscs2019@gmail.com",
+                        hintText: "email@gmail.com",
                         filled: true,
                         fillColor: const Color.fromARGB(255, 230, 230, 230),
                         enabledBorder: OutlineInputBorder(
@@ -350,16 +350,16 @@ class _SignupWidgetState extends State<SignupWidget> {
           firstNameController.text.isNotEmpty &
           lastNameController.text.isNotEmpty) {
         print('The fields is not empty');
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim(),
-        );
-        await users.add({
-          'firstname': firstNameController.text,
-          'lastname': lastNameController.text,
-          'email': emailController.text,
-          'password': passwordController.text,
-        });
+        await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+              email: emailController.text.trim(),
+              password: passwordController.text.trim(),
+            )
+            .then((value) => users.doc(value.user!.uid).set({
+                  'firstname': firstNameController.text.trim(),
+                  'lastname': lastNameController.text.trim(),
+                  'email': value.user!.email,
+                }));
       } else {
         print('Fields are empty');
       }
