@@ -29,10 +29,8 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  dropdownfrield: ^0.0.2
   flutter:
     sdk: flutter
-
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -80,7 +78,7 @@ dev_dependencies:
 
 flutter_icons:
   android: true
-  ios: true 
+  ios: true
   image_path_ios: "assets/images/ic_launcher.png"
   image_path_android: "assets/images/ic_launcher.png"
 
@@ -95,7 +93,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/animassets/mapanimation.json
-    - assets/Logo.gif
+    - assets/animassets/Logo.gif
     - assets/mapicons/
     - assets/images/google.png
     - assets/images/pic.png
@@ -103,6 +101,15 @@ flutter:
     - assets/images/google2.png
     - assets/images/VentureLogo.png
 
+    - assets/images/icons/upgrade.png
+
+    - assets/images/device1.PNG
+    - assets/images/device2.PNG
+    - assets/images/icons/team.png
+    - assets/images/icons/venture.png
+    - assets/images/icons/note.png
+    - assets/images/icons/device.png
+    - assets/images/icons/close.png
 
   # assets:
   #   - images/a_dot_burr.jpeg
