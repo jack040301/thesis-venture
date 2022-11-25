@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:fab_circular_menu/fab_circular_menu.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -10,6 +12,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:main_venture/models/auto_complete_results.dart';
 import 'package:main_venture/providers/search_places.dart';
 import 'package:main_venture/services/maps_services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:main_venture/feat_screens/settings.dart';
+
+import '../feat_screens/pinned_location.dart';
 
 //import 'dart:ui' as ui;
 
@@ -35,6 +42,9 @@ class _HomePageState extends ConsumerState<HomePage> {
 
 // Markers set
   Set<Marker> _markers = Set<Marker>();
+  Set<Marker> allmarkers = HashSet<Marker>();
+
+  Map<MarkerId, Marker> _markerss = <MarkerId, Marker>{};
   Set<Polyline> _polylines = Set<Polyline>();
   int markerIdCounter = 1;
   int polylineIdCounter = 1;
@@ -46,7 +56,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
 // initial map position on load
   static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.4279613380664, -122.085749655962),
+    target: LatLng(14.774477, 121.04483),
     zoom: 14.4746,
   );
 
@@ -74,6 +84,55 @@ class _HomePageState extends ConsumerState<HomePage> {
         color: Colors.blue,
         points: points.map((e) => LatLng(e.latitude, e.longitude)).toList()));
   }
+/*
+  Widget loadMap (){
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance.collection('markers').snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) return Text('Loading maps... Please Wait');
+          for (int i=0; i<snapshot.data.docs.length; i++){
+            _marker.add(new Marker (
+              width: 45.0,
+              height: 45.0,
+              point: new LatLng(snapshot.data.documents[i]['coords'].latitude,
+                  snapshot.data.documents[i]['coords'].longitude),
+              builder: (context) => new Container(
+                child: IconButton(
+                  icon: Icon(Icons.location_on),
+                  color: Colors.blue,
+                  iconSize: 45.0,
+                  onPressed: () {
+                    print(snapshot.data.documents[i] ['place']);
+                  },
+                ),
+              )));
+          }
+        },
+    );
+  } */
+
+//Show marker from the firestore database
+  getMarkerData() async {
+    await FirebaseFirestore.instance
+        .collection("markers")
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((documents) {
+                var data = documents.data() as Map;
+
+                allmarkers.add(Marker(
+                    infoWindow: InfoWindow(title: data["place"]),
+                    markerId: MarkerId(data["id"]),
+                    position: LatLng(
+                        data["coords"].latitude, data["coords"].longitude)));
+              })
+            });
+
+    setState(() {
+      allmarkers;
+      print(allmarkers.toString());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +153,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                   width: screenWidth,
                   child: GoogleMap(
                     mapType: MapType.normal,
-                    markers: _markers,
+                    // markers: _markerss,
+                    markers: allmarkers,
                     polylines: _polylines,
                     initialCameraPosition: _kGooglePlex,
                     onMapCreated: (GoogleMapController controller) {
@@ -335,10 +395,32 @@ class _HomePageState extends ConsumerState<HomePage> {
                     getDirections = true;
                   });
                 },
-                icon: const Icon(Icons.navigation))
+                icon: const Icon(Icons.navigation)),
+            IconButton(
+                onPressed: () {
+                  getMarkerData(); //function the marker from the firestore database
+                },
+                icon: const Icon(Icons.map)),
+            IconButton(
+                onPressed: () {
+                  SetDialog().showMyDialog(context);
+                },
+                icon: const Icon(Icons.settings)),
+            IconButton(
+                onPressed: () {
+                  PinnedLocation().showPinnedLocation(context);
+                },
+                icon: const Icon(Icons.pin_drop_outlined)),
           ]),
     );
   }
+
+  /* void _showAction(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      builder: (context) => Settings(),
+    );
+  } */
 
   gotoPlace(double lat, double lng, double endLat, double endLng,
       Map<String, dynamic> boundNe, Map<String, dynamic> boundSw) async {

@@ -1,22 +1,11 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:main_venture/profile_screen.dart';
-import 'package:main_venture/auth_screen.dart';
-import 'package:main_venture/auth_screens/login.dart';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'package:firebase_core/firebase_core.dart';
-
-
-import '../auth_screen.dart';
-import 'login.dart';
-
-
 import 'package:flutter_password_strength/flutter_password_strength.dart';
 import 'package:main_venture/component/customComponent.dart';
+import 'package:main_venture/auth_screens/login.dart';
+import 'package:main_venture/auth_screen.dart';
+import 'package:main_venture/feat_screens/profile_screen.dart';
 
 class SignupWidget extends StatefulWidget {
   const SignupWidget({Key? key}) : super(key: key);
@@ -100,7 +89,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                       controller: firstNameController,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
-                        hintText: "Nikki",
+                        hintText: "Firstname",
                         filled: true,
                         fillColor: const Color.fromARGB(255, 230, 230, 230),
                         enabledBorder: OutlineInputBorder(
@@ -147,7 +136,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                       controller: lastNameController,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
-                        hintText: "Ba-alan",
+                        hintText: "Lastname",
                         filled: true,
                         fillColor: const Color.fromARGB(255, 230, 230, 230),
                         enabledBorder: OutlineInputBorder(
@@ -194,7 +183,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                       controller: emailController,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
-                        hintText: "baalan.bscs2019@gmail.com",
+                        hintText: "email@gmail.com",
                         filled: true,
                         fillColor: const Color.fromARGB(255, 230, 230, 230),
                         enabledBorder: OutlineInputBorder(
@@ -264,11 +253,16 @@ class _SignupWidgetState extends State<SignupWidget> {
                       child: RawMaterialButton(
                         fillColor: const Color.fromARGB(255, 0, 110, 195),
                         onPressed: () {
-                          createAccount();
                           if (_formKey.currentState!.validate()) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                     content: Text('Processing Data')));
+                            createAccount();
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content:
+                                        Text('Fill out the required field')));
                           }
                         },
                         elevation: 0.0,
@@ -347,10 +341,8 @@ class _SignupWidgetState extends State<SignupWidget> {
     ));
   }
 
-
   Future<void> createAccount() async {
     print('Create account executed');
-
 
     try {
       if (emailController.text.isNotEmpty &
@@ -358,16 +350,16 @@ class _SignupWidgetState extends State<SignupWidget> {
           firstNameController.text.isNotEmpty &
           lastNameController.text.isNotEmpty) {
         print('The fields is not empty');
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim(),
-        );
-        await users.add({
-          'firstname': firstNameController.text,
-          'lastname': lastNameController.text,
-          'email': emailController.text,
-          'password': passwordController.text,
-        });
+        await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+              email: emailController.text.trim(),
+              password: passwordController.text.trim(),
+            )
+            .then((value) => users.doc(value.user!.uid).set({
+                  'firstname': firstNameController.text.trim(),
+                  'lastname': lastNameController.text.trim(),
+                  'email': value.user!.email,
+                }));
       } else {
         print('Fields are empty');
       }
@@ -435,4 +427,4 @@ Future<void> rmSignup(BuildContext context) async {
   } catch (e) {
     print('Routing: removing signup screen exception => $e');
   }
-
+}
