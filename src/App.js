@@ -1,54 +1,35 @@
-import React from "react";
-import Header from "./components/Header";
-import Dashboard from "./pages/Dashboard";
-import SideNav from "./components/SideNav";
-import Rentals from "./pages/Rentals";
-import Users from "./pages/Users";
-import Requests from "./pages/Requests";
-import Configuration from "./pages/Configuration";
-import Form from "./pages/Form";
-
+import React, {Fragment} from "react";
 import Login from "./auth/Login";
 /* import Home from "./Home"; */
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+
+import { auth } from './firebase';
+import { onAuthStateChanged } from 'firebase/auth'
+import Dashboard from "./pages/Dashboard";
 
 function App() {
-  return (
-    <>
-      <div class="wrapper">
-       <Login /> 
-        <Header />
-        <SideNav />
-        {/* <Home /> */}
-        {/* <Footer /> */}
+  const [user, setUser] = React.useState(null);
+  const [authState, setAuthState] = React.useState(null)
 
-        {/* <Routes> */}
-        {/* <Router> */}
-        {/* <Route exact path="/login" component={Login} />
-          <Route
-            exact
-            path="/dashboard"
-            component={() => <Dashboard authorized={false} />}
-          /> */}
-        {/* </Routes> */}
-        {/* </Router> */}
+  React.useEffect(() => {
+    const unSubscribeAuth = onAuthStateChanged(auth,
+      async authenticatedUser => {
+        if(authenticatedUser) {
+          setUser(authenticatedUser.email)
+          setAuthState('home');
+        } else {
+          setUser(null);
+          setAuthState('login')
+        }
+      })
 
-        <Router>
-          <Routes>
-            <Route index element={<Dashboard />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/rentals" element={<Rentals />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="/requests" element={<Requests />} />
-            <Route path="/configuration" element={<Configuration />} />
-            <Route path="/form" element={<Form />} />
-          </Routes>
-        </Router>
+      return unSubscribeAuth;
+  }, [user])
 
-       
-      </div>
-    </>
-  );
+  if(authState === null) return <div className='font-bold text-center text-5xl'>loading...</div>
+  if(authState === 'login') return <Login setAuthState={setAuthState} setUser={setUser}/>
+  if(user) return <Dashboard user={user} setAuthState={setAuthState} setUser={setUser}/>
 }
+
 
 export default App;

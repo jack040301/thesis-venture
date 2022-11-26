@@ -99,5 +99,47 @@ const logout = () => {
 };
 
 
+/* export const GoogleProvider = new firebase.auth.GoogleAuthProvider();
+GoogleProvider.setCustomParameters({ prompt: 'select_account' }); */
 
-export {auth, db, registerWithEmailAndPassword, logInWithEmailAndPassword, logout, sendPasswordReset}
+const handleUserProfile = async ({ userAuth, additionalData }) => {
+  if (!userAuth) return;
+  const { uid } = userAuth;
+
+  const userRef = db.doc(`users/${uid}`);
+  const snapshot = await userRef.get();
+
+  if (!snapshot.exists) {
+    const { email } = userAuth;
+    const timestamp = new Date();
+    const userRoles = ['admin'];
+
+    try {
+      await userRef.set({
+        email,
+        createdDate: timestamp,
+        userRoles,
+        ...additionalData
+      });
+
+      console.log("created");
+    } catch(err) {
+      // console.log(err);
+    }
+  }
+
+  return userRef;
+};
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged(userAuth => {
+      unsubscribe();
+      resolve(userAuth);
+    }, reject);
+  })
+}
+
+
+
+export {auth, db, registerWithEmailAndPassword,  logout, sendPasswordReset, handleUserProfile, createUserWithEmailAndPassword}

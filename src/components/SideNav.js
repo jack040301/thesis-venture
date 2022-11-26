@@ -1,6 +1,32 @@
 import React from "react";
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase';
 
-const SideNav = () => {
+import {
+  MDBBtn,
+
+} from "mdb-react-ui-kit";
+
+
+
+export default function SideNav({
+user,
+setAuthState,
+setUser
+}) {
+
+
+
+  const signOutHandler = () => {
+    signOut(auth)
+    .then(() => {
+        setUser(null);
+        setAuthState('login');
+    })
+    .catch((err) => console.log(err));
+}
+
+
   return (
     <div>
       <aside className="main-sidebar sidebar-dark-primary elevation-4">
@@ -56,7 +82,9 @@ const SideNav = () => {
               </li>
               <li className="nav-item">
                 <a href="#" className="nav-link">
-                  <p>Logout</p>
+
+                 <button onClick={signOutHandler}  size="lg">Logout</button>
+
                 </a>
               </li>
             </ul>
@@ -66,5 +94,3 @@ const SideNav = () => {
     </div>
   );
 };
-
-export default SideNav;

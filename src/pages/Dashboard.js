@@ -1,8 +1,35 @@
-import React from "react";
+import React, {useContext} from 'react'
 
-const Dashboard = () => {
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase';
+import Header from '../components/Header'
+import Sidenav from '../components/SideNav'
+
+
+
+export default function Dashboard({
+  user,
+  setAuthState,
+  setUser
+}) {
+
+  const signOutHandler = () => {
+      signOut(auth)
+      .then(() => {
+          setUser(null);
+          setAuthState('login');
+      })
+      .catch((err) => console.log(err));
+  }
+
+
   return (
+
+   
     <div>
+      <Header/>
+      <Sidenav/>
+
       <div className="content-wrapper">
         <div className="content-header">
           <div className="container-fluid"></div>
@@ -60,6 +87,5 @@ const Dashboard = () => {
       </div>
     </div>
   );
-};
+}
 
-export default Dashboard;

@@ -1,6 +1,6 @@
-import React,  { useEffect, useState } from "react";
-import { BrowserRouter as Router, Link } from "react-router-dom";
-import { logInWithEmailAndPassword} from '../firebase'
+import React,  { useState } from "react";
+import { auth} from '../firebase'
+import { signInWithEmailAndPassword} from 'firebase/auth';
 
 /* import { useNavigate } from "react-router-dom"; */
 
@@ -16,16 +16,25 @@ import {
   MDBCheckbox,
 } from "mdb-react-ui-kit";
 
-function Login() {
+function Login({
+  setAuthState,
+  setUser
+}) {
+
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
 
 
-  const [email, setEmail] = useState("");
-
-  const [password, setPassword] = useState("");
- 
-  const Login = () => {
-    logInWithEmailAndPassword(email, password);
-  };
+  const handleLogin = () => {
+      if(email !== null && password !== null) {
+          signInWithEmailAndPassword(auth, email, password)
+          .then(() => {
+              setUser(email)
+              setAuthState('home')
+          })
+          .catch((err) => alert(err));
+      }
+  }
 
 
 
@@ -71,8 +80,8 @@ function Login() {
                 label="Remember password"
               />
               <br></br>
-              <MDBBtn  size="lg">Login</MDBBtn>
-            {/*   <MDBBtn onClick={Login}  size="lg">Login</MDBBtn> */}
+           {/*    <MDBBtn onClick={Login} size="lg">handle user profile</MDBBtn> */}
+             <MDBBtn onClick={handleLogin}  size="lg">Login</MDBBtn>
 
               {/* <button
               onClick={() => {
