@@ -3,6 +3,7 @@ import 'dart:collection';
 
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:firebase_core/firebase_core.dart';
+//import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -17,6 +18,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:main_venture/feat_screens/settings.dart';
 
 import '../feat_screens/pinned_location.dart';
+import 'package:geocoding/geocoding.dart';
+
+//Geocoder package is deprecated
+//import 'package:flutter_geocoder/geocoder.dart';
 
 //import 'dart:ui' as ui;
 
@@ -29,11 +34,12 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   final Completer<GoogleMapController> _controller = Completer();
-
+/*
 //Debounce to throttle async calls during search
   Timer? _debounce;
 
 // toggling Ui as we need
+//
   bool searchToggle = false;
   bool radiusSlider = false;
   bool cardTapped = false;
@@ -471,6 +477,117 @@ class _HomePageState extends ConsumerState<HomePage> {
               ),
             )
           ],
+        ),
+      ),
+    );
+  }*/
+
+  int markerIdCounter = 0;
+  Set<Marker> marksman = Set<Marker>();
+
+  Future saveLoc(data) async {
+    try {
+      await FirebaseFirestore.instance.collection("savedPlaces").add(data).then(
+          (documentSnapshot) =>
+              print("added data with ID: ${documentSnapshot.id}"));
+    } on FirebaseException catch (e) {
+      print('Adding data exception: ${e.message}');
+    }
+  }
+
+  void _setMarker(double lat, double lng) {
+    var counter = markerIdCounter++;
+    MarkerId mid = MarkerId('marker_$counter');
+
+    final Marker marker = Marker(
+        markerId: mid,
+        position: LatLng(lat, lng),
+        onTap: () async {
+          List<Placemark> placemarks = await placemarkFromCoordinates(lat, lng);
+          await showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text('Save location'),
+                  content: SingleChildScrollView(
+                    child: ListBody(children: <Widget>[
+                      Text('Location: ${placemarks[0]}'),
+                    ]),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                        onPressed: () {
+                          final data = {
+                            "Administrative area":
+                                placemarks[0].administrativeArea,
+                            "country": placemarks[0].country,
+                            "ISO country Code": placemarks[0].isoCountryCode,
+                            "Locality": placemarks[0].locality,
+                            "Name": placemarks[0].name,
+                            "Postal Code": placemarks[0].postalCode,
+                            "Street": placemarks[0].street,
+                            "Sub Administrative area":
+                                placemarks[0].subAdministrativeArea,
+                            "Sub locality": placemarks[0].subLocality
+                          };
+                          saveLoc(data);
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Location saved')));
+                        },
+                        child: const Text('Save')),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Cancel'))
+                  ],
+                );
+              });
+        },
+        icon: BitmapDescriptor.defaultMarker);
+    setState(() {
+      marksman.add(marker);
+    });
+  }
+
+  void _setPolyline() {}
+
+  @override
+  Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    //Providers
+    final allSearchResults = ref.watch(placeResultsProvider);
+    final searchFlag = ref.watch(searchToggleProvider);
+
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Container(
+          width: screenWidth,
+          height: screenHeight,
+          child: GoogleMap(
+            onMapCreated: (GoogleMapController controller) {
+              _controller.complete(controller);
+            },
+            initialCameraPosition: const CameraPosition(
+                bearing: 0.0,
+                target: LatLng(16.0, 121.0),
+                tilt: 0.0,
+                zoom: 0.0),
+            compassEnabled: false,
+            mapToolbarEnabled: false,
+            mapType: MapType.normal,
+            onLongPress: (LatLng) {
+              _setMarker(LatLng.latitude, LatLng.longitude);
+            },
+            onTap: (LatLng) {
+              print(
+                  'Latitude: ${LatLng.latitude}, Longitude: ${LatLng.longitude}');
+            },
+            markers: marksman,
+          ),
         ),
       ),
     );
