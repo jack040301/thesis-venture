@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:main_venture/feat_screens/profile_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DialogVenture extends StatefulWidget {
   const DialogVenture({Key? key}) : super(key: key);
@@ -30,6 +32,9 @@ class _DialogVentureState extends State<DialogVenture> {
   var preferBusinessController = TextEditingController();
   final areaBudgetController = TextEditingController();
   final areaController = TextEditingController();
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String dropdownValue = 'Choose your business';
 
   Future<void> showInformationDialog(BuildContext context) async {
     return await showDialog(
@@ -37,6 +42,8 @@ class _DialogVentureState extends State<DialogVenture> {
         builder: (context) {
           // final TextEditingController _textEditingController =
           //     TextEditingController();
+          final TextEditingController _textEditingController =
+              TextEditingController();
           //bool isChecked = false;
           return StatefulBuilder(builder: (context, setState) {
             return AlertDialog(
@@ -52,6 +59,8 @@ class _DialogVentureState extends State<DialogVenture> {
                         alignment: Alignment.topRight,
                         child: Icon(Icons.close),
                       ),
+                          alignment: Alignment.topRight,
+                          child: Icon(Icons.close)),
                       const SizedBox(
                         height: 20.0,
                       ),
@@ -125,6 +134,59 @@ class _DialogVentureState extends State<DialogVenture> {
                             color: Color.fromARGB(255, 74, 74, 74),
                             fontSize: 14.0,
                           )),
+                        icon: Icon(Icons.keyboard_arrow_down_rounded),
+                        isExpanded: true,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.all((15.0)),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(5.0)),
+                            borderSide: BorderSide(
+                                color: const Color.fromARGB(255, 230, 230, 230)
+                                    .withOpacity(0.5),
+                                width: 2),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(5.0)),
+                            borderSide: BorderSide(
+                                color: const Color.fromARGB(255, 230, 230, 230)
+                                    .withOpacity(0.5),
+                                width: 2),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(5.0)),
+                            borderSide: BorderSide(
+                                color: const Color.fromARGB(255, 230, 230, 230)
+                                    .withOpacity(0.5),
+                                width: 2),
+                          ),
+                          filled: true,
+                          fillColor: const Color.fromARGB(255, 230, 230, 230),
+                        ),
+                        dropdownColor: const Color.fromARGB(255, 230, 230, 230),
+                        value: dropdownValue,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropdownValue = newValue!;
+                          });
+                        },
+                        items: <String>[
+                          'Choose your business',
+                          'Coffee Shop',
+                          'Commercial Space',
+                          'Boutique'
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value,
+                                  style: const TextStyle(
+                                    color: Color.fromARGB(255, 74, 74, 74),
+                                    fontSize: 14.0,
+                                  )));
+                        }).toList(),
+                      ),
 
                       //TEXT BOX 2
                       const SizedBox(
@@ -147,6 +209,9 @@ class _DialogVentureState extends State<DialogVenture> {
                             return areaBudgetController!.isNotEmpty
                                 ? null
                                 : 'Invalid Input';
+                          controller: _textEditingController,
+                          validator: (value) {
+                            return value!.isNotEmpty ? null : 'Invalid Input';
                           },
                           decoration: InputDecoration(
                             hintText: '500,000',
@@ -197,6 +262,9 @@ class _DialogVentureState extends State<DialogVenture> {
                             return areaController!.isNotEmpty
                                 ? null
                                 : 'Invalid Input';
+                          controller: _textEditingController,
+                          validator: (value) {
+                            return value!.isNotEmpty ? null : 'Invalid Input';
                           },
                           decoration: InputDecoration(
                             hintText: '40',
@@ -259,6 +327,7 @@ class _DialogVentureState extends State<DialogVenture> {
                               }
                             }
                           },
+                          onPressed: null,
                           elevation: 0.0,
                           padding: const EdgeInsets.symmetric(vertical: 15.0),
                           shape: RoundedRectangleBorder(
@@ -276,6 +345,7 @@ class _DialogVentureState extends State<DialogVenture> {
   }
 
   //@override
+  @override
   //Widget build(BuildContext context) {
   // TODO: implement build
   //throw UnimplementedError();
@@ -304,6 +374,7 @@ class _DialogVentureState extends State<DialogVenture> {
     ));
   }
 
+
   Future<void> userAnswers() async {
     var docu = await users.doc(FirebaseAuth.instance.currentUser!.uid).get();
 
@@ -327,4 +398,5 @@ class _DialogVentureState extends State<DialogVenture> {
         .push(MaterialPageRoute(builder: (context) => ProfileScreen()));
     //MaterialPageRoute(builder: (context) => const ProfileScreen());
   }
+
 }

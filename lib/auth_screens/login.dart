@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-import 'package:main_venture/auth_screen.dart';
 import 'package:main_venture/auth_screens/forgot_password.dart';
 import 'package:main_venture/auth_screens/signup.dart';
+import 'package:main_venture/auth_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -223,6 +222,8 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
+  //===========FUNCTIONS
 
   Future signIn() async {
     try {

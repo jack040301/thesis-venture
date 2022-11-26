@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:main_venture/auth_screens/login.dart';
-import 'package:main_venture/auth_screens/signup.dart';
 
 import 'package:main_venture/feat_screens/profile_screen.dart';
 
@@ -42,12 +41,12 @@ class _AuthScreenState extends State<AuthScreen> {
             return const ProfileScreen();
             //login
           } else {
-            return const SignupWidget();
+            return const LoginScreen();
             //no user
           }
         },
       ),
     );
   }
-}// class _AuthScreenState end
+}// class _AuthScreenState end*/
 
