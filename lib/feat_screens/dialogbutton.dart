@@ -1,3 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:main_venture/feat_screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -9,6 +14,24 @@ class DialogVenture extends StatefulWidget {
 }
 
 class _DialogVentureState extends State<DialogVenture> {
+  //final users = FirebaseFirestore.instance.collection('users').doc('userId');
+  //GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+  List<String> _businesstype = <String>[
+    'Coffee Shop',
+    'Commercial Space',
+    'Boutique'
+  ];
+  var selectedbusinesstype;
+
+  //String dropdownValue = "Choose your business'";
+
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _formKey = GlobalKey<FormState>();
+  var preferBusinessController = TextEditingController();
+  final areaBudgetController = TextEditingController();
+  final areaController = TextEditingController();
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String dropdownValue = 'Choose your business';
@@ -17,6 +40,8 @@ class _DialogVentureState extends State<DialogVenture> {
     return await showDialog(
         context: context,
         builder: (context) {
+          // final TextEditingController _textEditingController =
+          //     TextEditingController();
           final TextEditingController _textEditingController =
               TextEditingController();
           //bool isChecked = false;
@@ -31,6 +56,9 @@ class _DialogVentureState extends State<DialogVenture> {
                         height: 5.0,
                       ),
                       const Align(
+                        alignment: Alignment.topRight,
+                        child: Icon(Icons.close),
+                      ),
                           alignment: Alignment.topRight,
                           child: Icon(Icons.close)),
                       const SizedBox(
@@ -48,6 +76,64 @@ class _DialogVentureState extends State<DialogVenture> {
 
                       //DROPDOWN
                       DropdownButtonFormField(
+                          icon: Icon(Icons.keyboard_arrow_down_rounded),
+                          isExpanded: true,
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.all((15.0)),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(
+                                  color:
+                                      const Color.fromARGB(255, 230, 230, 230)
+                                          .withOpacity(0.5),
+                                  width: 2),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(
+                                  color:
+                                      const Color.fromARGB(255, 230, 230, 230)
+                                          .withOpacity(0.5),
+                                  width: 2),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(
+                                  color:
+                                      const Color.fromARGB(255, 230, 230, 230)
+                                          .withOpacity(0.5),
+                                  width: 2),
+                            ),
+                            filled: true,
+                            fillColor: const Color.fromARGB(255, 230, 230, 230),
+                          ),
+                          dropdownColor:
+                              const Color.fromARGB(255, 230, 230, 230),
+                          //value: dropdownValue,
+                          items: _businesstype
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value,
+                                    style: const TextStyle(
+                                      color: Color.fromARGB(255, 74, 74, 74),
+                                      fontSize: 14.0,
+                                    )));
+                          }).toList(),
+                          onChanged: (selecteditem) {
+                            setState(() {
+                              selectedbusinesstype = selecteditem;
+                            });
+                          },
+                          value: selectedbusinesstype,
+                          hint: Text('Choose your Business'),
+                          style: const TextStyle(
+                            color: Color.fromARGB(255, 74, 74, 74),
+                            fontSize: 14.0,
+                          )),
                         icon: Icon(Icons.keyboard_arrow_down_rounded),
                         isExpanded: true,
                         decoration: InputDecoration(
@@ -106,6 +192,7 @@ class _DialogVentureState extends State<DialogVenture> {
                       const SizedBox(
                         height: 20.0,
                       ),
+
                       const Text(
                           "Enter budget for the area (per square meter)?",
                           style: TextStyle(
@@ -116,6 +203,12 @@ class _DialogVentureState extends State<DialogVenture> {
                         height: 10.0,
                       ),
                       TextFormField(
+                          controller: areaBudgetController,
+                          keyboardType: TextInputType.number,
+                          validator: (areaBudgetController) {
+                            return areaBudgetController!.isNotEmpty
+                                ? null
+                                : 'Invalid Input';
                           controller: _textEditingController,
                           validator: (value) {
                             return value!.isNotEmpty ? null : 'Invalid Input';
@@ -163,6 +256,12 @@ class _DialogVentureState extends State<DialogVenture> {
                         height: 10.0,
                       ),
                       TextFormField(
+                          controller: areaController,
+                          keyboardType: TextInputType.number,
+                          validator: (areaController) {
+                            return areaController!.isNotEmpty
+                                ? null
+                                : 'Invalid Input';
                           controller: _textEditingController,
                           validator: (value) {
                             return value!.isNotEmpty ? null : 'Invalid Input';
@@ -202,6 +301,32 @@ class _DialogVentureState extends State<DialogVenture> {
                         width: 200.0,
                         child: RawMaterialButton(
                           fillColor: const Color.fromARGB(255, 0, 110, 195),
+                          //onPressed: null,
+                          //SAVE USERS' ANSWERS TO THE FIREBASE
+                          onPressed: () {
+                            if (selectedbusinesstype == null) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content:
+                                          Text('Choose Prefered Business')));
+                            } else {
+                              //preferBusinessController.text =selectedbusinesstype;
+                              // ScaffoldMessenger.of(context).showSnackBar(
+                              //     SnackBar(
+                              //         content: Text(selectedbusinesstype)));
+                              if (_formKey.currentState!.validate()) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text('Processing Data')));
+                                userAnswers();
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text(
+                                            'Fill out the required field')));
+                              }
+                            }
+                          },
                           onPressed: null,
                           elevation: 0.0,
                           padding: const EdgeInsets.symmetric(vertical: 15.0),
@@ -219,6 +344,7 @@ class _DialogVentureState extends State<DialogVenture> {
         });
   }
 
+  //@override
   @override
   //Widget build(BuildContext context) {
   // TODO: implement build
@@ -247,4 +373,30 @@ class _DialogVentureState extends State<DialogVenture> {
       ),
     ));
   }
+
+
+  Future<void> userAnswers() async {
+    var docu = await users.doc(FirebaseAuth.instance.currentUser!.uid).get();
+
+    if (docu.exists) {
+      await users.doc(FirebaseAuth.instance.currentUser!.uid).update({
+        'PreferBusiness': selectedbusinesstype,
+        'AreaBudget': areaBudgetController.text,
+        'AreaPerSquareMeter': areaController.text,
+      });
+    } else {
+      await users.doc(FirebaseAuth.instance.currentUser!.uid).set({
+        'PreferBusiness': selectedbusinesstype,
+        'AreaBudget': areaBudgetController.text,
+        'AreaPerSquareMeter': areaController.text,
+      });
+    }
+    // selectedbusinesstype.clear();
+    // areaBudgetController.clear();
+    // areaController.clear();
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => ProfileScreen()));
+    //MaterialPageRoute(builder: (context) => const ProfileScreen());
+  }
+
 }

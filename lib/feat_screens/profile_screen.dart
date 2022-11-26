@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:main_venture/screens/home_page.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:main_venture/feat_screens/dialogbutton.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:main_venture/screens/home_page.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
 
 //final userphoto = FirebaseAuth.instance.currentUser!.photoURL??"";
 
@@ -36,6 +44,8 @@ Future<void> logOut() async {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+
+
   // List<ListItem> _dropdownItems = [
   //   ListItem(1, "GeeksforGeeks"),
   //   ListItem(2, "Javatpoint"),
@@ -138,6 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         });
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -168,6 +179,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           builder: (context) => const HomePage()));
                 },
                 child: const Text("Map")),
+
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const DialogVenture()));
+                },
+                child: const Text("Dialog Question")),
+
           ],
         ),
       ),
