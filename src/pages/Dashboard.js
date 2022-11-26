@@ -2,8 +2,6 @@ import React, {useContext} from 'react'
 
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
-import Header from '../components/Header'
-import Sidenav from '../components/SideNav'
 
 
 
@@ -27,8 +25,7 @@ export default function Dashboard({
 
    
     <div>
-      <Header/>
-      <Sidenav/>
+   
 
       <div className="content-wrapper">
         <div className="content-header">

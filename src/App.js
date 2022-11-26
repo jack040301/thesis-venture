@@ -1,35 +1,62 @@
 import React, {Fragment} from "react";
-import Login from "./auth/Login";
-/* import Home from "./Home"; */
-
-
-import { auth } from './firebase';
-import { onAuthStateChanged } from 'firebase/auth'
 import Dashboard from "./pages/Dashboard";
+import Rentals from "./pages/Rentals";
+import Users from "./pages/Users";
+import Request from "./pages/Requests";
+import Configuration from "./pages/Configuration";
+import Header from './components/Header'
+import Sidenav from './components/SideNav'
+
+
+
+
+
+
+import Login from "./auth/Login";
+import ProtectedRoute from "./auth/PrivateRoute"
+import { AuthContextProvider } from './auth/context';
+/* import Home from "./Home"; */
+import { BrowserRouter as Router,Routes , Route } from "react-router-dom";
 
 function App() {
-  const [user, setUser] = React.useState(null);
-  const [authState, setAuthState] = React.useState(null)
-
-  React.useEffect(() => {
-    const unSubscribeAuth = onAuthStateChanged(auth,
-      async authenticatedUser => {
-        if(authenticatedUser) {
-          setUser(authenticatedUser.email)
-          setAuthState('home');
-        } else {
-          setUser(null);
-          setAuthState('login')
+  return (
+    <div>
+    <AuthContextProvider>
+    <Routes>
+      <Route path='/' element={<Login />} />
+      
+      <Route
+        path='/dashboard'
+        element={
+          <ProtectedRoute>
+               <Header/>
+      <Sidenav/>
+            <Dashboard />
+          </ProtectedRoute>
         }
-      })
+      />
 
-      return unSubscribeAuth;
-  }, [user])
+      <Route path="/rental" element={<ProtectedRoute>
+        <Header/>
+      <Sidenav/><Rentals/></ProtectedRoute>}/>
 
-  if(authState === null) return <div className='font-bold text-center text-5xl'>loading...</div>
-  if(authState === 'login') return <Login setAuthState={setAuthState} setUser={setUser}/>
-  if(user) return <Dashboard user={user} setAuthState={setAuthState} setUser={setUser}/>
+      <Route path="/user" element={<ProtectedRoute>  <Header/>
+      <Sidenav/><Users/></ProtectedRoute>}/>
+      <Route path="/request" element={<ProtectedRoute>  <Header/>
+      <Sidenav/><Request/></ProtectedRoute>}/>
+      <Route path="/config" element={<ProtectedRoute>  <Header/>
+      <Sidenav/><Configuration/></ProtectedRoute>}/>
+
+
+
+
+    </Routes>
+
+    
+  </AuthContextProvider>
+  </div>
+
+  );
 }
-
 
 export default App;

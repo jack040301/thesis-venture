@@ -1,7 +1,7 @@
-import React,  { useState } from "react";
-import { auth} from '../firebase'
-import { signInWithEmailAndPassword} from 'firebase/auth';
+import React,  {  useRef,useState } from "react";
+import { Link, useNavigate  } from "react-router-dom"
 
+import {UserAuth } from './context'
 /* import { useNavigate } from "react-router-dom"; */
 
 import {
@@ -16,25 +16,31 @@ import {
   MDBCheckbox,
 } from "mdb-react-ui-kit";
 
-function Login({
-  setAuthState,
-  setUser
-}) {
+function Login() {
 
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+  const navigate  = useNavigate ()
+
+  const { signIn } = UserAuth();
 
 
-  const handleLogin = () => {
-      if(email !== null && password !== null) {
-          signInWithEmailAndPassword(auth, email, password)
-          .then(() => {
-              setUser(email)
-              setAuthState('home')
-          })
-          .catch((err) => alert(err));
-      }
-  }
+  const [email, setEmail] = useState("");
+
+  const [password, setPassword] = useState("");
+
+  async function handleSubmit(e) {
+
+    e.preventDefault();
+    setError('')
+    try {
+      await signIn(email, password)
+      navigate('/dashboard')
+    } catch (e) {
+      setError(e.message)
+      console.log(e.message)
+    }
+  };
 
 
 
@@ -62,6 +68,7 @@ function Login({
                 type="email"
                 size="lg"
                 value={email} onChange={(e) => setEmail(e.target.value)}
+                required
               />
               <MDBInput
                 wrapperClass="mb-4 w-100"
@@ -70,7 +77,7 @@ function Login({
                 type="password"
                 size="lg"
                 value={password} onChange={(e) => setPassword(e.target.value)}
-
+              required
               />
 
               <MDBCheckbox
@@ -81,7 +88,7 @@ function Login({
               />
               <br></br>
            {/*    <MDBBtn onClick={Login} size="lg">handle user profile</MDBBtn> */}
-             <MDBBtn onClick={handleLogin}  size="lg">Login</MDBBtn>
+             <MDBBtn disabled={loading}  onClick={handleSubmit} size="lg">Login</MDBBtn>
 
               {/* <button
               onClick={() => {

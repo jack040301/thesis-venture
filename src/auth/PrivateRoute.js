@@ -1,21 +1,14 @@
-import React, {useContext} from 'react'
-import {UserContext} from "./context"
-import {Outlet, Navigate} from "react-router-dom"
-import Dashboard from '../pages/Dashboard'
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import { UserAuth } from './context';
 
-export default function Private() {
+const ProtectedRoute = ({ children }) => {
+  const { user } = UserAuth();
 
-  const {currentUser} = useContext(UserContext)
-  //console.log("PRIVATE", currentUser);
-
-  if(!currentUser) {
-    return <Navigate to="/" />
+  if (!user) {
+    return <Navigate to='/' />;
   }
+  return children;
+};
 
-  return (
-    <div className="container">
-    
-      <Outlet />
-    </div>
-  )
-}
+export default ProtectedRoute;
