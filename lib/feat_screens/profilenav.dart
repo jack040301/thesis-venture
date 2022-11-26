@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:main_venture/auth_screen.dart';
+import 'package:main_venture/feat_screens/pinned_location.dart';
+
+import 'settings.dart';
 
 //THIS IS THE DIALOG OF PROFILE
 
@@ -68,7 +71,9 @@ class ProfileNav {
                         height: 20.0,
                       ),
                       TextButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          PinnedLocation().showPinnedLocation(context);
+                        },
                         icon: const Icon(
                           Icons.person_pin_circle_outlined,
                           size: 30.0,
@@ -78,7 +83,9 @@ class ProfileNav {
                                 TextStyle(color: Colors.black, fontSize: 20.0)),
                       ),
                       TextButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          SetDialog().showMyDialog(context);
+                        },
                         icon: const Icon(
                           Icons.settings,
                           size: 30.0,

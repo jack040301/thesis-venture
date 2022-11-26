@@ -410,19 +410,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                 icon: const Icon(Icons.map)),
             IconButton(
                 onPressed: () {
-                  SetDialog().showMyDialog(context);
-                },
-                icon: const Icon(Icons.settings)),
-            IconButton(
-                onPressed: () {
                   ProfileNav().showProfileNav(context);
                 },
                 icon: const Icon(Icons.person)),
-            IconButton(
-                onPressed: () {
-                  PinnedLocation().showPinnedLocation(context);
-                },
-                icon: const Icon(Icons.pin_drop_outlined)),
           ]),
     );
   }
