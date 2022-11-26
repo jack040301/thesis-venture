@@ -6,7 +6,6 @@ packages:
     description:
       name: _flutterfire_internals
       sha256: e1d4810cd162d842ab1578239a4279a2402d3c1731c1345286df027c830890f8
-      url: "https://pub.dev"
     source: hosted
 
     version: "1.0.9"
@@ -125,12 +124,7 @@ packages:
       sha256: cfc915e6923fe5ce6e153b0723c753045de46de1b4d63771530504004a45fae0
       url: "https://pub.dev"
     source: hosted
-<<<<<<< HEAD
     version: "1.17.0"
-=======
-    version: "1.16.0"
-
->>>>>>> e91368e4232286a8cea3610f2280dab3be008c86
   convert:
     dependency: transitive
     description:

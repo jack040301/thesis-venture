@@ -10,6 +10,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:main_venture/feat_screens/profilenav.dart';
 import 'package:main_venture/models/auto_complete_results.dart';
 import 'package:main_venture/providers/search_places.dart';
 import 'package:main_venture/services/maps_services.dart';
@@ -34,7 +35,7 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   final Completer<GoogleMapController> _controller = Completer();
-/*
+
 //Debounce to throttle async calls during search
   Timer? _debounce;
 
@@ -414,6 +415,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                 icon: const Icon(Icons.settings)),
             IconButton(
                 onPressed: () {
+                  ProfileNav().showProfileNav(context);
+                },
+                icon: const Icon(Icons.person)),
+            IconButton(
+                onPressed: () {
                   PinnedLocation().showPinnedLocation(context);
                 },
                 icon: const Icon(Icons.pin_drop_outlined)),
@@ -480,9 +486,10 @@ class _HomePageState extends ConsumerState<HomePage> {
         ),
       ),
     );
-  }*/
+  }
 
-  int markerIdCounter = 0;
+//
+  /*  int markerIdCounter = 0;
   Set<Marker> marksman = Set<Marker>();
 
   Future saveLoc(data) async {
@@ -591,5 +598,5 @@ class _HomePageState extends ConsumerState<HomePage> {
         ),
       ),
     );
-  }
+  }*/
 }

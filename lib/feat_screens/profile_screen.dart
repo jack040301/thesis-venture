@@ -6,17 +6,13 @@ import 'package:main_venture/feat_screens/dialogbutton.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:main_venture/auth_screen.dart';
 
 import 'package:main_venture/screens/home_page.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-<<<<<<< HEAD
 import '../main.dart';
-=======
->>>>>>> e91368e4232286a8cea3610f2280dab3be008c86
 
 //final userphoto = FirebaseAuth.instance.currentUser!.photoURL??"";
 
@@ -49,14 +45,10 @@ Future logOut() async {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-<<<<<<< HEAD
   Future<void> singingOut() async {
     await GoogleSignIn().signOut();
     await FirebaseAuth.instance.signOut();
   }
-=======
-
->>>>>>> e91368e4232286a8cea3610f2280dab3be008c86
 
   // List<ListItem> _dropdownItems = [
   //   ListItem(1, "GeeksforGeeks"),
@@ -160,7 +152,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -197,7 +188,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           builder: (context) => const HomePage()));
                 },
                 child: const Text("Map")),
-
             ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -206,7 +196,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           builder: (context) => const DialogVenture()));
                 },
                 child: const Text("Dialog Question")),
-
           ],
         ),
       ),
