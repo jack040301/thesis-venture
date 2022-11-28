@@ -4,6 +4,7 @@ import 'dart:collection';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:firebase_core/firebase_core.dart';
 //import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -372,48 +373,72 @@ class _HomePageState extends ConsumerState<HomePage> {
           ],
         ),
       ),
-      floatingActionButton: FabCircularMenu(
-          alignment: Alignment.bottomLeft,
-          fabColor: Colors.blue,
-          fabOpenColor: Colors.red.shade100,
-          ringDiameter: 250.0,
-          ringWidth: 60.0,
-          ringColor: Colors.blue.shade50,
-          fabSize: 60.0,
-          children: [
-            IconButton(
-                onPressed: () {
-                  setState(() {
-                    searchToggle = true;
-                    radiusSlider = false;
-                    pressedNear = false;
-                    cardTapped = false;
-                    getDirections = false;
-                  });
-                },
-                icon: const Icon(Icons.search)),
-            IconButton(
-                onPressed: () {
-                  setState(() {
-                    searchToggle = false;
-                    radiusSlider = false;
-                    pressedNear = false;
-                    cardTapped = false;
-                    getDirections = true;
-                  });
-                },
-                icon: const Icon(Icons.navigation)),
-            IconButton(
-                onPressed: () {
-                  getMarkerData(); //function the marker from the firestore database
-                },
-                icon: const Icon(Icons.map)),
-            IconButton(
-                onPressed: () {
-                  ProfileNav().showProfileNav(context);
-                },
-                icon: const Icon(Icons.person)),
-          ]),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
+      floatingActionButton: Column(
+        children: [
+          FloatingActionButton(
+            disabledElevation: 0,
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            heroTag: null,
+            mini: true,
+            child: FirebaseAuth.instance.currentUser!.photoURL == null
+                ? const Image(image: AssetImage('assets/images/pic.png'))
+                : Image.network(
+                    FirebaseAuth.instance.currentUser!.photoURL ?? ""),
+            onPressed: () {
+              ProfileNav().showProfileNav(context);
+            },
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          FloatingActionButton(
+            disabledElevation: 0,
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            mini: true,
+            heroTag: null,
+            child: const Icon(Icons.house),
+            onPressed: () {},
+          ),
+          FloatingActionButton(
+            disabledElevation: 0,
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            mini: true,
+            heroTag: null,
+            child: const Icon(Icons.search),
+            onPressed: () {
+              setState(() {
+                searchToggle = true;
+                radiusSlider = false;
+                pressedNear = false;
+                cardTapped = false;
+                getDirections = false;
+              });
+            },
+          ),
+          FloatingActionButton(
+            disabledElevation: 0,
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            mini: true,
+            heroTag: null,
+            child: const Icon(Icons.navigation),
+            onPressed: () {
+              setState(() {
+                searchToggle = false;
+                radiusSlider = false;
+                pressedNear = false;
+                cardTapped = false;
+                getDirections = true;
+              });
+            },
+          ),
+        ],
+      ),
+      resizeToAvoidBottomInset: false,
     );
   }
 
