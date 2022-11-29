@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:fab_circular_menu/fab_circular_menu.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 //import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:main_venture/feat_screens/dialogbutton.dart';
 import 'package:main_venture/feat_screens/profilenav.dart';
+import 'package:main_venture/feat_screens/widgset.dart';
 import 'package:main_venture/models/auto_complete_results.dart';
 import 'package:main_venture/providers/search_places.dart';
 import 'package:main_venture/services/maps_services.dart';
@@ -22,8 +24,6 @@ import 'package:main_venture/feat_screens/settings.dart';
 
 import '../feat_screens/pinned_location.dart';
 import 'package:geocoding/geocoding.dart';
-
-import '../feat_screens/widgset.dart';
 
 //Geocoder package is deprecated
 //import 'package:flutter_geocoder/geocoder.dart';
@@ -40,7 +40,6 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   final Completer<GoogleMapController> _controller = Completer();
 
-
 //Debounce to throttle async calls during search
   Timer? _debounce;
 
@@ -52,7 +51,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   bool cardTapped = false;
   bool pressedNear = false;
   bool getDirections = false;
- // bool getmarker = true;
+  // bool getmarker = true;
 
 // Markers set
   Set<Marker> _markers = Set<Marker>();
@@ -99,43 +98,43 @@ class _HomePageState extends ConsumerState<HomePage> {
         points: points.map((e) => LatLng(e.latitude, e.longitude)).toList()));
   }
 
-
 //Show marker from the firestore database
   getMarkerData() async {
-
     await FirebaseFirestore.instance
         .collection("markers")
         .get()
         .then((QuerySnapshot querySnapshot) => {
-    querySnapshot.docs.forEach((documents) {
-    var data = documents.data() as Map;
-    allmarkers.add(Marker(
-    onTap: () async {
-    await dialogQuestion().showMyDialog(context);
-    },
-    infoWindow: InfoWindow(title: data["place"],),
-    markerId: MarkerId(data["id"]),
-    position: LatLng(
-    data["coords"].latitude, data["coords"].longitude)));
-    })
-    });
+              querySnapshot.docs.forEach((documents) {
+                var data = documents.data() as Map;
+                allmarkers.add(Marker(
+                    onTap: () async {
+                      await dialogQuestion().showMyDialog(context);
+                    },
+                    infoWindow: InfoWindow(
+                      title: data["place"],
+                    ),
+                    markerId: MarkerId(data["id"]),
+                    position: LatLng(
+                        data["coords"].latitude, data["coords"].longitude)));
+              })
+            });
 
     setState(() {
-    allmarkers;
-    print(allmarkers.toString());
-      });
-    }
+      allmarkers;
+      print(allmarkers.toString());
+    });
+  }
+
 //to automatically show marker to map
   Widget getmarker(BuildContext context) {
     getMarkerData();
     return Text('');
-
   }
 
   Widget builds(BuildContext context) {
-    return  Padding(
+    return Padding(
       padding: const EdgeInsets.fromLTRB(15.0, 150.0, 15.0, 5.0),
-      child:  AlertDialog(
+      child: AlertDialog(
         title: const Text("Alert Dialog Box"),
         content: const Text("You have raised a Alert Dialog Box"),
         actions: <Widget>[
@@ -153,9 +152,6 @@ class _HomePageState extends ConsumerState<HomePage> {
       ),
     );
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -185,64 +181,66 @@ class _HomePageState extends ConsumerState<HomePage> {
                     },
                   ),
                 ),
-                pressedNear?
-                    builds(context):
-                searchToggle
-                    ?
-                Padding(
-                        padding:
-                            const EdgeInsets.fromLTRB(15.0, 40.0, 15.0, 5.0),
-                        child: Column(children: [
-                          Container(
-                            height: 50.0,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: Colors.white,
-                            ),
-                            child: TextFormField(
-                              controller: searchController,
-                              decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 20.0, vertical: 15.0),
-                                  border: InputBorder.none,
-                                  hintText: 'Search',
-                                  suffixIcon: IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          searchToggle = false;
-                                          searchController.text = '';
-                                          _markers = {};
-                                          searchFlag.toggleSearch();
-                                        });
-                                      },
-                                      icon: const Icon(Icons.close))),
-                              onChanged: (value) {
-                                if (_debounce?.isActive ?? false) {
-                                  _debounce?.cancel();
-                                }
-                                _debounce =
-                                    Timer(const Duration(milliseconds: 700),
-                                        () async {
-                                  if (value.length > 2) {
-                                    if (!searchFlag.searchToggle) {
-                                      searchFlag.toggleSearch();
-                                      _markers = {};
+                pressedNear
+                    ? builds(context)
+                    : searchToggle
+                        ? Padding(
+                            padding: const EdgeInsets.fromLTRB(
+                                15.0, 40.0, 15.0, 5.0),
+                            child: Column(children: [
+                              Container(
+                                height: 50.0,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  color: Colors.white,
+                                ),
+                                child: TextFormField(
+                                  controller: searchController,
+                                  decoration: InputDecoration(
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 20.0, vertical: 15.0),
+                                      border: InputBorder.none,
+                                      hintText: 'Search',
+                                      suffixIcon: IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              searchToggle = false;
+                                              searchController.text = '';
+                                              _markers = {};
+                                              searchFlag.toggleSearch();
+                                            });
+                                          },
+                                          icon: const Icon(Icons.close))),
+                                  onChanged: (value) {
+                                    if (_debounce?.isActive ?? false) {
+                                      _debounce?.cancel();
                                     }
-                                    List<AutoCompleteResult> searchResults =
-                                        await MapServices().searchPlaces(value);
+                                    _debounce =
+                                        Timer(const Duration(milliseconds: 700),
+                                            () async {
+                                      if (value.length > 2) {
+                                        if (!searchFlag.searchToggle) {
+                                          searchFlag.toggleSearch();
+                                          _markers = {};
+                                        }
+                                        List<AutoCompleteResult> searchResults =
+                                            await MapServices()
+                                                .searchPlaces(value);
 
-                                    allSearchResults.setResults(searchResults);
-                                  } else {
-                                    List<AutoCompleteResult> emptyList = [];
-                                    allSearchResults.setResults(emptyList);
-                                  }
-                                });
-                              },
-                            ),
-                          ),
-                        ]),
-                      )
-                : Container(),
+                                        allSearchResults
+                                            .setResults(searchResults);
+                                      } else {
+                                        List<AutoCompleteResult> emptyList = [];
+                                        allSearchResults.setResults(emptyList);
+                                      }
+                                    });
+                                  },
+                                ),
+                              ),
+                            ]),
+                          )
+                        : Container(),
                 searchFlag.searchToggle
                     ? allSearchResults.allReturnedResults.length != 0
                         ? Positioned(
@@ -300,7 +298,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 ),
                               ),
                             ))
-                   : Container(),
+                    : Container(),
                 getmarker(context), //to automatically show marker to map
                 getDirections
                     ? Padding(
@@ -392,7 +390,6 @@ class _HomePageState extends ConsumerState<HomePage> {
           ],
         ),
       ),
-
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
       floatingActionButton: Column(
         children: [
