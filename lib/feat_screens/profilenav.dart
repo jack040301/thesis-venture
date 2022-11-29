@@ -29,8 +29,9 @@ class ProfileNav {
               const SizedBox(
                 height: 5.0,
               ),
-              const Align(
-                  alignment: Alignment.topRight, child: Icon(Icons.close)),
+              /*     const Align(
+                  alignment: Alignment.topRight, child: Icon(Icons.close),
+                  ), */
               const SizedBox(
                 height: 20.0,
               ),

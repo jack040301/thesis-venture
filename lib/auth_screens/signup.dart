@@ -52,8 +52,8 @@ class _SignupWidgetState extends State<SignupWidget> {
             const SizedBox(
               height: 20.0,
             ),
-            const Align(
-                alignment: Alignment.topRight, child: Icon(Icons.close)),
+            /*    const Align(
+                alignment: Alignment.topRight, child: Icon(Icons.close)), */
             Ink.image(
                 image: const AssetImage('assets/images/VentureLogo.png'),
                 height: 50),
@@ -349,7 +349,6 @@ class _SignupWidgetState extends State<SignupWidget> {
           passwordController.text.isNotEmpty &
           firstNameController.text.isNotEmpty &
           lastNameController.text.isNotEmpty) {
-
         print('The fields is not empty');
         await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
@@ -363,7 +362,6 @@ class _SignupWidgetState extends State<SignupWidget> {
                 }));
       } else {
         print('Fields are empty');
-
       }
     } on FirebaseAuthException catch (e) {
       /// Showing Error with AlertDialog if the user enter the wrong Email and Password
