@@ -1,29 +1,24 @@
 import 'dart:async';
-import 'dart:collection';
-
-import 'package:fab_circular_menu/fab_circular_menu.dart';
-import 'package:firebase_core/firebase_core.dart';
+//import 'dart:collection';
+//import 'package:fab_circular_menu/fab_circular_menu.dart';
 //import 'package:firebase_core/firebase_core.dart';
-
+//import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-
+//import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:main_venture/models/auto_complete_results.dart';
+//import 'package:main_venture/models/auto_complete_results.dart';
 import 'package:main_venture/providers/search_places.dart';
-import 'package:main_venture/services/maps_services.dart';
+//import 'package:main_venture/services/maps_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'package:main_venture/feat_screens/settings.dart';
-
-import '../feat_screens/pinned_location.dart';
+//import 'package:main_venture/feat_screens/settings.dart';
+//import '../feat_screens/pinned_location.dart';
 import 'package:geocoding/geocoding.dart';
-
 //Geocoder package is deprecated
 //import 'package:flutter_geocoder/geocoder.dart';
-
 //import 'dart:ui' as ui;
+import 'package:main_venture/providers/pin_loc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -468,6 +463,14 @@ class _HomePageState extends ConsumerState<HomePage> {
           children: [
             const Icon(Icons.location_on, color: Colors.green, size: 25.0),
             const SizedBox(width: 4.0),
+
+
+
+
+
+
+
+             
             Container(
               height: 40.0,
               width: MediaQuery.of(context).size.width - 75.0,
@@ -482,18 +485,12 @@ class _HomePageState extends ConsumerState<HomePage> {
     );
   }*/
 
-  int markerIdCounter = 0;
+  Pinloc curUser = Pinloc();
+  bool initGetLoc = true;
+  int markerIdCounter = -1;
   Set<Marker> marksman = Set<Marker>();
-
-  Future saveLoc(data) async {
-    try {
-      await FirebaseFirestore.instance.collection("savedPlaces").add(data).then(
-          (documentSnapshot) =>
-              print("added data with ID: ${documentSnapshot.id}"));
-    } on FirebaseException catch (e) {
-      print('Adding data exception: ${e.message}');
-    }
-  }
+  Map<String, dynamic> sloc = {'Places': []};
+  final sloclist = List<Map<String, dynamic>>.filled(3, {});
 
   void _setMarker(double lat, double lng) {
     var counter = markerIdCounter++;
@@ -503,6 +500,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         markerId: mid,
         position: LatLng(lat, lng),
         onTap: () async {
+          print('Marker ID counter: $markerIdCounter');
           List<Placemark> placemarks = await placemarkFromCoordinates(lat, lng);
           await showDialog(
               context: context,
@@ -517,7 +515,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                   actions: <Widget>[
                     TextButton(
                         onPressed: () {
-                          final data = {
+                          print(
+                              'Location sample: ${curUser.loc} ***********************');
+                          /*final data = {
                             "Administrative area":
                                 placemarks[0].administrativeArea,
                             "country": placemarks[0].country,
@@ -529,11 +529,20 @@ class _HomePageState extends ConsumerState<HomePage> {
                             "Sub Administrative area":
                                 placemarks[0].subAdministrativeArea,
                             "Sub locality": placemarks[0].subLocality
+                          };*/
+                          final data = {
+                            "markerID": markerIdCounter,
+                            "lat": lat,
+                            "lng": lng
                           };
-                          saveLoc(data);
+                          sloclist.setAll(markerIdCounter, [data]);
+                          sloc['Places'] = sloclist;
+
+                          curUser.saveLoc(sloc);
                           Navigator.pop(context);
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('Location saved')));
+                          print(sloclist);
                         },
                         child: const Text('Save')),
                     TextButton(
@@ -551,7 +560,18 @@ class _HomePageState extends ConsumerState<HomePage> {
     });
   }
 
-  void _setPolyline() {}
+  Future<void> _getLoc() async {
+    for (int i = 0; i <= 2; i++) {
+      MarkerId mid = MarkerId('marker_$i');
+      /*curUser.showSavedLoc(mid, curUser.loc!['Places'][i]['lat'],
+          curUser.loc!['Places'][i]['lng'], context, 0);*/
+      setState(() {
+        marksman.add(curUser.showSavedLoc(mid, curUser.loc!['Places'][i]['lat'],
+            curUser.loc!['Places'][i]['lng'], context, 0));
+      });
+    }
+    print('Location sample: ${curUser.loc} *****************************');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -573,18 +593,37 @@ class _HomePageState extends ConsumerState<HomePage> {
             },
             initialCameraPosition: const CameraPosition(
                 bearing: 0.0,
-                target: LatLng(16.0, 121.0),
+                target: LatLng(14.64905093547276, 121.01552981883287),
                 tilt: 0.0,
-                zoom: 0.0),
+                zoom: 10.0),
             compassEnabled: false,
             mapToolbarEnabled: false,
             mapType: MapType.normal,
             onLongPress: (LatLng) {
-              _setMarker(LatLng.latitude, LatLng.longitude);
+              if (markerIdCounter >= 2) {
+                curUser.warningDialog(context);
+                markerIdCounter = 2;
+              } else {
+                _setMarker(LatLng.latitude, LatLng.longitude);
+              }
             },
             onTap: (LatLng) {
               print(
                   'Latitude: ${LatLng.latitude}, Longitude: ${LatLng.longitude}');
+            },
+            onCameraMoveStarted: () {
+              if (initGetLoc == true) {
+                _getLoc();
+                initGetLoc = false;
+              } else {
+                print('Init getloc is false -------------------***-----');
+              }
+            },
+            onCameraMove: (cameraPosition) {
+              cameraPosition = const CameraPosition(
+                  target: LatLng(14.64905093547276, 121.01552981883287),
+                  zoom: 10.0);
+              //_getLoc();
             },
             markers: marksman,
           ),

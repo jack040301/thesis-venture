@@ -354,11 +354,19 @@ class _SignupWidgetState extends State<SignupWidget> {
           email: emailController.text.trim(),
           password: passwordController.text.trim(),
         );
-        await users.add({
-          'firstname': firstNameController.text,
-          'lastname': lastNameController.text,
-          'email': emailController.text,
-          'password': passwordController.text,
+        await users.doc(FirebaseAuth.instance.currentUser!.uid).set({
+          'Credentials': {
+            'firstname': firstNameController.text,
+            'lastname': lastNameController.text,
+            'email': emailController.text,
+            'password': passwordController.text,
+            'userID': FirebaseAuth.instance.currentUser!.uid
+          },
+          'Places': [
+            {'lat': 0.0, 'lng': 0.0},
+            {'lat': 0.0, 'lng': 0.0},
+            {'lat': 0.0, 'lng': 0.0}
+          ]
         });
       } else {
         print('Fields are empty');
@@ -400,7 +408,7 @@ class _SignupWidgetState extends State<SignupWidget> {
           print('***************************************** User is null');
           print('Current User: $curUser');
         } else {
-          print('User: ${user.email}');
+          print('User: ${user.email} : userId ${user.uid}');
           rmSignup(context);
         }
       });
