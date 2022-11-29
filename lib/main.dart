@@ -10,6 +10,7 @@ import 'package:main_venture/feat_screens/landingpage.dart';
 import 'package:main_venture/feat_screens/layer_simulation.dart';
 import 'package:main_venture/feat_screens/slidingpanel.dart';
 import 'package:main_venture/screens/home_page.dart';
+import 'package:main_venture/screens/alertbox.dart';
 
 //IMPORT YOUR FILE HERE IF YOU DONT WANT TO GO TO THE LOGIN PAGE STATE
 //DO NOT CHANGE AUTH SCREEN AFTER THE SPLASH SCREEN IF YOU ARE ACCESSING PROFILE SCREEN PAGE, YOU MUST LOGIN FIRST

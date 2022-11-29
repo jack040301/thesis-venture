@@ -38,22 +38,25 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   final Completer<GoogleMapController> _controller = Completer();
 
+
 //Debounce to throttle async calls during search
   Timer? _debounce;
 
 // toggling Ui as we need
+  bool searchToggle = true;
 //
-  bool searchToggle = false;
+//  bool searchToggle = false;
   bool radiusSlider = false;
   bool cardTapped = false;
   bool pressedNear = false;
   bool getDirections = false;
+ // bool getmarker = true;
 
 // Markers set
   Set<Marker> _markers = Set<Marker>();
   Set<Marker> allmarkers = HashSet<Marker>();
 
-  Map<MarkerId, Marker> _markerss = <MarkerId, Marker>{};
+  //Map<MarkerId, Marker> _markerss = <MarkerId, Marker>{};
   Set<Polyline> _polylines = Set<Polyline>();
   int markerIdCounter = 1;
   int polylineIdCounter = 1;
@@ -93,32 +96,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         color: Colors.blue,
         points: points.map((e) => LatLng(e.latitude, e.longitude)).toList()));
   }
-/*
-  Widget loadMap (){
-    return StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('markers').snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) return Text('Loading maps... Please Wait');
-          for (int i=0; i<snapshot.data.docs.length; i++){
-            _marker.add(new Marker (
-              width: 45.0,
-              height: 45.0,
-              point: new LatLng(snapshot.data.documents[i]['coords'].latitude,
-                  snapshot.data.documents[i]['coords'].longitude),
-              builder: (context) => new Container(
-                child: IconButton(
-                  icon: Icon(Icons.location_on),
-                  color: Colors.blue,
-                  iconSize: 45.0,
-                  onPressed: () {
-                    print(snapshot.data.documents[i] ['place']);
-                  },
-                ),
-              )));
-          }
-        },
-    );
-  } */
+
 
 //Show marker from the firestore database
   getMarkerData() async {
@@ -128,9 +106,8 @@ class _HomePageState extends ConsumerState<HomePage> {
         .then((QuerySnapshot querySnapshot) => {
               querySnapshot.docs.forEach((documents) {
                 var data = documents.data() as Map;
-
                 allmarkers.add(Marker(
-                    infoWindow: InfoWindow(title: data["place"]),
+                   infoWindow: InfoWindow(title: data["place"],),
                     markerId: MarkerId(data["id"]),
                     position: LatLng(
                         data["coords"].latitude, data["coords"].longitude)));
@@ -142,6 +119,37 @@ class _HomePageState extends ConsumerState<HomePage> {
       print(allmarkers.toString());
     });
   }
+//to automatically show marker to map
+  Widget getmarker(BuildContext context) {
+    getMarkerData();
+    return Text('');
+
+  }
+
+  Widget builds(BuildContext context) {
+    return  Padding(
+      padding: const EdgeInsets.fromLTRB(15.0, 150.0, 15.0, 5.0),
+      child:  AlertDialog(
+        title: const Text("Alert Dialog Box"),
+        content: const Text("You have raised a Alert Dialog Box"),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.pop;
+            },
+            child: Container(
+              color: Colors.green,
+              padding: const EdgeInsets.all(14),
+              child: const Text("okay"),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -171,8 +179,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                     },
                   ),
                 ),
+                pressedNear?
+                    builds(context):
                 searchToggle
-                    ? Padding(
+                    ?
+                Padding(
                         padding:
                             const EdgeInsets.fromLTRB(15.0, 40.0, 15.0, 5.0),
                         child: Column(children: [
@@ -225,7 +236,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           ),
                         ]),
                       )
-                    : Container(),
+                : Container(),
                 searchFlag.searchToggle
                     ? allSearchResults.allReturnedResults.length != 0
                         ? Positioned(
@@ -283,7 +294,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 ),
                               ),
                             ))
-                    : Container(),
+                   : Container(),
+                getmarker(context), //to automatically show marker to map
                 getDirections
                     ? Padding(
                         padding: const EdgeInsets.fromLTRB(15.0, 40.0, 15.0, 5),
@@ -374,6 +386,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           ],
         ),
       ),
+
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
       floatingActionButton: Column(
         children: [
