@@ -11,6 +11,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:main_venture/feat_screens/dialogbutton.dart';
 import 'package:main_venture/feat_screens/profilenav.dart';
 import 'package:main_venture/models/auto_complete_results.dart';
 import 'package:main_venture/providers/search_places.dart';
@@ -400,7 +401,9 @@ class _HomePageState extends ConsumerState<HomePage> {
             mini: true,
             heroTag: null,
             child: const Icon(Icons.house),
-            onPressed: () {},
+            onPressed: () {
+              DialogVenture.showInformationDialog(context);
+            },
           ),
           FloatingActionButton(
             disabledElevation: 0,

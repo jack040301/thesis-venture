@@ -9,6 +9,8 @@ class DialogVenture extends StatefulWidget {
 
   @override
   _DialogVentureState createState() => _DialogVentureState();
+
+  static void showInformationDialog(BuildContext context) {}
 }
 
 class _DialogVentureState extends State<DialogVenture> {
