@@ -23,6 +23,8 @@ import 'package:main_venture/feat_screens/settings.dart';
 import '../feat_screens/pinned_location.dart';
 import 'package:geocoding/geocoding.dart';
 
+import '../feat_screens/widgset.dart';
+
 //Geocoder package is deprecated
 //import 'package:flutter_geocoder/geocoder.dart';
 
@@ -100,25 +102,29 @@ class _HomePageState extends ConsumerState<HomePage> {
 
 //Show marker from the firestore database
   getMarkerData() async {
+
     await FirebaseFirestore.instance
         .collection("markers")
         .get()
         .then((QuerySnapshot querySnapshot) => {
-              querySnapshot.docs.forEach((documents) {
-                var data = documents.data() as Map;
-                allmarkers.add(Marker(
-                   infoWindow: InfoWindow(title: data["place"],),
-                    markerId: MarkerId(data["id"]),
-                    position: LatLng(
-                        data["coords"].latitude, data["coords"].longitude)));
-              })
-            });
+    querySnapshot.docs.forEach((documents) {
+    var data = documents.data() as Map;
+    allmarkers.add(Marker(
+    onTap: () async {
+    await dialogQuestion().showMyDialog(context);
+    },
+    infoWindow: InfoWindow(title: data["place"],),
+    markerId: MarkerId(data["id"]),
+    position: LatLng(
+    data["coords"].latitude, data["coords"].longitude)));
+    })
+    });
 
     setState(() {
-      allmarkers;
-      print(allmarkers.toString());
-    });
-  }
+    allmarkers;
+    print(allmarkers.toString());
+      });
+    }
 //to automatically show marker to map
   Widget getmarker(BuildContext context) {
     getMarkerData();
