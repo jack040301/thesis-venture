@@ -68,6 +68,13 @@ class _SplashScreenState extends State<SplashScreen> {
             width: 200.0,
             child: LottieBuilder.asset('assets/animassets/mapanimation.json')),
       ),
+<<<<<<< Updated upstream
+=======
+      nextScreen:
+          const HomePage(), //CHANGE HERE IF YOU WANT TO SEE YOUR SCREEN IMMEDIATELY
+      splashIconSize: 250,
+      duration: 3400,
+>>>>>>> Stashed changes
     );
   }
 }

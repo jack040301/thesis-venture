@@ -14,10 +14,17 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+<<<<<<< Updated upstream
+=======
+import 'package:main_venture/feat_screens/dialogbutton.dart';
+import 'package:main_venture/feat_screens/profilenav.dart';
+import 'package:main_venture/feat_screens/widgset.dart';
+>>>>>>> Stashed changes
 import 'package:main_venture/models/auto_complete_results.dart';
 import 'package:main_venture/providers/search_places.dart';
 import 'package:main_venture/services/maps_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:main_venture/feat_screens/dialogbutton.dart';
 
 import 'dart:ui' as ui;
 class HomePage extends ConsumerStatefulWidget {
@@ -125,12 +132,35 @@ TextEditingController _destinationController = TextEditingController();
   } */
 
   getMarkerData() async {
+<<<<<<< Updated upstream
     FirebaseFirestore.instance.collection('markers').get().then((markers) {
       if(markers.docs.isNotEmpty) {
         for(int i = 0; i < markers.docs.length ; i++){
           initMarker(markers.docs[i].data , markers.docs[i].id);
         }
       }
+=======
+    await FirebaseFirestore.instance
+        .collection("markers")
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((documents) {
+                var data = documents.data() as Map;
+                allmarkers.add(Marker(
+                  onTap: () async {
+                   await dialogQuestion().showMyDialog(context);
+                  },
+                   infoWindow: InfoWindow(title: data["place"],),
+                    markerId: MarkerId(data["id"]),
+                    position: LatLng(
+                        data["coords"].latitude, data["coords"].longitude)));
+              })
+            });
+
+    setState(() {
+      allmarkers;
+      print(allmarkers.toString());
+>>>>>>> Stashed changes
     });
   }
 
@@ -177,6 +207,7 @@ TextEditingController _destinationController = TextEditingController();
                     },
                   ),
                 ),
+<<<<<<< Updated upstream
                 searchToggle ?
                     Padding(padding: EdgeInsets.fromLTRB(15.0, 40.0, 15.0, 5.0),
               child: Column(
@@ -256,6 +287,18 @@ TextEditingController _destinationController = TextEditingController();
                         child: Container(
                           height: 200.0,
                             width: screenWidth - 30.0,
+=======
+                //pressedNear?
+                    //builds(context):
+                searchToggle
+                    ?
+                Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(15.0, 40.0, 15.0, 5.0),
+                        child: Column(children: [
+                          Container(
+                            height: 50.0,
+>>>>>>> Stashed changes
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10.0),
                                 color: Colors.white.withOpacity(0.7)
@@ -364,6 +407,7 @@ TextEditingController _destinationController = TextEditingController();
         ),
         ),
 
+<<<<<<< Updated upstream
       floatingActionButton: FabCircularMenu(
         alignment: Alignment.bottomLeft,
         fabColor: Colors.blue,
@@ -392,6 +436,77 @@ TextEditingController _destinationController = TextEditingController();
            });
          }, icon: Icon(Icons.navigation))
        ]),
+=======
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
+      floatingActionButton: Column(
+        children: [
+          FloatingActionButton(
+            disabledElevation: 0,
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            heroTag: null,
+            mini: true,
+           /* child: FirebaseAuth.instance.currentUser!.photoURL == null
+                ? const Image(image: AssetImage('assets/images/pic.png'))
+                : Image.network(
+                    FirebaseAuth.instance.currentUser!.photoURL ?? ""), */
+            onPressed: () {
+              ProfileNav().showProfileNav(context);
+            },
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          FloatingActionButton(
+            disabledElevation: 0,
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            mini: true,
+            heroTag: null,
+            child: const Icon(Icons.house),
+            onPressed: () {
+
+             // dialogQuestion().showMyDialog(context);
+            },
+          ),
+          FloatingActionButton(
+            disabledElevation: 0,
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            mini: true,
+            heroTag: null,
+            child: const Icon(Icons.search),
+            onPressed: () {
+              setState(() {
+                searchToggle = true;
+                radiusSlider = false;
+                pressedNear = false;
+                cardTapped = false;
+                getDirections = false;
+              });
+            },
+          ),
+          FloatingActionButton(
+            disabledElevation: 0,
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            mini: true,
+            heroTag: null,
+            child: const Icon(Icons.navigation),
+            onPressed: () {
+              setState(() {
+                searchToggle = false;
+                radiusSlider = false;
+                pressedNear = false;
+                cardTapped = false;
+                getDirections = true;
+              });
+            },
+          ),
+        ],
+      ),
+      resizeToAvoidBottomInset: false,
+>>>>>>> Stashed changes
     );
   }
 
