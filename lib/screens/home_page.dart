@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
-
+import 'dart:typed_data';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:firebase_core/firebase_core.dart';
 //import 'package:firebase_core/firebase_core.dart';
@@ -8,7 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-
+import 'package:custom_marker/marker_icon.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:main_venture/feat_screens/dialogbutton.dart';
@@ -40,7 +40,6 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   final Completer<GoogleMapController> _controller = Completer();
 
-
 //Debounce to throttle async calls during search
   Timer? _debounce;
 
@@ -57,22 +56,24 @@ class _HomePageState extends ConsumerState<HomePage> {
 // Markers set
   Set<Marker> _markers = Set<Marker>();
   Set<Marker> allmarkers = HashSet<Marker>();
-
   //Map<MarkerId, Marker> _markerss = <MarkerId, Marker>{};
   Set<Polyline> _polylines = Set<Polyline>();
   int markerIdCounter = 1;
   int polylineIdCounter = 1;
+
 
 // Text Editing Controllers
   TextEditingController searchController = TextEditingController();
   final TextEditingController _originController = TextEditingController();
   final TextEditingController _destinationController = TextEditingController();
 
+
 // initial map position on load
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(14.774477, 121.04483),
     zoom: 14.4746,
   );
+
 
   void _setMarker(point) {
     var counter = markerIdCounter++;
@@ -100,14 +101,17 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
 
+
+
 //Show marker from the firestore database
   getMarkerData() async {
+
 
     await FirebaseFirestore.instance
         .collection("markers")
         .get()
         .then((QuerySnapshot querySnapshot) => {
-    querySnapshot.docs.forEach((documents) {
+    querySnapshot.docs.forEach((documents) async {
     var data = documents.data() as Map;
     allmarkers.add(Marker(
     onTap: () async {
@@ -115,6 +119,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     },
     infoWindow: InfoWindow(title: data["place"],),
     markerId: MarkerId(data["id"]),
+    icon: await MarkerIcon.pictureAsset(assetPath: 'assets/images/icons/venture.png', width: 100, height: 100),
     position: LatLng(
     data["coords"].latitude, data["coords"].longitude)));
     })
@@ -402,10 +407,10 @@ class _HomePageState extends ConsumerState<HomePage> {
             foregroundColor: Colors.black,
             heroTag: null,
             mini: true,
-            child: FirebaseAuth.instance.currentUser!.photoURL == null
+         /*   child: FirebaseAuth.instance.currentUser!.photoURL == null
                 ? const Image(image: AssetImage('assets/images/pic.png'))
                 : Image.network(
-                    FirebaseAuth.instance.currentUser!.photoURL ?? ""),
+                    FirebaseAuth.instance.currentUser!.photoURL ?? ""),*/
             onPressed: () {
               ProfileNav().showProfileNav(context);
             },

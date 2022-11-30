@@ -67,6 +67,7 @@ dependencies:
   cloud_firestore: ^4.0.5
   flutter_password_strength: ^0.1.6
   geocoding: ^2.0.5
+  custom_marker: ^1.0.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.10.0
@@ -87,9 +88,8 @@ dev_dependencies:
 
 flutter_icons:
   android: true
-  ios: true
-  image_path_ios: "assets/images/ic_launcher.png"
-  image_path_android: "assets/images/ic_launcher.png"
+  image_path_ios: "assets/images/venture.png"
+  image_path_android: "assets/images/venture.png"
 
 # The following section is specific to Flutter packages.
 flutter:
@@ -104,6 +104,9 @@ flutter:
     - assets/animassets/mapanimation.json
     - assets/animassets/Logo.gif
     - assets/mapicons/
+    - assets/animassets/Venture_Splash.gif
+    - assets/images/icons/venture.png
+
     - assets/images/google.png
     - assets/images/pic.png
     - assets/images/icons/
@@ -111,6 +114,7 @@ flutter:
     - assets/images/VentureLogo.png
     - assets/images/mplaza1.jpg
     - assets/images/mplaza2.jpg
+    - assets/images/icons/venture.png
 
     - assets/images/icons/upgrade.png
 
@@ -160,3 +164,5 @@ flutter:
           weight: 100
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+assets/images/icons/venture:
+  png:
