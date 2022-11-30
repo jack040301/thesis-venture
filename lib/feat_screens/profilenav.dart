@@ -75,45 +75,37 @@ class ProfileNav {
                         onPressed: () {
                           PinnedLocation().showPinnedLocation(context);
                         },
-                        icon: const Icon(
-                          Icons.person_pin_circle_outlined,
-                          size: 30.0,
-                        ),
-                        label: const Text('      Pinned Locations',
+                        icon: const ImageIcon(AssetImage("assets/images/icons/savedpin.png"),
+                          size: 25.0,),
+                        label: const Text('Pinned Locations',
                             style:
-                                TextStyle(color: Colors.black, fontSize: 20.0)),
+                                TextStyle(color: Colors.black, fontSize: 15.0)),
                       ),
                       TextButton.icon(
                         onPressed: () {
                           SetDialog().showMyDialog(context);
                         },
-                        icon: const Icon(
-                          Icons.settings,
-                          size: 30.0,
-                        ),
-                        label: const Text('      Settings',
+                        icon: const ImageIcon(AssetImage("assets/images/icons/settings.png"),
+                          size: 25.0,),
+                        label: const Text('Settings',
                             style:
-                                TextStyle(color: Colors.black, fontSize: 20.0)),
+                                TextStyle(color: Colors.black, fontSize: 15.0)),
                       ),
                       TextButton.icon(
                         onPressed: () {},
-                        icon: const Icon(
-                          Icons.upgrade,
-                          size: 30.0,
-                        ),
-                        label: const Text('      Upgrade Account',
+                        icon: const ImageIcon(AssetImage("assets/images/icons/upgrade.png"),
+                          size: 25.0,),
+                        label: const Text('Upgrade Account',
                             style:
-                                TextStyle(color: Colors.black, fontSize: 20.0)),
+                                TextStyle(color: Colors.black, fontSize: 15.0)),
                       ),
                       TextButton.icon(
                         onPressed: () {},
-                        icon: const Icon(
-                          Icons.switch_account,
-                          size: 30.0,
-                        ),
-                        label: const Text('      Switch Account',
+                        icon: const ImageIcon(AssetImage("assets/images/icons/switch.png"),
+                          size: 25.0,),
+                        label: const Text('Switch Account',
                             style:
-                                TextStyle(color: Colors.black, fontSize: 20.0)),
+                                TextStyle(color: Colors.black, fontSize: 15.0)),
                       ),
                       TextButton.icon(
                         onPressed: () async {
@@ -123,13 +115,11 @@ class ProfileNav {
                                       builder: (context) =>
                                           const AuthScreen())));
                         },
-                        icon: const Icon(
-                          Icons.logout,
-                          size: 30.0,
-                        ),
-                        label: const Text('      Log out',
+                        icon: const ImageIcon(AssetImage("assets/images/icons/logout.png"),
+                          size: 25.0,),
+                        label: const Text('Log out',
                             style:
-                                TextStyle(color: Colors.black, fontSize: 20.0)),
+                                TextStyle(color: Colors.black, fontSize: 15.0)),
                       ),
                     ],
                   ),

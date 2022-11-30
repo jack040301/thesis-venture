@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:main_venture/feat_screens/landingpage.dart';
 import 'package:main_venture/feat_screens/layer_simulation.dart';
 import 'package:main_venture/feat_screens/slidingpanel.dart';
+import 'package:main_venture/feat_screens/upgrade_account.dart';
 import 'package:main_venture/screens/home_page.dart';
 import 'package:main_venture/screens/alertbox.dart';
 
