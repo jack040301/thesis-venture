@@ -67,3 +67,19 @@ class _CustomPassFieldState extends State<CustomPassField> {
     );
   }
 }
+
+class SaveLocationDialog extends StatefulWidget {
+  const SaveLocationDialog({super.key});
+
+  @override
+  State<SaveLocationDialog> createState() => _SaveLocationDialogState();
+}
+
+class _SaveLocationDialogState extends State<SaveLocationDialog> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: SimpleDialog(),
+    );
+  }
+}

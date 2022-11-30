@@ -3,12 +3,16 @@ import 'dart:collection';
 
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:firebase_core/firebase_core.dart';
+//import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:main_venture/feat_screens/dialogbutton.dart';
+import 'package:main_venture/feat_screens/profilenav.dart';
 import 'package:main_venture/models/auto_complete_results.dart';
 import 'package:main_venture/providers/search_places.dart';
 import 'package:main_venture/services/maps_services.dart';
@@ -17,6 +21,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:main_venture/feat_screens/settings.dart';
 
 import '../feat_screens/pinned_location.dart';
+import 'package:geocoding/geocoding.dart';
+
+import '../feat_screens/widgset.dart';
+
+//Geocoder package is deprecated
+//import 'package:flutter_geocoder/geocoder.dart';
 
 //import 'dart:ui' as ui;
 
@@ -30,21 +40,25 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   final Completer<GoogleMapController> _controller = Completer();
 
+
 //Debounce to throttle async calls during search
   Timer? _debounce;
 
 // toggling Ui as we need
-  bool searchToggle = false;
+  bool searchToggle = true;
+//
+//  bool searchToggle = false;
   bool radiusSlider = false;
   bool cardTapped = false;
   bool pressedNear = false;
   bool getDirections = false;
+ // bool getmarker = true;
 
 // Markers set
   Set<Marker> _markers = Set<Marker>();
   Set<Marker> allmarkers = HashSet<Marker>();
 
-  Map<MarkerId, Marker> _markerss = <MarkerId, Marker>{};
+  //Map<MarkerId, Marker> _markerss = <MarkerId, Marker>{};
   Set<Polyline> _polylines = Set<Polyline>();
   int markerIdCounter = 1;
   int polylineIdCounter = 1;
@@ -84,55 +98,64 @@ class _HomePageState extends ConsumerState<HomePage> {
         color: Colors.blue,
         points: points.map((e) => LatLng(e.latitude, e.longitude)).toList()));
   }
-/*
-  Widget loadMap (){
-    return StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('markers').snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) return Text('Loading maps... Please Wait');
-          for (int i=0; i<snapshot.data.docs.length; i++){
-            _marker.add(new Marker (
-              width: 45.0,
-              height: 45.0,
-              point: new LatLng(snapshot.data.documents[i]['coords'].latitude,
-                  snapshot.data.documents[i]['coords'].longitude),
-              builder: (context) => new Container(
-                child: IconButton(
-                  icon: Icon(Icons.location_on),
-                  color: Colors.blue,
-                  iconSize: 45.0,
-                  onPressed: () {
-                    print(snapshot.data.documents[i] ['place']);
-                  },
-                ),
-              )));
-          }
-        },
-    );
-  } */
+
 
 //Show marker from the firestore database
   getMarkerData() async {
+
     await FirebaseFirestore.instance
         .collection("markers")
         .get()
         .then((QuerySnapshot querySnapshot) => {
-              querySnapshot.docs.forEach((documents) {
-                var data = documents.data() as Map;
-
-                allmarkers.add(Marker(
-                    infoWindow: InfoWindow(title: data["place"]),
-                    markerId: MarkerId(data["id"]),
-                    position: LatLng(
-                        data["coords"].latitude, data["coords"].longitude)));
-              })
-            });
+    querySnapshot.docs.forEach((documents) {
+    var data = documents.data() as Map;
+    allmarkers.add(Marker(
+    onTap: () async {
+    await dialogQuestion().showMyDialog(context);
+    },
+    infoWindow: InfoWindow(title: data["place"],),
+    markerId: MarkerId(data["id"]),
+    position: LatLng(
+    data["coords"].latitude, data["coords"].longitude)));
+    })
+    });
 
     setState(() {
-      allmarkers;
-      print(allmarkers.toString());
-    });
+    allmarkers;
+    print(allmarkers.toString());
+      });
+    }
+//to automatically show marker to map
+  Widget getmarker(BuildContext context) {
+    getMarkerData();
+    return Text('');
+
   }
+
+  Widget builds(BuildContext context) {
+    return  Padding(
+      padding: const EdgeInsets.fromLTRB(15.0, 150.0, 15.0, 5.0),
+      child:  AlertDialog(
+        title: const Text("Alert Dialog Box"),
+        content: const Text("You have raised a Alert Dialog Box"),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.pop;
+            },
+            child: Container(
+              color: Colors.green,
+              padding: const EdgeInsets.all(14),
+              child: const Text("okay"),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -162,8 +185,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                     },
                   ),
                 ),
+                pressedNear?
+                    builds(context):
                 searchToggle
-                    ? Padding(
+                    ?
+                Padding(
                         padding:
                             const EdgeInsets.fromLTRB(15.0, 40.0, 15.0, 5.0),
                         child: Column(children: [
@@ -216,7 +242,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           ),
                         ]),
                       )
-                    : Container(),
+                : Container(),
                 searchFlag.searchToggle
                     ? allSearchResults.allReturnedResults.length != 0
                         ? Positioned(
@@ -274,7 +300,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 ),
                               ),
                             ))
-                    : Container(),
+                   : Container(),
+                getmarker(context), //to automatically show marker to map
                 getDirections
                     ? Padding(
                         padding: const EdgeInsets.fromLTRB(15.0, 40.0, 15.0, 5),
@@ -365,53 +392,75 @@ class _HomePageState extends ConsumerState<HomePage> {
           ],
         ),
       ),
-      floatingActionButton: FabCircularMenu(
-          alignment: Alignment.bottomLeft,
-          fabColor: Colors.blue,
-          fabOpenColor: Colors.red.shade100,
-          ringDiameter: 250.0,
-          ringWidth: 60.0,
-          ringColor: Colors.blue.shade50,
-          fabSize: 60.0,
-          children: [
-            IconButton(
-                onPressed: () {
-                  setState(() {
-                    searchToggle = true;
-                    radiusSlider = false;
-                    pressedNear = false;
-                    cardTapped = false;
-                    getDirections = false;
-                  });
-                },
-                icon: const Icon(Icons.search)),
-            IconButton(
-                onPressed: () {
-                  setState(() {
-                    searchToggle = false;
-                    radiusSlider = false;
-                    pressedNear = false;
-                    cardTapped = false;
-                    getDirections = true;
-                  });
-                },
-                icon: const Icon(Icons.navigation)),
-            IconButton(
-                onPressed: () {
-                  getMarkerData(); //function the marker from the firestore database
-                },
-                icon: const Icon(Icons.map)),
-            IconButton(
-                onPressed: () {
-                  SetDialog().showMyDialog(context);
-                },
-                icon: const Icon(Icons.settings)),
-            IconButton(
-                onPressed: () {
-                  PinnedLocation().showPinnedLocation(context);
-                },
-                icon: const Icon(Icons.pin_drop_outlined)),
-          ]),
+
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
+      floatingActionButton: Column(
+        children: [
+          FloatingActionButton(
+            disabledElevation: 0,
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            heroTag: null,
+            mini: true,
+            child: FirebaseAuth.instance.currentUser!.photoURL == null
+                ? const Image(image: AssetImage('assets/images/pic.png'))
+                : Image.network(
+                    FirebaseAuth.instance.currentUser!.photoURL ?? ""),
+            onPressed: () {
+              ProfileNav().showProfileNav(context);
+            },
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          FloatingActionButton(
+            disabledElevation: 0,
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            mini: true,
+            heroTag: null,
+            child: const Icon(Icons.house),
+            onPressed: () {
+              DialogVenture.showInformationDialog(context);
+            },
+          ),
+          FloatingActionButton(
+            disabledElevation: 0,
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            mini: true,
+            heroTag: null,
+            child: const Icon(Icons.search),
+            onPressed: () {
+              setState(() {
+                searchToggle = true;
+                radiusSlider = false;
+                pressedNear = false;
+                cardTapped = false;
+                getDirections = false;
+              });
+            },
+          ),
+          FloatingActionButton(
+            disabledElevation: 0,
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            mini: true,
+            heroTag: null,
+            child: const Icon(Icons.navigation),
+            onPressed: () {
+              setState(() {
+                searchToggle = false;
+                radiusSlider = false;
+                pressedNear = false;
+                cardTapped = false;
+                getDirections = true;
+              });
+            },
+          ),
+        ],
+      ),
+      resizeToAvoidBottomInset: false,
     );
   }
 
@@ -475,4 +524,116 @@ class _HomePageState extends ConsumerState<HomePage> {
       ),
     );
   }
+
+//
+  /*  int markerIdCounter = 0;
+  Set<Marker> marksman = Set<Marker>();
+
+  Future saveLoc(data) async {
+    try {
+      await FirebaseFirestore.instance.collection("savedPlaces").add(data).then(
+          (documentSnapshot) =>
+              print("added data with ID: ${documentSnapshot.id}"));
+    } on FirebaseException catch (e) {
+      print('Adding data exception: ${e.message}');
+    }
+  }
+
+  void _setMarker(double lat, double lng) {
+    var counter = markerIdCounter++;
+    MarkerId mid = MarkerId('marker_$counter');
+
+    final Marker marker = Marker(
+        markerId: mid,
+        position: LatLng(lat, lng),
+        onTap: () async {
+          List<Placemark> placemarks = await placemarkFromCoordinates(lat, lng);
+          await showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text('Save location'),
+                  content: SingleChildScrollView(
+                    child: ListBody(children: <Widget>[
+                      Text('Location: ${placemarks[0]}'),
+                    ]),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                        onPressed: () {
+                          final data = {
+                            "Administrative area":
+                                placemarks[0].administrativeArea,
+                            "country": placemarks[0].country,
+                            "ISO country Code": placemarks[0].isoCountryCode,
+                            "Locality": placemarks[0].locality,
+                            "Name": placemarks[0].name,
+                            "Postal Code": placemarks[0].postalCode,
+                            "Street": placemarks[0].street,
+                            "Sub Administrative area":
+                                placemarks[0].subAdministrativeArea,
+                            "Sub locality": placemarks[0].subLocality
+                          };
+                          saveLoc(data);
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Location saved')));
+                        },
+                        child: const Text('Save')),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Cancel'))
+                  ],
+                );
+              });
+        },
+        icon: BitmapDescriptor.defaultMarker);
+    setState(() {
+      marksman.add(marker);
+    });
+  }
+
+  void _setPolyline() {}
+
+  @override
+  Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    //Providers
+    final allSearchResults = ref.watch(placeResultsProvider);
+    final searchFlag = ref.watch(searchToggleProvider);
+
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Container(
+          width: screenWidth,
+          height: screenHeight,
+          child: GoogleMap(
+            onMapCreated: (GoogleMapController controller) {
+              _controller.complete(controller);
+            },
+            initialCameraPosition: const CameraPosition(
+                bearing: 0.0,
+                target: LatLng(16.0, 121.0),
+                tilt: 0.0,
+                zoom: 0.0),
+            compassEnabled: false,
+            mapToolbarEnabled: false,
+            mapType: MapType.normal,
+            onLongPress: (LatLng) {
+              _setMarker(LatLng.latitude, LatLng.longitude);
+            },
+            onTap: (LatLng) {
+              print(
+                  'Latitude: ${LatLng.latitude}, Longitude: ${LatLng.longitude}');
+            },
+            markers: marksman,
+          ),
+        ),
+      ),
+    );
+  }*/
 }
