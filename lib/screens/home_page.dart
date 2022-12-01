@@ -1,14 +1,12 @@
 import 'dart:async';
 import 'dart:collection';
-
-import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:firebase_core/firebase_core.dart';
 //import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-
+import 'package:custom_marker/marker_icon.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:main_venture/feat_screens/dialogbutton.dart';
@@ -18,9 +16,6 @@ import 'package:main_venture/providers/search_places.dart';
 import 'package:main_venture/services/maps_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:main_venture/feat_screens/settings.dart';
-
-import '../feat_screens/pinned_location.dart';
 import 'package:geocoding/geocoding.dart';
 
 import '../feat_screens/widgset.dart';
@@ -56,7 +51,6 @@ class _HomePageState extends ConsumerState<HomePage> {
 // Markers set
   Set<Marker> _markers = Set<Marker>();
   Set<Marker> allmarkers = HashSet<Marker>();
-
   //Map<MarkerId, Marker> _markerss = <MarkerId, Marker>{};
   Set<Polyline> _polylines = Set<Polyline>();
   int markerIdCounter = 1;
@@ -104,7 +98,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         .collection("markers")
         .get()
         .then((QuerySnapshot querySnapshot) => {
-              querySnapshot.docs.forEach((documents) {
+              querySnapshot.docs.forEach((documents) async {
                 var data = documents.data() as Map;
                 allmarkers.add(Marker(
                     onTap: () async {
@@ -114,6 +108,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                       title: data["place"],
                     ),
                     markerId: MarkerId(data["id"]),
+                    icon: await MarkerIcon.pictureAsset(
+                        assetPath: 'assets/images/icons/venture.png',
+                        width: 100,
+                        height: 100),
                     position: LatLng(
                         data["coords"].latitude, data["coords"].longitude)));
               })
@@ -399,12 +397,12 @@ class _HomePageState extends ConsumerState<HomePage> {
             foregroundColor: Colors.black,
             heroTag: null,
             mini: true,
-            /*    child: FirebaseAuth.instance.currentUser!.photoURL == null
+            /*   child: FirebaseAuth.instance.currentUser!.photoURL == null
                 ? const Image(image: AssetImage('assets/images/pic.png'))
                 : Image.network(
-                    FirebaseAuth.instance.currentUser!.photoURL ?? ""), */
+                    FirebaseAuth.instance.currentUser!.photoURL ?? ""),*/
             onPressed: () {
-              //ProfileNav().showProfileNav(context);
+              ProfileNav().showProfileNav(context);
             },
           ),
           const SizedBox(

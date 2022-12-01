@@ -4,6 +4,7 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:main_venture/auth_screen.dart';
+import 'package:main_venture/SavePinnedLocations.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:main_venture/feat_screens/landingpage.dart';
@@ -60,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
       splash: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset('assets/animassets/Logo.gif', width: 250, height: 150)
+          Image.asset('assets/animassets/Venture_Splash.gif', width: 400  , height: 300)
         ],
       ),
       nextScreen:
