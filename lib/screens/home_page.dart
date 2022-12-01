@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:fab_circular_menu/fab_circular_menu.dart';
-
 import 'package:firebase_core/firebase_core.dart';
 //import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,7 +13,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:main_venture/feat_screens/dialogbutton.dart';
 import 'package:main_venture/feat_screens/profilenav.dart';
-import 'package:main_venture/feat_screens/widgset.dart';
 import 'package:main_venture/models/auto_complete_results.dart';
 import 'package:main_venture/providers/search_places.dart';
 import 'package:main_venture/services/maps_services.dart';
@@ -24,6 +22,8 @@ import 'package:main_venture/feat_screens/settings.dart';
 
 import '../feat_screens/pinned_location.dart';
 import 'package:geocoding/geocoding.dart';
+
+import '../feat_screens/widgset.dart';
 
 //Geocoder package is deprecated
 //import 'package:flutter_geocoder/geocoder.dart';
@@ -399,12 +399,12 @@ class _HomePageState extends ConsumerState<HomePage> {
             foregroundColor: Colors.black,
             heroTag: null,
             mini: true,
-            child: FirebaseAuth.instance.currentUser!.photoURL == null
+            /*    child: FirebaseAuth.instance.currentUser!.photoURL == null
                 ? const Image(image: AssetImage('assets/images/pic.png'))
                 : Image.network(
-                    FirebaseAuth.instance.currentUser!.photoURL ?? ""),
+                    FirebaseAuth.instance.currentUser!.photoURL ?? ""), */
             onPressed: () {
-              ProfileNav().showProfileNav(context);
+              //ProfileNav().showProfileNav(context);
             },
           ),
           const SizedBox(
