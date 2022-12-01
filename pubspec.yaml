@@ -48,7 +48,7 @@ dependencies:
   sliding_up_panel: ^2.0.0+1
 
   #Carousel
-  carousel_slider: ^2.1.0
+  carousel_slider: ^4.1.1
 
   http:
   lottie:
@@ -125,6 +125,7 @@ flutter:
     - assets/images/icons/note.png
     - assets/images/icons/device.png
     - assets/images/icons/close.png
+    - assets/images/venture.png
 
   # assets:
   #   - images/a_dot_burr.jpeg
