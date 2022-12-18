@@ -6,12 +6,13 @@ import 'package:main_venture/feat_screens/dialogbutton.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:main_venture/auth_screen.dart';
 
 import 'package:main_venture/screens/home_page.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../main.dart';
 
 //final userphoto = FirebaseAuth.instance.currentUser!.photoURL??"";
 
@@ -22,7 +23,7 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-Future<void> logOut() async {
+Future logOut() async {
   try {
     await GoogleSignIn().signOut();
     await FirebaseAuth.instance.signOut();
@@ -44,7 +45,10 @@ Future<void> logOut() async {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
+  Future<void> singingOut() async {
+    await GoogleSignIn().signOut();
+    await FirebaseAuth.instance.signOut();
+  }
 
   // List<ListItem> _dropdownItems = [
   //   ListItem(1, "GeeksforGeeks"),
@@ -148,7 +152,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -169,8 +172,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const SizedBox(
               height: 10,
             ),
-            const ElevatedButton(
-                onPressed: logOut, child: Text("Logout Account")),
+            ElevatedButton(
+                onPressed: () async {
+                  await singingOut().then((value) =>
+                      Navigator.of(context, rootNavigator: true)
+                          .pushReplacement(MaterialPageRoute(
+                              builder: (context) => const AuthScreen())));
+                },
+                child: const Text("Logout Account")),
             ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -179,7 +188,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           builder: (context) => const HomePage()));
                 },
                 child: const Text("Map")),
-
             ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -188,7 +196,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           builder: (context) => const DialogVenture()));
                 },
                 child: const Text("Dialog Question")),
-
           ],
         ),
       ),

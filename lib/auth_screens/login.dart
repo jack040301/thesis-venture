@@ -40,13 +40,13 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(
-                height: 20.0,
+                height: 50.0,
               ),
-              const Align(
-                  alignment: Alignment.topRight, child: Icon(Icons.close)),
+              /*   const Align(
+                  alignment: Alignment.topRight, child: Icon(Icons.close)), */
               Ink.image(
                   image: const AssetImage('assets/images/VentureLogo.png'),
-                  height: 50),
+                  height: 80),
               const Text("Login",
                   style: TextStyle(
                       color: Color.fromARGB(255, 74, 74, 74),
@@ -130,6 +130,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderSide:
                         BorderSide(color: Colors.redAccent.withOpacity(0.5)),
                   ),
+                  suffix: InkWell(
+                    onTap: (){},
+                    child: Icon( Icons.visibility, color: const Color.fromARGB(255,74, 74, 74)),
+                  ),
                 ),
               ),
               const SizedBox(
@@ -140,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: RawMaterialButton(
                   fillColor: const Color.fromARGB(255, 0, 110, 195),
                   onPressed: signIn,
-                  elevation: 0.0,
+                  elevation: 0,
                   padding: const EdgeInsets.symmetric(vertical: 15.0),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.0)),
@@ -198,7 +202,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
                 child: Material(
                   color: const Color.fromARGB(255, 0, 110, 195),
-                  elevation: 8,
                   borderRadius: BorderRadius.circular(5.0),
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   child: Row(
