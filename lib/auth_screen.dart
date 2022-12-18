@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:main_venture/auth_screens/login.dart';
-
+import 'package:main_venture/auth_screens/email_verification.dart';
 import 'package:main_venture/feat_screens/profile_screen.dart';
 
 import 'package:google_sign_in/google_sign_in.dart';
@@ -39,7 +39,10 @@ class _AuthScreenState extends State<AuthScreen> {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return const HomePage();
+
+            //return const ProfileScreen();
+            return Emailverificationscreen();
+
             //login
           } else {
             return const LoginScreen();
