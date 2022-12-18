@@ -1,7 +1,7 @@
-import 'package:firebase_core/firebase_core.dart';
+//import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-class dialogQuestion {
+class DialogQuestion {
   Future showMyDialog(BuildContext context) {
     return showDialog(
         context: context,
@@ -38,7 +38,7 @@ class dialogQuestion {
 
 //DROPDOWN
                   DropdownButtonFormField(
-                    icon: Icon(Icons.keyboard_arrow_down_rounded),
+                    icon: const Icon(Icons.keyboard_arrow_down_rounded),
                     isExpanded: true,
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.all((15.0)),
@@ -87,12 +87,12 @@ class dialogQuestion {
                       });
                     },
 //value: selectedbusinesstype,
-                    hint: Text('Choose your Business'),
+                    hint: const Text('Choose your Business'),
                     style: const TextStyle(
                       color: Color.fromARGB(255, 74, 74, 74),
                       fontSize: 14.0,
                     ),
-                    items: [],
+                    items: const [],
                   ),
 
 //TEXT BOX 2

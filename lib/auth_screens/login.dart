@@ -131,8 +131,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         BorderSide(color: Colors.redAccent.withOpacity(0.5)),
                   ),
                   suffix: InkWell(
-                    onTap: (){},
-                    child: Icon( Icons.visibility, color: const Color.fromARGB(255,74, 74, 74)),
+                    onTap: () {},
+                    child: const Icon(Icons.visibility,
+                        color: Color.fromARGB(255, 74, 74, 74)),
                   ),
                 ),
               ),

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:main_venture/auth_screen.dart';
 import 'package:main_venture/feat_screens/pinned_location.dart';
+import 'package:main_venture/feat_screens/prediction_dialog.dart';
 
 import 'settings.dart';
 
@@ -73,10 +74,12 @@ class ProfileNav {
                       ),
                       TextButton.icon(
                         onPressed: () {
-                          PinnedLocation().showPinnedLocation(context);
+                          PredictionDialog().showPredictionDialog(context);
                         },
-                        icon: const ImageIcon(AssetImage("assets/images/icons/savedpin.png"),
-                          size: 25.0,),
+                        icon: const ImageIcon(
+                          AssetImage("assets/images/icons/savedpin.png"),
+                          size: 25.0,
+                        ),
                         label: const Text('Pinned Locations',
                             style:
                                 TextStyle(color: Colors.black, fontSize: 15.0)),
@@ -85,24 +88,30 @@ class ProfileNav {
                         onPressed: () {
                           SetDialog().showMyDialog(context);
                         },
-                        icon: const ImageIcon(AssetImage("assets/images/icons/settings.png"),
-                          size: 25.0,),
+                        icon: const ImageIcon(
+                          AssetImage("assets/images/icons/settings.png"),
+                          size: 25.0,
+                        ),
                         label: const Text('Settings',
                             style:
                                 TextStyle(color: Colors.black, fontSize: 15.0)),
                       ),
                       TextButton.icon(
                         onPressed: () {},
-                        icon: const ImageIcon(AssetImage("assets/images/icons/upgrade.png"),
-                          size: 25.0,),
+                        icon: const ImageIcon(
+                          AssetImage("assets/images/icons/upgrade.png"),
+                          size: 25.0,
+                        ),
                         label: const Text('Upgrade Account',
                             style:
                                 TextStyle(color: Colors.black, fontSize: 15.0)),
                       ),
                       TextButton.icon(
                         onPressed: () {},
-                        icon: const ImageIcon(AssetImage("assets/images/icons/switch.png"),
-                          size: 25.0,),
+                        icon: const ImageIcon(
+                          AssetImage("assets/images/icons/switch.png"),
+                          size: 25.0,
+                        ),
                         label: const Text('Switch Account',
                             style:
                                 TextStyle(color: Colors.black, fontSize: 15.0)),
@@ -115,8 +124,10 @@ class ProfileNav {
                                       builder: (context) =>
                                           const AuthScreen())));
                         },
-                        icon: const ImageIcon(AssetImage("assets/images/icons/logout.png"),
-                          size: 25.0,),
+                        icon: const ImageIcon(
+                          AssetImage("assets/images/icons/logout.png"),
+                          size: 25.0,
+                        ),
                         label: const Text('Log out',
                             style:
                                 TextStyle(color: Colors.black, fontSize: 15.0)),

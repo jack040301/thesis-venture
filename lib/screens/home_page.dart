@@ -10,6 +10,7 @@ import 'package:custom_marker/marker_icon.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:main_venture/feat_screens/dialogbutton.dart';
+import 'package:main_venture/feat_screens/prediction_dialog.dart';
 import 'package:main_venture/feat_screens/profilenav.dart';
 import 'package:main_venture/models/auto_complete_results.dart';
 import 'package:main_venture/providers/search_places.dart';
@@ -102,7 +103,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 var data = documents.data() as Map;
                 allmarkers.add(Marker(
                     onTap: () async {
-                      await dialogQuestion().showMyDialog(context);
+                      await DialogQuestion().showMyDialog(context);
                     },
                     infoWindow: InfoWindow(
                       title: data["place"],
@@ -416,7 +417,8 @@ class _HomePageState extends ConsumerState<HomePage> {
             heroTag: null,
             child: const Icon(Icons.house),
             onPressed: () {
-              DialogVenture.showInformationDialog(context);
+              PredictionDialog().showPredictionDialog(context);
+              //  DialogVenture.showInformationDialog(context);
             },
           ),
           FloatingActionButton(
