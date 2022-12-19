@@ -52,7 +52,7 @@ class SetDialog {
                       style: TextStyle(
                           fontFamily: 'Questrial',
                           color: Colors.grey.shade900,
-                          fontSize: 20),
+                          fontSize: 16),
                     ),
                     onPressed: () {
                       showDialog(
@@ -261,7 +261,7 @@ class SetDialog {
                       style: TextStyle(
                           fontFamily: 'Questrial',
                           color: Colors.grey.shade900,
-                          fontSize: 20),
+                          fontSize: 16),
                     ),
                     onPressed: () {
                       showDialog(
@@ -418,7 +418,7 @@ class SetDialog {
                       style: TextStyle(
                           fontFamily: 'Questrial',
                           color: Colors.grey.shade900,
-                          fontSize: 20),
+                          fontSize: 14),
                     ),
                     onPressed: () {
                       showDialog(
@@ -446,7 +446,7 @@ class SetDialog {
                                         style: TextStyle(
                                             fontFamily: 'Questrial',
                                             color: Colors.grey.shade900,
-                                            fontSize: 20),
+                                            fontSize: 16),
                                       ),
                                     ],
                                   ),
@@ -530,7 +530,7 @@ class SetDialog {
                       style: TextStyle(
                           fontFamily: 'Questrial',
                           color: Colors.grey.shade900,
-                          fontSize: 20),
+                          fontSize: 16),
                     ),
                     onPressed: () {
                       showDialog(

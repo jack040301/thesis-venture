@@ -1,5 +1,6 @@
 //import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:main_venture/models/demog_result.dart';
 
 class DialogQuestion {
   Future showMyDialog(BuildContext context) {
@@ -200,6 +201,10 @@ class DialogQuestion {
 //onPressed: null,
 //SAVE USERS' ANSWERS TO THE FIREBASE
                       onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const DemogResult()));
 /*  if (selectedbusinesstype == null) {
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
