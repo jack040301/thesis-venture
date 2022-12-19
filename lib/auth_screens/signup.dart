@@ -6,7 +6,6 @@ import 'package:main_venture/component/customComponent.dart';
 import 'package:main_venture/auth_screens/login.dart';
 import 'package:main_venture/auth_screen.dart';
 import 'package:main_venture/feat_screens/profile_screen.dart';
-//import 'package:email_auth/email_auth.dart';
 import 'package:main_venture/auth_screens/email_verification.dart';
 
 class SignupWidget extends StatefulWidget {

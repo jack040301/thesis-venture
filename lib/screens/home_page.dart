@@ -398,10 +398,10 @@ class _HomePageState extends ConsumerState<HomePage> {
             foregroundColor: Colors.black,
             heroTag: null,
             mini: true,
-            /*   child: FirebaseAuth.instance.currentUser!.photoURL == null
+            child: FirebaseAuth.instance.currentUser!.photoURL == null
                 ? const Image(image: AssetImage('assets/images/pic.png'))
                 : Image.network(
-                    FirebaseAuth.instance.currentUser!.photoURL ?? ""),*/
+                    FirebaseAuth.instance.currentUser!.photoURL ?? ""),
             onPressed: () {
               ProfileNav().showProfileNav(context);
             },
