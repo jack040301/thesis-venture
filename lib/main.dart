@@ -56,9 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return AnimatedSplashScreen(
       splash: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset('assets/animassets/Logo.gif', width: 400, height: 300)
-        ],
+        children: [Image.asset('assets/animassets/Logo.gif')],
       ),
       nextScreen:
           const AuthScreen(), //CHANGE HERE IF YOU WANT TO SEE YOUR SCREEN IMMEDIATELY

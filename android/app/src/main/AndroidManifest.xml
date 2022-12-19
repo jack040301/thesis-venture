@@ -2,7 +2,7 @@
     package="com.example.main_venture">
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <application
-        android:label="main_venture"
+        android:label="Venture"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
