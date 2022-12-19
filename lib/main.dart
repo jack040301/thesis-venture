@@ -57,8 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
       splash: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset('assets/animassets/Venture_Splash.gif',
-              width: 400, height: 300)
+          Image.asset('assets/animassets/Logo.gif', width: 400, height: 300)
         ],
       ),
       nextScreen:

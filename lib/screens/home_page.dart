@@ -415,9 +415,9 @@ class _HomePageState extends ConsumerState<HomePage> {
             foregroundColor: Colors.black,
             mini: true,
             heroTag: null,
-            child: const Icon(Icons.house),
+            child: const Icon(Icons.business),
             onPressed: () {
-              PredictionDialog().showPredictionDialog(context);
+              // PredictionDialog().showPredictionDialog(context);
               //  DialogVenture.showInformationDialog(context);
             },
           ),
