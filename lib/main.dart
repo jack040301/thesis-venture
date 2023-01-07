@@ -6,11 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:main_venture/auth_screen.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:main_venture/feat_screens/landingpage.dart';
-import 'package:main_venture/feat_screens/layer_simulation.dart';
-import 'package:main_venture/feat_screens/slidingpanel.dart';
 import 'package:main_venture/screens/home_page.dart';
-import 'package:main_venture/screens/alertbox.dart';
 
 //IMPORT YOUR FILE HERE IF YOU DONT WANT TO GO TO THE LOGIN PAGE STATE
 //DO NOT CHANGE AUTH SCREEN AFTER THE SPLASH SCREEN IF YOU ARE ACCESSING PROFILE SCREEN PAGE, YOU MUST LOGIN FIRST
@@ -50,6 +46,7 @@ class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _SplashScreenState createState() => _SplashScreenState();
 }
 
@@ -59,9 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return AnimatedSplashScreen(
       splash: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset('assets/animassets/Logo.gif', width: 250, height: 150)
-        ],
+        children: [Image.asset('assets/animassets/Logo.gif')],
       ),
       nextScreen:
           const HomePage(), //CHANGE HERE IF YOU WANT TO SEE YOUR SCREEN IMMEDIATELY
