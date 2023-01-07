@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:main_venture/models/demog_result.dart';
 
 class DialogQuestion {
+  final String markerid; //use this string to get the clicked marker id
+  DialogQuestion(this.markerid); //do not remove this
+
   Future showMyDialog(BuildContext context) {
     return showDialog(
         context: context,
@@ -28,11 +31,12 @@ class DialogQuestion {
                     height: 20.0,
                   ),
 
-                  const Text("What kind of business do you prefer?",
+                  const Text("Enter budget for the area (per square meter)?",
                       style: TextStyle(
                         color: Color.fromARGB(255, 74, 74, 74),
                         fontSize: 18.0,
                       )),
+
                   const SizedBox(
                     height: 10.0,
                   ),

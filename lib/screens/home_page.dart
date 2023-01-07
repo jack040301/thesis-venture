@@ -103,7 +103,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 var data = documents.data() as Map;
                 allmarkers.add(Marker(
                     onTap: () async {
-                      await DialogQuestion().showMyDialog(context);
+                      await DialogQuestion(data["id"]).showMyDialog(context);
                     },
                     infoWindow: InfoWindow(
                       title: data["place"],
