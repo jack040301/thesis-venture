@@ -64,7 +64,7 @@ class _SplashScreenState extends State<SplashScreen> {
         ],
       ),
       nextScreen:
-          const AuthScreen(), //CHANGE HERE IF YOU WANT TO SEE YOUR SCREEN IMMEDIATELY
+          const HomePage(), //CHANGE HERE IF YOU WANT TO SEE YOUR SCREEN IMMEDIATELY
       splashIconSize: 250,
       duration: 3400,
     );

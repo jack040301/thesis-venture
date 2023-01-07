@@ -23,7 +23,7 @@ import 'package:main_venture/feat_screens/settings.dart';
 import '../feat_screens/pinned_location.dart';
 import 'package:geocoding/geocoding.dart';
 
-import '../feat_screens/widgset.dart';
+import '../feat_screens/Prediction.dart';
 
 //Geocoder package is deprecated
 //import 'package:flutter_geocoder/geocoder.dart';
@@ -111,7 +111,9 @@ class _HomePageState extends ConsumerState<HomePage> {
     var data = documents.data() as Map;
     allmarkers.add(Marker(
     onTap: () async {
-    await dialogQuestion().showMyDialog(context);
+
+     // Navigator.push(context, MaterialPageRoute(builder: (context) => PredictionDialog(name: data["place"], address: address, population: population) ))
+     // PredictionDialog().showPredictionDialog(context);
     },
     infoWindow: InfoWindow(title: data["place"],),
     markerId: MarkerId(data["id"]),
@@ -402,12 +404,12 @@ class _HomePageState extends ConsumerState<HomePage> {
             foregroundColor: Colors.black,
             heroTag: null,
             mini: true,
-            child: FirebaseAuth.instance.currentUser!.photoURL == null
-                ? const Image(image: AssetImage('assets/images/pic.png'))
-                : Image.network(
-                    FirebaseAuth.instance.currentUser!.photoURL ?? ""),
+           // child: FirebaseAuth.instance.currentUser!.photoURL == null
+           //     ? const Image(image: AssetImage('assets/images/pic.png'))
+            //    : Image.network(
+            //        FirebaseAuth.instance.currentUser!.photoURL ?? ""),
             onPressed: () {
-              ProfileNav().showProfileNav(context);
+             // ProfileNav().showProfileNav(context);
             },
           ),
           const SizedBox(
