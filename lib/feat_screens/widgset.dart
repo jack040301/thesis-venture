@@ -208,7 +208,8 @@ class DialogQuestion {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const DemogResult()));
+                                builder: (context) =>
+                                    DemogResult(marker: markerid)));
 /*  if (selectedbusinesstype == null) {
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
