@@ -44,6 +44,7 @@ class _DialogVentureState extends State<DialogVenture> {
             return AlertDialog(
               content: Form(
                   key: _formKey,
+                child: SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -272,6 +273,7 @@ class _DialogVentureState extends State<DialogVenture> {
                       ),
                     ],
                   )),
+              ),
             );
           });
         });
@@ -301,8 +303,8 @@ class _DialogVentureState extends State<DialogVenture> {
 //END
             ),
           ),
+          ),
         ),
-      ),
     ));
   }
 
