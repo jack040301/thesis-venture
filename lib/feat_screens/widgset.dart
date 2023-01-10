@@ -1,6 +1,8 @@
 //import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:main_venture/models/demog_result.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class DialogQuestion {
   final String markerid; //use this string to get the clicked marker id
@@ -75,6 +77,7 @@ class DialogQuestion {
                       fillColor: const Color.fromARGB(255, 230, 230, 230),
                     ),
                     dropdownColor: const Color.fromARGB(255, 230, 230, 230),
+
 //value: dropdownValue,
 /*items: _businesstype
                           .map<DropdownMenuItem<String>>((String value) {
@@ -97,7 +100,7 @@ class DialogQuestion {
                       color: Color.fromARGB(255, 74, 74, 74),
                       fontSize: 14.0,
                     ),
-                    items: const [],
+                    items: [],
                   ),
 
 //TEXT BOX 2
@@ -122,7 +125,6 @@ class DialogQuestion {
                             : 'Invalid Input';
                       },
                       decoration: InputDecoration(
-                        hintText: '500,000',
                         filled: true,
                         fillColor: const Color.fromARGB(255, 230, 230, 230),
                         enabledBorder: OutlineInputBorder(
@@ -204,7 +206,11 @@ class DialogQuestion {
                       fillColor: const Color.fromARGB(255, 0, 110, 195),
 //onPressed: null,
 //SAVE USERS' ANSWERS TO THE FIREBASE
+
                       onPressed: () {
+                        // ito yun sana kapag initinallize dapat
+                        //  getMarkerData();
+
                         Navigator.push(
                             context,
                             MaterialPageRoute(

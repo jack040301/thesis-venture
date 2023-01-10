@@ -12,6 +12,34 @@ class DemogResult extends StatefulWidget {
 }
 
 class _DemogResultState extends State<DemogResult> {
+  //////////////////////////////////////////////////////////////////////////////////////////
+  // same din dito nagtry ako na magcall ng another collection kaso di sya gumagana pres para sana sa specific budget kaso ayaw lumabas
+  var businessname, businessbudget;
+  void initState() {
+    super.initState();
+    getBusinessData();
+  }
+
+  // ito yung kunwari sample na budget na nilagay ni user
+
+  getBusinessData() async {
+    CollectionReference business =
+        FirebaseFirestore.instance.collection("business");
+
+    final docRef = business.doc("10000"); //name of document
+    docRef.get().then(
+      (DocumentSnapshot doc) {
+        final data = doc.data() as Map<String, dynamic>;
+
+        businessname = data['name'];
+        businessbudget = data['budget'];
+      },
+      onError: (e) => print("Error getting document: $e"),
+    );
+  }
+
+//////////////////////////////////////////////////////////////////////////////
+
   @override
   Widget build(BuildContext context) {
     CollectionReference mark = FirebaseFirestore.instance.collection("markers");
@@ -31,11 +59,14 @@ class _DemogResultState extends State<DemogResult> {
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
+          String a = data['population'].toString();
+          //double pops = double.parse(a); //DATA FOR POPULATION
+
           return Scaffold(
             backgroundColor: const Color.fromARGB(255, 241, 242, 242),
             appBar: AppBar(
               backgroundColor: Colors.transparent,
-              title: Text(widget.marker),
+              title: Text("$businessname $businessbudget"),
               foregroundColor: const Color.fromARGB(255, 44, 45, 48),
               elevation: 0.0,
               leading: const BackButton(
@@ -61,7 +92,7 @@ class _DemogResultState extends State<DemogResult> {
                               width: 10.0,
                             ),
                             Expanded(
-                              child: Text(data['place'],
+                              child: Text(data['place'], //DATA FOR PLACE
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
                                       color: Color.fromARGB(255, 44, 45, 48),
@@ -77,9 +108,9 @@ class _DemogResultState extends State<DemogResult> {
                           color: Colors.white,
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: const Center(
-                          child: Text("Population", //POPULATION
-                              style: TextStyle(
+                        child: Center(
+                          child: Text(a, //POPULATION
+                              style: const TextStyle(
                                   color: Color.fromARGB(255, 44, 45, 48),
                                   fontSize: 16.0)), // <-- Text
                         ),
@@ -162,8 +193,10 @@ class _DemogResultState extends State<DemogResult> {
                           color: Colors.white,
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: const Center(
-                          child: Text("ideal",
+                        child: Center(
+                          child: Text('a',
+                              // ito dito ko sana sya ilalabas kaso ayaw nya
+                              // baa,
                               style: TextStyle(
                                   color: Color.fromARGB(255, 65, 99, 200),
                                   fontSize: 16.0)), // <-- Text
@@ -225,7 +258,9 @@ class _DemogResultState extends State<DemogResult> {
 
                                 Expanded(
                                   child: TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      getBusinessData();
+                                    },
                                     style: TextButton.styleFrom(
                                       minimumSize:
                                           const Size(150, 50), //<-- SEE HERE
