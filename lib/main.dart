@@ -8,6 +8,8 @@ import 'package:main_venture/auth_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:main_venture/screens/home_page.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+
 //IMPORT YOUR FILE HERE IF YOU DONT WANT TO GO TO THE LOGIN PAGE STATE
 //DO NOT CHANGE AUTH SCREEN AFTER THE SPLASH SCREEN IF YOU ARE ACCESSING PROFILE SCREEN PAGE, YOU MUST LOGIN FIRST
 /* import 'package:main_venture/feat_screens/pinned_location.dart';

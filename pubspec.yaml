@@ -45,6 +45,8 @@ dependencies:
   animated_splash_screen: ^1.3.0
 
   #Sliding Panel
+  #sliding_up_panel: ^2.0.0+1
+
 
 
   #Carousel

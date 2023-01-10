@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-
 class SlidingPanelScreen extends StatefulWidget {
   const SlidingPanelScreen({super.key});
 

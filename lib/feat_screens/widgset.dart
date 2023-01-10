@@ -1,11 +1,39 @@
 //import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:main_venture/models/demog_result.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class DialogQuestion {
+
+  //////////////////////////////////////////////////////////////////////////////////////////
+  //nagtry ako na magcall ng another collection kaso di sya gumagana pres para sana sa specific budget kaso ayaw lumabas
+
+  String ace = '5000'; // ito yung kunwari sample na budget na nilagay ni user
+  String baa = '';
+  String baaa= '';
+
+  getMarkerData() async {
+    baa = 'sss';
+    FirebaseFirestore.instance
+        .collection('business')
+        .doc(ace)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      var data = documentSnapshot.data as Map <String, dynamic>;
+      if (documentSnapshot.exists) {
+        baa = data['Name:'].toString();
+        baaa = data['Budget:'].toString();
+
+      } else {
+        print('Document does not exist on the database');
+      }
+    });
+  }
+//////////////////////////////////////////////////////////////////////////////
   final String markerid; //use this string to get the clicked marker id
   DialogQuestion(this.markerid); //do not remove this
+  CollectionReference mark = FirebaseFirestore.instance.collection("business");
 
   Future showMyDialog(BuildContext context) {
     return showDialog(
@@ -123,7 +151,7 @@ class DialogQuestion {
                             : 'Invalid Input';
                       },
                       decoration: InputDecoration(
-                        hintText: '500,000',
+                        hintText: baa,
                         filled: true,
                         fillColor: const Color.fromARGB(255, 230, 230, 230),
                         enabledBorder: OutlineInputBorder(
@@ -207,7 +235,11 @@ class DialogQuestion {
 //SAVE USERS' ANSWERS TO THE FIREBASE
 
                       onPressed: () {
-                        Navigator.push(
+                        // ito yun sana kapag initinallize dapat
+                      //  getMarkerData();
+
+
+                       Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
