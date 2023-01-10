@@ -104,6 +104,7 @@ class DialogQuestion {
                       fillColor: const Color.fromARGB(255, 230, 230, 230),
                     ),
                     dropdownColor: const Color.fromARGB(255, 230, 230, 230),
+
 //value: dropdownValue,
 /*items: _businesstype
                           .map<DropdownMenuItem<String>>((String value) {
@@ -126,7 +127,7 @@ class DialogQuestion {
                       color: Color.fromARGB(255, 74, 74, 74),
                       fontSize: 14.0,
                     ),
-                    items: const [],
+                    items: [],
                   ),
 
 //TEXT BOX 2
@@ -236,11 +237,10 @@ class DialogQuestion {
 
                       onPressed: () {
                         // ito yun sana kapag initinallize dapat
+
                       //  getMarkerData();
-
-
-                       Navigator.push(
-                            context,
+                        //  getMarkerData();
+                        Navigator.push(context,
                             MaterialPageRoute(
                                 builder: (context) =>
                                     DemogResult(marker: markerid)));
