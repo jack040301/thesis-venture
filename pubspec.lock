@@ -8,7 +8,7 @@ packages:
       sha256: e1d4810cd162d842ab1578239a4279a2402d3c1731c1345286df027c830890f8
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.9"
+    version: "1.0.12"
   animated_splash_screen:
     dependency: "direct main"
     description:
@@ -64,7 +64,8 @@ packages:
       sha256: "869a3f4f2ad0e8d029d9cefd20d2cafd0a50847b74e7aab3a8eec662b0c7d2ee"
       url: "https://pub.dev"
     source: hosted
-    version: "4.1.1"
+    version: "4.2.1"
+
   characters:
     dependency: transitive
     description:
@@ -80,7 +81,7 @@ packages:
       sha256: dd007e4fb8270916820a0d66e24f619266b60773cddd082c6439341645af2659
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.1"
+    version: "2.0.2"
   cli_util:
     dependency: transitive
     description:
@@ -104,7 +105,7 @@ packages:
       sha256: "456e55ca3ba38083efda3a9ef3432e3a43af0f13816caef8792428537f0562a2"
       url: "https://pub.dev"
     source: hosted
-    version: "4.1.0"
+    version: "4.3.1"
   cloud_firestore_platform_interface:
     dependency: transitive
     description:
@@ -112,7 +113,7 @@ packages:
       sha256: ea3d1d12d72ecaa58909d93e50aca53263d3bf06b904a7f0f1dcd5798941c09b
       url: "https://pub.dev"
     source: hosted
-    version: "5.9.0"
+    version: "5.10.1"
   cloud_firestore_web:
     dependency: transitive
     description:
@@ -120,7 +121,7 @@ packages:
       sha256: "3c9a77380e6a053129c2cb6dbe8ef1b708f4350ce0dad220d2c05cd68a2d467f"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.0"
+    version: "3.2.1"
   collection:
     dependency: transitive
     description:
@@ -216,7 +217,7 @@ packages:
       sha256: "721b90fe1a0966add31b47a490672954ac4fe45cfe721fd8a11ffbf4c166f611"
       url: "https://pub.dev"
     source: hosted
-    version: "4.1.4"
+    version: "4.2.5"
   firebase_auth_platform_interface:
     dependency: transitive
     description:
@@ -224,7 +225,7 @@ packages:
       sha256: "535263a55641e705dba63dc4f412e7c3ad39f9061cbfaf82de640092b53f91f2"
       url: "https://pub.dev"
     source: hosted
-    version: "6.11.3"
+    version: "6.11.7"
   firebase_auth_web:
     dependency: transitive
     description:
@@ -232,7 +233,7 @@ packages:
       sha256: "1a7fe4aafed9b29229aa1de6910e0631be94633b4a235e739cc2830a0f110361"
       url: "https://pub.dev"
     source: hosted
-    version: "5.1.3"
+    version: "5.2.4"
   firebase_core:
     dependency: "direct main"
     description:
@@ -240,7 +241,7 @@ packages:
       sha256: "904bd270364cf4dfaf3c58dc6939c4c7ad26e2877d820dc295ade2cd589d70f3"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.0"
+    version: "2.4.1"
   firebase_core_platform_interface:
     dependency: transitive
     description:
@@ -256,7 +257,7 @@ packages:
       sha256: a2acf43001a7fcd2997ce6b487b17666077be507d885c9941dd870a16aef3040
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.1"
+    version: "2.1.0"
   flip_card:
     dependency: "direct main"
     description:
@@ -341,6 +342,7 @@ packages:
       sha256: "371f6e8acb69dbe8aa3e0a50c8a65f8a9352b599134d585cc4923261cb5ae4d6"
       url: "https://pub.dev"
     source: hosted
+
     version: "2.1.1"
   flutter_spinkit:
     dependency: "direct main"
@@ -399,7 +401,7 @@ packages:
       sha256: "460b8c3318c5be1346e7182b848e3c2b83fe65f2f5d404c871ac7e134ee59801"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.1"
+    version: "2.2.3"
   google_maps_flutter_android:
     dependency: transitive
     description:
@@ -407,7 +409,7 @@ packages:
       sha256: "09e7e7fa642ea105bd507bb0c184c3d2fa9f9ad08f55bd8c8d609388d9078328"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.3"
+    version: "2.4.2"
   google_maps_flutter_ios:
     dependency: transitive
     description:
@@ -415,7 +417,7 @@ packages:
       sha256: "43a71553d9973af6886b6984e246dac18b8a62dc59581904d8d1292388b05ea5"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.12"
+    version: "2.1.13"
   google_maps_flutter_platform_interface:
     dependency: transitive
     description:
@@ -423,7 +425,7 @@ packages:
       sha256: cde5d8713fd61f48ba675190be5ab294a022eec966748a2f83063f487d076fbc
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.4"
+    version: "2.2.5"
   google_sign_in:
     dependency: "direct main"
     description:
@@ -431,7 +433,7 @@ packages:
       sha256: d3e31052ce068d0fe2eb9975ee4409266a044592cf67737ec230be07343c6bdf
       url: "https://pub.dev"
     source: hosted
-    version: "5.4.2"
+    version: "5.4.3"
   google_sign_in_android:
     dependency: transitive
     description:
@@ -463,7 +465,7 @@ packages:
       sha256: "5b35c221169a7b3e0fc15043ac09102ef542300ef92f2e1f05d5d8efde263af5"
       url: "https://pub.dev"
     source: hosted
-    version: "0.10.2"
+    version: "0.10.2+1"
   http:
     dependency: "direct main"
     description:
@@ -487,7 +489,7 @@ packages:
       sha256: f6ffe2895e3c86c6ad5a27e6302cf807403463e397cb2f0c580f619ac2fa588b
       url: "https://pub.dev"
     source: hosted
-    version: "3.2.2"
+    version: "3.3.0"
   intl:
     dependency: transitive
     description:
@@ -527,7 +529,7 @@ packages:
       sha256: "9e3c5424008322b83b45c9adcfa4c96dc3e9306c7e82c0ba22fa189a40980cb5"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0"
+    version: "2.2.0"
   matcher:
     dependency: transitive
     description:
@@ -703,7 +705,7 @@ packages:
       sha256: e1e7413d70444ea3096815a60fe5da1b11bda8a9dc4769252cc82c53536f8bcc
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.4"
+    version: "6.0.5"
   quiver:
     dependency: transitive
     description:
@@ -711,7 +713,7 @@ packages:
       sha256: "93982981971e812c94d4a6fa3a57b89f9ec12b38b6380cd3c1370c3b01e4580e"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.0"
+    version: "3.2.1"
   riverpod:
     dependency: transitive
     description:
@@ -719,6 +721,7 @@ packages:
       sha256: "899cd0999b2f3b798349d9b5639cfea81d406c011bd914097145ff92e91b29f9"
       url: "https://pub.dev"
     source: hosted
+
     version: "2.1.1"
   rxdart:
     dependency: transitive
