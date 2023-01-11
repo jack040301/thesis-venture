@@ -8,6 +8,32 @@ class DialogQuestion {
   final String markerid; //use this string to get the clicked marker id
   DialogQuestion(this.markerid); //do not remove this
 
+
+  var businessname, businessbudget;
+  void initState() {
+    
+    getBusinessData();
+  }
+
+  // ito yung kunwari sample na budget na nilagay ni user
+
+  getBusinessData() async {
+    CollectionReference business =
+        FirebaseFirestore.instance.collection("business");
+
+    final docRef = business.doc("10000"); //name of document
+    docRef.get().then(
+      (DocumentSnapshot doc) {
+        final data = doc.data() as Map<String, dynamic>;
+
+        businessname = data['name'];
+        businessbudget = data['budget'];
+      },
+      onError: (e) => print("Error getting document: $e"),
+    );
+  }
+
+
   Future showMyDialog(BuildContext context) {
     return showDialog(
         context: context,
