@@ -6,6 +6,7 @@ import 'package:main_venture/component/customComponent.dart';
 import 'package:main_venture/auth_screens/login.dart';
 import 'package:main_venture/auth_screen.dart';
 import 'package:main_venture/feat_screens/profile_screen.dart';
+import 'package:main_venture/auth_screens/email_verification.dart';
 
 class SignupWidget extends StatefulWidget {
   const SignupWidget({Key? key}) : super(key: key);
@@ -15,15 +16,44 @@ class SignupWidget extends StatefulWidget {
 }
 
 class _SignupWidgetState extends State<SignupWidget> {
+  //final _emailForgotController = TextEditingController();
+
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  //final otpcontroller = TextEditingController();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
+
+  // void sendotp() async {
+  //   EmailAuth.sessionName = "Test Session";
+  //   //EmailAuth emailAuth =  new EmailAuth(sessionName: " Authentication");
+  //   bool res =
+  //       await EmailAuth.sendOtp(receiverMail: emailController.value.text);
+  //   if (res) {
+  //     print("OTP sent");
+  //   } else {
+  //     print("We could not send OTP");
+  //   }
+  // }
+
+  // void verifyotp() async {
+  //   var res = EmailAuth.validate(
+  //       receiverMail: emailController.text, userOTP: otpcontroller.text);
+  //   if (res) {
+  //     print("OTP verified");
+  //   } else {
+  //     print("Invalid OTP");
+  //   }
+  // }
+
+  var tSnackBar = const SnackBar(
+    content: Text('Email Field Must Fill!'),
+  );
 
   @override
   void initState() {
@@ -52,8 +82,8 @@ class _SignupWidgetState extends State<SignupWidget> {
             const SizedBox(
               height: 20.0,
             ),
-            const Align(
-                alignment: Alignment.topRight, child: Icon(Icons.close)),
+            /*    const Align(
+                alignment: Alignment.topRight, child: Icon(Icons.close)), */
             Ink.image(
                 image: const AssetImage('assets/images/VentureLogo.png'),
                 height: 50),
@@ -342,6 +372,8 @@ class _SignupWidgetState extends State<SignupWidget> {
   }
 
   Future<void> createAccount() async {
+    //emailverificationscreen();
+
     print('Create account executed');
 
     try {
@@ -349,7 +381,6 @@ class _SignupWidgetState extends State<SignupWidget> {
           passwordController.text.isNotEmpty &
           firstNameController.text.isNotEmpty &
           lastNameController.text.isNotEmpty) {
-
         print('The fields is not empty');
         await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
@@ -363,7 +394,6 @@ class _SignupWidgetState extends State<SignupWidget> {
                 }));
       } else {
         print('Fields are empty');
-
       }
     } on FirebaseAuthException catch (e) {
       /// Showing Error with AlertDialog if the user enter the wrong Email and Password
@@ -419,7 +449,8 @@ Future<void> rmSignup(BuildContext context) async {
   try {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const ProfileScreen()),
+      //MaterialPageRoute(builder: (context) => const ProfileScreen()),
+      MaterialPageRoute(builder: (context) => Emailverificationscreen()),
     );
 
     /*Navigator.removeRoute(

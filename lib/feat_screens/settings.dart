@@ -88,6 +88,7 @@ class SetDialog {
                         fontFamily: 'Questrial',
                         color: Colors.grey.shade900,
                         fontSize: 20),
+
                   ),
                   onPressed: () {
                     Navigator.push(context,
@@ -108,6 +109,7 @@ class SetDialog {
                         MaterialPageRoute(builder: (context) => TermsCondiScreen()));
                   },
                 ),
+
               ],
             )
           ),

@@ -5,6 +5,8 @@ import 'package:main_venture/auth_screen.dart';
 import 'package:main_venture/feat_screens/pinned_location.dart';
 import 'package:main_venture/feat_screens/pinnedlocation_new.dart';
 
+
+import 'profile_screen.dart';
 import 'settings.dart';
 
 //THIS IS THE DIALOG OF PROFILE
@@ -128,12 +130,14 @@ class ProfileNav {
                         ),
                       )
                     ])));
+
           });
         });
   }
 }
 
-Future<void> singingOut() async {
+/* Future<void> singingOut() async {
   await GoogleSignIn().signOut();
   await FirebaseAuth.instance.signOut();
 }
+

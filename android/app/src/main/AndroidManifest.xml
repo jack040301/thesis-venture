@@ -2,13 +2,15 @@
     package="com.example.main_venture">
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <application
-        android:label="main_venture"
+        android:label="Venture"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+        `<meta-data android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyADCsauZ2OnwP2WH41KHAL6IgpG3Mnvl64" />`
+
   <meta-data android:name="com.google.android.geo.API_KEY"
         android:value="AIzaSyADCsauZ2OnwP2WH41KHAL6IgpG3Mnvl64" />
-    <!--    `<meta-data android:name="com.google.android.geo.API_KEY"
-        android:value="@string/key" />` --> <!--please edit this on your local file to access the map-->
         <activity
             android:name=".MainActivity"
             android:exported="true"

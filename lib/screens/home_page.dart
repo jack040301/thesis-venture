@@ -1,25 +1,25 @@
 import 'dart:async';
 import 'dart:collection';
-
-import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:firebase_core/firebase_core.dart';
 //import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-
+import 'package:custom_marker/marker_icon.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:main_venture/feat_screens/dialogbutton.dart';
+import 'package:main_venture/feat_screens/prediction_dialog.dart';
 import 'package:main_venture/feat_screens/profilenav.dart';
 import 'package:main_venture/models/auto_complete_results.dart';
 import 'package:main_venture/providers/search_places.dart';
 import 'package:main_venture/services/maps_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:main_venture/feat_screens/settings.dart';
-
-import '../feat_screens/pinned_location.dart';
 import 'package:geocoding/geocoding.dart';
+
+import '../feat_screens/widgset.dart';
 
 //Geocoder package is deprecated
 //import 'package:flutter_geocoder/geocoder.dart';
@@ -40,18 +40,19 @@ class _HomePageState extends ConsumerState<HomePage> {
   Timer? _debounce;
 
 // toggling Ui as we need
+  bool searchToggle = true;
 //
-  bool searchToggle = false;
+//  bool searchToggle = false;
   bool radiusSlider = false;
   bool cardTapped = false;
   bool pressedNear = false;
   bool getDirections = false;
+  // bool getmarker = true;
 
 // Markers set
   Set<Marker> _markers = Set<Marker>();
   Set<Marker> allmarkers = HashSet<Marker>();
-
-  Map<MarkerId, Marker> _markerss = <MarkerId, Marker>{};
+  //Map<MarkerId, Marker> _markerss = <MarkerId, Marker>{};
   Set<Polyline> _polylines = Set<Polyline>();
   int markerIdCounter = 1;
   int polylineIdCounter = 1;
@@ -91,32 +92,6 @@ class _HomePageState extends ConsumerState<HomePage> {
         color: Colors.blue,
         points: points.map((e) => LatLng(e.latitude, e.longitude)).toList()));
   }
-/*
-  Widget loadMap (){
-    return StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('markers').snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) return Text('Loading maps... Please Wait');
-          for (int i=0; i<snapshot.data.docs.length; i++){
-            _marker.add(new Marker (
-              width: 45.0,
-              height: 45.0,
-              point: new LatLng(snapshot.data.documents[i]['coords'].latitude,
-                  snapshot.data.documents[i]['coords'].longitude),
-              builder: (context) => new Container(
-                child: IconButton(
-                  icon: Icon(Icons.location_on),
-                  color: Colors.blue,
-                  iconSize: 45.0,
-                  onPressed: () {
-                    print(snapshot.data.documents[i] ['place']);
-                  },
-                ),
-              )));
-          }
-        },
-    );
-  } */
 
 //Show marker from the firestore database
   getMarkerData() async {
@@ -124,12 +99,20 @@ class _HomePageState extends ConsumerState<HomePage> {
         .collection("markers")
         .get()
         .then((QuerySnapshot querySnapshot) => {
-              querySnapshot.docs.forEach((documents) {
+              querySnapshot.docs.forEach((documents) async {
                 var data = documents.data() as Map;
-
                 allmarkers.add(Marker(
-                    infoWindow: InfoWindow(title: data["place"]),
+                    onTap: () async {
+                      await DialogQuestion(data["id"]).showMyDialog(context);
+                    },
+                    infoWindow: InfoWindow(
+                      title: data["place"],
+                    ),
                     markerId: MarkerId(data["id"]),
+                    icon: await MarkerIcon.pictureAsset(
+                        assetPath: 'assets/images/icons/venture.png',
+                        width: 100,
+                        height: 100),
                     position: LatLng(
                         data["coords"].latitude, data["coords"].longitude)));
               })
@@ -139,6 +122,34 @@ class _HomePageState extends ConsumerState<HomePage> {
       allmarkers;
       print(allmarkers.toString());
     });
+  }
+
+//to automatically show marker to map
+  Widget getmarker(BuildContext context) {
+    getMarkerData();
+    return Text('');
+  }
+
+  Widget builds(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(15.0, 150.0, 15.0, 5.0),
+      child: AlertDialog(
+        title: const Text("Alert Dialog Box"),
+        content: const Text("You have raised a Alert Dialog Box"),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.pop;
+            },
+            child: Container(
+              color: Colors.green,
+              padding: const EdgeInsets.all(14),
+              child: const Text("okay"),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -169,61 +180,66 @@ class _HomePageState extends ConsumerState<HomePage> {
                     },
                   ),
                 ),
-                searchToggle
-                    ? Padding(
-                        padding:
-                            const EdgeInsets.fromLTRB(15.0, 40.0, 15.0, 5.0),
-                        child: Column(children: [
-                          Container(
-                            height: 50.0,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: Colors.white,
-                            ),
-                            child: TextFormField(
-                              controller: searchController,
-                              decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 20.0, vertical: 15.0),
-                                  border: InputBorder.none,
-                                  hintText: 'Search',
-                                  suffixIcon: IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          searchToggle = false;
-                                          searchController.text = '';
-                                          _markers = {};
-                                          searchFlag.toggleSearch();
-                                        });
-                                      },
-                                      icon: const Icon(Icons.close))),
-                              onChanged: (value) {
-                                if (_debounce?.isActive ?? false) {
-                                  _debounce?.cancel();
-                                }
-                                _debounce =
-                                    Timer(const Duration(milliseconds: 700),
-                                        () async {
-                                  if (value.length > 2) {
-                                    if (!searchFlag.searchToggle) {
-                                      searchFlag.toggleSearch();
-                                      _markers = {};
+                pressedNear
+                    ? builds(context)
+                    : searchToggle
+                        ? Padding(
+                            padding: const EdgeInsets.fromLTRB(
+                                15.0, 40.0, 15.0, 5.0),
+                            child: Column(children: [
+                              Container(
+                                height: 50.0,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  color: Colors.white,
+                                ),
+                                child: TextFormField(
+                                  controller: searchController,
+                                  decoration: InputDecoration(
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 20.0, vertical: 15.0),
+                                      border: InputBorder.none,
+                                      hintText: 'Search',
+                                      suffixIcon: IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              searchToggle = false;
+                                              searchController.text = '';
+                                              _markers = {};
+                                              searchFlag.toggleSearch();
+                                            });
+                                          },
+                                          icon: const Icon(Icons.close))),
+                                  onChanged: (value) {
+                                    if (_debounce?.isActive ?? false) {
+                                      _debounce?.cancel();
                                     }
-                                    List<AutoCompleteResult> searchResults =
-                                        await MapServices().searchPlaces(value);
+                                    _debounce =
+                                        Timer(const Duration(milliseconds: 700),
+                                            () async {
+                                      if (value.length > 2) {
+                                        if (!searchFlag.searchToggle) {
+                                          searchFlag.toggleSearch();
+                                          _markers = {};
+                                        }
+                                        List<AutoCompleteResult> searchResults =
+                                            await MapServices()
+                                                .searchPlaces(value);
 
-                                    allSearchResults.setResults(searchResults);
-                                  } else {
-                                    List<AutoCompleteResult> emptyList = [];
-                                    allSearchResults.setResults(emptyList);
-                                  }
-                                });
-                              },
-                            ),
-                          ),
-                        ]),
-                      )
-                    : Container(),
+                                        allSearchResults
+                                            .setResults(searchResults);
+                                      } else {
+                                        List<AutoCompleteResult> emptyList = [];
+                                        allSearchResults.setResults(emptyList);
+                                      }
+                                    });
+                                  },
+                                ),
+                              ),
+                            ]),
+                          )
+                        : Container(),
                 searchFlag.searchToggle
                     ? allSearchResults.allReturnedResults.length != 0
                         ? Positioned(
@@ -282,6 +298,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                               ),
                             ))
                     : Container(),
+                getmarker(context), //to automatically show marker to map
                 getDirections
                     ? Padding(
                         padding: const EdgeInsets.fromLTRB(15.0, 40.0, 15.0, 5),
@@ -372,48 +389,75 @@ class _HomePageState extends ConsumerState<HomePage> {
           ],
         ),
       ),
-      floatingActionButton: FabCircularMenu(
-          alignment: Alignment.bottomLeft,
-          fabColor: Colors.blue,
-          fabOpenColor: Colors.red.shade100,
-          ringDiameter: 250.0,
-          ringWidth: 60.0,
-          ringColor: Colors.blue.shade50,
-          fabSize: 60.0,
-          children: [
-            IconButton(
-                onPressed: () {
-                  setState(() {
-                    searchToggle = true;
-                    radiusSlider = false;
-                    pressedNear = false;
-                    cardTapped = false;
-                    getDirections = false;
-                  });
-                },
-                icon: const Icon(Icons.search)),
-            IconButton(
-                onPressed: () {
-                  setState(() {
-                    searchToggle = false;
-                    radiusSlider = false;
-                    pressedNear = false;
-                    cardTapped = false;
-                    getDirections = true;
-                  });
-                },
-                icon: const Icon(Icons.navigation)),
-            IconButton(
-                onPressed: () {
-                  getMarkerData(); //function the marker from the firestore database
-                },
-                icon: const Icon(Icons.map)),
-            IconButton(
-                onPressed: () {
-                  ProfileNav().showProfileNav(context);
-                },
-                icon: const Icon(Icons.person)),
-          ]),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
+      floatingActionButton: Column(
+        children: [
+          FloatingActionButton(
+            disabledElevation: 0,
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            heroTag: null,
+            mini: true,
+            child: FirebaseAuth.instance.currentUser!.photoURL == null
+                ? const Image(image: AssetImage('assets/images/pic.png'))
+                : Image.network(
+                    FirebaseAuth.instance.currentUser!.photoURL ?? ""),
+            onPressed: () {
+              ProfileNav().showProfileNav(context);
+            },
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          FloatingActionButton(
+            disabledElevation: 0,
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            mini: true,
+            heroTag: null,
+            child: const Icon(Icons.business),
+            onPressed: () {
+              // PredictionDialog().showPredictionDialog(context);
+              //  DialogVenture.showInformationDialog(context);
+            },
+          ),
+          FloatingActionButton(
+            disabledElevation: 0,
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            mini: true,
+            heroTag: null,
+            child: const Icon(Icons.search),
+            onPressed: () {
+              setState(() {
+                searchToggle = true;
+                radiusSlider = false;
+                pressedNear = false;
+                cardTapped = false;
+                getDirections = false;
+              });
+            },
+          ),
+          FloatingActionButton(
+            disabledElevation: 0,
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            mini: true,
+            heroTag: null,
+            child: const Icon(Icons.navigation),
+            onPressed: () {
+              setState(() {
+                searchToggle = false;
+                radiusSlider = false;
+                pressedNear = false;
+                cardTapped = false;
+                getDirections = true;
+              });
+            },
+          ),
+        ],
+      ),
+      resizeToAvoidBottomInset: false,
     );
   }
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-
+//import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class LandingPageScreen extends StatefulWidget {
   const LandingPageScreen({super.key});
@@ -14,35 +13,30 @@ class _LandingPageScreenState extends State<LandingPageScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
-        floatingActionButton: Column(
+      floatingActionButton: Column(
         children: [
           FloatingActionButton(
-          disabledElevation: 0,
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          mini: true,
-          child: Icon(
-              Icons.person
+            disabledElevation: 0,
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            mini: true,
+            child: Icon(Icons.person),
+            onPressed: () {},
           ),
-          onPressed: () {},
-        ),
-      SizedBox(
-        height: 10,
+          SizedBox(
+            height: 10,
+          ),
+          FloatingActionButton(
+            disabledElevation: 0,
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            mini: true,
+            child: Icon(Icons.house),
+            onPressed: () {},
+          ),
+        ],
       ),
-      FloatingActionButton(
-        disabledElevation: 0,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        mini: true,
-        child: Icon(
-            Icons.house
-        ),
-        onPressed: () {},
-      ),
-    ],
-        ),
-      body:
-      Padding(
+      body: Padding(
         padding: const EdgeInsets.all(0.0),
         child: SingleChildScrollView(
           child: Column(
@@ -53,20 +47,22 @@ class _LandingPageScreenState extends State<LandingPageScreen> {
                 margin: const EdgeInsets.fromLTRB(20, 630, 20, 0),
                 child: TextField(
                   decoration: InputDecoration(
-                    contentPadding:EdgeInsets.fromLTRB(20, 10, 30, 10),
-                    prefixIcon: Icon(Icons.search, color: const Color.fromARGB(255,102, 103, 105)),
-                    hintText: "Search an area around Caloocan", hintStyle: TextStyle(fontSize: 14.0),
+                    contentPadding: EdgeInsets.fromLTRB(20, 10, 30, 10),
+                    prefixIcon: Icon(Icons.search,
+                        color: const Color.fromARGB(255, 102, 103, 105)),
+                    hintText: "Search an area around Caloocan",
+                    hintStyle: TextStyle(fontSize: 14.0),
                     filled: true,
                     fillColor: Colors.white,
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-                      borderSide: BorderSide(
-                          color: Colors.transparent),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(20.0)),
+                      borderSide: BorderSide(color: Colors.transparent),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-                      borderSide: BorderSide(
-                          color: Colors.transparent),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(20.0)),
+                      borderSide: BorderSide(color: Colors.transparent),
                     ),
                   ),
                 ),

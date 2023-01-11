@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
+//import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class LayerSimulationScreen extends StatefulWidget {
   const LayerSimulationScreen({super.key});
@@ -32,11 +32,12 @@ class _LayerSimulationScreenState extends State<LayerSimulationScreen> {
                 Container(
                   margin: const EdgeInsets.fromLTRB(50, 25, 50, 0),
                   child: TextField(
-                    textAlign: TextAlign. center,
+                    textAlign: TextAlign.center,
                     decoration: InputDecoration(
-                        hintStyle: TextStyle(color: Color.fromARGB(255, 173, 172, 172),),
-                        hintText: "MY BUSINESS"
-                    ),
+                        hintStyle: TextStyle(
+                          color: Color.fromARGB(255, 173, 172, 172),
+                        ),
+                        hintText: "MY BUSINESS"),
                   ),
                 ),
                 const SizedBox(
@@ -71,7 +72,7 @@ class _LayerSimulationScreenState extends State<LayerSimulationScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5.0)),
                     child: const Text("Save Changes",
-                        textAlign: TextAlign. center,
+                        textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white, fontSize: 14.0)),
                   ),
                 ),
@@ -81,4 +82,3 @@ class _LayerSimulationScreenState extends State<LayerSimulationScreen> {
     );
   }
 }
-
