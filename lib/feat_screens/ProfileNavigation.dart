@@ -42,73 +42,71 @@ class _ProfileNavigationState extends State<ProfileNavigation> {
                           SizedBox(
                             height: 20.0,
                           ),
-                    Container(
-                        width: double.maxFinite,
-                        child: TextButtonTheme(
-                          data: TextButtonThemeData(
-                            style: TextButton.styleFrom(
-                              primary: Colors.black,
-                              alignment: Alignment.centerLeft,
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-
-
-
-
-                              TextButton.icon(
-                                onPressed: () {},
-                                icon: Icon(Icons.account_circle_outlined,
-                                size: 50.0,),
-                                label: Text('Juan Dela Cruz',
-                                    style: TextStyle(
-                                    color: Colors.black, fontSize: 30.0)),),
-                              SizedBox(
-                                height: 20.0,
+                          Container(
+                            width: double.maxFinite,
+                            child: TextButtonTheme(
+                              data: TextButtonThemeData(
+                                style: TextButton.styleFrom(
+                                  primary: Colors.black,
+                                  alignment: Alignment.centerLeft,
+                                ),
                               ),
-                              TextButton.icon(
-                                onPressed: () {},
-                                icon: Icon(Icons.person_pin_circle_outlined,
-                                  size: 30.0,),
-                                label: Text('      Pinned Locations',
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 20.0)),),
-                              TextButton.icon(
-                                onPressed: () {},
-                                icon: Icon(Icons.settings,
-                                  size: 30.0,),
-                                label: Text('      Settings',
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 20.0)),),
-                              TextButton.icon(
-                                onPressed: () {},
-                                icon: Icon(Icons.upgrade,
-                                  size: 30.0,),
-                                label: Text('      Upgrade Account',
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 20.0)),),
-                              TextButton.icon(
-                                onPressed: () {},
-                                icon: Icon(Icons.switch_account,
-                                  size: 30.0,),
-                                label: Text('      Switch Account',
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 20.0)),),
-                              TextButton.icon(
-                                onPressed: () {},
-                                icon: Icon(Icons.logout,
-                                  size: 30.0,),
-                                label: Text('      Log out',
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 20.0)),),
-                            ],
-                          ),
-                        ),
-                        )
-                ]
-            )));
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+
+
+                                  TextButton.icon(
+                                    onPressed: () {},
+                                    icon: Icon(Icons.account_circle_outlined,
+                                      size: 50.0,),
+                                    label: Text('Juan Dela Cruz',
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 30.0)),),
+                                  SizedBox(
+                                    height: 20.0,
+                                  ),
+                                  TextButton.icon(
+                                    onPressed: () {},
+                                    icon: Icon(Icons.person_pin_circle_outlined,
+                                      size: 30.0,),
+                                    label: Text('      Pinned Locations',
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 20.0)),),
+                                  TextButton.icon(
+                                    onPressed: () {},
+                                    icon: Icon(Icons.settings,
+                                      size: 30.0,),
+                                    label: Text('      Settings',
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 20.0)),),
+                                  TextButton.icon(
+                                    onPressed: () {},
+                                    icon: Icon(Icons.upgrade,
+                                      size: 30.0,),
+                                    label: Text('      Upgrade Account',
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 20.0)),),
+                                  TextButton.icon(
+                                    onPressed: () {},
+                                    icon: Icon(Icons.switch_account,
+                                      size: 30.0,),
+                                    label: Text('      Switch Account',
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 20.0)),),
+                                  TextButton.icon(
+                                    onPressed: () {},
+                                    icon: Icon(Icons.logout,
+                                      size: 30.0,),
+                                    label: Text('      Log out',
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 20.0)),),
+                                ],
+                              ),
+                            ),
+                          )
+                        ]
+                    )));
           });
         });
   }
