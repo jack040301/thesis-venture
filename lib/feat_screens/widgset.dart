@@ -6,41 +6,45 @@ import 'package:firebase_core/firebase_core.dart';
 
 class DialogQuestion {
 
-  //////////////////////////////////////////////////////////////////////////////////////////
-  //nagtry ako na magcall ng another collection kaso di sya gumagana pres para sana sa specific budget kaso ayaw lumabas
 
-  String ace = '5000'; // ito yung kunwari sample na budget na nilagay ni user
-  String baa = '';
-  String baaa= '';
-
-  getMarkerData() async {
-    baa = 'sss';
-    FirebaseFirestore.instance
-        .collection('business')
-        .doc(ace)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      var data = documentSnapshot.data as Map <String, dynamic>;
-      if (documentSnapshot.exists) {
-        baa = data['Name:'].toString();
-        baaa = data['Budget:'].toString();
-
-      } else {
-        print('Document does not exist on the database');
-      }
-    });
-  }
 //////////////////////////////////////////////////////////////////////////////
   final String markerid; //use this string to get the clicked marker id
   DialogQuestion(this.markerid); //do not remove this
   CollectionReference mark = FirebaseFirestore.instance.collection("business");
 
+
+  var businessname, businessbudget;
+  void initState() {
+    
+    getBusinessData();
+  }
+
+  // ito yung kunwari sample na budget na nilagay ni user
+
+  getBusinessData() async {
+    CollectionReference business =
+        FirebaseFirestore.instance.collection("business");
+
+    final docRef = business.doc("10000"); //name of document
+    docRef.get().then(
+      (DocumentSnapshot doc) {
+        final data = doc.data() as Map<String, dynamic>;
+
+        businessname = data['name'];
+        businessbudget = data['budget'];
+      },
+      onError: (e) => print("Error getting document: $e"),
+    );
+  }
+
+
   Future showMyDialog(BuildContext context) {
     return showDialog(
         context: context,
         builder: (context) {
-// final TextEditingController _textEditingController =
-//     TextEditingController();
+ final TextEditingController areaBudgetController =
+     TextEditingController();
+ final String budget= (areaBudgetController.text.toString());
 //bool isChecked = false;
           return StatefulBuilder(builder: (context, setState) {
             return AlertDialog(
@@ -144,7 +148,7 @@ class DialogQuestion {
                     height: 10.0,
                   ),
                   TextFormField(
-//controller: areaBudgetController,
+                  controller: areaBudgetController,
                       keyboardType: TextInputType.number,
                       validator: (areaBudgetController) {
                         return areaBudgetController!.isNotEmpty
@@ -152,7 +156,7 @@ class DialogQuestion {
                             : 'Invalid Input';
                       },
                       decoration: InputDecoration(
-                        hintText: baa,
+                        hintText: "",
                         filled: true,
                         fillColor: const Color.fromARGB(255, 230, 230, 230),
                         enabledBorder: OutlineInputBorder(
@@ -243,7 +247,7 @@ class DialogQuestion {
                         Navigator.push(context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    DemogResult(marker: markerid)));
+                                    DemogResult(marker: markerid, budget: budget)));
 /*  if (selectedbusinesstype == null) {
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(

@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:main_venture/auth_screen.dart';
 import 'package:main_venture/feat_screens/pinned_location.dart';
-import 'package:main_venture/feat_screens/prediction_dialog.dart';
+import 'package:main_venture/feat_screens/pinnedlocation_new.dart';
 
 import 'profile_screen.dart';
 import 'settings.dart';
@@ -58,17 +58,28 @@ class ProfileNav {
                               height: 50.0,
                               width: 50.0,
                             ),
-                      Text(
-                          FirebaseAuth.instance.currentUser!.displayName ??
-                              "Default Name",
-                          style: const TextStyle(
-                              color: Colors.black, fontSize: 30.0)),
+                      TextButton.icon(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.account_circle_outlined,
+                          size: 50.0,
+                        ),
+                        label: Text(
+                            FirebaseAuth.instance.currentUser!.displayName ??
+                                "Default Name",
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 30.0)),
+                      ),
                       const SizedBox(
                         height: 20.0,
                       ),
-                      /*    TextButton.icon(
+                      TextButton.icon(
                         onPressed: () {
-                          PredictionDialog().showPredictionDialog(context);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      PinnedLocationScreen()));
                         },
                         icon: const ImageIcon(
                           AssetImage("assets/images/icons/savedpin.png"),
@@ -77,7 +88,7 @@ class ProfileNav {
                         label: const Text('Pinned Locations',
                             style:
                                 TextStyle(color: Colors.black, fontSize: 15.0)),
-                      ), */
+                      ),
                       TextButton.icon(
                         onPressed: () {
                           SetDialog().showMyDialog(context);
@@ -112,10 +123,11 @@ class ProfileNav {
                       ),
                       TextButton.icon(
                         onPressed: () async {
-                          await logOut().then((value) => Navigator.of(context,
-                                  rootNavigator: true)
-                              .pushReplacement(MaterialPageRoute(
-                                  builder: (context) => const AuthScreen())));
+                          await singingOut().then((value) =>
+                              Navigator.of(context, rootNavigator: true)
+                                  .pushReplacement(MaterialPageRoute(
+                                      builder: (context) =>
+                                          const AuthScreen())));
                         },
                         icon: const ImageIcon(
                           AssetImage("assets/images/icons/logout.png"),
@@ -135,8 +147,7 @@ class ProfileNav {
   }
 }
 
-/* Future<void> singingOut() async {
+Future<void> singingOut() async {
   await GoogleSignIn().signOut();
   await FirebaseAuth.instance.signOut();
 }
- */

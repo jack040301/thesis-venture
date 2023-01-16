@@ -70,6 +70,11 @@ class _HomePageState extends ConsumerState<HomePage> {
     zoom: 14.4746,
   );
 
+  void initState() {
+    super.initState();
+    getMarkerData();
+  }
+
   void _setMarker(point) {
     var counter = markerIdCounter++;
 
@@ -128,10 +133,10 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
 //to automatically show marker to map
-  Widget getmarker(BuildContext context) {
+   Widget getmarker(BuildContext context) {
     getMarkerData();
     return Text('');
-  }
+  } 
 
   Widget builds(BuildContext context) {
     return Padding(
@@ -301,7 +306,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                               ),
                             ))
                     : Container(),
-                getmarker(context), //to automatically show marker to map
+
+               getmarker(context), //to automatically show marker to map
                 getDirections
                     ? Padding(
                         padding: const EdgeInsets.fromLTRB(15.0, 40.0, 15.0, 5),

@@ -6,6 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:main_venture/auth_screen.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:main_venture/feat_screens/ProfileNavigation.dart';
+import 'package:main_venture/feat_screens/landingpage.dart';
+import 'package:main_venture/feat_screens/layer_simulation.dart';
+import 'package:main_venture/feat_screens/pinned_location.dart';
+import 'package:main_venture/feat_screens/pinnedlocation_new.dart';
+import 'package:main_venture/feat_screens/profilenav.dart';
+import 'package:main_venture/feat_screens/slidingpanel.dart';
+
 import 'package:main_venture/screens/home_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';

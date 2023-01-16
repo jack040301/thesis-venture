@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import '../component/loading.dart';
 
 class DemogResult extends StatefulWidget {
-  const DemogResult({super.key, required this.marker});
-
+  const DemogResult({super.key, required this.marker, required this.budget});
   final String marker;
+  final String budget;
   @override
   State<DemogResult> createState() => _DemogResultState();
 }
@@ -14,18 +14,12 @@ class DemogResult extends StatefulWidget {
 class _DemogResultState extends State<DemogResult> {
 
 
-  //////////////////////////////////////////////////////////////////////////////////////////
-  // same din dito nagtry ako na magcall ng another collection kaso di sya gumagana pres para sana sa specific budget kaso ayaw lumabas
-
   String ace = '5000'; // ito yung kunwari sample na budget na nilagay ni user
- // String baa = '';
-  String baaa= '';
+  // String baa = '';
+  String baaa = '';
 
-
-
-  //////////////////////////////////////////////////////////////////////////////////////////
-  // same din dito nagtry ako na magcall ng another collection kaso di sya gumagana pres para sana sa specific budget kaso ayaw lumabas
   var businessname, businessbudget;
+
   void initState() {
     super.initState();
     getBusinessData();
@@ -35,11 +29,13 @@ class _DemogResultState extends State<DemogResult> {
 
   getBusinessData() async {
     CollectionReference business =
-        FirebaseFirestore.instance.collection("business");
+    FirebaseFirestore.instance.collection("business");
 
-    final docRef = business.doc("10000"); //name of document
+    final docRef = business.get("10000"); //name of document
     docRef.get().then(
-      (DocumentSnapshot doc) {
+          (QuerySnapshot doc) {
+
+
         final data = doc.data() as Map<String, dynamic>;
 
         businessname = data['name'];
@@ -53,7 +49,6 @@ class _DemogResultState extends State<DemogResult> {
 
   @override
   Widget build(BuildContext context) {
-
     CollectionReference mark = FirebaseFirestore.instance.collection("markers");
     final String con = widget.marker.trim(); //this still has problem
 
@@ -73,7 +68,7 @@ class _DemogResultState extends State<DemogResult> {
 
           snapshot.data!.data() as Map<String, dynamic>;
 
-              snapshot.data!.data() as Map<String, dynamic>;
+          snapshot.data!.data() as Map<String, dynamic>;
           String a = data['population'].toString();
           //double pops = double.parse(a); //DATA FOR POPULATION
 
@@ -170,7 +165,8 @@ class _DemogResultState extends State<DemogResult> {
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                         child: const Center(
                           child: Text(
-                              "Budget required for the area", //BUDGET REQUIRED FOR THE AREA
+                              "Budget required for the area",
+                              //BUDGET REQUIRED FOR THE AREA
                               style: TextStyle(
                                   color: Color.fromARGB(255, 44, 45, 48),
                                   fontSize: 16.0)), // <-- Text
@@ -212,9 +208,9 @@ class _DemogResultState extends State<DemogResult> {
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
 
-                        child:  Center(
+                        child: Center(
                           child: Text('a',
-                            // ito dito ko sana sya ilalabas kaso ayaw nya
+                              // ito dito ko sana sya ilalabas kaso ayaw nya
                               //baa,
                               style: TextStyle(
                                   color: Color.fromARGB(255, 65, 99, 200),
@@ -280,7 +276,6 @@ class _DemogResultState extends State<DemogResult> {
                                     onPressed: () {
                                       //getMarkerData();
                                       getBusinessData();
-
                                     },
                                     style: TextButton.styleFrom(
                                       minimumSize:
@@ -304,7 +299,4 @@ class _DemogResultState extends State<DemogResult> {
       },
     );
   }
-//////////////////////////////////////////////////////////////////////////////
-
-
-
+}
