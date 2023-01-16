@@ -36,8 +36,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-<<<<<<< Updated upstream
-=======
+
   getwidget: ^3.0.1
 
   decorated_dropdownbutton: ^0.0.3
@@ -50,14 +49,14 @@ dependencies:
 
   #Carousel
  # carousel_slider: ^2.1.0
->>>>>>> Stashed changes
+
 
   http:
 
   lottie:
   dartz:
   google_maps_flutter:
-  geoflutterfire2: ^2.3.13
+  geoflutterfire2:
   flutter_riverpod:
   fab_circular_menu:
   flutter_polyline_points:
@@ -74,10 +73,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
