@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:main_venture/auth_screen.dart';
-import 'package:main_venture/feat_screens/pinned_location.dart';
 import 'package:main_venture/feat_screens/pinnedlocation_new.dart';
 
-import 'profile_screen.dart';
 import 'settings.dart';
 
 //THIS IS THE DIALOG OF PROFILE
@@ -48,22 +46,20 @@ class ProfileNav {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      FirebaseAuth.instance.currentUser!.photoURL == null
-                          ? const Image(
-                              image: AssetImage('assets/images/pic.png'),
-                              height: 50.0,
-                              width: 50.0)
-                          : Image.network(
-                              FirebaseAuth.instance.currentUser!.photoURL ?? "",
-                              height: 50.0,
-                              width: 50.0,
-                            ),
                       TextButton.icon(
                         onPressed: () {},
-                        icon: const Icon(
-                          Icons.account_circle_outlined,
-                          size: 50.0,
-                        ),
+                        icon: FirebaseAuth.instance.currentUser!.photoURL ==
+                                null
+                            ? const Image(
+                                image: AssetImage('assets/images/pic.png'),
+                                height: 50.0,
+                                width: 50.0)
+                            : Image.network(
+                                FirebaseAuth.instance.currentUser!.photoURL ??
+                                    "",
+                                height: 50.0,
+                                width: 50.0,
+                              ),
                         label: Text(
                             FirebaseAuth.instance.currentUser!.displayName ??
                                 "Default Name",
@@ -79,7 +75,7 @@ class ProfileNav {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      PinnedLocationScreen()));
+                                      const PinnedLocationScreen()));
                         },
                         icon: const ImageIcon(
                           AssetImage("assets/images/icons/savedpin.png"),
