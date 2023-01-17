@@ -12,8 +12,6 @@ class DemogResult extends StatefulWidget {
 }
 
 class _DemogResultState extends State<DemogResult> {
-
-
   String ace = '5000'; // ito yung kunwari sample na budget na nilagay ni user
   // String baa = '';
   String baaa = '';
@@ -29,13 +27,11 @@ class _DemogResultState extends State<DemogResult> {
 
   getBusinessData() async {
     CollectionReference business =
-    FirebaseFirestore.instance.collection("business");
-
-    final docRef = business.get("10000"); //name of document
+        FirebaseFirestore.instance.collection("business");
+    var bud = widget.budget.trim();
+    final docRef = business.doc(bud); //name of document
     docRef.get().then(
-          (QuerySnapshot doc) {
-
-
+      (DocumentSnapshot doc) {
         final data = doc.data() as Map<String, dynamic>;
 
         businessname = data['name'];
@@ -65,8 +61,7 @@ class _DemogResultState extends State<DemogResult> {
 
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
-
-          snapshot.data!.data() as Map<String, dynamic>;
+              snapshot.data!.data() as Map<String, dynamic>;
 
           snapshot.data!.data() as Map<String, dynamic>;
           String a = data['population'].toString();
@@ -78,7 +73,7 @@ class _DemogResultState extends State<DemogResult> {
               backgroundColor: Colors.transparent,
 
               //title: Text("Demographical Result"),
-              title: Text("$businessname $businessbudget"),
+              title: Text(widget.budget),
               foregroundColor: const Color.fromARGB(255, 44, 45, 48),
               elevation: 0.0,
               leading: const BackButton(
@@ -120,7 +115,6 @@ class _DemogResultState extends State<DemogResult> {
                           color: Colors.white,
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-
                         child: Center(
                           child: Text(a, //POPULATION
                               style: const TextStyle(
@@ -164,8 +158,7 @@ class _DemogResultState extends State<DemogResult> {
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                         child: const Center(
-                          child: Text(
-                              "Budget required for the area",
+                          child: Text("Budget required for the area",
                               //BUDGET REQUIRED FOR THE AREA
                               style: TextStyle(
                                   color: Color.fromARGB(255, 44, 45, 48),
@@ -207,12 +200,11 @@ class _DemogResultState extends State<DemogResult> {
                           color: Colors.white,
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-
                         child: Center(
-                          child: Text('a',
+                          child: Text('$businessname' '\n' '$businessbudget',
                               // ito dito ko sana sya ilalabas kaso ayaw nya
                               //baa,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Color.fromARGB(255, 65, 99, 200),
                                   fontSize: 16.0)), // <-- Text
                         ),
@@ -260,9 +252,9 @@ class _DemogResultState extends State<DemogResult> {
                                               255, 0, 110, 195), // background
                                           shape: RoundedRectangleBorder(
                                               borderRadius:
-                                              BorderRadius.circular(5.0)),
+                                                  BorderRadius.circular(5.0)),
                                           minimumSize:
-                                          Size(150, 50), //////// HERE
+                                              Size(150, 50), //////// HERE
                                         ),
                                         onPressed: () {},
                                         child: const Text(
@@ -279,7 +271,7 @@ class _DemogResultState extends State<DemogResult> {
                                     },
                                     style: TextButton.styleFrom(
                                       minimumSize:
-                                      const Size(150, 50), //<-- SEE HERE
+                                          const Size(150, 50), //<-- SEE HERE
                                       side: const BorderSide(
                                         color: Color.fromARGB(255, 0, 110, 195),
                                         width: 3,

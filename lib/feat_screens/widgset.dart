@@ -5,23 +5,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 class DialogQuestion {
-
-
 //////////////////////////////////////////////////////////////////////////////
   final String markerid; //use this string to get the clicked marker id
   DialogQuestion(this.markerid); //do not remove this
   CollectionReference mark = FirebaseFirestore.instance.collection("business");
 
-
   var businessname, businessbudget;
   void initState() {
-    
-    getBusinessData();
+    // getBusinessData();
   }
-
+  final TextEditingController areaBudgetController = TextEditingController();
   // ito yung kunwari sample na budget na nilagay ni user
-
-  getBusinessData() async {
+  /*  getBusinessData() async {
     CollectionReference business =
         FirebaseFirestore.instance.collection("business");
 
@@ -35,16 +30,20 @@ class DialogQuestion {
       },
       onError: (e) => print("Error getting document: $e"),
     );
-  }
+  } */
 
+  Future<void> demogResult(BuildContext context) async {
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => DemogResult(
+                marker: markerid, budget: areaBudgetController.text)));
+  }
 
   Future showMyDialog(BuildContext context) {
     return showDialog(
         context: context,
         builder: (context) {
- final TextEditingController areaBudgetController =
-     TextEditingController();
- final String budget= (areaBudgetController.text.toString());
 //bool isChecked = false;
           return StatefulBuilder(builder: (context, setState) {
             return AlertDialog(
@@ -148,7 +147,7 @@ class DialogQuestion {
                     height: 10.0,
                   ),
                   TextFormField(
-                  controller: areaBudgetController,
+                      controller: areaBudgetController,
                       keyboardType: TextInputType.number,
                       validator: (areaBudgetController) {
                         return areaBudgetController!.isNotEmpty
@@ -242,12 +241,9 @@ class DialogQuestion {
                       onPressed: () {
                         // ito yun sana kapag initinallize dapat
 
-                      //  getMarkerData();
                         //  getMarkerData();
-                        Navigator.push(context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    DemogResult(marker: markerid, budget: budget)));
+                        //  getMarkerData();
+                        demogResult(context);
 /*  if (selectedbusinesstype == null) {
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
