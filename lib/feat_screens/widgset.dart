@@ -5,8 +5,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 class DialogQuestion {
+
+
+//////////////////////////////////////////////////////////////////////////////
   final String markerid; //use this string to get the clicked marker id
   DialogQuestion(this.markerid); //do not remove this
+  CollectionReference mark = FirebaseFirestore.instance.collection("business");
 
 
   var businessname, businessbudget;
@@ -38,8 +42,9 @@ class DialogQuestion {
     return showDialog(
         context: context,
         builder: (context) {
-// final TextEditingController _textEditingController =
-//     TextEditingController();
+ final TextEditingController areaBudgetController =
+     TextEditingController();
+ final String budget= (areaBudgetController.text.toString());
 //bool isChecked = false;
           return StatefulBuilder(builder: (context, setState) {
             return AlertDialog(
@@ -143,7 +148,7 @@ class DialogQuestion {
                     height: 10.0,
                   ),
                   TextFormField(
-//controller: areaBudgetController,
+                  controller: areaBudgetController,
                       keyboardType: TextInputType.number,
                       validator: (areaBudgetController) {
                         return areaBudgetController!.isNotEmpty
@@ -151,6 +156,7 @@ class DialogQuestion {
                             : 'Invalid Input';
                       },
                       decoration: InputDecoration(
+                        hintText: "",
                         filled: true,
                         fillColor: const Color.fromARGB(255, 230, 230, 230),
                         enabledBorder: OutlineInputBorder(
@@ -235,13 +241,13 @@ class DialogQuestion {
 
                       onPressed: () {
                         // ito yun sana kapag initinallize dapat
-                        //  getMarkerData();
 
-                        Navigator.push(
-                            context,
+                      //  getMarkerData();
+                        //  getMarkerData();
+                        Navigator.push(context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    DemogResult(marker: markerid)));
+                                    DemogResult(marker: markerid, budget: budget)));
 /*  if (selectedbusinesstype == null) {
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(

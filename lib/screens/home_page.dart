@@ -7,6 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:custom_marker/marker_icon.dart';
+
+import 'package:main_venture/feat_screens/widgset.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:main_venture/feat_screens/dialogbutton.dart';
@@ -19,7 +21,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:geocoding/geocoding.dart';
 
-import '../feat_screens/widgset.dart';
+import '../feat_screens/Prediction.dart';
 
 //Geocoder package is deprecated
 //import 'package:flutter_geocoder/geocoder.dart';
@@ -104,6 +106,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         .collection("markers")
         .get()
         .then((QuerySnapshot querySnapshot) => {
+
               querySnapshot.docs.forEach((documents) async {
                 var data = documents.data() as Map;
                 allmarkers.add(Marker(
@@ -404,12 +407,12 @@ class _HomePageState extends ConsumerState<HomePage> {
             foregroundColor: Colors.black,
             heroTag: null,
             mini: true,
-            child: FirebaseAuth.instance.currentUser!.photoURL == null
-                ? const Image(image: AssetImage('assets/images/pic.png'))
-                : Image.network(
-                    FirebaseAuth.instance.currentUser!.photoURL ?? ""),
+           // child: FirebaseAuth.instance.currentUser!.photoURL == null
+           //     ? const Image(image: AssetImage('assets/images/pic.png'))
+            //    : Image.network(
+            //        FirebaseAuth.instance.currentUser!.photoURL ?? ""),
             onPressed: () {
-              ProfileNav().showProfileNav(context);
+             // ProfileNav().showProfileNav(context);
             },
           ),
           const SizedBox(

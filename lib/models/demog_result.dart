@@ -4,17 +4,22 @@ import 'package:flutter/material.dart';
 import '../component/loading.dart';
 
 class DemogResult extends StatefulWidget {
-  const DemogResult({super.key, required this.marker});
-
+  const DemogResult({super.key, required this.marker, required this.budget});
   final String marker;
+  final String budget;
   @override
   State<DemogResult> createState() => _DemogResultState();
 }
 
 class _DemogResultState extends State<DemogResult> {
-  //////////////////////////////////////////////////////////////////////////////////////////
-  // same din dito nagtry ako na magcall ng another collection kaso di sya gumagana pres para sana sa specific budget kaso ayaw lumabas
+
+
+  String ace = '5000'; // ito yung kunwari sample na budget na nilagay ni user
+  // String baa = '';
+  String baaa = '';
+
   var businessname, businessbudget;
+
   void initState() {
     super.initState();
     getBusinessData();
@@ -24,11 +29,13 @@ class _DemogResultState extends State<DemogResult> {
 
   getBusinessData() async {
     CollectionReference business =
-        FirebaseFirestore.instance.collection("business");
+    FirebaseFirestore.instance.collection("business");
 
-    final docRef = business.doc("10000"); //name of document
+    final docRef = business.get("10000"); //name of document
     docRef.get().then(
-      (DocumentSnapshot doc) {
+          (QuerySnapshot doc) {
+
+
         final data = doc.data() as Map<String, dynamic>;
 
         businessname = data['name'];
@@ -58,7 +65,10 @@ class _DemogResultState extends State<DemogResult> {
 
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
-              snapshot.data!.data() as Map<String, dynamic>;
+
+          snapshot.data!.data() as Map<String, dynamic>;
+
+          snapshot.data!.data() as Map<String, dynamic>;
           String a = data['population'].toString();
           //double pops = double.parse(a); //DATA FOR POPULATION
 
@@ -66,6 +76,8 @@ class _DemogResultState extends State<DemogResult> {
             backgroundColor: const Color.fromARGB(255, 241, 242, 242),
             appBar: AppBar(
               backgroundColor: Colors.transparent,
+
+              //title: Text("Demographical Result"),
               title: Text("$businessname $businessbudget"),
               foregroundColor: const Color.fromARGB(255, 44, 45, 48),
               elevation: 0.0,
@@ -108,6 +120,7 @@ class _DemogResultState extends State<DemogResult> {
                           color: Colors.white,
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+
                         child: Center(
                           child: Text(a, //POPULATION
                               style: const TextStyle(
@@ -152,7 +165,8 @@ class _DemogResultState extends State<DemogResult> {
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                         child: const Center(
                           child: Text(
-                              "Budget required for the area", //BUDGET REQUIRED FOR THE AREA
+                              "Budget required for the area",
+                              //BUDGET REQUIRED FOR THE AREA
                               style: TextStyle(
                                   color: Color.fromARGB(255, 44, 45, 48),
                                   fontSize: 16.0)), // <-- Text
@@ -193,10 +207,11 @@ class _DemogResultState extends State<DemogResult> {
                           color: Colors.white,
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+
                         child: Center(
                           child: Text('a',
                               // ito dito ko sana sya ilalabas kaso ayaw nya
-                              // baa,
+                              //baa,
                               style: TextStyle(
                                   color: Color.fromARGB(255, 65, 99, 200),
                                   fontSize: 16.0)), // <-- Text
@@ -245,9 +260,9 @@ class _DemogResultState extends State<DemogResult> {
                                               255, 0, 110, 195), // background
                                           shape: RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(5.0)),
+                                              BorderRadius.circular(5.0)),
                                           minimumSize:
-                                              Size(150, 50), //////// HERE
+                                          Size(150, 50), //////// HERE
                                         ),
                                         onPressed: () {},
                                         child: const Text(
@@ -259,11 +274,12 @@ class _DemogResultState extends State<DemogResult> {
                                 Expanded(
                                   child: TextButton(
                                     onPressed: () {
+                                      //getMarkerData();
                                       getBusinessData();
                                     },
                                     style: TextButton.styleFrom(
                                       minimumSize:
-                                          const Size(150, 50), //<-- SEE HERE
+                                      const Size(150, 50), //<-- SEE HERE
                                       side: const BorderSide(
                                         color: Color.fromARGB(255, 0, 110, 195),
                                         width: 3,
