@@ -1,26 +1,24 @@
-//import 'dart:html';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:main_venture/feat_screens/widgset.dart';
 
 import '../component/loading.dart';
 
 class DemogResult extends StatefulWidget {
-  final String budget; // di pa gumagana to
-  DemogResult({super.key, required this.marker, required this.budget});
+  const DemogResult({super.key, required this.marker, required this.budget});
   final String marker;
-//  final String budget;
+  final String budget;
   @override
   State<DemogResult> createState() => _DemogResultState();
 }
 
 class _DemogResultState extends State<DemogResult> {
-  String Budgets= "5000"  ; // may way ba na pwede ko idirect dito yung budget mula sa textfield ng widget di ko pa sya matawag
-  String ideal = 'Bakery';
-  //String  = '';
+  String popstrA = '';
+  String landbudgetstrA = '';
+  String revstrA = '';
 
-  var businessname, businessbudget;
+
+
+  var businessname, businessbudget, landbudget, landrevenue, landpop;
 
   void initState() {
     super.initState();
@@ -28,20 +26,27 @@ class _DemogResultState extends State<DemogResult> {
   }
 
 
-  // ito yung kunwari sample na budget na nilagay ni user
   getBusinessData() async {
     CollectionReference business =
     FirebaseFirestore.instance.collection("business");
-
-    final docRef = business.where("budget", isEqualTo: Budgets); // yung budgets na variable yung gagamitin dito para matawag yung specific document accroding sa budget
+    var bud = widget.budget.trim();
+    String budgetf = bud.toString();
+    final docRef = business.where("budget", isEqualTo: budgetf); // yung budgets na variable yung gagamitin dito para matawag yung specific document accroding sa budget
     docRef.get().then(
           (QuerySnapshot doc) {
-        //final data = doc.toString() as Map<String, dynamic>;
         doc.docs.forEach((documents) async {
           var data = documents.data() as Map;
-
           businessname = data['name'];
           businessbudget = data['budget'];
+          landbudget = data ['land value'];
+          landrevenue = data ['revenue'];
+          landpop = data ['population'];
+
+
+// for coversion of var to String
+          landbudgetstrA = data['land value'].toString();
+          revstrA = data['revenue'].toString();
+          popstrA = data['population'].toString();
         });
       },
 
@@ -49,11 +54,10 @@ class _DemogResultState extends State<DemogResult> {
     );
   }
 
-//////////////////////////////////////////////////////////////////////////////
 
   @override
   Widget build(BuildContext context) {
-    final String  buds = widget.budget.toString(); // ito yung pantest ko kaso di ko rin alam kung gumagana ng null lang din kasi
+
     CollectionReference mark = FirebaseFirestore.instance.collection("markers");
     final String con = widget.marker.trim(); //this still has problem
 
@@ -70,20 +74,53 @@ class _DemogResultState extends State<DemogResult> {
 
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
-
           snapshot.data!.data() as Map<String, dynamic>;
 
           snapshot.data!.data() as Map<String, dynamic>;
-          String a = data['population'].toString();
-          //double pops = double.parse(a); //DATA FOR POPULATION
+          //for land size
+          String landstr = data['land size'].toString();
+          String landstrfinal= '${landstr}sqm';
+
+          // for population
+          String popstrB = data['population'].toString();
+          double popdblB = double.parse(popstrB);
+          double popdblA= double.parse(popstrA);
+          double popdblfinal = (popdblB / popdblA)*100;
+
+
+          // for revenue
+          String revstrB = data['revenue'].toString();
+          double revdblB = double.parse(revstrB);
+          double revdblA= double.parse(revstrA);
+          double revdblfinal = (revdblB / revdblA) *100;
+
+
+          // for budget
+          String landbudgetstrB = data['land'].toString();
+          double landbudgetdblB = double.parse(landbudgetstrB);
+          double landbudgetdblA= double.parse(landbudgetstrA);
+
+          double landbudgetdblfinalA = landbudgetdblB - landbudgetdblA;
+          double landbudgetdblfinalB = landbudgetdblA - landbudgetdblfinalA;
+          double landbudgetdblfinalC = (landbudgetdblfinalB / landbudgetdblA) *100;
+          if (landbudgetdblfinalC >100){
+            landbudgetdblfinalC = 100.0;
+          }
+
+          double result = (popdblfinal + revdblfinal + landbudgetdblfinalC)/3 ;
+
+          String resultA = result.toStringAsFixed(2);
+          String resultfinal ='${resultA}%';
+
+
 
           return Scaffold(
             backgroundColor: const Color.fromARGB(255, 241, 242, 242),
             appBar: AppBar(
               backgroundColor: Colors.transparent,
 
-              //title: Text("Demographical Result"),
-              title: Text("$businessname $businessbudget"),
+              title: Text("Demographical Result"),
+              // title: Text(resultfinal),
               foregroundColor: const Color.fromARGB(255, 44, 45, 48),
               elevation: 0.0,
               leading: const BackButton(
@@ -125,9 +162,22 @@ class _DemogResultState extends State<DemogResult> {
                           color: Colors.white,
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-
                         child: Center(
-                          child: Text(a, //POPULATION
+                          child: Text("Population", //POPULATION
+                              style: const TextStyle(
+                                  color: Color.fromARGB(255, 44, 45, 48),
+                                  fontSize: 16.0)), // <-- Text
+                        ),
+                      ),
+                      Container(
+                        width: 350,
+                        height: 100,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+                        child: Center(
+                          child: Text(popstrB, //POPULATION
                               style: const TextStyle(
                                   color: Color.fromARGB(255, 44, 45, 48),
                                   fontSize: 16.0)), // <-- Text
@@ -154,8 +204,36 @@ class _DemogResultState extends State<DemogResult> {
                           color: Colors.white,
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: const Center(
-                          child: Text("Land per sq", //LAND PER SQ
+                        child:  Center(
+                          child: Text(revstrB, //REVENUE PER YEAR
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 44, 45, 48),
+                                  fontSize: 16.0)), // <-- Text
+                        ),
+                      ),
+                      Container(
+                        width: 350,
+                        height: 100,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+                        child:  Center(
+                          child: Text("Land per SqM", //LAND PER SQ
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 44, 45, 48),
+                                  fontSize: 16.0)), // <-- Text
+                        ),
+                      ),
+                      Container(
+                        width: 350,
+                        height: 100,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+                        child:  Center(
+                          child: Text(landstrfinal, //LAND PER SQ
                               style: TextStyle(
                                   color: Color.fromARGB(255, 44, 45, 48),
                                   fontSize: 16.0)), // <-- Text
@@ -169,8 +247,22 @@ class _DemogResultState extends State<DemogResult> {
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                         child: const Center(
-                          child: Text(
-                              "Budget required for the area",
+                          child: Text("Budget required for the area",
+                              //BUDGET REQUIRED FOR THE AREA
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 44, 45, 48),
+                                  fontSize: 16.0)), // <-- Text
+                        ),
+                      ),
+                      Container(
+                        width: 350,
+                        height: 100,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+                        child:  Center(
+                          child: Text(landbudgetstrB,
                               //BUDGET REQUIRED FOR THE AREA
                               style: TextStyle(
                                   color: Color.fromARGB(255, 44, 45, 48),
@@ -184,10 +276,10 @@ class _DemogResultState extends State<DemogResult> {
                           color: Colors.white,
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: const Center(
-                          child: Text("67%",
+                        child:  Center(
+                          child: Text(resultfinal,
                               style: TextStyle(
-                                  color: Color.fromARGB(255, 44, 45, 48),
+                                  color: Color.fromARGB(255, 65, 99, 200),
                                   fontSize: 35.0)), // <-- Text
                         ),
                       ),
@@ -199,7 +291,7 @@ class _DemogResultState extends State<DemogResult> {
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                         child: const Center(
-                          child: Text("Your ideal Business is ",
+                          child: Text("Your ideal business is",
                               style: TextStyle(
                                   color: Color.fromARGB(255, 44, 45, 48),
                                   fontSize: 16.0)), // <-- Text
@@ -212,12 +304,11 @@ class _DemogResultState extends State<DemogResult> {
                           color: Colors.white,
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-
                         child: Center(
-                          child: Text("$ideal",
+                          child: Text('',
                               // ito dito ko sana sya ilalabas kaso ayaw nya
                               //baa,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Color.fromARGB(255, 65, 99, 200),
                                   fontSize: 16.0)), // <-- Text
                         ),
@@ -230,7 +321,7 @@ class _DemogResultState extends State<DemogResult> {
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                         child: const Center(
-                          child: Text("Business Type: Commercial ",
+                          child: Text("Business Type: Start Up",
                               style: TextStyle(
                                   color: Color.fromARGB(255, 44, 45, 48),
                                   fontSize: 16.0)), // <-- Text
@@ -239,28 +330,14 @@ class _DemogResultState extends State<DemogResult> {
                       Container(
                         width: 350,
                         height: 90,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: const Center(
-                          child: Text("Suggested business for you",
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 44, 45, 48),
-                                  fontSize: 16.0)), // <-- Text
-                        ),
-                      ),
-                      Container(
-                        width: 350,
-                        height: 30,
                         decoration: const BoxDecoration(
                           color: Colors.white,
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                         child:  Center(
-                          child: Text("",
+                          child: Text("Suggested business for you" '\n' '$businessname',
                               style: TextStyle(
-                                  color: Color.fromARGB(255, 65, 99, 200),
+                                  color: Color.fromARGB(255, 44, 45, 48),
                                   fontSize: 16.0)), // <-- Text
                         ),
                       ),
@@ -319,6 +396,3 @@ class _DemogResultState extends State<DemogResult> {
     );
   }
 }
-
-
-
