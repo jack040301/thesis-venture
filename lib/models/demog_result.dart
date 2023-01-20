@@ -1,20 +1,29 @@
+//import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:main_venture/feat_screens/widgset.dart';
 
 import '../component/loading.dart';
 
 class DemogResult extends StatefulWidget {
-  const DemogResult({super.key, required this.marker, required this.budget});
+  final String budget, ideal; // di pa gumagana to
+  DemogResult(
+      {super.key,
+      required this.marker,
+      required this.budget,
+      required this.ideal});
   final String marker;
-  final String budget;
+//  final String budget;
   @override
   State<DemogResult> createState() => _DemogResultState();
 }
 
 class _DemogResultState extends State<DemogResult> {
-  String ace = '5000'; // ito yung kunwari sample na budget na nilagay ni user
-  // String baa = '';
-  String baaa = '';
+/*   String Budgets =
+      "5000"; */ // may way ba na pwede ko idirect dito yung budget mula sa textfield ng widget di ko pa sya matawag
+  // String ideal = 'Bakery';
+  //String  = '';
 
   var businessname, businessbudget;
 
@@ -24,18 +33,24 @@ class _DemogResultState extends State<DemogResult> {
   }
 
   // ito yung kunwari sample na budget na nilagay ni user
-
   getBusinessData() async {
     CollectionReference business =
         FirebaseFirestore.instance.collection("business");
-    var bud = widget.budget.trim();
-    final docRef = business.doc(bud); //name of document
-    docRef.get().then(
-      (DocumentSnapshot doc) {
-        final data = doc.data() as Map<String, dynamic>;
 
-        businessname = data['name'];
-        businessbudget = data['budget'];
+    var budgets = widget.budget.trim();
+
+    final docRef = business.where("budget",
+        isEqualTo:
+            budgets); // yung budgets na variable yung gagamitin dito para matawag yung specific document accroding sa budget
+    docRef.get().then(
+      (QuerySnapshot doc) {
+        //final data = doc.toString() as Map<String, dynamic>;
+        doc.docs.forEach((documents) async {
+          var data = documents.data() as Map;
+
+          businessname = data['name'];
+          businessbudget = data['budget'];
+        });
       },
       onError: (e) => print("Error getting document: $e"),
     );
@@ -72,8 +87,8 @@ class _DemogResultState extends State<DemogResult> {
             appBar: AppBar(
               backgroundColor: Colors.transparent,
 
-              //title: Text("Demographical Result"),
-              title: Text(widget.budget),
+              title: Text("Demographical Result"),
+              //title: Text("$businessname $businessbudget"),
               foregroundColor: const Color.fromARGB(255, 44, 45, 48),
               elevation: 0.0,
               leading: const BackButton(
@@ -173,10 +188,10 @@ class _DemogResultState extends State<DemogResult> {
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                         child: const Center(
-                          child: Text("Your business is",
+                          child: Text("67%",
                               style: TextStyle(
                                   color: Color.fromARGB(255, 44, 45, 48),
-                                  fontSize: 16.0)), // <-- Text
+                                  fontSize: 35.0)), // <-- Text
                         ),
                       ),
                       Container(
@@ -187,10 +202,10 @@ class _DemogResultState extends State<DemogResult> {
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                         child: const Center(
-                          child: Text("67%",
+                          child: Text("Your ideal Business is ",
                               style: TextStyle(
                                   color: Color.fromARGB(255, 44, 45, 48),
-                                  fontSize: 35.0)), // <-- Text
+                                  fontSize: 16.0)), // <-- Text
                         ),
                       ),
                       Container(
@@ -201,7 +216,7 @@ class _DemogResultState extends State<DemogResult> {
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                         child: Center(
-                          child: Text('$businessname' '\n' '$businessbudget',
+                          child: Text(widget.ideal,
                               // ito dito ko sana sya ilalabas kaso ayaw nya
                               //baa,
                               style: const TextStyle(
@@ -217,7 +232,7 @@ class _DemogResultState extends State<DemogResult> {
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                         child: const Center(
-                          child: Text("Business Type",
+                          child: Text("Business Type: Commercial ",
                               style: TextStyle(
                                   color: Color.fromARGB(255, 44, 45, 48),
                                   fontSize: 16.0)), // <-- Text
@@ -234,6 +249,20 @@ class _DemogResultState extends State<DemogResult> {
                           child: Text("Suggested business for you",
                               style: TextStyle(
                                   color: Color.fromARGB(255, 44, 45, 48),
+                                  fontSize: 16.0)), // <-- Text
+                        ),
+                      ),
+                      Container(
+                        width: 350,
+                        height: 30,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+                        child: const Center(
+                          child: Text("",
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 65, 99, 200),
                                   fontSize: 16.0)), // <-- Text
                         ),
                       ),
