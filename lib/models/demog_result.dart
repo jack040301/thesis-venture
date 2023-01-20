@@ -37,11 +37,13 @@ class _DemogResultState extends State<DemogResult> {
     CollectionReference business =
         FirebaseFirestore.instance.collection("business");
 
-    var budgets = widget.budget.trim();
+    var budgets =
+        widget.budget.trim(); //budgets inputted by the user from widget
+    var ideal = widget.ideal; //ideal of user from widget
 
     final docRef = business.where("budget",
         isEqualTo:
-            budgets); // yung budgets na variable yung gagamitin dito para matawag yung specific document accroding sa budget
+            budgets); // paayos ako ng query mo according sa mga data inside the firestore.
     docRef.get().then(
       (QuerySnapshot doc) {
         //final data = doc.toString() as Map<String, dynamic>;
