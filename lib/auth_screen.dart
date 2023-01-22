@@ -1,11 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:main_venture/auth_screens/login.dart';
-import 'package:main_venture/auth_screens/email_verification.dart';
-import 'package:main_venture/feat_screens/profile_screen.dart';
+import 'package:main_venture/profile_screen.dart';
 
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:main_venture/screens/home_page.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -39,9 +37,7 @@ class _AuthScreenState extends State<AuthScreen> {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            //return const ProfileScreen();
-            return Emailverificationscreen();
-
+            return const ProfileScreen();
             //login
           } else {
             return const LoginScreen();
@@ -51,5 +47,5 @@ class _AuthScreenState extends State<AuthScreen> {
       ),
     );
   }
-}// class _AuthScreenState end*/
+}// class _AuthScreenState end
 
