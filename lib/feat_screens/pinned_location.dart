@@ -198,7 +198,7 @@ class PinnedLocation {
                                                   fontFamily: 'Questrial',
                                                 ),
                                               ),
-                                              Text(
+                                              /*    Text(
                                                 'Related Businesses',
                                                 style: TextStyle(
                                                   fontSize: 15,
@@ -212,7 +212,7 @@ class PinnedLocation {
                                                   fontSize: 23,
                                                   fontFamily: 'Questrial',
                                                 ),
-                                              ),
+                                              ), */
                                               Text(
                                                 '67%',
                                                 style: TextStyle(
@@ -810,7 +810,7 @@ class PinnedLocation {
                                                     fontSize: 23,
                                                   ),
                                                 ),
-                                                Text(
+                                                /*   Text(
                                                   'Related Businesses',
                                                   style: TextStyle(
                                                     fontSize: 15,
@@ -822,7 +822,7 @@ class PinnedLocation {
                                                   style: TextStyle(
                                                     fontSize: 23,
                                                   ),
-                                                ),
+                                                ), */
                                                 Text(
                                                   '67%',
                                                   style: TextStyle(

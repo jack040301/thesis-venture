@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
-
-
-
 class HomePages extends StatefulWidget {
   const HomePages({Key? key}) : super(key: key);
 
@@ -16,24 +11,24 @@ class HomePages extends StatefulWidget {
 class _HomePagesState extends State<HomePages> {
   @override
   Widget build(BuildContext context) {
-    return   Padding(
+    return Padding(
       padding: const EdgeInsets.fromLTRB(15.0, 20.0, 45.0, 5.0),
-          child:  AlertDialog(
-                  title: const Text("Alert Dialog Box"),
-                  content: const Text("You have raised a Alert Dialog Box"),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop;
-                      },
-                      child: Container(
-                        color: Colors.green,
-                        padding: const EdgeInsets.all(14),
-                        child: const Text("okay"),
-                      ),
-                    ),
-                  ],
-                ),
-        );
+      child: AlertDialog(
+        title: const Text("Alert Dialog Box"),
+        content: const Text("You have raised a Alert Dialog Box"),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.pop;
+            },
+            child: Container(
+              color: Colors.green,
+              padding: const EdgeInsets.all(14),
+              child: const Text("okay"),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

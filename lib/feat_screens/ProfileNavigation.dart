@@ -19,30 +19,29 @@ class _ProfileNavigationState extends State<ProfileNavigation> {
         context: context,
         builder: (context) {
           final TextEditingController _textEditingController =
-          TextEditingController();
+              TextEditingController();
           //bool isChecked = false;
           return StatefulBuilder(builder: (context, setState) {
             return AlertDialog(
                 content: Form(
                     key: _formKey,
-                    child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const SizedBox(
-                            height: 5.0,
-                          ),
-                          // const Align(
-                          // alignment: Alignment.topRight,
-                          //child: Icon(Icons.close)),
-                          SizedBox(
-                            height: 5.0,
-                          ),
-                          const Align(
-                              alignment: Alignment.topRight, child: Icon(Icons.close)),
-                          SizedBox(
-                            height: 20.0,
-                          ),
-                    Container(
+                    child: Column(mainAxisSize: MainAxisSize.min, children: [
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      // const Align(
+                      // alignment: Alignment.topRight,
+                      //child: Icon(Icons.close)),
+                      SizedBox(
+                        height: 5.0,
+                      ),
+                      const Align(
+                          alignment: Alignment.topRight,
+                          child: Icon(Icons.close)),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      Container(
                         width: double.maxFinite,
                         child: TextButtonTheme(
                           data: TextButtonThemeData(
@@ -54,61 +53,74 @@ class _ProfileNavigationState extends State<ProfileNavigation> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-
-
-
-
                               TextButton.icon(
                                 onPressed: () {},
-                                icon: Icon(Icons.account_circle_outlined,
-                                size: 50.0,),
+                                icon: Icon(
+                                  Icons.account_circle_outlined,
+                                  size: 50.0,
+                                ),
                                 label: Text('Juan Dela Cruz',
                                     style: TextStyle(
-                                    color: Colors.black, fontSize: 30.0)),),
+                                        color: Colors.black, fontSize: 30.0)),
+                              ),
                               SizedBox(
                                 height: 20.0,
                               ),
                               TextButton.icon(
                                 onPressed: () {},
-                                icon: Icon(Icons.person_pin_circle_outlined,
-                                  size: 30.0,),
+                                icon: Icon(
+                                  Icons.person_pin_circle_outlined,
+                                  size: 30.0,
+                                ),
                                 label: Text('      Pinned Locations',
                                     style: TextStyle(
-                                        color: Colors.black, fontSize: 20.0)),),
+                                        color: Colors.black, fontSize: 20.0)),
+                              ),
                               TextButton.icon(
                                 onPressed: () {},
-                                icon: Icon(Icons.settings,
-                                  size: 30.0,),
+                                icon: Icon(
+                                  Icons.settings,
+                                  size: 30.0,
+                                ),
                                 label: Text('      Settings',
                                     style: TextStyle(
-                                        color: Colors.black, fontSize: 20.0)),),
+                                        color: Colors.black, fontSize: 20.0)),
+                              ),
                               TextButton.icon(
                                 onPressed: () {},
-                                icon: Icon(Icons.upgrade,
-                                  size: 30.0,),
+                                icon: Icon(
+                                  Icons.upgrade,
+                                  size: 30.0,
+                                ),
                                 label: Text('      Upgrade Account',
                                     style: TextStyle(
-                                        color: Colors.black, fontSize: 20.0)),),
+                                        color: Colors.black, fontSize: 20.0)),
+                              ),
                               TextButton.icon(
                                 onPressed: () {},
-                                icon: Icon(Icons.switch_account,
-                                  size: 30.0,),
+                                icon: Icon(
+                                  Icons.switch_account,
+                                  size: 30.0,
+                                ),
                                 label: Text('      Switch Account',
                                     style: TextStyle(
-                                        color: Colors.black, fontSize: 20.0)),),
+                                        color: Colors.black, fontSize: 20.0)),
+                              ),
                               TextButton.icon(
                                 onPressed: () {},
-                                icon: Icon(Icons.logout,
-                                  size: 30.0,),
+                                icon: Icon(
+                                  Icons.logout,
+                                  size: 30.0,
+                                ),
                                 label: Text('      Log out',
                                     style: TextStyle(
-                                        color: Colors.black, fontSize: 20.0)),),
+                                        color: Colors.black, fontSize: 20.0)),
+                              ),
                             ],
                           ),
                         ),
-                        )
-                ]
-            )));
+                      )
+                    ])));
           });
         });
   }
@@ -123,22 +135,22 @@ class _ProfileNavigationState extends State<ProfileNavigation> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-          padding: const EdgeInsets.all(30.0),
-          child: SingleChildScrollView(
-            child: Center(
-              child: ElevatedButton(
-                onPressed: () async {
-                  await showInformationDialog(context);
-                },
-                child: const Text(
-                  "Click Me",
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+      padding: const EdgeInsets.all(30.0),
+      child: SingleChildScrollView(
+        child: Center(
+          child: ElevatedButton(
+            onPressed: () async {
+              await showInformationDialog(context);
+            },
+            child: const Text(
+              "Click Me",
+              style: TextStyle(color: Colors.white, fontSize: 16),
 
 //END
-                ),
-              ),
             ),
           ),
-        ));
+        ),
+      ),
+    ));
   }
 }

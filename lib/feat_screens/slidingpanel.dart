@@ -1,14 +1,11 @@
-/*import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-
 class SlidingPanelScreen extends StatefulWidget {
   const SlidingPanelScreen({super.key});
-
   @override
   State<SlidingPanelScreen> createState() => _SlidingPanelScreenState();
 }
-
 class _SlidingPanelScreenState extends State<SlidingPanelScreen> {
   @override
   Widget build(BuildContext context) {
@@ -130,14 +127,12 @@ class _SlidingPanelScreenState extends State<SlidingPanelScreen> {
     );
   }
 }
-
 class ImagesPinned extends StatelessWidget {
   String imgPath;
   ImagesPinned(this.imgPath);
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-
     return Container(
       margin: EdgeInsets.symmetric(vertical: 0, horizontal: 3),
       child: Column(
@@ -155,7 +150,6 @@ class ImagesPinned extends StatelessWidget {
     );
   }
 }
-
 class BarIndicator extends StatelessWidget {
   const BarIndicator({
     Key? key,
@@ -174,4 +168,5 @@ class BarIndicator extends StatelessWidget {
       ),
     );
   }
-}*/
+}
+ */

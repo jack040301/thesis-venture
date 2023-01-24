@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:main_venture/auth_screens/signup.dart';
 import 'package:main_venture/auth_screens/login.dart';
 import 'package:main_venture/feat_screens/profile_screen.dart';
+import 'package:main_venture/screens/home_page.dart';
 
 class Emailverificationscreen extends StatefulWidget {
   //const emailverificationscreen({super.key});
@@ -66,28 +67,28 @@ class EmailverificationscreenState extends State<Emailverificationscreen> {
 
   @override
   Widget build(BuildContext context) => isEmailVerified
-      ? ProfileScreen()
+      ? const HomePage()
       : Scaffold(
           appBar: AppBar(
-            title: Text('Verify Email'),
+            title: const Text('Verify Email'),
           ),
           body: Padding(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'A Verification email has been sent to Your Email.',
                   style: TextStyle(fontSize: 20),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size.fromHeight(50),
+                    minimumSize: const Size.fromHeight(50),
                   ),
-                  icon: Icon(Icons.email, size: 32),
-                  label: Text(
+                  icon: const Icon(Icons.email, size: 32),
+                  label: const Text(
                     'Resent Email',
                     style: TextStyle(fontSize: 24),
                   ),

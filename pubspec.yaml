@@ -68,6 +68,7 @@ dependencies:
   flutter_password_strength: ^0.1.6
   geocoding: ^2.0.5
   custom_marker: ^1.0.0
+  flutter_spinkit: ^5.1.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.10.0
