@@ -2,11 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../component/loading.dart';
+import 'forecasting_population.dart';
 
 class DemogResult extends StatefulWidget {
-  const DemogResult({super.key, required this.marker, required this.budget});
-  final String marker;
-  final String budget;
+  const DemogResult(
+      {super.key,
+      required this.marker,
+      required this.budget,
+      required this.ideal});
+  final String marker, ideal, budget;
   @override
   State<DemogResult> createState() => _DemogResultState();
 }
@@ -16,8 +20,6 @@ class _DemogResultState extends State<DemogResult> {
   String landbudgetstrA = '';
   String revstrA = '';
 
-
-
   var businessname, businessbudget, landbudget, landrevenue, landpop;
 
   void initState() {
@@ -25,23 +27,38 @@ class _DemogResultState extends State<DemogResult> {
     getBusinessData();
   }
 
+  // ignore: non_constant_identifier_names
+  Future<void> StatisForecasting(BuildContext context) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BarchartPop(
+          markerid: widget.marker,
+        ),
+      ),
+    );
+  }
 
   getBusinessData() async {
     CollectionReference business =
-    FirebaseFirestore.instance.collection("business");
+        FirebaseFirestore.instance.collection("business");
     var bud = widget.budget.trim();
     String budgetf = bud.toString();
-    final docRef = business.where("budget", isEqualTo: budgetf); // yung budgets na variable yung gagamitin dito para matawag yung specific document accroding sa budget
+    final docRef = business.where("budget",
+        isEqualTo:
+            budgetf); // yung budgets na variable yung gagamitin dito para matawag yung specific document accroding sa budget
     docRef.get().then(
-          (QuerySnapshot doc) {
+      (QuerySnapshot doc) {
         doc.docs.forEach((documents) async {
           var data = documents.data() as Map;
           businessname = data['name'];
           businessbudget = data['budget'];
-          landbudget = data ['land value'];
-          landrevenue = data ['revenue'];
-          landpop = data ['population'];
-
+          landbudget = data['land value'];
+          landrevenue = data['revenue'];
+          landpop = data['population'];
+          landbudget = data['land value'];
+          landrevenue = data['revenue'];
+          landpop = data['population'];
 
 // for coversion of var to String
           landbudgetstrA = data['land value'].toString();
@@ -49,78 +66,74 @@ class _DemogResultState extends State<DemogResult> {
           popstrA = data['population'].toString();
         });
       },
-
       onError: (e) => print("Error getting document: $e"),
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     CollectionReference mark = FirebaseFirestore.instance.collection("markers");
     final String con = widget.marker.trim(); //this still has problem
 
     return FutureBuilder<DocumentSnapshot>(
-      future: mark.doc("$con").get(),
+      future: mark.doc(con).get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {
-          return Text("Something went wrong"); //error in getting the data
+          return const Text("Something went wrong"); //error in getting the data
         }
         if (snapshot.hasData && !snapshot.data!.exists) {
-          return Text("Retry loading the application"); //put here
+          return const Text("Retry loading the application"); //put here
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
-          snapshot.data!.data() as Map<String, dynamic>;
+              snapshot.data!.data() as Map<String, dynamic>;
 
-          snapshot.data!.data() as Map<String, dynamic>;
           //for land size
           String landstr = data['land size'].toString();
-          String landstrfinal= '${landstr}sqm';
+          String landstrfinal = '${landstr}sqm';
 
           // for population
           String popstrB = data['population'].toString();
           double popdblB = double.parse(popstrB);
-          double popdblA= double.parse(popstrA);
-          double popdblfinal = (popdblB / popdblA)*100;
-
+          double popdblA = double.parse(popstrA);
+          double popdblfinal = (popdblB / popdblA) * 100;
 
           // for revenue
           String revstrB = data['revenue'].toString();
           double revdblB = double.parse(revstrB);
-          double revdblA= double.parse(revstrA);
-          double revdblfinal = (revdblB / revdblA) *100;
 
+          double revdblA = double.parse(revstrA);
+          double revdblfinal = (revdblB / revdblA) * 100;
 
           // for budget
           String landbudgetstrB = data['land'].toString();
           double landbudgetdblB = double.parse(landbudgetstrB);
-          double landbudgetdblA= double.parse(landbudgetstrA);
+
+          double landbudgetdblA = double.parse(landbudgetstrA);
 
           double landbudgetdblfinalA = landbudgetdblB - landbudgetdblA;
           double landbudgetdblfinalB = landbudgetdblA - landbudgetdblfinalA;
-          double landbudgetdblfinalC = (landbudgetdblfinalB / landbudgetdblA) *100;
-          if (landbudgetdblfinalC >100){
+          double landbudgetdblfinalC =
+              (landbudgetdblfinalB / landbudgetdblA) * 100;
+          if (landbudgetdblfinalC > 100) {
             landbudgetdblfinalC = 100.0;
           }
 
-          double result = (popdblfinal + revdblfinal + landbudgetdblfinalC)/3 ;
+          double result = (popdblfinal + revdblfinal + landbudgetdblfinalC) / 3;
 
           String resultA = result.toStringAsFixed(2);
-          String resultfinal ='${resultA}%';
-
-
+          String resultfinal = '${resultA}%';
 
           return Scaffold(
             backgroundColor: const Color.fromARGB(255, 241, 242, 242),
             appBar: AppBar(
               backgroundColor: Colors.transparent,
 
-              title: Text("Demographical Result"),
+              title: const Text("Demographical Result"),
               // title: Text(resultfinal),
+
               foregroundColor: const Color.fromARGB(255, 44, 45, 48),
               elevation: 0.0,
               leading: const BackButton(
@@ -162,9 +175,9 @@ class _DemogResultState extends State<DemogResult> {
                           color: Colors.white,
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: Center(
+                        child: const Center(
                           child: Text("Population", //POPULATION
-                              style: const TextStyle(
+                              style: TextStyle(
                                   color: Color.fromARGB(255, 44, 45, 48),
                                   fontSize: 16.0)), // <-- Text
                         ),
@@ -204,9 +217,9 @@ class _DemogResultState extends State<DemogResult> {
                           color: Colors.white,
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child:  Center(
+                        child: Center(
                           child: Text(revstrB, //REVENUE PER YEAR
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Color.fromARGB(255, 44, 45, 48),
                                   fontSize: 16.0)), // <-- Text
                         ),
@@ -218,7 +231,7 @@ class _DemogResultState extends State<DemogResult> {
                           color: Colors.white,
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child:  Center(
+                        child: const Center(
                           child: Text("Land per SqM", //LAND PER SQ
                               style: TextStyle(
                                   color: Color.fromARGB(255, 44, 45, 48),
@@ -232,9 +245,9 @@ class _DemogResultState extends State<DemogResult> {
                           color: Colors.white,
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child:  Center(
+                        child: Center(
                           child: Text(landstrfinal, //LAND PER SQ
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Color.fromARGB(255, 44, 45, 48),
                                   fontSize: 16.0)), // <-- Text
                         ),
@@ -261,10 +274,10 @@ class _DemogResultState extends State<DemogResult> {
                           color: Colors.white,
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child:  Center(
+                        child: Center(
                           child: Text(landbudgetstrB,
                               //BUDGET REQUIRED FOR THE AREA
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Color.fromARGB(255, 44, 45, 48),
                                   fontSize: 16.0)), // <-- Text
                         ),
@@ -276,9 +289,9 @@ class _DemogResultState extends State<DemogResult> {
                           color: Colors.white,
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child:  Center(
+                        child: Center(
                           child: Text(resultfinal,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Color.fromARGB(255, 65, 99, 200),
                                   fontSize: 35.0)), // <-- Text
                         ),
@@ -305,7 +318,9 @@ class _DemogResultState extends State<DemogResult> {
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                         child: Center(
-                          child: Text('',
+                          // child: Text('',
+                          child: Text(widget.ideal,
+
                               // ito dito ko sana sya ilalabas kaso ayaw nya
                               //baa,
                               style: const TextStyle(
@@ -334,9 +349,10 @@ class _DemogResultState extends State<DemogResult> {
                           color: Colors.white,
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child:  Center(
-                          child: Text("Suggested business for you" '\n' '$businessname',
-                              style: TextStyle(
+                        child: Center(
+                          child: Text(
+                              "Suggested business for you" '\n' '$businessname',
+                              style: const TextStyle(
                                   color: Color.fromARGB(255, 44, 45, 48),
                                   fontSize: 16.0)), // <-- Text
                         ),
@@ -356,11 +372,13 @@ class _DemogResultState extends State<DemogResult> {
                                               255, 0, 110, 195), // background
                                           shape: RoundedRectangleBorder(
                                               borderRadius:
-                                              BorderRadius.circular(5.0)),
+                                                  BorderRadius.circular(5.0)),
                                           minimumSize:
-                                          Size(150, 50), //////// HERE
+                                              const Size(150, 50), //////// HERE
                                         ),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          StatisForecasting(context);
+                                        },
                                         child: const Text(
                                           "Download",
                                           style: TextStyle(color: Colors.white),
@@ -375,13 +393,13 @@ class _DemogResultState extends State<DemogResult> {
                                     },
                                     style: TextButton.styleFrom(
                                       minimumSize:
-                                      const Size(150, 50), //<-- SEE HERE
+                                          const Size(150, 50), //<-- SEE HERE
                                       side: const BorderSide(
                                         color: Color.fromARGB(255, 0, 110, 195),
                                         width: 3,
                                       ),
                                     ),
-                                    child: Text('Done'),
+                                    child: const Text('Done'),
                                   ),
                                 ),
                               ]))

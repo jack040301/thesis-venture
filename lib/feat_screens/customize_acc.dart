@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class CustomizeAccScreen extends StatefulWidget {
   const CustomizeAccScreen({super.key});
@@ -8,6 +11,47 @@ class CustomizeAccScreen extends StatefulWidget {
 }
 
 class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
+  final _firstnameController = TextEditingController();
+  final _lastnameController = TextEditingController();
+
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  void initState() {
+    super.initState();
+
+    inputData();
+  }
+
+  void inputData() {
+    final User? user = auth.currentUser;
+
+    final uid = user!.uid;
+    _firstnameController.text = user.displayName!;
+    _emailController.text = user.email!;
+
+    // here you write the codes to input the data into firestore
+  }
+
+/*   updatePassword() {
+    try {
+      if (_firstnameController.text.isNotEmpty &
+          _emailController.text.isNotEmpty &
+          _passwordController.text.isNotEmpty &
+          _confirmPasswordController.text.isNotEmpty) {
+        if (_passwordController.text == _confirmPasswordController.text) {
+          final User? user = auth.currentUser;
+          user?.updatePassword(_passwordController.text).then((value) => null);
+        }
+      } else {
+        print('Fields are empty');
+      }
+    } on FirebaseAuthException catch (e) {}
+  } */
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,6 +85,7 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
                 ),
               ),
               TextField(
+                controller: _firstnameController,
                 decoration: InputDecoration(
                   labelStyle: const TextStyle(
                     color: Colors.black,
@@ -69,6 +114,7 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
                 ),
               ),
               TextField(
+                controller: _lastnameController,
                 decoration: InputDecoration(
                   labelStyle: const TextStyle(
                     color: Colors.black,
@@ -97,6 +143,8 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
                 ),
               ),
               TextField(
+                controller: _emailController,
+                enabled: false,
                 decoration: InputDecoration(
                   labelStyle: const TextStyle(
                     color: Colors.black,
@@ -126,6 +174,7 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               ),
               TextField(
                 obscureText: true,
+                controller: _passwordController,
                 decoration: InputDecoration(
                   hintText: '************',
                   labelStyle: const TextStyle(
@@ -156,6 +205,7 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               ),
               TextField(
                 obscureText: true,
+                controller: _confirmPasswordController,
                 decoration: InputDecoration(
                   hintText: '************',
                   labelStyle: const TextStyle(
@@ -179,8 +229,7 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
                   onPressed: () {},
                   child: const Text(
                     'Save Changes',
-                    style:
-                    TextStyle(height: 1.5, fontSize: 18),
+                    style: TextStyle(height: 1.5, fontSize: 18),
                   ),
                 ),
               ),

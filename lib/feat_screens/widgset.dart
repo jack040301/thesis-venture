@@ -10,34 +10,30 @@ class DialogQuestion {
   DialogQuestion(this.markerid); //do not remove this
   CollectionReference mark = FirebaseFirestore.instance.collection("business");
 
-  var businessname, businessbudget;
+  var selectdropval;
   void initState() {
     // getBusinessData();
   }
   final TextEditingController areaBudgetController = TextEditingController();
-  // ito yung kunwari sample na budget na nilagay ni user
-  /*  getBusinessData() async {
-    CollectionReference business =
-        FirebaseFirestore.instance.collection("business");
 
-    final docRef = business.doc("10000"); //name of document
-    docRef.get().then(
-      (DocumentSnapshot doc) {
-        final data = doc.data() as Map<String, dynamic>;
 
-        businessname = data['name'];
-        businessbudget = data['budget'];
-      },
-      onError: (e) => print("Error getting document: $e"),
-    );
-  } */
+  var dropitems = [
+    //pa lagay dito sa array yung maquery na items
+    'Item 1',
+    'Item 2',
+    'Item 3',
+    'Item 4',
+    'Item 5',
+  ];
 
   Future<void> demogResult(BuildContext context) async {
     await Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => DemogResult(
-                marker: markerid, budget: areaBudgetController.text)));
+                marker: markerid,
+                budget: areaBudgetController.text,
+                ideal: selectdropval)));
   }
 
   Future showMyDialog(BuildContext context) {
@@ -109,19 +105,20 @@ class DialogQuestion {
                         dropdownColor: const Color.fromARGB(255, 230, 230, 230),
 
 //value: dropdownValue,
-/*items: _businesstype
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value,
-                                style: const TextStyle(
-                                  color: Color.fromARGB(255, 74, 74, 74),
-                                  fontSize: 14.0,
-                                )));
-                      }).toList(),*/
-                        onChanged: (selecteditem) {
+                        items:
+                        dropitems.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value,
+                                  style: const TextStyle(
+                                    color: Color.fromARGB(255, 74, 74, 74),
+                                    fontSize: 14.0,
+                                  )));
+                        }).toList(),
+                        onChanged: (String? newValue) {
                           setState(() {
 // selectedbusinesstype = selecteditem;
+                            selectdropval = newValue!;
                           });
                         },
 //value: selectedbusinesstype,
@@ -130,7 +127,6 @@ class DialogQuestion {
                           color: Color.fromARGB(255, 74, 74, 74),
                           fontSize: 14.0,
                         ),
-                        items: [],
                       ),
 
 //TEXT BOX 2
