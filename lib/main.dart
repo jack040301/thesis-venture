@@ -18,6 +18,8 @@ import 'package:main_venture/screens/home_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 
+import 'splash_screen.dart';
+
 //IMPORT YOUR FILE HERE IF YOU DONT WANT TO GO TO THE LOGIN PAGE STATE
 //DO NOT CHANGE AUTH SCREEN AFTER THE SPLASH SCREEN IF YOU ARE ACCESSING PROFILE SCREEN PAGE, YOU MUST LOGIN FIRST
 /* import 'package:main_venture/feat_screens/pinned_location.dart';
@@ -69,7 +71,7 @@ class _SplashScreenState extends State<SplashScreen> {
         children: [Image.asset('assets/animassets/Logo.gif')],
       ),
       nextScreen:
-          const HomePage(), //CHANGE HERE IF YOU WANT TO SEE YOUR SCREEN IMMEDIATELY
+          const Screensplash(), //CHANGE HERE IF YOU WANT TO SEE YOUR SCREEN IMMEDIATELY
       splashIconSize: 250,
       duration: 3400,
     );

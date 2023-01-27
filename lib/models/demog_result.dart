@@ -157,9 +157,9 @@ class _DemogResultState extends State<DemogResult> {
                           color: Colors.white,
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: Center(
+                        child: const Center(
                           child: Text("Population", //POPULATION
-                              style: const TextStyle(
+                              style: TextStyle(
                                   color: Color.fromARGB(255, 44, 45, 48),
                                   fontSize: 16.0)), // <-- Text
                         ),
@@ -201,7 +201,7 @@ class _DemogResultState extends State<DemogResult> {
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                         child: Center(
                           child: Text(revstrB, //REVENUE PER YEAR
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Color.fromARGB(255, 44, 45, 48),
                                   fontSize: 16.0)), // <-- Text
                         ),
@@ -213,7 +213,7 @@ class _DemogResultState extends State<DemogResult> {
                           color: Colors.white,
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: Center(
+                        child: const Center(
                           child: Text("Land per SqM", //LAND PER SQ
                               style: TextStyle(
                                   color: Color.fromARGB(255, 44, 45, 48),
@@ -229,7 +229,7 @@ class _DemogResultState extends State<DemogResult> {
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                         child: Center(
                           child: Text(landstrfinal, //LAND PER SQ
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Color.fromARGB(255, 44, 45, 48),
                                   fontSize: 16.0)), // <-- Text
                         ),
@@ -259,7 +259,7 @@ class _DemogResultState extends State<DemogResult> {
                         child: Center(
                           child: Text(landbudgetstrB,
                               //BUDGET REQUIRED FOR THE AREA
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Color.fromARGB(255, 44, 45, 48),
                                   fontSize: 16.0)), // <-- Text
                         ),
@@ -273,7 +273,7 @@ class _DemogResultState extends State<DemogResult> {
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                         child: Center(
                           child: Text(resultfinal,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Color.fromARGB(255, 65, 99, 200),
                                   fontSize: 35.0)), // <-- Text
                         ),
@@ -332,7 +332,7 @@ class _DemogResultState extends State<DemogResult> {
                         child: Center(
                           child: Text(
                               "Suggested business for you" '\n' '$businessname',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Color.fromARGB(255, 44, 45, 48),
                                   fontSize: 16.0)), // <-- Text
                         ),
@@ -354,7 +354,7 @@ class _DemogResultState extends State<DemogResult> {
                                               borderRadius:
                                                   BorderRadius.circular(5.0)),
                                           minimumSize:
-                                              Size(150, 50), //////// HERE
+                                              const Size(150, 50), //////// HERE
                                         ),
                                         onPressed: () {},
                                         child: const Text(
@@ -377,7 +377,7 @@ class _DemogResultState extends State<DemogResult> {
                                         width: 3,
                                       ),
                                     ),
-                                    child: Text('Done'),
+                                    child: const Text('Done'),
                                   ),
                                 ),
                               ]))

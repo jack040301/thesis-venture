@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
-class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+/* import 'models/forecasting/barfore.dart';
+import 'models/forecasting/forecasting.dart'; */
+
+class Screensplash extends StatelessWidget {
+  const Screensplash({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      body: const Center(
-        child: Text("Loading....."),
+      body: SingleChildScrollView(
+        child: Column(children: [Stack()]),
       ),
     );
   }

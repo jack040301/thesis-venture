@@ -55,6 +55,7 @@ dependencies:
   http:
   lottie:
   dartz:
+  fl_chart:
   google_maps_flutter:
   flutter_riverpod:
   fab_circular_menu:
