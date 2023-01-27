@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../component/loading.dart';
+import 'forecasting_population.dart';
 
 class DemogResult extends StatefulWidget {
   const DemogResult(
@@ -26,20 +27,35 @@ class _DemogResultState extends State<DemogResult> {
     getBusinessData();
   }
 
+  // ignore: non_constant_identifier_names
+  Future<void> StatisForecasting(BuildContext context) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BarchartPop(
+          markerid: widget.marker,
+        ),
+      ),
+    );
+  }
+
   getBusinessData() async {
     CollectionReference business =
         FirebaseFirestore.instance.collection("business");
-    var bud = widget.budget.trim().toString();
-    //String budgetf = bud.toString();
+    var bud = widget.budget.trim();
+    String budgetf = bud.toString();
     final docRef = business.where("budget",
         isEqualTo:
-            bud); // yung budgets na variable yung gagamitin dito para matawag yung specific document accroding sa budget
+            budgetf); // yung budgets na variable yung gagamitin dito para matawag yung specific document accroding sa budget
     docRef.get().then(
       (QuerySnapshot doc) {
         doc.docs.forEach((documents) async {
           var data = documents.data() as Map;
           businessname = data['name'];
           businessbudget = data['budget'];
+          landbudget = data['land value'];
+          landrevenue = data['revenue'];
+          landpop = data['population'];
           landbudget = data['land value'];
           landrevenue = data['revenue'];
           landpop = data['population'];
@@ -60,7 +76,7 @@ class _DemogResultState extends State<DemogResult> {
     final String con = widget.marker.trim(); //this still has problem
 
     return FutureBuilder<DocumentSnapshot>(
-      future: mark.doc("$con").get(),
+      future: mark.doc(con).get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {
@@ -74,7 +90,6 @@ class _DemogResultState extends State<DemogResult> {
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
 
-          snapshot.data!.data() as Map<String, dynamic>;
           //for land size
           String landstr = data['land size'].toString();
           String landstrfinal = '${landstr}sqm';
@@ -88,12 +103,14 @@ class _DemogResultState extends State<DemogResult> {
           // for revenue
           String revstrB = data['revenue'].toString();
           double revdblB = double.parse(revstrB);
+
           double revdblA = double.parse(revstrA);
           double revdblfinal = (revdblB / revdblA) * 100;
 
           // for budget
           String landbudgetstrB = data['land'].toString();
           double landbudgetdblB = double.parse(landbudgetstrB);
+
           double landbudgetdblA = double.parse(landbudgetstrA);
 
           double landbudgetdblfinalA = landbudgetdblB - landbudgetdblA;
@@ -115,7 +132,8 @@ class _DemogResultState extends State<DemogResult> {
               backgroundColor: Colors.transparent,
 
               title: const Text("Demographical Result"),
-              //  title: Text(widget.ideal),
+              // title: Text(resultfinal),
+
               foregroundColor: const Color.fromARGB(255, 44, 45, 48),
               elevation: 0.0,
               leading: const BackButton(
@@ -300,7 +318,9 @@ class _DemogResultState extends State<DemogResult> {
                         ),
                         padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                         child: Center(
+                          // child: Text('',
                           child: Text(widget.ideal,
+
                               // ito dito ko sana sya ilalabas kaso ayaw nya
                               //baa,
                               style: const TextStyle(
@@ -356,7 +376,9 @@ class _DemogResultState extends State<DemogResult> {
                                           minimumSize:
                                               const Size(150, 50), //////// HERE
                                         ),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          StatisForecasting(context);
+                                        },
                                         child: const Text(
                                           "Download",
                                           style: TextStyle(color: Colors.white),

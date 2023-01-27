@@ -15,22 +15,7 @@ class DialogQuestion {
     // getBusinessData();
   }
   final TextEditingController areaBudgetController = TextEditingController();
-  // ito yung kunwari sample na budget na nilagay ni user
-  /*  getBusinessData() async {
-    CollectionReference business =
-        FirebaseFirestore.instance.collection("business");
 
-    final docRef = business.doc("10000"); //name of document
-    docRef.get().then(
-      (DocumentSnapshot doc) {
-        final data = doc.data() as Map<String, dynamic>;
-
-        businessname = data['name'];
-        businessbudget = data['budget'];
-      },
-      onError: (e) => print("Error getting document: $e"),
-    );
-  } */
 
   var dropitems = [
     //pa lagay dito sa array yung maquery na items
@@ -61,200 +46,200 @@ class DialogQuestion {
               content: Form(
 //key: _formKey,
                   child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(
-                    height: 5.0,
-                  ),
-                  const Align(
-                    alignment: Alignment.topRight,
-                    child: Icon(Icons.close),
-                  ),
-                  const SizedBox(
-                    height: 20.0,
-                  ),
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      const Align(
+                        alignment: Alignment.topRight,
+                        child: Icon(Icons.close),
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
 
-                  const Text("Enter budget for the area (per square meter)?",
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 74, 74, 74),
-                        fontSize: 18.0,
-                      )),
+                      const Text("Enter budget for the area (per square meter)?",
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 74, 74, 74),
+                            fontSize: 18.0,
+                          )),
 
-                  const SizedBox(
-                    height: 10.0,
-                  ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
 
 //DROPDOWN
-                  DropdownButtonFormField(
-                    icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                    isExpanded: true,
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.all((15.0)),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius:
+                      DropdownButtonFormField(
+                        icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                        isExpanded: true,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.all((15.0)),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius:
                             const BorderRadius.all(Radius.circular(5.0)),
-                        borderSide: BorderSide(
-                            color: const Color.fromARGB(255, 230, 230, 230)
-                                .withOpacity(0.5),
-                            width: 2),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius:
+                            borderSide: BorderSide(
+                                color: const Color.fromARGB(255, 230, 230, 230)
+                                    .withOpacity(0.5),
+                                width: 2),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius:
                             const BorderRadius.all(Radius.circular(5.0)),
-                        borderSide: BorderSide(
-                            color: const Color.fromARGB(255, 230, 230, 230)
-                                .withOpacity(0.5),
-                            width: 2),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderRadius:
+                            borderSide: BorderSide(
+                                color: const Color.fromARGB(255, 230, 230, 230)
+                                    .withOpacity(0.5),
+                                width: 2),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderRadius:
                             const BorderRadius.all(Radius.circular(5.0)),
-                        borderSide: BorderSide(
-                            color: const Color.fromARGB(255, 230, 230, 230)
-                                .withOpacity(0.5),
-                            width: 2),
-                      ),
-                      filled: true,
-                      fillColor: const Color.fromARGB(255, 230, 230, 230),
-                    ),
-                    dropdownColor: const Color.fromARGB(255, 230, 230, 230),
+                            borderSide: BorderSide(
+                                color: const Color.fromARGB(255, 230, 230, 230)
+                                    .withOpacity(0.5),
+                                width: 2),
+                          ),
+                          filled: true,
+                          fillColor: const Color.fromARGB(255, 230, 230, 230),
+                        ),
+                        dropdownColor: const Color.fromARGB(255, 230, 230, 230),
 
 //value: dropdownValue,
-                    items:
+                        items:
                         dropitems.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value,
-                              style: const TextStyle(
-                                color: Color.fromARGB(255, 74, 74, 74),
-                                fontSize: 14.0,
-                              )));
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      setState(() {
+                          return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value,
+                                  style: const TextStyle(
+                                    color: Color.fromARGB(255, 74, 74, 74),
+                                    fontSize: 14.0,
+                                  )));
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
 // selectedbusinesstype = selecteditem;
-                        selectdropval = newValue!;
-                      });
-                    },
+                            selectdropval = newValue!;
+                          });
+                        },
 //value: selectedbusinesstype,
-                    hint: const Text('Choose your Business'),
-                    style: const TextStyle(
-                      color: Color.fromARGB(255, 74, 74, 74),
-                      fontSize: 14.0,
-                    ),
-                  ),
+                        hint: const Text('Choose your Business'),
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 74, 74, 74),
+                          fontSize: 14.0,
+                        ),
+                      ),
 
 //TEXT BOX 2
-                  const SizedBox(
-                    height: 20.0,
-                  ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
 
-                  const Text("Enter budget for the area (per square meter)?",
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 74, 74, 74),
-                        fontSize: 15.0,
-                      )),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  TextFormField(
-                      controller: areaBudgetController,
-                      keyboardType: TextInputType.number,
-                      validator: (areaBudgetController) {
-                        return areaBudgetController!.isNotEmpty
-                            ? null
-                            : 'Invalid Input';
-                      },
-                      decoration: InputDecoration(
-                        hintText: "",
-                        filled: true,
-                        fillColor: const Color.fromARGB(255, 230, 230, 230),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius:
+                      const Text("Enter budget for the area (per square meter)?",
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 74, 74, 74),
+                            fontSize: 15.0,
+                          )),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      TextFormField(
+                          controller: areaBudgetController,
+                          keyboardType: TextInputType.number,
+                          validator: (areaBudgetController) {
+                            return areaBudgetController!.isNotEmpty
+                                ? null
+                                : 'Invalid Input';
+                          },
+                          decoration: InputDecoration(
+                            hintText: "",
+                            filled: true,
+                            fillColor: const Color.fromARGB(255, 230, 230, 230),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
                               const BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(
-                              color: const Color.fromARGB(255, 230, 230, 230)
-                                  .withOpacity(0.5),
-                              width: 2),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius:
+                              borderSide: BorderSide(
+                                  color: const Color.fromARGB(255, 230, 230, 230)
+                                      .withOpacity(0.5),
+                                  width: 2),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
                               const BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(
-                              color: const Color.fromARGB(255, 230, 230, 230)
-                                  .withOpacity(0.5)),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius:
+                              borderSide: BorderSide(
+                                  color: const Color.fromARGB(255, 230, 230, 230)
+                                      .withOpacity(0.5)),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius:
                               const BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(
-                              color: Colors.redAccent.withOpacity(0.5)),
-                        ),
-                      )),
+                              borderSide: BorderSide(
+                                  color: Colors.redAccent.withOpacity(0.5)),
+                            ),
+                          )),
 
 // TEXT BOX 3
 
-                  const SizedBox(
-                    height: 20.0,
-                  ),
-                  const Text("Enter value of area (per square meter)?",
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 74, 74, 74),
-                        fontSize: 18.0,
-                      )),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  TextFormField(
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      const Text("Enter value of area (per square meter)?",
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 74, 74, 74),
+                            fontSize: 18.0,
+                          )),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      TextFormField(
 // controller: areaController,
-                      keyboardType: TextInputType.number,
-                      validator: (areaController) {
-                        return areaController!.isNotEmpty
-                            ? null
-                            : 'Invalid Input';
-                      },
-                      decoration: InputDecoration(
-                        hintText: '40',
-                        filled: true,
-                        fillColor: const Color.fromARGB(255, 230, 230, 230),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius:
+                          keyboardType: TextInputType.number,
+                          validator: (areaController) {
+                            return areaController!.isNotEmpty
+                                ? null
+                                : 'Invalid Input';
+                          },
+                          decoration: InputDecoration(
+                            hintText: '40',
+                            filled: true,
+                            fillColor: const Color.fromARGB(255, 230, 230, 230),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
                               const BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(
-                              color: const Color.fromARGB(255, 230, 230, 230)
-                                  .withOpacity(0.5),
-                              width: 2),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius:
+                              borderSide: BorderSide(
+                                  color: const Color.fromARGB(255, 230, 230, 230)
+                                      .withOpacity(0.5),
+                                  width: 2),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
                               const BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(
-                              color: const Color.fromARGB(255, 230, 230, 230)
-                                  .withOpacity(0.5)),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius:
+                              borderSide: BorderSide(
+                                  color: const Color.fromARGB(255, 230, 230, 230)
+                                      .withOpacity(0.5)),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius:
                               const BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(
-                              color: Colors.redAccent.withOpacity(0.5)),
-                        ),
-                      )),
-                  const SizedBox(
-                    height: 20.0,
-                  ),
-                  SizedBox(
-                    width: 200.0,
-                    child: RawMaterialButton(
-                      fillColor: const Color.fromARGB(255, 0, 110, 195),
+                              borderSide: BorderSide(
+                                  color: Colors.redAccent.withOpacity(0.5)),
+                            ),
+                          )),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      SizedBox(
+                        width: 200.0,
+                        child: RawMaterialButton(
+                          fillColor: const Color.fromARGB(255, 0, 110, 195),
 //onPressed: null,
 //SAVE USERS' ANSWERS TO THE FIREBASE
 
-                      onPressed: () {
-                        // ito yun sana kapag initinallize dapat
+                          onPressed: () {
+                            // ito yun sana kapag initinallize dapat
 
-                        //  getMarkerData();
-                        //  getMarkerData();
-                        demogResult(context);
+                            //  getMarkerData();
+                            //  getMarkerData();
+                            demogResult(context);
 /*  if (selectedbusinesstype == null) {
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
@@ -277,18 +262,18 @@ class DialogQuestion {
                                         'Fill out the required field')));
                           }
                         }*/
-                      },
-                      elevation: 0.0,
-                      padding: const EdgeInsets.symmetric(vertical: 15.0),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0)),
-                      child: const Text("Proceed",
-                          style:
+                          },
+                          elevation: 0.0,
+                          padding: const EdgeInsets.symmetric(vertical: 15.0),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5.0)),
+                          child: const Text("Proceed",
+                              style:
                               TextStyle(color: Colors.white, fontSize: 15.0)),
-                    ),
-                  ),
-                ],
-              )),
+                        ),
+                      ),
+                    ],
+                  )),
             );
           });
         });

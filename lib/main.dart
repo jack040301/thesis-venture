@@ -16,8 +16,6 @@ import 'package:main_venture/feat_screens/slidingpanel.dart';
 
 import 'package:main_venture/screens/home_page.dart';
 
-import 'package:firebase_core/firebase_core.dart';
-
 import 'splash_screen.dart';
 
 //IMPORT YOUR FILE HERE IF YOU DONT WANT TO GO TO THE LOGIN PAGE STATE
@@ -71,7 +69,7 @@ class _SplashScreenState extends State<SplashScreen> {
         children: [Image.asset('assets/animassets/Logo.gif')],
       ),
       nextScreen:
-          const Screensplash(), //CHANGE HERE IF YOU WANT TO SEE YOUR SCREEN IMMEDIATELY
+          const SplashScreenFore(), //CHANGE HERE IF YOU WANT TO SEE YOUR SCREEN IMMEDIATELY
       splashIconSize: 250,
       duration: 3400,
     );
