@@ -1,12 +1,12 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:main_venture/screens/home_page.dart';
 
 //this is only a sample
 class PredictionDialog {
-    String name, address, population;
+  String name, address, population;
 
-   PredictionDialog({required this.name, required this.address, required this.population});
+  PredictionDialog(
+      {required this.name, required this.address, required this.population});
 
   Future showPredictionDialog(BuildContext context) {
     return showDialog(
@@ -51,29 +51,29 @@ class PredictionDialog {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Name: ${name}',
-                    style: TextStyle(
+                    'Name: $name',
+                    style: const TextStyle(
                       fontSize: 20,
                       height: 3,
                       fontFamily: 'Questrial',
                     ),
                   ),
                   Text(
-                    'Population: ${address}',
-                    style: TextStyle(
+                    'Population: $address',
+                    style: const TextStyle(
                       fontSize: 15,
                       height: 2,
                       fontFamily: 'Questrial',
                     ),
                   ),
-                  Text(
+                  const Text(
                     '261,729',
                     style: TextStyle(
                       fontSize: 23,
                       fontFamily: 'Questrial',
                     ),
                   ),
-                  Text(
+                  const Text(
                     'Revenue Per Year',
                     style: TextStyle(
                       fontSize: 15,
@@ -81,14 +81,14 @@ class PredictionDialog {
                       fontFamily: 'Questrial',
                     ),
                   ),
-                  Text(
+                  const Text(
                     '1,073,006,946.81',
                     style: TextStyle(
                       fontSize: 23,
                       fontFamily: 'Questrial',
                     ),
                   ),
-                  Text(
+                  const Text(
                     'Land per sq',
                     style: TextStyle(
                       fontSize: 15,
@@ -96,14 +96,14 @@ class PredictionDialog {
                       fontFamily: 'Questrial',
                     ),
                   ),
-                  Text(
+                  const Text(
                     '5,240,000',
                     style: TextStyle(
                       fontSize: 23,
                       fontFamily: 'Questrial',
                     ),
                   ),
-                  Text(
+                  const Text(
                     'Budget Required for the Area',
                     style: TextStyle(
                       fontSize: 15,
@@ -111,29 +111,14 @@ class PredictionDialog {
                       fontFamily: 'Questrial',
                     ),
                   ),
-                  Text(
+                  const Text(
                     '8,000 per sqm',
                     style: TextStyle(
                       fontSize: 23,
                       fontFamily: 'Questrial',
                     ),
                   ),
-                  /*    Text(
-                                                'Related Businesses',
-                                                style: TextStyle(
-                                                  fontSize: 15,
-                                                  height: 2,
-                                                  fontFamily: 'Questrial',
-                                                ),
-                                              ),
-                                              Text(
-                                                '2',
-                                                style: TextStyle(
-                                                  fontSize: 23,
-                                                  fontFamily: 'Questrial',
-                                                ),
-                                              ), */
-                  Text(
+                  const Text(
                     '70%',
                     style: TextStyle(
                       fontSize: 40,

@@ -3,8 +3,11 @@ import 'data_population.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 class PointsLineChart extends StatelessWidget {
+  const PointsLineChart({super.key});
+
   // Defining the data
 
+  // ignore: non_constant_identifier_names
   List<charts.Series<SalesData, int>> _LineSeries() {
     final data = [
       SalesData(months: 0, sales: 10),

@@ -63,7 +63,8 @@ class SetDialog {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => CustomizeAccScreen()));
+                                builder: (context) =>
+                                    const CustomizeAccScreen()));
                       },
                     ),
                     TextButton(
@@ -79,7 +80,7 @@ class SetDialog {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ManualScreen()));
+                                builder: (context) => const ManualScreen()));
                       },
                     ),
                     TextButton(
@@ -95,7 +96,7 @@ class SetDialog {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AboutUsScreen()));
+                                builder: (context) => const AboutUsScreen()));
                       },
                     ),
                     TextButton(
@@ -111,7 +112,8 @@ class SetDialog {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => TermsCondiScreen()));
+                                builder: (context) =>
+                                    const TermsCondiScreen()));
                       },
                     ),
                   ],

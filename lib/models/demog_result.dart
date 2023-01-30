@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../component/loading.dart';
-import 'forecasting_population.dart';
+import 'forecasting/forecasting_population.dart';
 
 class DemogResult extends StatefulWidget {
   const DemogResult(
@@ -20,8 +19,10 @@ class _DemogResultState extends State<DemogResult> {
   String landbudgetstrA = '';
   String revstrA = '';
 
+  // ignore: prefer_typing_uninitialized_variables
   var businessname, businessbudget, landbudget, landrevenue, landpop;
 
+  @override
   void initState() {
     super.initState();
     getBusinessData();
@@ -47,7 +48,7 @@ class _DemogResultState extends State<DemogResult> {
     final docRef = business.where("budget",
         isEqualTo:
             budgetf); // yung budgets na variable yung gagamitin dito para matawag yung specific document accroding sa budget
-    docRef.get().then(
+    await docRef.get().then(
       (QuerySnapshot doc) {
         doc.docs.forEach((documents) async {
           var data = documents.data() as Map;
@@ -66,7 +67,7 @@ class _DemogResultState extends State<DemogResult> {
           popstrA = data['population'].toString();
         });
       },
-      onError: (e) => print("Error getting document: $e"),
+      onError: (e) => ("Error getting document: $e"),
     );
   }
 
@@ -92,7 +93,7 @@ class _DemogResultState extends State<DemogResult> {
 
           //for land size
           String landstr = data['land size'].toString();
-          String landstrfinal = '${landstr}sqm';
+          //  String landstrfinal = '${landstr}sqm';
 
           // for population
           String popstrB = data['population'].toString();
@@ -150,24 +151,7 @@ class _DemogResultState extends State<DemogResult> {
                       const SizedBox(
                         height: 10.0,
                       ),
-                      Container(
-                        color: Colors.white,
-                        padding: const EdgeInsets.fromLTRB(35, 20, 35, 7),
-                        child: Row(
-                          children: <Widget>[
-                            const SizedBox(
-                              width: 10.0,
-                            ),
-                            Expanded(
-                              child: Text(data['place'], //DATA FOR PLACE
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                      color: Color.fromARGB(255, 44, 45, 48),
-                                      fontSize: 20.0)),
-                            )
-                          ],
-                        ),
-                      ),
+                      DemogPlace(data: data),
                       Container(
                         width: 350,
                         height: 100,
@@ -182,20 +166,7 @@ class _DemogResultState extends State<DemogResult> {
                                   fontSize: 16.0)), // <-- Text
                         ),
                       ),
-                      Container(
-                        width: 350,
-                        height: 100,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: Center(
-                          child: Text(popstrB, //POPULATION
-                              style: const TextStyle(
-                                  color: Color.fromARGB(255, 44, 45, 48),
-                                  fontSize: 16.0)), // <-- Text
-                        ),
-                      ),
+                      DemogPopu(popstrB: popstrB),
                       Container(
                         width: 350,
                         height: 100,
@@ -210,20 +181,7 @@ class _DemogResultState extends State<DemogResult> {
                                   fontSize: 16.0)), // <-- Text
                         ),
                       ),
-                      Container(
-                        width: 350,
-                        height: 100,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: Center(
-                          child: Text(revstrB, //REVENUE PER YEAR
-                              style: const TextStyle(
-                                  color: Color.fromARGB(255, 44, 45, 48),
-                                  fontSize: 16.0)), // <-- Text
-                        ),
-                      ),
+                      DemogRevenue(revstrB: revstrB),
                       Container(
                         width: 350,
                         height: 100,
@@ -238,20 +196,7 @@ class _DemogResultState extends State<DemogResult> {
                                   fontSize: 16.0)), // <-- Text
                         ),
                       ),
-                      Container(
-                        width: 350,
-                        height: 100,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: Center(
-                          child: Text(landstrfinal, //LAND PER SQ
-                              style: const TextStyle(
-                                  color: Color.fromARGB(255, 44, 45, 48),
-                                  fontSize: 16.0)), // <-- Text
-                        ),
-                      ),
+                      DemogLandsqm(landstr: landstr),
                       Container(
                         width: 350,
                         height: 100,
@@ -267,35 +212,8 @@ class _DemogResultState extends State<DemogResult> {
                                   fontSize: 16.0)), // <-- Text
                         ),
                       ),
-                      Container(
-                        width: 350,
-                        height: 100,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: Center(
-                          child: Text(landbudgetstrB,
-                              //BUDGET REQUIRED FOR THE AREA
-                              style: const TextStyle(
-                                  color: Color.fromARGB(255, 44, 45, 48),
-                                  fontSize: 16.0)), // <-- Text
-                        ),
-                      ),
-                      Container(
-                        width: 350,
-                        height: 50,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: Center(
-                          child: Text(resultfinal,
-                              style: const TextStyle(
-                                  color: Color.fromARGB(255, 65, 99, 200),
-                                  fontSize: 35.0)), // <-- Text
-                        ),
-                      ),
+                      DemogBudget(landbudgetstrB: landbudgetstrB),
+                      DemogResultFinal(resultfinal: resultfinal),
                       Container(
                         width: 350,
                         height: 50,
@@ -310,24 +228,7 @@ class _DemogResultState extends State<DemogResult> {
                                   fontSize: 16.0)), // <-- Text
                         ),
                       ),
-                      Container(
-                        width: 350,
-                        height: 30,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: Center(
-                          // child: Text('',
-                          child: Text(widget.ideal,
-
-                              // ito dito ko sana sya ilalabas kaso ayaw nya
-                              //baa,
-                              style: const TextStyle(
-                                  color: Color.fromARGB(255, 65, 99, 200),
-                                  fontSize: 16.0)), // <-- Text
-                        ),
-                      ),
+                      DemogIdealBusiness(widget: widget),
                       Container(
                         width: 350,
                         height: 90,
@@ -376,9 +277,7 @@ class _DemogResultState extends State<DemogResult> {
                                           minimumSize:
                                               const Size(150, 50), //////// HERE
                                         ),
-                                        onPressed: () {
-                                          StatisForecasting(context);
-                                        },
+                                        onPressed: () {},
                                         child: const Text(
                                           "Download",
                                           style: TextStyle(color: Colors.white),
@@ -389,7 +288,9 @@ class _DemogResultState extends State<DemogResult> {
                                   child: TextButton(
                                     onPressed: () {
                                       //getMarkerData();
-                                      getBusinessData();
+                                      // getBusinessData();
+
+                                      StatisForecasting(context);
                                     },
                                     style: TextButton.styleFrom(
                                       minimumSize:
@@ -409,8 +310,206 @@ class _DemogResultState extends State<DemogResult> {
           );
         }
 
-        return Loading(); //while loading the data
+        return const Center(
+            child: CircularProgressIndicator()); //while loading the data
       },
+    );
+  }
+}
+
+class DemogIdealBusiness extends StatelessWidget {
+  const DemogIdealBusiness({
+    super.key,
+    required this.widget,
+  });
+
+  final DemogResult widget;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 350,
+      height: 30,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+      ),
+      padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+      child: Center(
+        // child: Text('',
+        child: Text(widget.ideal,
+
+            // ito dito ko sana sya ilalabas kaso ayaw nya
+            //baa,
+            style: const TextStyle(
+                color: Color.fromARGB(255, 65, 99, 200),
+                fontSize: 16.0)), // <-- Text
+      ),
+    );
+  }
+}
+
+class DemogResultFinal extends StatelessWidget {
+  const DemogResultFinal({
+    super.key,
+    required this.resultfinal,
+  });
+
+  final String resultfinal;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 350,
+      height: 50,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+      ),
+      padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+      child: Center(
+        child: Text(resultfinal,
+            style: const TextStyle(
+                color: Color.fromARGB(255, 65, 99, 200),
+                fontSize: 35.0)), // <-- Text
+      ),
+    );
+  }
+}
+
+class DemogBudget extends StatelessWidget {
+  const DemogBudget({
+    super.key,
+    required this.landbudgetstrB,
+  });
+
+  final String landbudgetstrB;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 350,
+      height: 100,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+      ),
+      padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+      child: Center(
+        child: Text(landbudgetstrB,
+            //BUDGET REQUIRED FOR THE AREA
+            style: const TextStyle(
+                color: Color.fromARGB(255, 44, 45, 48),
+                fontSize: 16.0)), // <-- Text
+      ),
+    );
+  }
+}
+
+class DemogLandsqm extends StatelessWidget {
+  const DemogLandsqm({
+    super.key,
+    required this.landstr,
+  });
+
+  final String landstr;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 350,
+      height: 100,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+      ),
+      padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+      child: Center(
+        child: Text('$landstr' 'sqm', //LAND PER SQ
+            style: const TextStyle(
+                color: Color.fromARGB(255, 44, 45, 48),
+                fontSize: 16.0)), // <-- Text
+      ),
+    );
+  }
+}
+
+class DemogRevenue extends StatelessWidget {
+  const DemogRevenue({
+    super.key,
+    required this.revstrB,
+  });
+
+  final String revstrB;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 350,
+      height: 100,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+      ),
+      padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+      child: Center(
+        child: Text(revstrB, //REVENUE PER YEAR
+            style: const TextStyle(
+                color: Color.fromARGB(255, 44, 45, 48),
+                fontSize: 16.0)), // <-- Text
+      ),
+    );
+  }
+}
+
+class DemogPopu extends StatelessWidget {
+  const DemogPopu({
+    super.key,
+    required this.popstrB,
+  });
+
+  final String popstrB;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 350,
+      height: 100,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+      ),
+      padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+      child: Center(
+        child: Text(popstrB, //POPULATION
+            style: const TextStyle(
+                color: Color.fromARGB(255, 44, 45, 48),
+                fontSize: 16.0)), // <-- Text
+      ),
+    );
+  }
+}
+
+class DemogPlace extends StatelessWidget {
+  const DemogPlace({
+    super.key,
+    required this.data,
+  });
+
+  final Map<String, dynamic> data;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      padding: const EdgeInsets.fromLTRB(35, 20, 35, 7),
+      child: Row(
+        children: <Widget>[
+          const SizedBox(
+            width: 10.0,
+          ),
+          Expanded(
+            child: Text(data['place'], //DATA FOR PLACE
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                    color: Color.fromARGB(255, 44, 45, 48), fontSize: 20.0)),
+          )
+        ],
+      ),
     );
   }
 }
