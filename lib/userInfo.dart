@@ -19,20 +19,20 @@ class AuthFunction {
     try {
       await GoogleSignIn().signOut();
       await FirebaseAuth.instance.signOut();
-    //  print('Signout initiated');
+      //  print('Signout initiated');
     } catch (e) {
       //print("error in sign in $e");
     }
     try {
       FirebaseAuth.instance.authStateChanges().listen((User? user) {
         if (user == null) {
-      //    print('User has Signed out');
+          //    print('User has Signed out');
         } else {
-        //  print('User is logged in');
+          //  print('User is logged in');
         }
       });
     } on FirebaseAuthException catch (e) {
-    //  print('Logout pressed: ${e.message}');
+      //  print('Logout pressed: ${e.message}');
     }
   }
 
