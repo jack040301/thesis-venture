@@ -31,7 +31,7 @@ class _LayerSimulationScreenState extends State<LayerSimulationScreen> {
               children: [
                 Container(
                   margin: const EdgeInsets.fromLTRB(50, 25, 50, 0),
-                  child: TextField(
+                  child: const TextField(
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
                         hintStyle: TextStyle(
@@ -50,7 +50,7 @@ class _LayerSimulationScreenState extends State<LayerSimulationScreen> {
                   ),
                   margin: const EdgeInsets.fromLTRB(250, 0, 15, 0),
                   child: IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.upgrade,
                     ),
                     iconSize: 20,

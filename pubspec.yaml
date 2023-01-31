@@ -38,7 +38,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   getwidget: ^3.0.1
-  fl_chart:
+  
     
   decorated_dropdownbutton: ^0.0.3
 
@@ -56,13 +56,13 @@ dependencies:
   http:
   lottie:
   dartz:
+  fl_chart:
   google_maps_flutter:
   flutter_riverpod:
   fab_circular_menu:
   flutter_polyline_points:
   flutter_rating_stars:
   flip_card:
-  flutter_spinkit:
   firebase_core: ^2.1.1
   firebase_auth: ^4.1.1
   google_sign_in: ^5.4.2

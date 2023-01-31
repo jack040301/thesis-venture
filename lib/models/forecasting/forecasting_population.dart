@@ -2,12 +2,11 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../component/loading.dart';
 import 'data_population.dart';
 
 class BarchartPop extends StatelessWidget {
   final String markerid;
-  BarchartPop({required this.markerid});
+  const BarchartPop({super.key, required this.markerid});
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +106,7 @@ class BarchartPop extends StatelessWidget {
             )),
           );
         }
-        return Loading();
+        return const Center(child: CircularProgressIndicator());
       },
     );
   }

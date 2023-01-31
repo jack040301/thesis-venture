@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:main_venture/auth_screen.dart';
 import 'package:main_venture/feat_screens/pinnedlocation_new.dart';
 
+import '../userInfo.dart';
 import 'settings.dart';
 
 //THIS IS THE DIALOG OF PROFILE
@@ -13,8 +13,6 @@ class ProfileNav {
     return await showDialog(
         context: context,
         builder: (context) {
-          final TextEditingController _textEditingController =
-              TextEditingController();
           //bool isChecked = false;
           return StatefulBuilder(builder: (context, setState) {
             return AlertDialog(
@@ -144,6 +142,5 @@ class ProfileNav {
 }
 
 Future<void> singingOut() async {
-  await GoogleSignIn().signOut();
-  await FirebaseAuth.instance.signOut();
+  return await AuthFunction().logOut();
 }

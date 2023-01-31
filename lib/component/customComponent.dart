@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CustomPassField extends StatefulWidget {
   CustomPassField(
       {super.key, required this.onChanged, required this.onSaved, this.cont});
@@ -79,7 +80,7 @@ class _SaveLocationDialogState extends State<SaveLocationDialog> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: SimpleDialog(),
+      child: const SimpleDialog(),
     );
   }
 }

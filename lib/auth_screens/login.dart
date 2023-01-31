@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:main_venture/auth_screens/forgot_password.dart';
 import 'package:main_venture/auth_screens/signup.dart';
-import 'package:main_venture/auth_screen.dart';
-import 'package:main_venture/component/loading.dart';
-import 'package:main_venture/feat_screens/profile_screen.dart';
+import 'package:main_venture/userInfo.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,6 +14,20 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  final textFieldFocusNode = FocusNode();
+  bool _obscured = true;
+
+  void _toggleObscured() {
+    setState(() {
+      _obscured = !_obscured;
+      if (textFieldFocusNode.hasPrimaryFocus) {
+        return; // If focus is on text field, dont unfocus
+      } else {
+        textFieldFocusNode.canRequestFocus = true;
+      } // Prevents focus if tap on eye
+    });
+  }
 
   bool loading = false;
 
@@ -36,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return loading
-        ? Loading()
+        ? const Center(child: CircularProgressIndicator())
         : Scaffold(
             body: Padding(
               padding: const EdgeInsets.all(30.0),
@@ -116,7 +128,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       enableSuggestions: false,
                       autocorrect: false,
                       controller: _passwordController,
-                      obscureText: true,
+                      obscureText: _obscured,
+                      focusNode: textFieldFocusNode,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: "Password",
@@ -144,9 +157,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: Colors.redAccent.withOpacity(0.5)),
                         ),
                         suffix: InkWell(
-                          onTap: () {},
-                          child: const Icon(Icons.visibility,
-                              color: Color.fromARGB(255, 74, 74, 74)),
+                          onTap: _toggleObscured,
+                          child: Icon(
+                              _obscured
+                                  ? Icons.visibility
+                                  : Icons.visibility_off_rounded,
+                              color: const Color.fromARGB(255, 74, 74, 74)),
                         ),
                       ),
                     ),
@@ -216,8 +232,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 20.0,
                     ),
                     GestureDetector(
-                      onTap: () {
-                        const AuthScreen().signInWithGoogle();
+                      onTap: () async {
+                        await AuthFunction().signInWithGoogle();
                       },
                       child: Material(
                         color: const Color.fromARGB(255, 0, 110, 195),
@@ -246,16 +262,6 @@ class _LoginScreenState extends State<LoginScreen> {
           );
   }
 
-  //===========FUNCTIONS
-/* Future<bool> isLoggedIn() async {
-    User user = await FirebaseAuth.currentUser();
-    if (user == null) {
-      return false;
-    }
-    return user.is;
-  }
- */
-
   Future signIn() async {
     try {
       /// In the below, with if statement we have some simple validate
@@ -275,7 +281,7 @@ class _LoginScreenState extends State<LoginScreen> {
           setState(() {
             loading = false;
           });
-          logOut();
+          // await AuthFunction().logOut();
         }
       } else if (_emailController.text.isNotEmpty &
           _passwordController.text.isEmpty) {

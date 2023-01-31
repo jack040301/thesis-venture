@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -20,6 +18,7 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
 
   final FirebaseAuth auth = FirebaseAuth.instance;
 
+  @override
   void initState() {
     super.initState();
 
@@ -35,22 +34,6 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
 
     // here you write the codes to input the data into firestore
   }
-
-/*   updatePassword() {
-    try {
-      if (_firstnameController.text.isNotEmpty &
-          _emailController.text.isNotEmpty &
-          _passwordController.text.isNotEmpty &
-          _confirmPasswordController.text.isNotEmpty) {
-        if (_passwordController.text == _confirmPasswordController.text) {
-          final User? user = auth.currentUser;
-          user?.updatePassword(_passwordController.text).then((value) => null);
-        }
-      } else {
-        print('Fields are empty');
-      }
-    } on FirebaseAuthException catch (e) {}
-  } */
 
   @override
   Widget build(BuildContext context) {
