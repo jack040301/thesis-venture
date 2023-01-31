@@ -1,4 +1,26 @@
 import React from "react";
+import { collections } from "./dataCenter";
+
+function generateTable(collections){
+  
+  var tableItems = collections.map((collections)=>
+  <tr>
+    <td>{collections.id}</td>
+          <td>{collections.user}</td>
+          <td>{collections.date}</td>
+          <td>
+              <span className="tag tag-success">{collections.status}</span>
+          </td>
+    <td>{collections.reason}</td>
+  </tr>
+  );
+  
+  return(
+    <tbody>
+      {tableItems}      
+    </tbody>
+  );  
+}
 
 function App() {
   return (
@@ -39,56 +61,7 @@ function App() {
                       <th>Reason</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td>183</td>
-                      <td>John Doe</td>
-                      <td>11-7-2014</td>
-                      <td>
-                        <span className="tag tag-success">Approved</span>
-                      </td>
-                      <td>
-                        Bacon ipsum dolor sit amet salami venison chicken flank
-                        fatback doner.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>219</td>
-                      <td>Alexander Pierce</td>
-                      <td>11-7-2014</td>
-                      <td>
-                        <span className="tag tag-warning">Pending</span>
-                      </td>
-                      <td>
-                        Bacon ipsum dolor sit amet salami venison chicken flank
-                        fatback doner.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>657</td>
-                      <td>Bob Doe</td>
-                      <td>11-7-2014</td>
-                      <td>
-                        <span className="tag tag-primary">Approved</span>
-                      </td>
-                      <td>
-                        Bacon ipsum dolor sit amet salami venison chicken flank
-                        fatback doner.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>175</td>
-                      <td>Mike Doe</td>
-                      <td>11-7-2014</td>
-                      <td>
-                        <span className="tag tag-danger">Denied</span>
-                      </td>
-                      <td>
-                        Bacon ipsum dolor sit amet salami venison chicken flank
-                        fatback doner.
-                      </td>
-                    </tr>
-                  </tbody>
+                  {generateTable(collections)}
                 </table>
               </div>
             </div>

@@ -1,8 +1,39 @@
 import React from "react";
+import { getFirestore, collection, getDoc, doc } from "firebase/firestore";
+import DataTower  from "./dataCenter.js";
+import { collections } from "./dataCenter.js";
+
+const dataStore = new DataTower();
+dataStore.jar.setUser = "Test user here";
+//dataStore.setupData();
+//dataStore.testData();
+console.log("Rental outside: ", dataStore.jar['user']);
+  //arr.push(collections[0]);
+
+function generateTable(collections){
+  
+  var tableItems = collections.map((collections)=>
+  <tr>
+    <td>{collections.id}</td>
+          <td>{collections.user}</td>
+          <td>{collections.date}</td>
+          <td>
+              <span className="tag tag-success">{collections.status}</span>
+          </td>
+    <td>{collections.reason}</td>
+  </tr>
+  );
+  
+  return(
+    <tbody>
+      {tableItems}      
+    </tbody>
+  );  
+}
 
 function Home() {
   return (
-    <>
+    <>                  
       <div class="content-wrapper">
         <div className="row">
           <div className="col-12">
@@ -39,56 +70,10 @@ function Home() {
                       <th>Reason</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td>183</td>
-                      <td>John Doe</td>
-                      <td>11-7-2014</td>
-                      <td>
-                        <span className="tag tag-success">Approved</span>
-                      </td>
-                      <td>
-                        Bacon ipsum dolor sit amet salami venison chicken flank
-                        fatback doner.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>219</td>
-                      <td>Alexander Pierce</td>
-                      <td>11-7-2014</td>
-                      <td>
-                        <span className="tag tag-warning">Pending</span>
-                      </td>
-                      <td>
-                        Bacon ipsum dolor sit amet salami venison chicken flank
-                        fatback doner.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>657</td>
-                      <td>Bob Doe</td>
-                      <td>11-7-2014</td>
-                      <td>
-                        <span className="tag tag-primary">Approved</span>
-                      </td>
-                      <td>
-                        Bacon ipsum dolor sit amet salami venison chicken flank
-                        fatback doner.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>175</td>
-                      <td>Mike Doe</td>
-                      <td>11-7-2014</td>
-                      <td>
-                        <span className="tag tag-danger">Denied</span>
-                      </td>
-                      <td>
-                        Bacon ipsum dolor sit amet salami venison chicken flank
-                        fatback doner.
-                      </td>
-                    </tr>
-                  </tbody>
+                  {generateTable(collections)}
+                  {/*<tbody>
+                  {tableData(collections[0].id, collections[0].user, collections[0].date, collections[0].status, collections[0].reason)}
+                </tbody>*/}                
                 </table>
               </div>
             </div>

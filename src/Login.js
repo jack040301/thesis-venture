@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
-/* import { useNavigate } from "react-router-dom"; */
+import { useNavigate } from "react-router-dom";
 
 import {
   MDBBtn,
@@ -65,7 +65,7 @@ function Login() {
                 Login
               </button> */}
 
-              <hr className="my-4" />
+              <hr className="my-4" /> 
 
               {/* <MDBBtn
                 className="mb-2 w-100"
