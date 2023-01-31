@@ -28,74 +28,99 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.fromLTRB(5, 0, 0, 20),
-                                    child: Row(
-                                      children: [
+                  Container(
+                    width: 350,
+                    height: 50,
+                    color: Colors.white,
+                    padding: const EdgeInsets.fromLTRB(35, 20, 40, 7),
+                    child: Row(
+                      children: const <Widget>[
                                         const ImageIcon(
                                           AssetImage(
                                               "assets/images/icons/venture.png"),
-                                          color: Colors.black,
+                                          color: Color.fromARGB(255, 23, 23, 23),
                                           size: 23,
                                         ),
-                                        Text(
-                                          ' About the Application',
-                                          style: TextStyle(
-                                              height: 1.5,
-                                              fontFamily: 'Questrial',
-                                              color: Colors.grey.shade900,
-                                              fontSize: 20),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Text(
+                        SizedBox(
+                          width: 5.0,
+                        ),
+                        Expanded(
+                          child: Text('About the Application',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 23, 23, 23),
+                                  fontSize: 18.0)),
+                        )
+                      ],
+                    ),
+                  ),
+    Container(
+    width: 350,
+    height: 280,
+    decoration: const BoxDecoration(
+    color: Colors.white,
+    ),
+    padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+    child: const Center(
+    child: Text(
                                     'Is a Web-based Application that gives the users idea of the area he/she wants to rent, and enables them to customize the room based on the area and the layout of the space by the help of the Google API that gives the user a static view of the establishment and adding an option of Augmented reality in some selected establishment.',
                                     textAlign: TextAlign.justify,
                                     style: TextStyle(
                                       height: 1.5,
-                                      color: Colors.grey.shade700,
-                                      fontFamily: 'Questrial',
-                                      fontSize: 20,
+                                      color: Color.fromARGB(255, 54, 54, 54),
+                                      fontSize: 17,
                                     ),
                                   ),
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.fromLTRB(5, 0, 0, 20),
-                                    child: Row(
-                                      children: [
-                                        const ImageIcon(
-                                          AssetImage(
-                                              "assets/images/icons/team.png"),
-                                          color: Colors.black,
-                                          size: 23,
-                                        ),
-                                        Text(
-                                          ' About the Team',
-                                          style: TextStyle(
-                                              height: 1.5,
-                                              fontFamily: 'Questrial',
-                                              color: Colors.grey.shade900,
-                                              fontSize: 20),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Text(
-                                    'We are team Hexagon, and we would love you to meet our team. Our team consists of 14 brilliant computer science students from the University of Caloocan City',
+    ),
+    ),
+
+    Container(
+      width: 350,
+      height: 45,
+    color: Colors.white,
+    padding: const EdgeInsets.fromLTRB(35, 20, 40, 7),
+    child: Row(
+    children: const <Widget>[
+    const ImageIcon(
+    AssetImage(
+    "assets/images/icons/team.png"),
+      color: Color.fromARGB(255, 23, 23, 23),
+    size: 23,
+    ),
+    SizedBox(
+    width: 5.0,
+    ),
+    Expanded(
+    child: Text('About the Team',
+    style: TextStyle(
+        color: Color.fromARGB(255, 23, 23, 23),
+    fontSize: 18.0)),
+    )
+    ],
+    ),
+    ),
+
+    Container(
+    width: 350,
+    height: 150,
+    decoration: const BoxDecoration(
+    color: Colors.white,
+    ),
+    padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
+    child: Text(
+   'We are team Hexagon, and we would love you to meet our team. Our team consists of 14 brilliant computer science students from the University of Caloocan City',
                                     textAlign: TextAlign.justify,
                                     style: TextStyle(
+                                      color: Color.fromARGB(255, 54, 54, 54),
                                       height: 1.5,
-                                      color: Colors.grey.shade700,
-                                      fontFamily: 'Questrial',
-                                      fontSize: 20,
+                                      fontSize: 17,
                                     ),
                                   ),
-                                ],
-                              ),
+    ),
+
+                              ],
                             ),
                           ),
+        ),
                         );
   }
 }

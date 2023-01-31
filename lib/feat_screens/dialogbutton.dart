@@ -62,7 +62,7 @@ class _DialogVentureState extends State<DialogVenture> {
                       const Text("What kind of business do you prefer?",
                           style: TextStyle(
                             color: Color.fromARGB(255, 74, 74, 74),
-                            fontSize: 18.0,
+                            fontSize: 16.0,
                           )),
                       const SizedBox(
                         height: 10.0,
@@ -138,7 +138,7 @@ class _DialogVentureState extends State<DialogVenture> {
                           "Enter budget for the area (per square meter)?",
                           style: TextStyle(
                             color: Color.fromARGB(255, 74, 74, 74),
-                            fontSize: 15.0,
+                            fontSize: 16.0,
                           )),
                       const SizedBox(
                         height: 10.0,
@@ -188,7 +188,7 @@ class _DialogVentureState extends State<DialogVenture> {
                       const Text("Enter value of area (per square meter)?",
                           style: TextStyle(
                             color: Color.fromARGB(255, 74, 74, 74),
-                            fontSize: 18.0,
+                            fontSize: 16.0,
                           )),
                       const SizedBox(
                         height: 10.0,

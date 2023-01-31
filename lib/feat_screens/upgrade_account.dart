@@ -25,6 +25,7 @@ class _UpgradeAccScreenState extends State<UpgradeAccScreen> {
           padding: const EdgeInsets.all(10.0),
           child: SingleChildScrollView(
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -55,86 +56,67 @@ class _UpgradeAccScreenState extends State<UpgradeAccScreen> {
                 ),
                 Container(
                   width: 350,
-                  height: 150,
+                  height: 200,
                   decoration: const BoxDecoration(
                     color: Colors.white,
                   ),
                   padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                   child: const Center(
                     child: Text(
-                        "Upgrading your account requires lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
+                        "Upgrading your account allows you to add your commercial space to be rented and be available on map. It can be seen by the other users of the application. Tap the link provided below to submit your request for upgrading your account.\nNote: Approval of requests may take up to 24 hrs to approve.",
+                        textAlign: TextAlign.justify,
                         style: TextStyle(
                             color: Color.fromARGB(255, 44, 45, 48),
-                            fontSize: 16.0)), // <-- Text
+                            fontSize: 17.0)), // <-- Text
                   ),
                 ),
+
                 Container(
-                  padding: const EdgeInsets.fromLTRB(35, 12, 35, 7),
                   color: Colors.white,
+                  padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
                   child: Row(
                     children: const <Widget>[
+                      Image(
+                          image: const AssetImage(
+                              'assets/images/gmail.png'),
+                          height: 15,
+                          width: 23),
+                      SizedBox(
+                        width: 7.0,
+                      ),
                       Expanded(
-                          child: Text(
-                        'Upload your files',
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 44, 45, 48),
-                            fontSize: 16.0),
-                      )),
+                        child: Text('Email us at:',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 44, 45, 48),
+                                fontSize: 17.0)),
+                      )
                     ],
                   ),
                 ),
                 Container(
                   width: 350,
-                  height: 90,
+                  height: 30,
                   decoration: const BoxDecoration(
                     color: Colors.white,
                   ),
-                  padding: const EdgeInsets.fromLTRB(35, 2, 35, 40),
-                  child: ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0)),
-                        elevation: 0.0,
-                        shadowColor: Colors.transparent,
-                        foregroundColor: const Color.fromARGB(255, 55, 62, 78),
-                        backgroundColor:
-                            const Color.fromARGB(255, 241, 242, 242),
-                        padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
-                        textStyle: const TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                            fontFamily: 'Questrial')),
-                    onPressed: () {},
-                    icon: const Icon(
-                        // <-- Icon
-                        Icons.file_upload_outlined,
-                        size: 15.0),
-                    label: const Text('Choose File',
+                  padding: const EdgeInsets.fromLTRB(32, 2, 35, 7),
+                  child: const Center(
+                    child: Text(
+                        "ucc.venture@gmail.com",
                         style: TextStyle(
-                            color:
-                                Color.fromARGB(255, 55, 62, 78))), // <-- Text
+                          decoration: TextDecoration.underline,
+                            color: Color.fromARGB(255, 44, 45, 48),
+                            fontSize: 17.0)), // <-- Text
                   ),
                 ),
-                Container(
-                  width: 350,
-                  height: 100,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                  ),
-                  padding: const EdgeInsets.fromLTRB(35, 2, 35, 50),
-                  child: RawMaterialButton(
-                    fillColor: const Color.fromARGB(255, 0, 110, 195),
-                    onPressed: () {
-                      showAlertDialog(context);
-                    },
-                    elevation: 0.0,
-                    padding: const EdgeInsets.fromLTRB(27, 10, 27, 10),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0)),
-                    child: const Text("Request to upgrade my account",
-                        style: TextStyle(color: Colors.white, fontSize: 15.0)),
-                  ),
-                ),
+            Container(
+              width: 350,
+              height: 400,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+              ),
+              padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+            ),
               ],
             ),
           )),

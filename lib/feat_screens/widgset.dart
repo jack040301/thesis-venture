@@ -60,6 +60,7 @@ class DialogQuestion {
             return AlertDialog(
               content: Form(
 //key: _formKey,
+                child: SingleChildScrollView(
                   child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -74,10 +75,10 @@ class DialogQuestion {
                     height: 20.0,
                   ),
 
-                  const Text("Enter budget for the area (per square meter)?",
+                  const Text("What kind of business do you prefer?",
                       style: TextStyle(
                         color: Color.fromARGB(255, 74, 74, 74),
-                        fontSize: 18.0,
+                        fontSize: 16.0,
                       )),
 
                   const SizedBox(
@@ -140,7 +141,7 @@ class DialogQuestion {
                     hint: const Text('Choose your Business'),
                     style: const TextStyle(
                       color: Color.fromARGB(255, 74, 74, 74),
-                      fontSize: 14.0,
+                      fontSize: 15.0,
                     ),
                   ),
 
@@ -149,10 +150,10 @@ class DialogQuestion {
                     height: 20.0,
                   ),
 
-                  const Text("Enter budget for the area (per square meter)?",
+                  const Text("Enter budget for the area (per square meter)",
                       style: TextStyle(
                         color: Color.fromARGB(255, 74, 74, 74),
-                        fontSize: 15.0,
+                        fontSize: 16.0,
                       )),
                   const SizedBox(
                     height: 10.0,
@@ -166,7 +167,7 @@ class DialogQuestion {
                             : 'Invalid Input';
                       },
                       decoration: InputDecoration(
-                        hintText: "",
+                        hintText: "0",
                         filled: true,
                         fillColor: const Color.fromARGB(255, 230, 230, 230),
                         enabledBorder: OutlineInputBorder(
@@ -197,10 +198,10 @@ class DialogQuestion {
                   const SizedBox(
                     height: 20.0,
                   ),
-                  const Text("Enter value of area (per square meter)?",
+                  const Text("Enter value of area (per square meter)",
                       style: TextStyle(
                         color: Color.fromARGB(255, 74, 74, 74),
-                        fontSize: 18.0,
+                        fontSize: 16.0,
                       )),
                   const SizedBox(
                     height: 10.0,
@@ -214,7 +215,7 @@ class DialogQuestion {
                             : 'Invalid Input';
                       },
                       decoration: InputDecoration(
-                        hintText: '40',
+                        hintText: '0',
                         filled: true,
                         fillColor: const Color.fromARGB(255, 230, 230, 230),
                         enabledBorder: OutlineInputBorder(
@@ -289,6 +290,7 @@ class DialogQuestion {
                   ),
                 ],
               )),
+              ),
             );
           });
         });

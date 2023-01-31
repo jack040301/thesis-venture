@@ -208,6 +208,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 child: Column(children: [
                                   Container(
                                     height: 50.0,
+                                    width: 280,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10.0),
                                       color: Colors.white,
@@ -220,6 +221,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                   horizontal: 20.0,
                                                   vertical: 15.0),
                                           border: InputBorder.none,
+                                          prefixIcon:
+                                          const Icon(Icons.search),
                                           hintText: 'Search',
                                           suffixIcon: IconButton(
                                               onPressed: () {
@@ -295,6 +298,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                                   child: Center(
                                     child: Column(
                                       children: [
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
                                         const Text('No results to show',
                                             style: TextStyle(
                                                 fontFamily: 'WorkSans',
@@ -333,6 +339,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                               children: [
                                 Container(
                                   height: 50.0,
+                                  width: 280,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10.0),
                                     color: Colors.white,
@@ -350,6 +357,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 const SizedBox(height: 3.0),
                                 Container(
                                   height: 50.0,
+                                  width: 280,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10.0),
                                     color: Colors.white,
@@ -425,8 +433,11 @@ class _HomePageState extends ConsumerState<HomePage> {
           floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
           floatingActionButton: Column(
             children: [
+              const SizedBox(
+                height: 12),
               FloatingActionButton(
                 disabledElevation: 0,
+                elevation: 0.0,
                 backgroundColor: Colors.white,
                 foregroundColor: Colors.black,
                 heroTag: null,
@@ -436,14 +447,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                 //    : Image.network(
                 //        FirebaseAuth.instance.currentUser!.photoURL ?? ""),
                 onPressed: () {
-                  // ProfileNav().showProfileNav(context);
+                   ProfileNav().showProfileNav(context);
                 },
-              ),
-              const SizedBox(
-                height: 10,
               ),
               FloatingActionButton(
                 disabledElevation: 0,
+                elevation: 0.0,
                 backgroundColor: Colors.white,
                 foregroundColor: Colors.black,
                 mini: true,
@@ -456,6 +465,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               ),
               FloatingActionButton(
                 disabledElevation: 0,
+                elevation: 0.0,
                 backgroundColor: Colors.white,
                 foregroundColor: Colors.black,
                 mini: true,
@@ -473,6 +483,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               ),
               FloatingActionButton(
                 disabledElevation: 0,
+                elevation: 0.0,
                 backgroundColor: Colors.white,
                 foregroundColor: Colors.black,
                 mini: true,
