@@ -198,257 +198,243 @@ class _HomePageState extends ConsumerState<HomePage> {
           return const Center(child: CircularProgressIndicator());
         }
 
-        return FutureBuilder(
-          future: _mapFuture,
-          builder: (context, AsyncSnapshot<bool> snapshot) {
-            return Scaffold(
-              body: SingleChildScrollView(
-                child: Column(
+        return Scaffold(
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Stack(
                   children: [
-                    Stack(
-                      children: [
-                        HomeGoogleMap(
-                            screenHeight: screenHeight,
-                            screenWidth: screenWidth,
-                            allmarkers: allmarkers,
-                            polylines: _polylines,
-                            kGooglePlex: _kGooglePlex,
-                            controller: _controller),
-                        pressedNear
-                            ? builds(context)
-                            : searchToggle
-                                ? Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        15.0, 40.0, 15.0, 5.0),
-                                    child: Column(children: [
-                                      Container(
-                                        height: 50.0,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                          color: Colors.white,
-                                        ),
-                                        child: TextFormField(
-                                          controller: searchController,
-                                          decoration: InputDecoration(
-                                              contentPadding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 20.0,
-                                                      vertical: 15.0),
-                                              border: InputBorder.none,
-                                              hintText: 'Search',
-                                              suffixIcon: IconButton(
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      searchToggle = false;
-                                                      searchController.text =
-                                                          '';
-                                                      _markers = {};
-                                                      searchFlag.toggleSearch();
-                                                    });
-                                                  },
-                                                  icon:
-                                                      const Icon(Icons.close))),
-                                          onChanged: (value) {
-                                            if (_debounce?.isActive ?? false) {
-                                              _debounce?.cancel();
-                                            }
-                                            _debounce = Timer(
-                                                const Duration(
-                                                    milliseconds: 700),
-                                                () async {
-                                              if (value.length > 2) {
-                                                if (!searchFlag.searchToggle) {
-                                                  searchFlag.toggleSearch();
-                                                  _markers = {};
-                                                }
-                                                List<AutoCompleteResult>
-                                                    searchResults =
-                                                    await MapServices()
-                                                        .searchPlaces(value);
-
-                                                allSearchResults
-                                                    .setResults(searchResults);
-                                              } else {
-                                                List<AutoCompleteResult>
-                                                    emptyList = [];
-                                                allSearchResults
-                                                    .setResults(emptyList);
-                                              }
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                    ]),
-                                  )
-                                : Container(),
-                        searchFlag.searchToggle
-                            ? allSearchResults.allReturnedResults.length != 0
-                                ? Positioned(
-                                    top: 100.0,
-                                    left: 15.0,
-                                    child: Container(
-                                      height: 200.0,
-                                      width: screenWidth - 30.0,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        color: Colors.white.withOpacity(0.7),
-                                      ),
-                                      child: ListView(
-                                        children: [
-                                          ...allSearchResults.allReturnedResults
-                                              .map((e) =>
-                                                  buildListItem(e, searchFlag))
-                                        ],
-                                      ),
-                                    ))
-                                : Positioned(
-                                    top: 100.0,
-                                    left: 15.0,
-                                    child: HomeNoResultToShow(
-                                        screenWidth: screenWidth,
-                                        searchFlag: searchFlag))
-                            : Container(),
-
-                        //    getmarker(context), //to automatically show marker to map
-                        getDirections
+                    HomeGoogleMap(
+                        screenHeight: screenHeight,
+                        screenWidth: screenWidth,
+                        allmarkers: allmarkers,
+                        polylines: _polylines,
+                        kGooglePlex: _kGooglePlex,
+                        controller: _controller),
+                    pressedNear
+                        ? builds(context)
+                        : searchToggle
                             ? Padding(
                                 padding: const EdgeInsets.fromLTRB(
-                                    15.0, 40.0, 15.0, 5),
-                                child: Column(
-                                  children: [
-                                    HomeOriginController(
-                                        originController: _originController),
-                                    const SizedBox(height: 3.0),
-                                    Container(
-                                      height: 50.0,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        color: Colors.white,
-                                      ),
-                                      child: TextFormField(
-                                        controller: _destinationController,
-                                        decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 20.0,
-                                                    vertical: 15.0),
-                                            border: InputBorder.none,
-                                            hintText: 'Destination',
-                                            suffixIcon: Container(
-                                              width: 96.8,
-                                              child: Row(
-                                                children: [
-                                                  IconButton(
-                                                      onPressed: () async {
-                                                        var directions =
-                                                            await MapServices()
-                                                                .getDirections(
-                                                                    _originController
-                                                                        .text,
-                                                                    _destinationController
-                                                                        .text);
-                                                        _markers = {};
-                                                        _polylines = {};
-                                                        gotoPlace(
-                                                          directions[
-                                                                  'start_location']
-                                                              ['lat'],
-                                                          directions[
-                                                                  'start_location']
-                                                              ['lng'],
-                                                          directions[
-                                                                  'end_location']
-                                                              ['lng'],
-                                                          directions[
-                                                                  'end_location']
-                                                              ['lat'],
-                                                          directions[
-                                                              'bounds_ne'],
-                                                          directions[
-                                                              'bounds_sw'],
-                                                        );
-                                                        _setPolyline(directions[
-                                                            'polyline_deoded']);
-                                                      },
-                                                      icon: const Icon(
-                                                          Icons.search)),
-                                                  IconButton(
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          getDirections = false;
-                                                          _originController
-                                                              .text = '';
-                                                          _destinationController
-                                                              .text = '';
-                                                        });
-                                                      },
-                                                      icon: const Icon(
-                                                          Icons.close))
-                                                ],
-                                              ),
-                                            )),
-                                      ),
-                                    )
-                                  ],
-                                ),
+                                    15.0, 40.0, 15.0, 5.0),
+                                child: Column(children: [
+                                  Container(
+                                    height: 50.0,
+                                    width: 280,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      color: Colors.white,
+                                    ),
+                                    child: TextFormField(
+                                      controller: searchController,
+                                      decoration: InputDecoration(
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 20.0,
+                                                  vertical: 15.0),
+                                          border: InputBorder.none,
+                                          prefixIcon: const Icon(Icons.search),
+                                          hintText: 'Search',
+                                          suffixIcon: IconButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  searchToggle = false;
+                                                  searchController.text = '';
+                                                  _markers = {};
+                                                  searchFlag.toggleSearch();
+                                                });
+                                              },
+                                              icon: const Icon(Icons.close))),
+                                      onChanged: (value) {
+                                        if (_debounce?.isActive ?? false) {
+                                          _debounce?.cancel();
+                                        }
+                                        _debounce = Timer(
+                                            const Duration(milliseconds: 700),
+                                            () async {
+                                          if (value.length > 2) {
+                                            if (!searchFlag.searchToggle) {
+                                              searchFlag.toggleSearch();
+                                              _markers = {};
+                                            }
+                                            List<AutoCompleteResult>
+                                                searchResults =
+                                                await MapServices()
+                                                    .searchPlaces(value);
+
+                                            allSearchResults
+                                                .setResults(searchResults);
+                                          } else {
+                                            List<AutoCompleteResult> emptyList =
+                                                [];
+                                            allSearchResults
+                                                .setResults(emptyList);
+                                          }
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ]),
                               )
-                            : Container()
-                      ],
-                    )
+                            : Container(),
+                    searchFlag.searchToggle
+                        ? allSearchResults.allReturnedResults.length != 0
+                            ? Positioned(
+                                top: 100.0,
+                                left: 15.0,
+                                child: Container(
+                                  height: 200.0,
+                                  width: screenWidth - 30.0,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    color: Colors.white.withOpacity(0.7),
+                                  ),
+                                  child: ListView(
+                                    children: [
+                                      ...allSearchResults.allReturnedResults
+                                          .map((e) =>
+                                              buildListItem(e, searchFlag))
+                                    ],
+                                  ),
+                                ))
+                            : Positioned(
+                                top: 100.0,
+                                left: 15.0,
+                                child: HomeNoResultToShow(
+                                    screenWidth: screenWidth,
+                                    searchFlag: searchFlag))
+                        : Container(),
+
+                    //    getmarker(context), //to automatically show marker to map
+                    getDirections
+                        ? Padding(
+                            padding:
+                                const EdgeInsets.fromLTRB(15.0, 40.0, 15.0, 5),
+                            child: Column(
+                              children: [
+                                HomeOriginController(
+                                    originController: _originController),
+                                const SizedBox(height: 3.0),
+                                Container(
+                                  height: 50.0,
+                                  width: 280,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    color: Colors.white,
+                                  ),
+                                  child: TextFormField(
+                                    controller: _destinationController,
+                                    decoration: InputDecoration(
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                horizontal: 20.0,
+                                                vertical: 15.0),
+                                        border: InputBorder.none,
+                                        hintText: 'Destination',
+                                        suffixIcon: Container(
+                                          width: 96.8,
+                                          child: Row(
+                                            children: [
+                                              IconButton(
+                                                  onPressed: () async {
+                                                    var directions =
+                                                        await MapServices()
+                                                            .getDirections(
+                                                                _originController
+                                                                    .text,
+                                                                _destinationController
+                                                                    .text);
+                                                    _markers = {};
+                                                    _polylines = {};
+                                                    gotoPlace(
+                                                      directions[
+                                                              'start_location']
+                                                          ['lat'],
+                                                      directions[
+                                                              'start_location']
+                                                          ['lng'],
+                                                      directions['end_location']
+                                                          ['lng'],
+                                                      directions['end_location']
+                                                          ['lat'],
+                                                      directions['bounds_ne'],
+                                                      directions['bounds_sw'],
+                                                    );
+                                                    _setPolyline(directions[
+                                                        'polyline_deoded']);
+                                                  },
+                                                  icon:
+                                                      const Icon(Icons.search)),
+                                              IconButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      getDirections = false;
+                                                      _originController.text =
+                                                          '';
+                                                      _destinationController
+                                                          .text = '';
+                                                    });
+                                                  },
+                                                  icon: const Icon(Icons.close))
+                                            ],
+                                          ),
+                                        )),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        : Container()
                   ],
-                ),
+                )
+              ],
+            ),
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
+          floatingActionButton: Column(
+            children: [
+              const SizedBox(height: 12),
+              const HomeFloatingProfile(),
+              const HomeFloatingDialog(),
+              FloatingActionButton(
+                disabledElevation: 0,
+                elevation: 0.0,
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                mini: true,
+                heroTag: null,
+                child: const Icon(Icons.search),
+                onPressed: () {
+                  setState(() {
+                    searchToggle = true;
+                    radiusSlider = false;
+                    pressedNear = false;
+                    cardTapped = false;
+                    getDirections = false;
+                  });
+                },
               ),
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.miniEndTop,
-              floatingActionButton: Column(
-                children: [
-                  const HomeFloatingProfile(),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const HomeFloatingDialog(),
-                  FloatingActionButton(
-                    disabledElevation: 0,
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.black,
-                    mini: true,
-                    heroTag: null,
-                    child: const Icon(Icons.search),
-                    onPressed: () {
-                      setState(() {
-                        searchToggle = true;
-                        radiusSlider = false;
-                        pressedNear = false;
-                        cardTapped = false;
-                        getDirections = false;
-                      });
-                    },
-                  ),
-                  FloatingActionButton(
-                    disabledElevation: 0,
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.black,
-                    mini: true,
-                    heroTag: null,
-                    child: const Icon(Icons.navigation),
-                    onPressed: () {
-                      setState(() {
-                        searchToggle = false;
-                        radiusSlider = false;
-                        pressedNear = false;
-                        cardTapped = false;
-                        getDirections = true;
-                      });
-                    },
-                  ),
-                ],
+              FloatingActionButton(
+                disabledElevation: 0,
+                elevation: 0.0,
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                mini: true,
+                heroTag: null,
+                child: const Icon(Icons.navigation),
+                onPressed: () {
+                  setState(() {
+                    searchToggle = false;
+                    radiusSlider = false;
+                    pressedNear = false;
+                    cardTapped = false;
+                    getDirections = true;
+                  });
+                },
               ),
-              resizeToAvoidBottomInset: false,
-            );
-          },
+            ],
+          ),
+          resizeToAvoidBottomInset: false,
         );
       },
     );
@@ -649,6 +635,9 @@ class HomeNoResultToShow extends StatelessWidget {
       child: Center(
         child: Column(
           children: [
+            const SizedBox(
+              height: 5,
+            ),
             const Text('No results to show',
                 style: TextStyle(
                     fontFamily: 'WorkSans', fontWeight: FontWeight.w400)),
@@ -673,85 +662,6 @@ class HomeNoResultToShow extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class HomeOriginController extends StatelessWidget {
-  const HomeOriginController({
-    super.key,
-    required TextEditingController originController,
-  }) : _originController = originController;
-
-  final TextEditingController _originController;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 50.0,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        color: Colors.white,
-      ),
-      child: TextFormField(
-        controller: _originController,
-        decoration: const InputDecoration(
-          contentPadding:
-              EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
-          border: InputBorder.none,
-          hintText: 'origin',
-        ),
-      ),
-    );
-  }
-}
-
-class HomeFloatingDialog extends StatelessWidget {
-  const HomeFloatingDialog({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      disabledElevation: 0,
-      backgroundColor: Colors.white,
-      foregroundColor: Colors.black,
-      mini: true,
-      heroTag: null,
-      child: const Icon(Icons.business),
-      onPressed: () {
-        //  PredictionDialog().showPredictionDialog(context);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const LayerSimulationScreen()),
-        );
-        //   DialogVenture.showInformationDialog(context);
-      },
-    );
-  }
-}
-
-class HomeFloatingProfile extends StatelessWidget {
-  const HomeFloatingProfile({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      disabledElevation: 0,
-      backgroundColor: Colors.white,
-      foregroundColor: Colors.black,
-      heroTag: null,
-      mini: true,
-      child: FirebaseAuth.instance.currentUser!.photoURL == null
-          ? const Image(image: AssetImage('assets/images/pic.png'))
-          : Image.network(FirebaseAuth.instance.currentUser!.photoURL ?? ""),
-      onPressed: () {
-        ProfileNav().showProfileNav(context);
-      },
     );
   }
 }
@@ -787,9 +697,89 @@ class HomeGoogleMap extends StatelessWidget {
         markers: allmarkers,
         polylines: _polylines,
         initialCameraPosition: _kGooglePlex,
-        onMapCreated: (GoogleMapController controller) async {
+        onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
         },
+      ),
+    );
+  }
+}
+
+class HomeFloatingDialog extends StatelessWidget {
+  const HomeFloatingDialog({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      disabledElevation: 0,
+      elevation: 0.0,
+      backgroundColor: Colors.white,
+      foregroundColor: Colors.black,
+      mini: true,
+      heroTag: null,
+      child: const Icon(Icons.business),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const LayerSimulationScreen()),
+        );
+      },
+    );
+  }
+}
+
+class HomeFloatingProfile extends StatelessWidget {
+  const HomeFloatingProfile({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      disabledElevation: 0,
+      elevation: 0.0,
+      backgroundColor: Colors.white,
+      foregroundColor: Colors.black,
+      heroTag: null,
+      mini: true,
+      child: FirebaseAuth.instance.currentUser!.photoURL == null
+          ? const Image(image: AssetImage('assets/images/pic.png'))
+          : Image.network(FirebaseAuth.instance.currentUser!.photoURL ?? ""),
+      onPressed: () {
+        ProfileNav().showProfileNav(context);
+      },
+    );
+  }
+}
+
+class HomeOriginController extends StatelessWidget {
+  const HomeOriginController({
+    super.key,
+    required TextEditingController originController,
+  }) : _originController = originController;
+
+  final TextEditingController _originController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 50.0,
+      width: 280,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        color: Colors.white,
+      ),
+      child: TextFormField(
+        controller: _originController,
+        decoration: const InputDecoration(
+          contentPadding:
+              EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+          border: InputBorder.none,
+          hintText: 'origin',
+        ),
       ),
     );
   }
