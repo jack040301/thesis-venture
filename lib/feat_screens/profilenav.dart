@@ -9,17 +9,13 @@ import 'settings.dart';
 //THIS IS THE DIALOG OF PROFILE
 
 @override
-
-void initState(){
+void initState() {
   AuthFunction().getfirstname();
-
 }
 
 class ProfileNav {
-
-
   Future<void> showProfileNav(BuildContext context) async {
-      initState();
+    initState();
     return await showDialog(
         context: context,
         builder: (context) {
@@ -68,9 +64,7 @@ class ProfileNav {
                                 height: 50.0,
                                 width: 50.0,
                               ),
-                        label: Text(
-                           userinfo().fname ??
-                                "Default Name",
+                        label: Text(userinfo().fname ?? "Default Name",
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 30.0)),
                       ),
