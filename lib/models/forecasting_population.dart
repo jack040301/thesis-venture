@@ -69,7 +69,17 @@ class BarchartPop extends StatelessWidget {
               centerTitle: true,
               backgroundColor: Colors.green[700],
             ),
-            body: Container(
+            body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: SingleChildScrollView(
+        child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+        const SizedBox(
+        height: 10.0,
+        ),
+          Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
               child: charts.BarChart(
                 series,
@@ -78,6 +88,23 @@ class BarchartPop extends StatelessWidget {
                 domainAxis: const charts.OrdinalAxisSpec(),
               ),
             ),
+          Container(
+            width: 350,
+            height: 100,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+            ),
+            padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+            child: const Center(
+              child: Text("Population", //POPULATION
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 44, 45, 48),
+                      fontSize: 16.0)), // <-- Text
+            ),
+          ),
+           ],
+          ),
+            )),
           );
         }
         return Loading();
