@@ -11,7 +11,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 class userinfo {
   final name = FirebaseAuth.instance.currentUser!.displayName;
   final profile = FirebaseAuth.instance.currentUser!.photoURL;
-  var fname;
+  var fname = "";
 } //end class
 
 class AuthFunction {
@@ -52,17 +52,19 @@ class AuthFunction {
     //once signed in, return the user credential
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
-}
 
-Future getfirstname() async {
-  await FirebaseFirestore.instance
-      .collection('users')
-      .get()
-      .then((QuerySnapshot snapshot) => {
-            snapshot.docs.forEach((documents) async {
-              var data = documents.data() as Map;
-              var gname = data['firstname'];
-              userinfo().fname = gname;
-            })
-          });
+
+  Future getfirstname() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .get()
+        .then((QuerySnapshot snapshot) => {
+      snapshot.docs.forEach((documents) async {
+        var data = documents.data() as Map;
+        var gname = data['firstname'];
+        userinfo().fname = gname;
+      })
+    });
+  }
+
 }

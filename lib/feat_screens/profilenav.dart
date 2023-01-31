@@ -8,8 +8,18 @@ import 'settings.dart';
 
 //THIS IS THE DIALOG OF PROFILE
 
+@override
+
+void initState(){
+  AuthFunction().getfirstname();
+
+}
+
 class ProfileNav {
+
+
   Future<void> showProfileNav(BuildContext context) async {
+      initState();
     return await showDialog(
         context: context,
         builder: (context) {
@@ -59,7 +69,7 @@ class ProfileNav {
                                 width: 50.0,
                               ),
                         label: Text(
-                            FirebaseAuth.instance.currentUser!.displayName ??
+                           userinfo().fname ??
                                 "Default Name",
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 30.0)),
