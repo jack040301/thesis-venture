@@ -13,51 +13,59 @@ class SetDialog {
         builder: (context) {
           return AlertDialog(
             content: Container(
-                padding: const EdgeInsets.all(10.0),
-                height: 260,
-                width: 500,
+                padding: const EdgeInsets.fromLTRB(10, 3, 0, 0),
+                height: 400,
+                width: 430,
+                child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(60, 0, 0, 0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(''),
                           Text(
                             'Settings',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontFamily: 'Questrial',
                               color: Colors.grey.shade900,
-                              fontSize: 25,
+                              fontSize: 23,
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            child: InkWell(
-                              child: Image.asset(
-                                'assets/images/icons/close.png',
-                                height: 15,
-                                width: 15,
-                              ),
-                              onTap: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
+                          const SizedBox(
+                              width: 55
                           ),
-                        ],
+
+                          Align(
+                  alignment: Alignment.topRight,
+                child: InkWell(
+                  child: Image.asset(
+                    'assets/images/icons/close.png',
+                    height: 15,
+                    width: 15,
+                  ),
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              ),
+                      ],
                       ),
                     ),
+                    const SizedBox(
+                      height: 35
+                    ),
+
                     TextButton(
                       child: Text(
                         'Customize Account',
                         style: TextStyle(
                             fontFamily: 'Questrial',
                             color: Colors.grey.shade900,
-                            fontSize: 20),
+                            fontSize: 18),
                       ),
                       onPressed: () {
                         Navigator.push(
@@ -74,7 +82,7 @@ class SetDialog {
                         style: TextStyle(
                             fontFamily: 'Questrial',
                             color: Colors.grey.shade900,
-                            fontSize: 20),
+                            fontSize: 18),
                       ),
                       onPressed: () {
                         Navigator.push(
@@ -90,7 +98,7 @@ class SetDialog {
                         style: TextStyle(
                             fontFamily: 'Questrial',
                             color: Colors.grey.shade900,
-                            fontSize: 20),
+                            fontSize: 18),
                       ),
                       onPressed: () {
                         Navigator.push(
@@ -101,12 +109,12 @@ class SetDialog {
                     ),
                     TextButton(
                       child: Text(
-                        'Terms and Condition',
+                        'Terms and Conditions',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: 'Questrial',
                             color: Colors.grey.shade900,
-                            fontSize: 20),
+                            fontSize: 18),
                       ),
                       onPressed: () {
                         Navigator.push(
@@ -116,7 +124,11 @@ class SetDialog {
                                     const TermsCondiScreen()));
                       },
                     ),
+                    const SizedBox(
+                        height: 80
+                    ),
                   ],
+                ),
                 )),
           );
         });

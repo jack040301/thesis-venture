@@ -66,7 +66,7 @@ class ProfileNav {
                               ),
                         label: Text(userinfo().fname ?? "Default Name",
                             style: const TextStyle(
-                                color: Colors.black, fontSize: 30.0)),
+                                color: Colors.black, fontSize: 22.0)),
                       ),
                       const SizedBox(
                         height: 20.0,
@@ -106,16 +106,6 @@ class ProfileNav {
                           size: 25.0,
                         ),
                         label: const Text('Upgrade Account',
-                            style:
-                                TextStyle(color: Colors.black, fontSize: 15.0)),
-                      ),
-                      TextButton.icon(
-                        onPressed: () {},
-                        icon: const ImageIcon(
-                          AssetImage("assets/images/icons/switch.png"),
-                          size: 25.0,
-                        ),
-                        label: const Text('Switch Account',
                             style:
                                 TextStyle(color: Colors.black, fontSize: 15.0)),
                       ),

@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_const, empty_catches
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:main_venture/auth_screen.dart';
