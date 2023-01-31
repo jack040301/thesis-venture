@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 
 import '../component/loading.dart';
 import 'forecasting_population.dart';
+import 'package:screenshot/screenshot.dart';
+import 'dart:typed_data';
+
 
 class DemogResult extends StatefulWidget {
   const DemogResult(
@@ -19,6 +22,8 @@ class _DemogResultState extends State<DemogResult> {
   String popstrA = '';
   String landbudgetstrA = '';
   String revstrA = '';
+
+  ScreenshotController screenshotController = new ScreenshotController();
 
   var businessname, businessbudget, landbudget, landrevenue, landpop;
 
@@ -147,216 +152,220 @@ class _DemogResultState extends State<DemogResult> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(
-                        height: 10.0,
-                      ),
-                      Container(
-                        color: Colors.white,
-                        padding: const EdgeInsets.fromLTRB(35, 20, 35, 7),
-                        child: Row(
-                          children: <Widget>[
+                      Screenshot(child:
+                          Stack(children: [
                             const SizedBox(
-                              width: 10.0,
+                              height: 10.0,
                             ),
-                            Expanded(
-                              child: Text(data['place'], //DATA FOR PLACE
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                      color: Color.fromARGB(255, 44, 45, 48),
-                                      fontSize: 20.0)),
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: 350,
-                        height: 100,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: const Center(
-                          child: Text("Population", //POPULATION
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 44, 45, 48),
-                                  fontSize: 16.0)), // <-- Text
-                        ),
-                      ),
-                      Container(
-                        width: 350,
-                        height: 100,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: Center(
-                          child: Text(popstrB, //POPULATION
-                              style: const TextStyle(
-                                  color: Color.fromARGB(255, 44, 45, 48),
-                                  fontSize: 16.0)), // <-- Text
-                        ),
-                      ),
-                      Container(
-                        width: 350,
-                        height: 100,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: const Center(
-                          child: Text("Revenue per year", //REVENUE PER YEAR
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 44, 45, 48),
-                                  fontSize: 16.0)), // <-- Text
-                        ),
-                      ),
-                      Container(
-                        width: 350,
-                        height: 100,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: Center(
-                          child: Text(revstrB, //REVENUE PER YEAR
-                              style: const TextStyle(
-                                  color: Color.fromARGB(255, 44, 45, 48),
-                                  fontSize: 16.0)), // <-- Text
-                        ),
-                      ),
-                      Container(
-                        width: 350,
-                        height: 100,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: const Center(
-                          child: Text("Land per SqM", //LAND PER SQ
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 44, 45, 48),
-                                  fontSize: 16.0)), // <-- Text
-                        ),
-                      ),
-                      Container(
-                        width: 350,
-                        height: 100,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: Center(
-                          child: Text(landstrfinal, //LAND PER SQ
-                              style: const TextStyle(
-                                  color: Color.fromARGB(255, 44, 45, 48),
-                                  fontSize: 16.0)), // <-- Text
-                        ),
-                      ),
-                      Container(
-                        width: 350,
-                        height: 100,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: const Center(
-                          child: Text("Budget required for the area",
-                              //BUDGET REQUIRED FOR THE AREA
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 44, 45, 48),
-                                  fontSize: 16.0)), // <-- Text
-                        ),
-                      ),
-                      Container(
-                        width: 350,
-                        height: 100,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: Center(
-                          child: Text(landbudgetstrB,
-                              //BUDGET REQUIRED FOR THE AREA
-                              style: const TextStyle(
-                                  color: Color.fromARGB(255, 44, 45, 48),
-                                  fontSize: 16.0)), // <-- Text
-                        ),
-                      ),
-                      Container(
-                        width: 350,
-                        height: 50,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: Center(
-                          child: Text(resultfinal,
-                              style: const TextStyle(
-                                  color: Color.fromARGB(255, 65, 99, 200),
-                                  fontSize: 35.0)), // <-- Text
-                        ),
-                      ),
-                      Container(
-                        width: 350,
-                        height: 50,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: const Center(
-                          child: Text("Your ideal business is",
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 44, 45, 48),
-                                  fontSize: 16.0)), // <-- Text
-                        ),
-                      ),
-                      Container(
-                        width: 350,
-                        height: 30,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: Center(
-                          // child: Text('',
-                          child: Text(widget.ideal,
+                            Container(
+                              color: Colors.white,
+                              padding: const EdgeInsets.fromLTRB(35, 20, 35, 7),
+                              child: Row(
+                                children: <Widget>[
+                                  const SizedBox(
+                                    width: 10.0,
+                                  ),
+                                  Expanded(
+                                    child: Text(data['place'], //DATA FOR PLACE
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                            color: Color.fromARGB(255, 44, 45, 48),
+                                            fontSize: 20.0)),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Container(
+                              width: 350,
+                              height: 100,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+                              child: const Center(
+                                child: Text("Population", //POPULATION
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 16.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                              width: 350,
+                              height: 100,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+                              child: Center(
+                                child: Text(popstrB, //POPULATION
+                                    style: const TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 16.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                              width: 350,
+                              height: 100,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+                              child: const Center(
+                                child: Text("Revenue per year", //REVENUE PER YEAR
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 16.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                              width: 350,
+                              height: 100,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+                              child: Center(
+                                child: Text(revstrB, //REVENUE PER YEAR
+                                    style: const TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 16.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                              width: 350,
+                              height: 100,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+                              child: const Center(
+                                child: Text("Land per SqM", //LAND PER SQ
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 16.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                              width: 350,
+                              height: 100,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+                              child: Center(
+                                child: Text(landstrfinal, //LAND PER SQ
+                                    style: const TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 16.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                              width: 350,
+                              height: 100,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+                              child: const Center(
+                                child: Text("Budget required for the area",
+                                    //BUDGET REQUIRED FOR THE AREA
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 16.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                              width: 350,
+                              height: 100,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+                              child: Center(
+                                child: Text(landbudgetstrB,
+                                    //BUDGET REQUIRED FOR THE AREA
+                                    style: const TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 16.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                              width: 350,
+                              height: 50,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+                              child: Center(
+                                child: Text(resultfinal,
+                                    style: const TextStyle(
+                                        color: Color.fromARGB(255, 65, 99, 200),
+                                        fontSize: 35.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                              width: 350,
+                              height: 50,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+                              child: const Center(
+                                child: Text("Your ideal business is",
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 16.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                              width: 350,
+                              height: 30,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+                              child: Center(
+                                // child: Text('',
+                                child: Text(widget.ideal,
 
-                              // ito dito ko sana sya ilalabas kaso ayaw nya
-                              //baa,
-                              style: const TextStyle(
-                                  color: Color.fromARGB(255, 65, 99, 200),
-                                  fontSize: 16.0)), // <-- Text
-                        ),
-                      ),
-                      Container(
-                        width: 350,
-                        height: 90,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: const Center(
-                          child: Text("Business Type: Start Up",
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 44, 45, 48),
-                                  fontSize: 16.0)), // <-- Text
-                        ),
-                      ),
-                      Container(
-                        width: 350,
-                        height: 90,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                        child: Center(
-                          child: Text(
-                              "Suggested business for you" '\n' '$businessname',
-                              style: const TextStyle(
-                                  color: Color.fromARGB(255, 44, 45, 48),
-                                  fontSize: 16.0)), // <-- Text
-                        ),
-                      ),
+                                    // ito dito ko sana sya ilalabas kaso ayaw nya
+                                    //baa,
+                                    style: const TextStyle(
+                                        color: Color.fromARGB(255, 65, 99, 200),
+                                        fontSize: 16.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                              width: 350,
+                              height: 90,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+                              child: const Center(
+                                child: Text("Business Type: Start Up",
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 16.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                              width: 350,
+                              height: 90,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+                              child: Center(
+                                child: Text(
+                                    "Suggested business for you" '\n' '$businessname',
+                                    style: const TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 16.0)), // <-- Text
+                              ),
+                            ),
+                          ],), controller: screenshotController),
+
                       Container(
                           height: 100,
                           decoration: const BoxDecoration(
@@ -377,7 +386,16 @@ class _DemogResultState extends State<DemogResult> {
                                               const Size(150, 50), //////// HERE
                                         ),
                                         onPressed: () {
-                                          StatisForecasting(context);
+
+                                          screenshotController
+                                              .capture(delay: Duration(milliseconds: 10))
+                                              .then((capturedImage) async {
+                                            ShowCapturedWidget(context, capturedImage!);
+                                          }).catchError((onError) {
+                                            print(onError);
+                                          });
+
+                                          // StatisForecasting(context);
                                         },
                                         child: const Text(
                                           "Download",
@@ -413,4 +431,21 @@ class _DemogResultState extends State<DemogResult> {
       },
     );
   }
+}
+
+Future<dynamic> ShowCapturedWidget(
+    BuildContext context, Uint8List capturedImage) {
+  return showDialog(
+    useSafeArea: false,
+    context: context,
+    builder: (context) => Scaffold(
+      appBar: AppBar(
+        title: Text("Captured widget screenshot"),
+      ),
+      body: Center(
+          child: capturedImage != null
+              ? Image.memory(capturedImage)
+              : Container()),
+    ),
+  );
 }

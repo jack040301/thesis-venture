@@ -47,7 +47,7 @@ dependencies:
 
   #Sliding Panel
   sliding_up_panel: ^2.0.0+1
-
+  screenshot:
 
 
   #Carousel
@@ -108,6 +108,8 @@ flutter:
     - assets/animassets/Logo.gif
     - assets/mapicons/
     - assets/animassets/Venture_Splash.gif
+    - assets/animassets/Venture_Splash.png
+
     - assets/images/icons/venture.png
 
     - assets/images/google.png

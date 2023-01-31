@@ -63,16 +63,19 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 5)).then((value) =>
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const HomePage())));
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return AnimatedSplashScreen(
-      splash: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [Image.asset('assets/animassets/Logo.gif')],
+    return Scaffold(
+      body: Center(
+        child: Image.asset('assets/animassets/Venture_Splash.png'),
       ),
-      nextScreen:
-          const HomePage(), //CHANGE HERE IF YOU WANT TO SEE YOUR SCREEN IMMEDIATELY
-      splashIconSize: 250,
-      duration: 3400,
     );
   }
 }
