@@ -17,17 +17,8 @@ import 'package:main_venture/providers/search_places.dart';
 import 'package:main_venture/services/maps_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:main_venture/feat_screens/Prediction.dart';
-/* import 'package:firebase_core/firebase_core.dart';
 
-import 'package:geocoding/geocoding.dart';
-import 'package:main_venture/feat_screens/prediction_dialog.dart';
-
-import '../feat_screens/Prediction.dart'; */
-
-//Geocoder package is deprecated
-//import 'package:flutter_geocoder/geocoder.dart';
-
-//import 'dart:ui' as ui;
+import '../userInfo.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -36,7 +27,7 @@ class HomePage extends ConsumerStatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends ConsumerState<HomePage> {
+class _HomePageState extends ConsumerState<HomePage> with Userinformation {
   final Completer<GoogleMapController> _controller = Completer();
   final Future<bool> _mapFuture =
       Future.delayed(const Duration(milliseconds: 1000), () => true);
@@ -47,7 +38,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   Timer? _debounce;
 
 // toggling Ui as we need
-  bool searchToggle = true;
+  bool searchToggle = false;
 //
 //  bool searchToggle = false;
   bool radiusSlider = false;
@@ -66,12 +57,13 @@ class _HomePageState extends ConsumerState<HomePage> {
   Set<Polyline> _polylines = Set<Polyline>();
   int markerIdCounter = 1;
   int polylineIdCounter = 1;
-
+  String assre = '';
 // Text Editing Controllers
   TextEditingController searchController = TextEditingController();
   final TextEditingController _originController = TextEditingController();
   final TextEditingController _destinationController = TextEditingController();
-
+  FirebaseFirestore database =
+      FirebaseFirestore.instance; //instance of firestore
 // initial map position on load
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(14.774477, 121.04483),
@@ -81,6 +73,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   void initState() {
     addCustomIconMarker();
+    UserinfoFirestore(); //run the function before the map loads
     super.initState();
   }
 
@@ -109,6 +102,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         points: points.map((e) => LatLng(e.latitude, e.longitude)).toList()));
   }
 
+  //converting custom icon marker to bytes
   void addCustomIconMarker() {
     String assetpicture = "assets/images/icons/venture.png";
 
@@ -118,11 +112,23 @@ class _HomePageState extends ConsumerState<HomePage> {
             }));
   }
 
+  //this is the function for getting the users info in firestore
+  Future UserinfoFirestore() async {
+    final docRef = database.collection("users").doc(GoogleUserStaticInfo().uid);
+    docRef.get().then(
+      (DocumentSnapshot doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        // ...
+        UserInfofirstname = data['firstname'];
+        UserInfolastname = data['lastname'];
+      },
+      onError: (e) => print("Error getting document: $e"),
+    );
+  }
+
 //Show marker from the firestore database
   Future getMarkerData() async {
-    // String assetpicture = "assets/images/icons/venture.png";
-
-    await FirebaseFirestore.instance
+    await database
         .collection("markers")
         .get()
         .then((QuerySnapshot snapshot) => {
@@ -148,12 +154,6 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     return allmarkers;
   }
-
-//to automatically show marker to map
-  /* Widget getmarker(BuildContext context) {
-    getMarkerData();
-    return Text('');
-  } */
 
   Widget builds(BuildContext context) {
     return Padding(
@@ -394,7 +394,10 @@ class _HomePageState extends ConsumerState<HomePage> {
           floatingActionButton: Column(
             children: [
               const SizedBox(height: 12),
-              const HomeFloatingProfile(),
+              FloatingButtonUserProfile(
+                  UserInfofirstname: UserInfofirstname,
+                  UserInfolastname:
+                      UserInfolastname), //breaking the Widget of floating button and passing the data from the stateless widget below
               const HomeFloatingDialog(),
               FloatingActionButton(
                 disabledElevation: 0,
@@ -614,6 +617,37 @@ class _HomePageState extends ConsumerState<HomePage> {
   }*/
 }
 
+class FloatingButtonUserProfile extends StatelessWidget {
+  const FloatingButtonUserProfile({
+    super.key,
+    required this.UserInfofirstname,
+    required this.UserInfolastname,
+  });
+
+  final String UserInfofirstname,
+      UserInfolastname; //parameter to pass data from the stateless widget
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      disabledElevation: 0,
+      elevation: 0.0,
+      backgroundColor: Colors.white,
+      foregroundColor: Colors.black,
+      heroTag: null,
+      mini: true,
+      child: GoogleUserStaticInfo().profile == null
+          ? const Image(image: AssetImage('assets/images/pic.png'))
+          : Image.network(GoogleUserStaticInfo().profile ?? ""),
+      onPressed: () {
+        ProfileNav(firstname: UserInfofirstname, lastname: UserInfolastname)
+            .showProfileNav(context);
+        //parameter : data from firestore //pass in the profilenav.dart
+      },
+    );
+  }
+}
+
 class HomeNoResultToShow extends StatelessWidget {
   const HomeNoResultToShow({
     super.key,
@@ -731,30 +765,6 @@ class HomeFloatingDialog extends StatelessWidget {
   }
 }
 
-class HomeFloatingProfile extends StatelessWidget {
-  const HomeFloatingProfile({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      disabledElevation: 0,
-      elevation: 0.0,
-      backgroundColor: Colors.white,
-      foregroundColor: Colors.black,
-      heroTag: null,
-      mini: true,
-      child: FirebaseAuth.instance.currentUser!.photoURL == null
-          ? const Image(image: AssetImage('assets/images/pic.png'))
-          : Image.network(FirebaseAuth.instance.currentUser!.photoURL ?? ""),
-      onPressed: () {
-        ProfileNav().showProfileNav(context);
-      },
-    );
-  }
-}
-
 class HomeOriginController extends StatelessWidget {
   const HomeOriginController({
     super.key,
@@ -783,4 +793,10 @@ class HomeOriginController extends StatelessWidget {
       ),
     );
   }
+}
+
+//Object For User
+class Userinformation {
+  String UserInfofirstname = "";
+  String UserInfolastname = "";
 }
