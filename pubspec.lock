@@ -64,6 +64,23 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.1"
+<<<<<<< Updated upstream
+=======
+  charts_common:
+    dependency: transitive
+    description:
+      name: charts_common
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.12.0"
+  charts_flutter:
+    dependency: "direct main"
+    description:
+      name: charts_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.12.0"
+>>>>>>> Stashed changes
   checked_yaml:
     dependency: transitive
     description:
@@ -155,6 +172,16 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.3"
+<<<<<<< Updated upstream
+=======
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.5"
+>>>>>>> Stashed changes
   fab_circular_menu:
     dependency: "direct main"
     description:
@@ -225,6 +252,16 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+<<<<<<< Updated upstream
+=======
+  fl_chart:
+    dependency: "direct main"
+    description:
+      name: fl_chart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.60.0"
+>>>>>>> Stashed changes
   flip_card:
     dependency: "direct main"
     description:
@@ -457,6 +494,16 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+<<<<<<< Updated upstream
+=======
+  logging:
+    dependency: transitive
+    description:
+      name: logging
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.1"
+>>>>>>> Stashed changes
   lottie:
     dependency: "direct main"
     description:
@@ -537,7 +584,11 @@ packages:
   path_provider_ios:
     dependency: transitive
     description:
+<<<<<<< Updated upstream
       name: path_provider_ios
+=======
+      name: path_provider_foundation
+>>>>>>> Stashed changes
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.11"
@@ -639,6 +690,16 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.7"
+<<<<<<< Updated upstream
+=======
+  screenshot:
+    dependency: "direct main"
+    description:
+      name: screenshot
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.3.0"
+>>>>>>> Stashed changes
   sky_engine:
     dependency: transitive
     description: flutter

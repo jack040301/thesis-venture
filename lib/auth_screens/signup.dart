@@ -392,6 +392,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                   'firstname': firstNameController.text.trim(),
                   'lastname': lastNameController.text.trim(),
                   'email': value.user!.email,
+                  'password': passwordController.text.trim(),
                 }));
       } else {
         print('Fields are empty');

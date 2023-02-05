@@ -87,6 +87,18 @@ class ProfileNav {
                               userinfo().name ?? ""
                               // FirebaseAuth.instance.currentUser!.displayName ?? ""
                               ),
+<<<<<<< Updated upstream
+=======
+                        label: GoogleUserStaticInfo().name == null
+                            ? Text(
+                                "${firstname.toUpperCase()} ${lastname.toUpperCase()}", //display firstname and lastname from the firestore
+                                style: const TextStyle(
+                                    color: Colors.black, fontSize: 22.0))
+                            : Text(GoogleUserStaticInfo().name ?? "",
+                                style: const TextStyle(
+                                    color: Colors.black, fontSize: 22.0)),
+                      ),
+>>>>>>> Stashed changes
                       const SizedBox(
                         height: 20.0,
                       ),
