@@ -1,61 +1,83 @@
-import React, {Fragment} from "react";
+import React, { Fragment } from "react";
 import Dashboard from "./pages/Dashboard";
-import Rentals from "./pages/Rentals";
+import MapPage from "./pages/Rentals";
 import Users from "./pages/Users";
 import Request from "./pages/Requests";
 import Configuration from "./pages/Configuration";
-import Header from './components/Header'
-import Sidenav from './components/SideNav'
-
-
-
-
-
+import Header from "./components/Header";
+import Sidenav from "./components/SideNav";
 
 import Login from "./auth/Login";
-import ProtectedRoute from "./auth/PrivateRoute"
-import { AuthContextProvider } from './auth/context';
+import ProtectedRoute from "./auth/PrivateRoute";
+import { AuthContextProvider } from "./auth/context";
 /* import Home from "./Home"; */
-import { BrowserRouter as Router,Routes , Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <div>
-    <AuthContextProvider>
-    <Routes>
-      <Route path='/' element={<Login />} />
-      
-      <Route
-        path='/dashboard'
-        element={
-          <ProtectedRoute>
-               <Header/>
-      <Sidenav/>
-            <Dashboard />
-          </ProtectedRoute>
-        }
-      />
+      <AuthContextProvider>
+        <Routes>
+          <Route path="/" element={<Login />} />
 
-      <Route path="/rental" element={<ProtectedRoute>
-        <Header/>
-      <Sidenav/><Rentals/></ProtectedRoute>}/>
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Header />
+                <Sidenav />
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
 
-      <Route path="/user" element={<ProtectedRoute>  <Header/>
-      <Sidenav/><Users/></ProtectedRoute>}/>
-      <Route path="/request" element={<ProtectedRoute>  <Header/>
-      <Sidenav/><Request/></ProtectedRoute>}/>
-      <Route path="/config" element={<ProtectedRoute>  <Header/>
-      <Sidenav/><Configuration/></ProtectedRoute>}/>
+          <Route
+            path="/rental"
+            element={
+              <ProtectedRoute>
+                <Header />
+                <Sidenav />
+                <MapPage />
+              </ProtectedRoute>
+            }
+          />
 
-
-
-
-    </Routes>
-
-    
-  </AuthContextProvider>
-  </div>
-
+          <Route
+            path="/user"
+            element={
+              <ProtectedRoute>
+                {" "}
+                <Header />
+                <Sidenav />
+                <Users />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/request"
+            element={
+              <ProtectedRoute>
+                {" "}
+                <Header />
+                <Sidenav />
+                <Request />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/config"
+            element={
+              <ProtectedRoute>
+                {" "}
+                <Header />
+                <Sidenav />
+                <Configuration />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </AuthContextProvider>
+    </div>
   );
 }
 

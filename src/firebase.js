@@ -141,5 +141,9 @@ export const getCurrentUser = () => {
 }
 
 
+export const addInFirestore = () => {
+
+}
+
 
 export {auth, db, registerWithEmailAndPassword,  logout, sendPasswordReset, handleUserProfile, createUserWithEmailAndPassword}

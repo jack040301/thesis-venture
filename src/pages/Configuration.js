@@ -1,6 +1,63 @@
-import React from "react";
+/*  import React, { useRef, useState } from "react";
+import {UserAuth } from '../auth/context'
+
+
+import {
+  MDBBtn,
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBInput,
+  MDBValidation,
+  MDBValidationItem
+} from "mdb-react-ui-kit";
 
 function App() {
+  const [formValue, setFormValue] = useState({
+    email: "",
+    password: "",
+    confirmpass: "",
+    
+  });
+
+  const { createUser, user } = UserAuth();
+
+
+  async function handleSubmit(e) {
+
+    e.preventDefault();
+    setError('')
+    try {
+    if(password === confirmpass){  
+      await createUser(email, password).then(() =>
+    {
+      addDoc(collection(db, "users"), {
+        uid: user.uid,
+        authProvider: "local",
+        email,
+        role:'admin',
+      });
+
+    }).catch((err)=>{
+      setError(err.message)
+    })
+
+      e.target.reset();
+    }else{
+      setError('password and confirm password not matched')
+    }
+
+    } catch (e) {
+      setError(e.message)
+      console.log(e.message)
+    }
+  };
+
+
+  const onChange = (e) => {
+    setFormValue({ ...formValue, [e.target.name]: e.target.value });
+  };
+
   return (
     <>
       <div class="content-wrapper">
@@ -28,69 +85,69 @@ function App() {
                   </div>
                 </div>
               </div>
-              <div className="card-body table-responsive p-0">
-                <table className="table table-hover text-nowrap">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>User</th>
-                      <th>Date</th>
-                      <th>Status</th>
-                      <th>Reason</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>183</td>
-                      <td>John Doe</td>
-                      <td>11-7-2014</td>
-                      <td>
-                        <span className="tag tag-success">Approved</span>
-                      </td>
-                      <td>
-                        Bacon ipsum dolor sit amet salami venison chicken flank
-                        fatback doner.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>219</td>
-                      <td>Alexander Pierce</td>
-                      <td>11-7-2014</td>
-                      <td>
-                        <span className="tag tag-warning">Pending</span>
-                      </td>
-                      <td>
-                        Bacon ipsum dolor sit amet salami venison chicken flank
-                        fatback doner.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>657</td>
-                      <td>Bob Doe</td>
-                      <td>11-7-2014</td>
-                      <td>
-                        <span className="tag tag-primary">Approved</span>
-                      </td>
-                      <td>
-                        Bacon ipsum dolor sit amet salami venison chicken flank
-                        fatback doner.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>175</td>
-                      <td>Mike Doe</td>
-                      <td>11-7-2014</td>
-                      <td>
-                        <span className="tag tag-danger">Denied</span>
-                      </td>
-                      <td>
-                        Bacon ipsum dolor sit amet salami venison chicken flank
-                        fatback doner.
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <MDBContainer fluid className='row g-3'>
+      
+                <div className="d-flex align-items-center justify-content-center">
+                  <MDBCol lg="4" md="6" className="mb-4">
+                    <img
+                      src="https://p.kindpng.com/picc/s/568-5680678_bandori-bangdream-mocaaoba-aobamoca-anime-icon-.png"
+                      className="img-fluid rounded-circle"
+                      alt=""
+                    />
+                  </MDBCol>
+                </div>
+                <MDBRow
+                  tag="form"
+                  className="d-flex justify-content-center align-items-center h-100"
+                >
+                  <MDBCol md="4">
+                
+                    <MDBInput
+                      value={formValue.email}
+                      name="email"
+                      onChange={onChange}
+                      id="validationCustom01"
+                      required
+                      type="email"
+                      label="Email"
+                    />
+                   
+                  </MDBCol>
+                  <MDBCol md="4">
+                
+                    <MDBInput
+                      value={formValue.password}
+                      name="password"
+                      onChange={onChange}
+                      id="validationCustom02"
+                      required
+                      type="password"
+                      label="Password"
+                    />
+                   
+                  </MDBCol>
+
+                  <MDBCol md="6">
+                
+                    <MDBInput
+                      value={formValue.confirmpass}
+                      name="confirmpass"
+                      onChange={onChange}
+                      id="validationCustom03"
+                      required
+                      type="password"
+                      label="Confirm Password"
+                    />
+                   
+                  </MDBCol>
+
+                  <MDBCol md="2" size="12">
+                    <MDBBtn type="submit" onClick={handleSubmit}>Save Changes</MDBBtn>
+                  </MDBCol>
+                </MDBRow>
+              
+              </MDBContainer>
+            
             </div>
           </div>
         </div>
@@ -100,3 +157,4 @@ function App() {
 }
 
 export default App;
+ */
