@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import Dashboard from "./pages/Dashboard";
-import MapPage from "./pages/Rentals";
+import MapPage from "./pages/Maps";
 import Users from "./pages/Users";
 import Request from "./pages/Requests";
 import Configuration from "./pages/Configuration";
@@ -18,7 +18,7 @@ function App() {
     <div>
       <AuthContextProvider>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<MapPage />} />
 
           <Route
             path="/dashboard"
