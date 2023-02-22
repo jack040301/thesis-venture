@@ -2,24 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:main_venture/auth_screen.dart';
 import 'package:main_venture/feat_screens/pinnedlocation_new.dart';
+import 'package:main_venture/feat_screens/upgrade_account.dart';
 
 import '../userInfo.dart';
+import 'customize_acc.dart';
 import 'settings.dart';
 
 //THIS IS THE DIALOG OF PROFILE
 
-@override
-void initState() {
-  AuthFunction().getfirstname();
-}
-
 class ProfileNav {
+  final String firstname,
+      lastname; // init firstname lastname string for class parameters
+  ProfileNav(
+      {required this.firstname,
+      required this.lastname}); //get the firstname lastname in the homepage.dart
+
   Future<void> showProfileNav(BuildContext context) async {
-    initState();
     return await showDialog(
         context: context,
         builder: (context) {
-          //bool isChecked = false;
+          //  initState(); //bool isChecked = false;
           return StatefulBuilder(builder: (context, setState) {
             return AlertDialog(
                 content: Form(
@@ -52,19 +54,18 @@ class ProfileNav {
                     children: [
                       TextButton.icon(
                         onPressed: () {},
-                        icon: FirebaseAuth.instance.currentUser!.photoURL ==
-                                null
+                        icon: GoogleUserStaticInfo().profile == null
                             ? const Image(
                                 image: AssetImage('assets/images/pic.png'),
                                 height: 50.0,
                                 width: 50.0)
                             : Image.network(
-                                FirebaseAuth.instance.currentUser!.photoURL ??
-                                    "",
+                                GoogleUserStaticInfo().profile ?? "",
                                 height: 50.0,
                                 width: 50.0,
                               ),
-                        label: Text(userinfo().fname ?? "Default Name",
+                        label: Text(
+                            "${firstname.toUpperCase()} ${lastname.toUpperCase()}", //display firstname and lastname from the firestore
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 22.0)),
                       ),
@@ -99,8 +100,49 @@ class ProfileNav {
                             style:
                                 TextStyle(color: Colors.black, fontSize: 15.0)),
                       ),
+                      /*      TextButton(
+                        child: Text(
+                          'Customize Account',
+                          style: TextStyle(
+                              fontFamily: 'Questrial',
+                              color: Colors.grey.shade900,
+                              fontSize: 18),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const CustomizeAccScreen()));
+                        },
+                      ), */
                       TextButton.icon(
-                        onPressed: () {},
+                        onPressed: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CustomizeAccScreen(
+                                      firstname: firstname,
+                                      lastname: lastname,
+                                    )),
+                          );
+                        },
+                        icon: const ImageIcon(
+                          AssetImage("assets/images/icons/team.png"),
+                          size: 25.0,
+                        ),
+                        label: const Text('Customize Account',
+                            style:
+                                TextStyle(color: Colors.black, fontSize: 15.0)),
+                      ),
+                      TextButton.icon(
+                        onPressed: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const UpgradeAccScreen()),
+                          );
+                        },
                         icon: const ImageIcon(
                           AssetImage("assets/images/icons/upgrade.png"),
                           size: 25.0,
@@ -136,5 +178,5 @@ class ProfileNav {
 }
 
 Future<void> singingOut() async {
-  return await AuthFunction().logOut();
+  return await FunctionAuthentication().logOut();
 }

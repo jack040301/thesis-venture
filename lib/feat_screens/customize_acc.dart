@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:main_venture/screens/home_page.dart';
 
 class CustomizeAccScreen extends StatefulWidget {
-  const CustomizeAccScreen({super.key});
+  CustomizeAccScreen(
+      {super.key, required this.firstname, required this.lastname});
+  String firstname, lastname;
 
   @override
   State<CustomizeAccScreen> createState() => _CustomizeAccScreenState();
@@ -26,11 +29,8 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
   }
 
   void inputData() {
-    final User? user = auth.currentUser;
-
-    final uid = user!.uid;
-    _firstnameController.text = user.displayName!;
-    _emailController.text = user.email!;
+    _lastnameController.text = widget.firstname;
+    _firstnameController.text = widget.lastname;
 
     // here you write the codes to input the data into firestore
   }
