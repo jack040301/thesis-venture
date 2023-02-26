@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:main_venture/models/forecasting/forecasting_linechart.dart';
 
 import 'forecasting/forecasting_population.dart';
 
@@ -327,7 +328,7 @@ class _DemogResultState extends State<DemogResult> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 Expanded(
-                                    child: ElevatedButton(
+                                    child: ElevatedButton.icon(
                                         style: ElevatedButton.styleFrom(
                                           elevation: 0.0,
                                           padding: const EdgeInsets.all(10.0),
@@ -340,18 +341,25 @@ class _DemogResultState extends State<DemogResult> {
                                               const Size(70, 40), //////// HERE
                                         ),
                                         onPressed: () {},
-                                        child: const Text(
+                                        icon: Icon(Icons.file_download_outlined,
+                                          size: 18.0,
+                                        ),
+                            label: Text(
                                           "Download",
                                           style: TextStyle(color: Colors.white),
                                         ))),
                                 //Spacer(),
-                                const SizedBox(
+                               const SizedBox(
                                   width: 10.0,
                                 ),
 
                                 Expanded(
                                   child: TextButton(
                                     onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => const PointsLineChart()));
                                       //getMarkerData();
                                       //   getBusinessData();
                                     },
