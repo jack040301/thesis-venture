@@ -70,7 +70,9 @@ dependencies:
   cloud_firestore: ^4.0.5
   flutter_password_strength: ^0.1.6
   geocoding: ^2.0.5
-  custom_marker: ^1.0.0
+  image_gallery_saver:
+  permission_handler:
+  syncfusion_flutter_charts:
 
 dev_dependencies:
   flutter_launcher_icons: ^0.10.0

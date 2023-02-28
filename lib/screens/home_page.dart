@@ -1,11 +1,9 @@
 import 'dart:async';
 import 'dart:collection';
 //import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:custom_marker/marker_icon.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -16,7 +14,6 @@ import 'package:main_venture/models/auto_complete_results.dart';
 import 'package:main_venture/providers/search_places.dart';
 import 'package:main_venture/services/maps_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:main_venture/feat_screens/Prediction.dart';
 
 import '../userInfo.dart';
 
@@ -48,10 +45,12 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
   // bool getmarker = true;
 
 // Markers set
-  Set<Marker> _markers = Set<Marker>();
-  Set<Marker> allmarkers = HashSet<Marker>();
+  Set<Marker> allmarkers = <Marker>{};
+  Set<Marker> _markers = <Marker>{};
 
-  Map<MarkerId, Marker> _marrkers = <MarkerId, Marker>{};
+  // Set<Marker> allmarkers = HashSet<Marker>();
+
+  Map<MarkerId, Marker> _mapmarker = <MarkerId, Marker>{};
 
   //Map<MarkerId, Marker> _markerss = <MarkerId, Marker>{};
   Set<Polyline> _polylines = Set<Polyline>();
@@ -72,8 +71,10 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 
   @override
   void initState() {
+    userinfoFirestore();
     addCustomIconMarker();
-    UserinfoFirestore(); //run the function before the map loads
+    getBusiness();
+    //run the function before the map loads
     super.initState();
   }
 
@@ -112,8 +113,35 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
             }));
   }
 
+  List<DropdownData> dropdownDatas = [];
+  Future getBusiness() async {
+    await FirebaseFirestore.instance
+        .collection("business")
+        .get()
+        .then((QuerySnapshot snapshot) => {
+              snapshot.docs.forEach((documents) async {
+                //var data = documents.data() as Map;
+
+                dropdownDatas.add(DropdownData(nameofbusiness: documents.id));
+              })
+            });
+  }
+
   //this is the function for getting the users info in firestore
-  Future UserinfoFirestore() async {
+  Future userinfoFirestore() async {
+/*     Stream<DocumentSnapshot> usersStream = FirebaseFirestore.instance
+        .collection('users')
+        .doc(GoogleUserStaticInfo().uid)
+        .snapshots();
+
+    usersStream.map(
+      (DocumentSnapshot doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        UserInfofirstname = data['firstname'];
+        UserInfolastname = data['lastname'];
+      },
+    ); */
+
     final docRef = database.collection("users").doc(GoogleUserStaticInfo().uid);
     docRef.get().then(
       (DocumentSnapshot doc) {
@@ -127,21 +155,22 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
   }
 
 //Show marker from the firestore database
-  Future getMarkerData() async {
+/*   Future getMarkerData() async {
     await database
         .collection("markers")
         .get()
         .then((QuerySnapshot snapshot) => {
               snapshot.docs.forEach((documents) async {
                 var data = documents.data() as Map;
+
                 allmarkers.add(Marker(
                     onTap: () async {
-                      await DialogQuestion(data['id']).showMyDialog(context);
+                      await DialogQuestion(documents.id).showMyDialog(context);
                     },
                     infoWindow: InfoWindow(
                       title: data["place"],
                     ),
-                    markerId: MarkerId(data["id"]),
+                    markerId: MarkerId(documents.id),
                     icon: markerIcon,
                     position: LatLng(
                         data["coords"].latitude, data["coords"].longitude)));
@@ -153,6 +182,65 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
     });
 
     return allmarkers;
+  } */
+
+  Future testMarker() async {
+
+    await FirebaseFirestore.instance
+        .collection("testmarkers")
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((documents) async {
+                var data = documents.data() as Map;
+
+                /*   print(data["coords"].latitude);
+                print(data["coords"].longitude); */
+
+                allmarkers.add(Marker(
+                    onTap: () async {
+                      await DialogQuestion(documents.id, dropdownDatas)
+                          .showMyDialog(context);
+                    },
+                    infoWindow: InfoWindow(
+                      title: data["place"],
+                    ),
+                    markerId: MarkerId(documents.id),
+                    icon: markerIcon,
+                    position: LatLng(
+                        data["coords"].latitude, data["coords"].longitude)));
+              })
+            });
+
+    setState(() {
+      allmarkers;
+    });
+
+    return allmarkers;
+
+    /*    await FirebaseFirestore.instance
+        .collection("markers")
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((documents) async {
+                var data = documents.data() as Map;
+
+                await allmarkers.add(Marker(
+                    onTap: () async {
+                      await DialogQuestion(data['id']).showMyDialog(context);
+                    },
+                    infoWindow: InfoWindow(title: data["place"]),
+                    markerId: MarkerId(data["id"]),
+                    icon: markerIcon,
+                    position: LatLng(
+                        data["coords"]!.latitude, data["coords"]!.longitude)));
+              })
+
+            });
+
+    setState(() {
+      allmarkers;
+      print(allmarkers.toString());
+    }); */
   }
 
   Widget builds(BuildContext context) {
@@ -188,14 +276,14 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
     final allSearchResults = ref.watch(placeResultsProvider);
     final searchFlag = ref.watch(searchToggleProvider);
     return FutureBuilder(
-      future: getMarkerData(),
-      builder: (BuildContext context, snapshot) {
+      future: testMarker(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasError) {
           return const Text('Something went wrong');
         }
 
-        if (snapshot.data == null) {
-          return const Center(child: CircularProgressIndicator());
+        if (snapshot.hasData == false) {
+          return const Center(child: CircularProgressIndicator.adaptive());
         }
 
         return Scaffold(
@@ -278,7 +366,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
                               )
                             : Container(),
                     searchFlag.searchToggle
-                        ? allSearchResults.allReturnedResults.length != 0
+                        ? allSearchResults.allReturnedResults.isNotEmpty
                             ? Positioned(
                                 top: 100.0,
                                 left: 15.0,
@@ -618,7 +706,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 }
 
 class FloatingButtonUserProfile extends StatelessWidget {
-  const FloatingButtonUserProfile({
+  FloatingButtonUserProfile({
     super.key,
     required this.UserInfofirstname,
     required this.UserInfolastname,
@@ -627,24 +715,44 @@ class FloatingButtonUserProfile extends StatelessWidget {
   final String UserInfofirstname,
       UserInfolastname; //parameter to pass data from the stateless widget
 
+  final Stream<DocumentSnapshot> usersStream = FirebaseFirestore.instance
+      .collection('users')
+      .doc(GoogleUserStaticInfo().uid)
+      .snapshots();
+
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      disabledElevation: 0,
-      elevation: 0.0,
-      backgroundColor: Colors.white,
-      foregroundColor: Colors.black,
-      heroTag: null,
-      mini: true,
-      child: GoogleUserStaticInfo().profile == null
-          ? const Image(image: AssetImage('assets/images/pic.png'))
-          : Image.network(GoogleUserStaticInfo().profile ?? ""),
-      onPressed: () {
-        ProfileNav(firstname: UserInfofirstname, lastname: UserInfolastname)
-            .showProfileNav(context);
-        //parameter : data from firestore //pass in the profilenav.dart
-      },
-    );
+    return StreamBuilder<DocumentSnapshot>(
+        stream: usersStream,
+        builder:
+            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return const Text('Something went wrong');
+          }
+
+          if (snapshot.hasData == false) {
+            return const CircularProgressIndicator.adaptive();
+          }
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          return FloatingActionButton(
+            disabledElevation: 0,
+            elevation: 0.0,
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            heroTag: null,
+            mini: true,
+            child: Profile().profile == null
+                ? const Image(image: AssetImage('assets/images/pic.png'))
+                : Image.network(Profile().profile ?? ""),
+            onPressed: () {
+              ProfileNav(
+                      firstname: data['firstname'], lastname: data['lastname'])
+                  .showProfileNav(context);
+              //parameter : data from firestore //pass in the profilenav.dart
+            },
+          );
+        });
   }
 }
 

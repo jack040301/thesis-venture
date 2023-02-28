@@ -12,15 +12,31 @@ class BarChartModel {
   });
 }
 
-
 class SalesData {
+  double months;
+  double sales;
 
-   int months;
-   int sales;
-
-  SalesData({required this.months, required this.sales,
-
+  SalesData({
+    required this.months,
+    required this.sales,
   });
+}
 
+class BusinessLineGraph {
+  int months;
+  double cost;
 
+  BusinessLineGraph({
+    required this.months,
+    required this.cost,
+  });
+}
+
+class ChartData {
+  ChartData({
+    required this.months,
+    required this.cost,
+  });
+  String months;
+  double cost;
 }

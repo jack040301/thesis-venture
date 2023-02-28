@@ -345,7 +345,7 @@ class _SignupWidgetState extends State<SignupWidget> {
             ),
             GestureDetector(
                 onTap: () async {
-                  await FunctionAuthentication().signInWithGoogle();
+                  await Functio().signInWithGoogle();
                 },
                 child: Material(
                   color: const Color.fromARGB(255, 0, 110, 195),

@@ -9,6 +9,8 @@ import 'package:main_venture/global_objects/ui_class.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'models/forecasting/Linechartsync.dart';
+import 'models/forecasting/forecasting_linechart.dart';
 import 'screens/home_page.dart';
 
 void main() async {
@@ -46,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 5)).then((value) =>
+    Future.delayed(const Duration(seconds: 2)).then((value) =>
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const AuthScreen())));
   }

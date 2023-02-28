@@ -1,6 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:main_venture/screens/home_page.dart';
+import 'package:main_venture/auth_screens/login.dart';
+
+import '../userInfo.dart';
 
 class CustomizeAccScreen extends StatefulWidget {
   CustomizeAccScreen(
@@ -21,6 +27,9 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
 
   final FirebaseAuth auth = FirebaseAuth.instance;
 
+  final CollectionReference _users =
+      FirebaseFirestore.instance.collection('users');
+
   @override
   void initState() {
     super.initState();
@@ -33,6 +42,20 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
     _firstnameController.text = widget.lastname;
 
     // here you write the codes to input the data into firestore
+  }
+
+  final textFieldFocusNode = FocusNode();
+  bool _obscured = true;
+
+  void _toggleObscured() {
+    setState(() {
+      _obscured = !_obscured;
+      if (textFieldFocusNode.hasPrimaryFocus) {
+        return; // If focus is on text field, dont unfocus
+      } else {
+        textFieldFocusNode.canRequestFocus = true;
+      } // Prevents focus if tap on eye
+    });
   }
 
   @override
@@ -113,7 +136,7 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               const SizedBox(
                 height: 20.0,
               ),
-              Container(
+              /*   Container(
                 width: 350,
                 child: const Text(
                   "Email Address",
@@ -139,7 +162,7 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
                     borderSide: BorderSide.none,
                   ),
                 ),
-              ),
+              ), */
               const SizedBox(
                 height: 20.0,
               ),
@@ -156,8 +179,9 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
                 ),
               ),
               TextField(
-                obscureText: true,
                 controller: _passwordController,
+                obscureText: _obscured,
+                focusNode: textFieldFocusNode,
                 decoration: InputDecoration(
                   hintText: '************',
                   labelStyle: const TextStyle(
@@ -169,12 +193,20 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
                   border: const OutlineInputBorder(
                     borderSide: BorderSide.none,
                   ),
+                  suffix: InkWell(
+                    onTap: _toggleObscured,
+                    child: Icon(
+                        _obscured
+                            ? Icons.visibility
+                            : Icons.visibility_off_rounded,
+                        color: const Color.fromARGB(255, 74, 74, 74)),
+                  ),
                 ),
               ),
               const SizedBox(
                 height: 20.0,
               ),
-              Container(
+              /*   Container(
                 width: 350,
                 child: const Text(
                   "Confirm Password",
@@ -201,7 +233,7 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
                     borderSide: BorderSide.none,
                   ),
                 ),
-              ),
+              ), */
               const SizedBox(
                 height: 20.0,
               ),
@@ -209,7 +241,9 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
                 width: 480,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    updateAccount();
+                  },
                   child: const Text(
                     'Save Changes',
                     style: TextStyle(height: 1.5, fontSize: 18),
@@ -222,4 +256,84 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
       ),
     );
   }
+
+  Future updateAccount() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    PopSnackbar popSnackbar = PopSnackbar();
+
+    final String fname = _firstnameController.text;
+    final String lname = _lastnameController.text;
+    final String password = _passwordController.text;
+    final String confirmPassword = _confirmPasswordController.text;
+    // if (lname != null) {
+    final String displayName = fname + lname;
+    if (fname.isNotEmpty &&
+        lname.isNotEmpty &&
+        password.isNotEmpty &&
+        confirmPassword.isNotEmpty) {
+      if (user != null) {
+        await _users.doc(GoogleUserStaticInfo().uid).update({
+          "firstname": _firstnameController.text,
+          "lastname": _lastnameController.text,
+        });
+        _changePassword(user, password, displayName, context, popSnackbar);
+
+        ScaffoldMessenger.of(context).showSnackBar(
+            popSnackbar.popsnackbar("Successfully update your account"));
+        //   Navigator.of(context).popUntil((_) => count++ >= 2);
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(popSnackbar.popsnackbar("User is null"));
+      }
+      // print("Password isnt match");
+    } else {
+      //print("Please fill out all Fields");
+      popSnackbar.showErrorDialog(_confirmPasswordController,
+          _passwordController, context, "Please fill out all the fields");
+      /*  showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Error Happened'),
+            content: const SingleChildScrollView(
+              child: Text("Please fill out all Fields"),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Got it'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _passwordController.clear();
+                  _confirmPasswordController.clear();
+                },
+              ),
+            ],
+          );
+        },
+      ); */
+    }
+  }
+}
+
+void _changePassword(User user, String password, String displayName, context,
+    PopSnackbar popSnackbar) async {
+  user.updatePassword(password).then((_) {
+    ScaffoldMessenger.of(context).showSnackBar(
+        popSnackbar.popsnackbar("Successfully update the password"));
+  }).catchError((error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+        popSnackbar.popsnackbar("Password cant be changed due to $error"));
+  });
+
+/*   await user
+      .updateDisplayName(displayName)
+      .then((_) => {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(popSnackbar.popsnackbar("Updated Displayname"))
+          })
+      .catchError((error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+        popSnackbar.popsnackbar("User didnt use Google Sign in $error"));
+  }); */
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:main_venture/auth_screen.dart';
+
 import 'package:main_venture/feat_screens/pinnedlocation_new.dart';
 import 'package:main_venture/feat_screens/upgrade_account.dart';
 
@@ -41,7 +40,7 @@ class ProfileNav {
               const SizedBox(
                 height: 20.0,
               ),
-              Container(
+              SizedBox(
                 width: double.maxFinite,
                 child: TextButtonTheme(
                   data: TextButtonThemeData(
@@ -54,13 +53,13 @@ class ProfileNav {
                     children: [
                       TextButton.icon(
                         onPressed: () {},
-                        icon: GoogleUserStaticInfo().profile == null
+                        icon: Profile().profile == null
                             ? const Image(
                                 image: AssetImage('assets/images/pic.png'),
                                 height: 50.0,
                                 width: 50.0)
                             : Image.network(
-                                GoogleUserStaticInfo().profile ?? "",
+                                Profile().profile ?? "",
                                 height: 50.0,
                                 width: 50.0,
                               ),
@@ -153,11 +152,12 @@ class ProfileNav {
                       ),
                       TextButton.icon(
                         onPressed: () async {
-                          await singingOut().then((value) =>
+                          singingOut(context);
+                          /*   await singingOut().then((value) =>
                               Navigator.of(context, rootNavigator: true)
                                   .pushReplacement(MaterialPageRoute(
                                       builder: (context) =>
-                                          const AuthScreen())));
+                                          const AuthScreen()))); */
                         },
                         icon: const ImageIcon(
                           AssetImage("assets/images/icons/logout.png"),
@@ -177,6 +177,8 @@ class ProfileNav {
   }
 }
 
-Future<void> singingOut() async {
-  return await FunctionAuthentication().logOut();
+Future<void> singingOut(context) async {
+  PopSnackbar popSnackbar = PopSnackbar();
+
+  return await popSnackbar.showLogoutDialog(context);
 }
