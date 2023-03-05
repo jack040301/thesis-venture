@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
 import 'dart:typed_data';
 import 'package:screenshot/screenshot.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'forecasting/forecasting_linechart.dart';
+import 'package:main_venture/models/forecasting/forecasting_linechart.dart';
 import 'forecasting/forecasting_population.dart';
 import 'package:main_venture/userInfo.dart';
 
@@ -249,6 +251,7 @@ class _DemogResultState extends State<DemogResult> {
                                       fontSize: 15.0)), // <-- Text
                             ),
                           ),
+
                           LandPerSQM(landstr: landstr),
                           Container(
                             width: 350,
@@ -413,6 +416,22 @@ class _DemogResultState extends State<DemogResult> {
                                               .popUntil((_) => count++ >= 2);
                                         },
                                         style: TextButton.styleFrom(
+
+                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Expanded(
+                                    child: ElevatedButton.icon(
+                                        style: ElevatedButton.styleFrom(
+                                          elevation: 0.0,
+                                          padding: const EdgeInsets.all(10.0),
+                                          primary: const Color.fromARGB(
+                                              255, 0, 110, 195), // background
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5.0)),
+
                                           minimumSize:
                                               const Size(70, 40), //<-- SEE HERE
                                           side: const BorderSide(
@@ -421,8 +440,38 @@ class _DemogResultState extends State<DemogResult> {
                                             width: 3,
                                           ),
                                         ),
+
                                         child: const Text('Done'),
-                                      ),
+                                        onPressed: () {},
+                                        icon: Icon(Icons.file_download_outlined,
+                                          size: 18.0,
+                                        ),
+                            label: Text(
+                                          "Download",
+                                          style: TextStyle(color: Colors.white),
+                                        ))),
+                                //Spacer(),
+                               const SizedBox(
+                                  width: 10.0,
+                                ),
+
+                                Expanded(
+                                  child: TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => const PointsLineChart()));
+                                      //getMarkerData();
+                                      //   getBusinessData();
+                                    },
+                                    style: TextButton.styleFrom(
+                                      minimumSize:
+                                          const Size(70, 40), //<-- SEE HERE
+                                      side: const BorderSide(
+                                        color: Color.fromARGB(255, 0, 110, 195),
+                                        width: 3,
+                     ),
                                     ),
                                   ]))
                         ],

@@ -7,8 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:main_venture/userInfo.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class ForecastingLineChart extends StatelessWidget {
-  ForecastingLineChart({super.key, required this.business});
+
+import 'package:main_venture/models/demog_result.dart';
+
+class PointsLineChart extends StatelessWidget {
+  const PointsLineChart({super.key});
 
   final String business;
   late TooltipBehavior _tooltipBehavior;
@@ -44,6 +47,7 @@ class ForecastingLineChart extends StatelessWidget {
   Widget build(BuildContext context) {
     initState();
     return Scaffold(
+
         appBar: AppBar(
           title: const Text('Forecasting Line Chart'),
           centerTitle: true,
@@ -188,6 +192,7 @@ class ForecastingLineChart extends StatelessWidget {
         yValueMapper: (ChartData data, _) => data.cost,
       )
     ];
+
   }
 }
 
