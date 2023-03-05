@@ -3,26 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:main_venture/models/demog_result.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:main_venture/userInfo.dart';
 
 class DialogQuestion {
 //////////////////////////////////////////////////////////////////////////////
-  final String markerid; //use this string to get the clicked marker id
-  DialogQuestion(this.markerid); //do not remove this
+  final String markerid;
+//use this string to get the clicked marker id
+  DialogQuestion(this.markerid, this.dropdownDatas); //do not remove this
   CollectionReference mark = FirebaseFirestore.instance.collection("business");
-
+  List<DropdownData> dropdownDatas = [];
   var selectdropval = "";
-  void initState() {
-    // getBusinessData();
-  }
+
   final TextEditingController areaBudgetController = TextEditingController();
   final areaController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
-  var dropitems = [
-    //pa lagay dito sa array yung maquery na items
-    'Item 1',
-    'Item 2',
-  ];
 
   static const colortext = Color.fromARGB(255, 74, 74, 74);
 
@@ -36,6 +30,55 @@ class DialogQuestion {
                 ideal: selectdropval)));
   }
 
+  /* List<DropdownMenuItem> get dropdownItems {
+    List<DropdownMenuItem> businessItems = [];
+    FirebaseFirestore.instance
+        .collection("business")
+        .get()
+        .then((QuerySnapshot snapshot) => {
+              snapshot.docs.forEach((documents) async {
+                //var data = documents.data() as Map;
+                var data = documents.data() as Map;
+
+                businessItems.add(
+                  DropdownMenuItem(
+                    value: documents.id,
+                    child: Text(
+                      documents.id,
+                      style: const TextStyle(color: Color(0xff11b719)),
+                    ),
+                  ),
+                );
+              })
+            });
+
+    return businessItems;
+  } */
+
+  /*  List<DropdownMenuItem> businessItems = [];
+
+  Future getBusiness() async {
+    await FirebaseFirestore.instance
+        .collection("business")
+        .get()
+        .then((QuerySnapshot snapshot) => {
+              snapshot.docs.forEach((documents) async {
+                //var data = documents.data() as Map;
+                var data = documents.data() as Map;
+
+                businessItems.add(
+                  DropdownMenuItem(
+                    value: documents.id,
+                    child: Text(
+                      documents.id,
+                      style: const TextStyle(color: Color(0xff11b719)),
+                    ),
+                  ),
+                );
+              })
+            });
+  }
+ */
   Future showMyDialog(BuildContext context) {
     return showDialog(
         context: context,
@@ -67,7 +110,7 @@ class DialogQuestion {
                     const SizeBoxTen(),
 
 //DROPDOWN
-                    DropdownButtonFormField(
+                    DropdownButtonFormField<DropdownData>(
                       icon: const Icon(Icons.keyboard_arrow_down_rounded),
                       isExpanded: true,
                       decoration: InputDecoration(
@@ -102,7 +145,14 @@ class DialogQuestion {
                       dropdownColor: const Color.fromARGB(255, 230, 230, 230),
 
 //value: dropdownValue,
-                      items: dropitems
+                      items: dropdownDatas.map<DropdownMenuItem<DropdownData>>(
+                          (DropdownData data) {
+                        return DropdownMenuItem<DropdownData>(
+                          value: data,
+                          child: Text(data.nameofbusiness),
+                        );
+                      }).toList(),
+                      /*  dropitems
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                             value: value,
@@ -111,11 +161,11 @@ class DialogQuestion {
                                   color: Color.fromARGB(255, 74, 74, 74),
                                   fontSize: 14.0,
                                 )));
-                      }).toList(),
-                      onChanged: (String? newValue) {
+                      }).toList(), */
+                      onChanged: (value) {
                         setState(() {
 // selectedbusinesstype = selecteditem;
-                          selectdropval = newValue!;
+                          selectdropval = value!.nameofbusiness;
                         });
                       },
 //value: selectedbusinesstype,
