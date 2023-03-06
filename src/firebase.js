@@ -4,10 +4,13 @@ import { initializeApp } from "firebase/app";
 import {getAuth,
 createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut} from 'firebase/auth'
 
-import {getFirestore,  query,
+import {getFirestore,  query, GeoPoint,
   getDocs,
   collection,
   where,
+  doc,
+  updateDoc,
+  deleteDoc,
   addDoc,} from 'firebase/firestore'
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -153,4 +156,4 @@ export const addInFirestore = () => {
 }
 
 
-export {auth, db, registerWithEmailAndPassword,  logout, sendPasswordReset, handleUserProfile, createUserWithEmailAndPassword}
+export {auth,doc,updateDoc,deleteDoc,GeoPoint,addDoc,collection, db, registerWithEmailAndPassword,  logout, sendPasswordReset, handleUserProfile, createUserWithEmailAndPassword}

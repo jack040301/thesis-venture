@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-
-import { GoogleMap, LoadScript } from "@react-google-maps/api";
+import customMarker from '../Assets/x.png';
+import { GoogleMap, LoadScript,Marker } from "@react-google-maps/api";
+import { db, addDoc,collection,GeoPoint,updateDoc,deleteDoc,doc } from "../firebase";
 
 import {
   MDBModal,
@@ -14,6 +15,7 @@ import {
   MDBModalFooter,
 } from "mdb-react-ui-kit";
 
+
 function MapPage() {
   const center = { lat: 14.774477, lng: 121.04483 };
   const [basicModal, setBasicModal] = useState(false);
@@ -21,6 +23,10 @@ function MapPage() {
   const [coorlat, setCoorlat] = useState('');
   const [coorlong, setCoorlong] = useState('');
   const [coorname, setCoorname] = useState('');
+  const [coorland, setCoorLand] = useState('');
+  const [coorlandSize, setCoorlandSize] = useState('');
+  const [coorPopulation, setCoorPopulation] = useState('');
+  const [coorRevenue, setCoorRevenue] = useState('');
 
 
 
@@ -53,9 +59,83 @@ function MapPage() {
     height: "500px",
   };
 
+  let markers = [
+  
+    
+      { lat: 14.774477, lng: 121.04483} ,
+      { lat: 14.7804844429249, lng:121.04371547698975} ,
+      {lat: 14.784478, lng: 121.04483},
+
+   ]
+
+ 
+
+    function createKey(marker) {
+      return marker.lat + marker.lng
+    }
+
+    const addMarkers = async (e) => {
+     
+     
+      try {
+          const docRef = await addDoc(collection(db, "testmarkers"), {
+            coords: new GeoPoint(coorlat,coorlong) , 
+            place:coorname,
+            land:coorland,
+            landsize:coorlandSize,
+            population:coorPopulation,
+            revenue:coorPopulation,
+
+          });
+          console.log("Document written with ID: ", docRef.id);
+
+          //success
+        } catch (e) {
+          //error
+
+          console.error("Error adding document: ", e);
+        }
+  }
+
+  const updateMarkers = async(e) => {
+    const docRef = doc(db, 'testmarkers', '2PXWoKH70dOhqwGIIamU');
+
+    try {
+    const updateMarker = await updateDoc(docRef, {
+      coords: new GeoPoint(coorlat,coorlong) , 
+      place:coorname,
+      land:coorland,
+      landsize:coorlandSize,
+      population:coorPopulation,
+      revenue:coorPopulation,
+  });
+  
+
+            //success
+          } catch (e) {
+            //error
+  
+            console.error("Error adding document: ", e);
+          }
+  }
+
+  const deleteMarkers = async(e)=>{
+
+    try {
+
+      const delMark =  await deleteDoc(doc(db, "testmarkers", "2PXWoKH70dOhqwGIIamU"));
+          //success
+        } catch (e) {
+          //error
+
+          console.error("Error adding document: ", e);
+        }
+  }
+
+
   return (
     <>
-      <div class="content-wrapper">
+      <div className="content-wrapper">
         <div className="row">
           <div className="col-12">
             <div className="card">
@@ -88,10 +168,22 @@ function MapPage() {
                     //trigger the function
                     mapContainerStyle={containerStyle}
                     center={center}
-                    zoom={10}
-            
-                
+                    zoom={14.4746}
+                  
                   >
+
+
+          {  markers.map((mark) => (
+              <Marker options={{icon:customMarker}} onClick={(e) => handleMapClick(e)} key={createKey(mark)} position={mark} />
+            ))}
+
+      
+      
+         
+              
+                  
+                      {/*     <Marker position={{lat: 14.774477, lng: 121.04483}} options={{icon:customMarker}}/> */}
+                     
                     <></>
                   </GoogleMap>
                 </LoadScript>
@@ -141,6 +233,7 @@ function MapPage() {
                 placeholder="Land"
                 id="formControlLg"
                 type="text"
+                value={coorland} onChange={(e) => setCoorLand(e.target.value)}
                
               required
               />
@@ -149,6 +242,7 @@ function MapPage() {
                 placeholder="Land size"
                 id="formControlLg"
                 type="text"
+                value={coorlandSize} onChange={(e) => setCoorlandSize(e.target.value)}
                
               required
               />
@@ -181,6 +275,7 @@ function MapPage() {
                 placeholder="Total Population "
                 id="formControlLg"
                 type="text"
+                value={coorPopulation} onChange={(e) => setCoorPopulation(e.target.value)}
                
               required
               />
@@ -189,6 +284,7 @@ function MapPage() {
                 placeholder="Revenue"
                 id="formControlLg"
                 type="text"
+                value={coorRevenue} onChange={(e) => setCoorRevenue(e.target.value)}
                
               required
               />
@@ -196,7 +292,9 @@ function MapPage() {
             </MDBModalBody>
 
             <MDBModalFooter>
-              <MDBBtn>Add Place</MDBBtn>
+              <MDBBtn onClick={addMarkers}>Add Place</MDBBtn>
+              <MDBBtn onClick={updateMarkers}>Update Place</MDBBtn>
+              <MDBBtn onClick={deleteMarkers} >Delete Place</MDBBtn>
             </MDBModalFooter>
           </MDBModalContent>
         </MDBModalDialog>
@@ -206,3 +304,11 @@ function MapPage() {
 }
 
 export default MapPage;
+
+
+class geopoint {
+  constructor(lat, lon) {
+    this.latitude = lat;
+    this.longitude = lon;
+  }
+}
