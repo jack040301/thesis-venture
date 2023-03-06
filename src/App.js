@@ -10,7 +10,6 @@ import Sidenav from "./components/SideNav";
 import Login from "./auth/Login";
 import ProtectedRoute from "./auth/PrivateRoute";
 import { AuthContextProvider } from "./auth/context";
-/* import Home from "./Home"; */
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -18,7 +17,7 @@ function App() {
     <div>
       <AuthContextProvider>
         <Routes>
-          <Route path="/" element={<MapPage />} />
+          <Route path="/" element={<Login  />} />
 
           <Route
             path="/dashboard"
@@ -32,7 +31,7 @@ function App() {
           />
 
           <Route
-            path="/rental"
+            path="/map"
             element={
               <ProtectedRoute>
                 <Header />

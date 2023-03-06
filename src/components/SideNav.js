@@ -56,11 +56,11 @@ setUser
               </li>
 
               <li className="nav-item">
-              <Link to="/rental" className="nav-link">
+              <Link to="/map" className="nav-link">
            
                   <i className="nav-icon fas fa-building" />
 
-                  <p>Rentals</p>
+                  <p>Maps & Markers</p>
              
                 </Link>
               </li>
