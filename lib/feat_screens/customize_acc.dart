@@ -38,8 +38,8 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
   }
 
   void inputData() {
-    _lastnameController.text = widget.firstname;
-    _firstnameController.text = widget.lastname;
+    _lastnameController.text = widget.lastname;
+    _firstnameController.text = widget.firstname;
 
     // here you write the codes to input the data into firestore
   }
@@ -206,7 +206,7 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               const SizedBox(
                 height: 20.0,
               ),
-              /*   Container(
+              Container(
                 width: 350,
                 child: const Text(
                   "Confirm Password",
@@ -233,7 +233,7 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
                     borderSide: BorderSide.none,
                   ),
                 ),
-              ), */
+              ),
               const SizedBox(
                 height: 20.0,
               ),
@@ -272,15 +272,21 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
         password.isNotEmpty &&
         confirmPassword.isNotEmpty) {
       if (user != null) {
-        await _users.doc(GoogleUserStaticInfo().uid).update({
-          "firstname": _firstnameController.text,
-          "lastname": _lastnameController.text,
-        });
-        _changePassword(user, password, displayName, context, popSnackbar);
+        if (confirmPassword == password) {
+          await _users.doc(GoogleUserStaticInfo().uid).update({
+            "firstname": _firstnameController.text,
+            "lastname": _lastnameController.text,
+            "password": _passwordController.text,
+          });
+          _changePassword(user, password, displayName, context, popSnackbar);
 
-        ScaffoldMessenger.of(context).showSnackBar(
-            popSnackbar.popsnackbar("Successfully update your account"));
-        //   Navigator.of(context).popUntil((_) => count++ >= 2);
+          ScaffoldMessenger.of(context).showSnackBar(
+              popSnackbar.popsnackbar("Successfully update your account"));
+          //   Navigator.of(context).popUntil((_) => count++ >= 2);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(popSnackbar
+              .popsnackbar("Password and Confirm Password are not the same"));
+        }
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(popSnackbar.popsnackbar("User is null"));
@@ -336,4 +342,7 @@ void _changePassword(User user, String password, String displayName, context,
     ScaffoldMessenger.of(context).showSnackBar(
         popSnackbar.popsnackbar("User didnt use Google Sign in $error"));
   }); */
+  Future.delayed(const Duration(seconds: 5)).then((value) =>
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const HomePage())));
 }

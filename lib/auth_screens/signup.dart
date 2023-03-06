@@ -346,6 +346,16 @@ class _SignupWidgetState extends State<SignupWidget> {
             GestureDetector(
                 onTap: () async {
                   await Functio().signInWithGoogle();
+                  var usersCheck =
+                      await users.doc(GoogleUserStaticInfo().uid).get();
+
+                  if (!usersCheck.exists) {
+                    await users.doc(GoogleUserStaticInfo().uid).set({
+                      'firstname': GoogleUserStaticInfo().firstname,
+                      'lastname': GoogleUserStaticInfo().lastname,
+                      'email': GoogleUserStaticInfo().email,
+                    }).onError((error, stackTrace) => (error.toString()));
+                  }
                 },
                 child: Material(
                   color: const Color.fromARGB(255, 0, 110, 195),
@@ -392,6 +402,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                   'firstname': firstNameController.text.trim(),
                   'lastname': lastNameController.text.trim(),
                   'email': value.user!.email,
+                  'password': passwordController.text.trim(),
                 }));
       } else {
         //    print('Fields are empty');
