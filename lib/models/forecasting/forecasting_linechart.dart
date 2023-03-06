@@ -7,13 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:main_venture/userInfo.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+class SyncLineChart extends StatelessWidget {
+  SyncLineChart({super.key});
 
-import 'package:main_venture/models/demog_result.dart';
-
-class PointsLineChart extends StatelessWidget {
-  const PointsLineChart({super.key});
-
-  final String business;
   late TooltipBehavior _tooltipBehavior;
   late TooltipBehavior _tooltip;
   late List<_ChartData> piedata;
@@ -47,13 +43,12 @@ class PointsLineChart extends StatelessWidget {
   Widget build(BuildContext context) {
     initState();
     return Scaffold(
-
         appBar: AppBar(
-          title: const Text('Forecasting Line Chart'),
+          title: const Text('Line Chart Example'),
           centerTitle: true,
         ),
         body: FutureBuilder<DocumentSnapshot>(
-            future: forebusiness.doc(business).get(),
+            future: forebusiness.doc("Coffee Shop").get(),
             builder: (BuildContext context,
                 AsyncSnapshot<DocumentSnapshot> snapshot) {
               if (snapshot.hasError) {
@@ -192,7 +187,6 @@ class PointsLineChart extends StatelessWidget {
         yValueMapper: (ChartData data, _) => data.cost,
       )
     ];
-
   }
 }
 
@@ -212,9 +206,9 @@ class _ChartData {
 }
 
 Future showSnack(context, ChartPointDetails details) async {
-  PopSnackbar popSnackbar = PopSnackbar();
+  //PopSnackbar popSnackbar = PopSnackbar();
 
-  var a = details.dataPoints?.toList();
-  ScaffoldMessenger.of(context)
-      .showSnackBar(popSnackbar.popsnackbar(a.toString()));
+  // var a = details.dataPoints?.toList();
+  // ScaffoldMessenger.of(context)
+  // .showSnackBar(popSnackbar.popsnackbar(a.toString()));
 }

@@ -161,15 +161,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: RawMaterialButton(
                         fillColor: const Color.fromARGB(255, 0, 110, 195),
                         onPressed: () async {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            duration: const Duration(seconds: 4),
-                            content: Row(
-                              children: const <Widget>[
-                                CircularProgressIndicator(),
-                                Text("  Signing-In...")
-                              ],
-                            ),
-                          ));
+                          // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          //   duration: const Duration(seconds: 4),
+                          //   content: Row(
+                          //     children: const <Widget>[
+                          //       CircularProgressIndicator(),
+                          //       Text("  Signing-In...")
+                          //     ],
+                          //   ),
+                          // ));
 
                           await signIn();
                         },
@@ -248,9 +248,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         if (!usersCheck.exists) {
                           await users.doc(GoogleUserStaticInfo().uid).set({
-                            'firstname': 'Firstname',
-                            'lastname': 'Lastname',
-                            'email': 'Email',
+                            'firstname': GoogleUserStaticInfo().firstname,
+                            'lastname': GoogleUserStaticInfo().lastname,
+                            'email': GoogleUserStaticInfo().email,
                           }).onError((error, stackTrace) => (error.toString()));
                         }
                       },
