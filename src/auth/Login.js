@@ -1,7 +1,19 @@
+<<<<<<< HEAD:src/auth/Login.js
 import React,  {  useRef,useState } from "react";
 import { Link, useNavigate  } from "react-router-dom"
 
 import {UserAuth } from './context'
+=======
+<<<<<<< Updated upstream:src/Login.js
+import React from "react";
+import { BrowserRouter as Router, Link } from "react-router-dom";
+=======
+import React, { useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+import { UserAuth } from "./context";
+>>>>>>> Stashed changes:src/auth/Login.js
+>>>>>>> 84f274f (web important changes):src/Login.js
 /* import { useNavigate } from "react-router-dom"; */
 
 import {
@@ -17,6 +29,7 @@ import {
 } from "mdb-react-ui-kit";
 
 function Login() {
+<<<<<<< HEAD:src/auth/Login.js
 
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
@@ -25,11 +38,22 @@ function Login() {
   const { signIn } = UserAuth();
 
 
+=======
+<<<<<<< Updated upstream:src/Login.js
+=======
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const { signIn } = UserAuth();
+
+>>>>>>> 84f274f (web important changes):src/Login.js
   const [email, setEmail] = useState("");
 
   const [password, setPassword] = useState("");
 
   async function handleSubmit(e) {
+<<<<<<< HEAD:src/auth/Login.js
 
     e.preventDefault();
     setError('')
@@ -44,6 +68,20 @@ function Login() {
 
 
 
+=======
+    e.preventDefault();
+    setError("");
+    try {
+      await signIn(email, password);
+      navigate("/dashboard");
+    } catch (e) {
+      setError(e.message);
+      console.log(e.message);
+    }
+  }
+
+>>>>>>> Stashed changes:src/auth/Login.js
+>>>>>>> 84f274f (web important changes):src/Login.js
   /* let navigate = useNavigate();
   navigate("/dashboard"); */
 
@@ -67,8 +105,17 @@ function Login() {
                 id="formControlLg"
                 type="email"
                 size="lg"
+<<<<<<< HEAD:src/auth/Login.js
                 value={email} onChange={(e) => setEmail(e.target.value)}
                 required
+=======
+<<<<<<< Updated upstream:src/Login.js
+=======
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+>>>>>>> Stashed changes:src/auth/Login.js
+>>>>>>> 84f274f (web important changes):src/Login.js
               />
               <MDBInput
                 wrapperClass="mb-4 w-100"
@@ -76,8 +123,17 @@ function Login() {
                 id="formControlLg"
                 type="password"
                 size="lg"
+<<<<<<< HEAD:src/auth/Login.js
                 value={password} onChange={(e) => setPassword(e.target.value)}
               required
+=======
+<<<<<<< Updated upstream:src/Login.js
+=======
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+>>>>>>> Stashed changes:src/auth/Login.js
+>>>>>>> 84f274f (web important changes):src/Login.js
               />
 
               <MDBCheckbox
@@ -87,8 +143,25 @@ function Login() {
                 label="Remember password"
               />
               <br></br>
+<<<<<<< HEAD:src/auth/Login.js
            {/*    <MDBBtn onClick={Login} size="lg">handle user profile</MDBBtn> */}
              <MDBBtn disabled={loading}  onClick={handleSubmit} size="lg">Login</MDBBtn>
+=======
+<<<<<<< Updated upstream:src/Login.js
+
+              <MDBBtn size="lg">Login</MDBBtn>
+=======
+              {/*    <MDBBtn onClick={Login} size="lg">handle user profile</MDBBtn> */}
+              <button
+                disabled={loading}
+                onClick={handleSubmit}
+                size="lg"
+                class="btn btn-primary"
+              >
+                Login
+              </button>
+>>>>>>> Stashed changes:src/auth/Login.js
+>>>>>>> 84f274f (web important changes):src/Login.js
 
               {/* <button
               onClick={() => {

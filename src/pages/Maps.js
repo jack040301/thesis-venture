@@ -1,7 +1,25 @@
 import React, { useState, useEffect } from "react";
+<<<<<<< HEAD
 import customMarker from '../Assets/x.png';
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { db, addDoc, collection, GeoPoint, updateDoc, deleteDoc, doc, getDocs, query,onSnapshot, getMarkers } from "../firebase";
+=======
+import customMarker from "../Assets/x.png";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import {
+  db,
+  addDoc,
+  collection,
+  GeoPoint,
+  updateDoc,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  onSnapshot,
+  getMarkers,
+} from "../firebase";
+>>>>>>> 84f274f (web important changes)
 
 import {
   MDBModal,
@@ -15,13 +33,17 @@ import {
   MDBModalFooter,
 } from "mdb-react-ui-kit";
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 84f274f (web important changes)
 function MapPage() {
   const center = { lat: 14.774477, lng: 121.04483 };
   const [basicModal, setBasicModal] = useState(false);
   const [basicModal2, setBasicModal2] = useState(false);
 
   const api = process.env.REACT_APP_GOOGLE_MAPS_API_KEY; //insert the api key of the google map
+<<<<<<< HEAD
   const [coorlat, setCoorlat] = useState('');
   const [coorlong, setCoorlong] = useState('');
   const [coorname, setCoorname] = useState('');
@@ -38,6 +60,20 @@ function MapPage() {
 
   
 
+=======
+  const [coorlat, setCoorlat] = useState("");
+  const [coorlong, setCoorlong] = useState("");
+  const [coorname, setCoorname] = useState("");
+  const [coorland, setCoorLand] = useState("");
+  const [coorlandSize, setCoorlandSize] = useState("");
+  const [coorPopulation, setCoorPopulation] = useState("");
+  const [coorRevenue, setCoorRevenue] = useState("");
+  const [coorID, setCoorID] = useState("");
+  let markers = [];
+
+  const [data, setData] = useState(markers);
+
+>>>>>>> 84f274f (web important changes)
   function resetAllFilters() {
     setCoorPopulation("");
     setCoorlandSize("");
@@ -45,6 +81,7 @@ function MapPage() {
     setCoorRevenue("");
   }
 
+<<<<<<< HEAD
   const handleMapClick = (e,name) => {
     resetAllFilters();
 
@@ -65,10 +102,30 @@ function MapPage() {
 
       })
       .catch(err => console.warn(err.message));
+=======
+  const handleMapClick = (e, name) => {
+    resetAllFilters();
+
+    setCoorlat(e.latLng.lat());
+    setCoorlong(e.latLng.lng());
+    setCoorID(name);
+
+    let url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${e.latLng.lat()},${e.latLng.lng()}&key=${api}`;
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data);
+        let parts = data.results[0].address_components;
+
+        setCoorname(data.results[0].formatted_address);
+      })
+      .catch((err) => console.warn(err.message));
+>>>>>>> 84f274f (web important changes)
 
     return setBasicModal(!basicModal); //triggering the modal
   };
 
+<<<<<<< HEAD
 
   const handleMapClick2 = (e) => {
 
@@ -90,11 +147,30 @@ function MapPage() {
 
       })
       .catch(err => console.warn(err.message));
+=======
+  const handleMapClick2 = (e) => {
+    resetAllFilters();
+
+    setCoorlat(e.latLng.lat());
+    setCoorlong(e.latLng.lng());
+
+    let url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${e.latLng.lat()},${e.latLng.lng()}&key=${api}`;
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data);
+        let parts = data.results[0].address_components;
+
+        setCoorname(data.results[0].formatted_address);
+      })
+      .catch((err) => console.warn(err.message));
+>>>>>>> 84f274f (web important changes)
 
     return setBasicModal2(!basicModal2); //triggering the modal
   };
 
   const containerStyle = {
+<<<<<<< HEAD
     width: "1550px",
     height: "500px",
   };
@@ -103,6 +179,13 @@ function MapPage() {
   const addMarkers = async (e) => {
 
 
+=======
+    width: "1650px",
+    height: "1000px",
+  };
+
+  const addMarkers = async (e) => {
+>>>>>>> 84f274f (web important changes)
     try {
       const docRef = await addDoc(collection(db, "testmarkers"), {
         coords: new GeoPoint(coorlat, coorlong),
@@ -111,13 +194,19 @@ function MapPage() {
         landsize: coorlandSize,
         population: coorPopulation,
         revenue: coorPopulation,
+<<<<<<< HEAD
 
       });
      alert("Successful Adding Marker")
+=======
+      });
+      alert("Successful Adding Marker");
+>>>>>>> 84f274f (web important changes)
 
       //success
     } catch (e) {
       //error
+<<<<<<< HEAD
       alert("Error adding Marker : " , e)
 
 
@@ -127,6 +216,16 @@ function MapPage() {
 
   const updateMarkers = async (e) => {
     const docRef = doc(db, 'testmarkers', coorID);
+=======
+      alert("Error adding Marker : ", e);
+
+      console.error("Error adding document: ", e);
+    }
+  };
+
+  const updateMarkers = async (e) => {
+    const docRef = doc(db, "testmarkers", coorID);
+>>>>>>> 84f274f (web important changes)
 
     try {
       const updateMarker = await updateDoc(docRef, {
@@ -138,6 +237,7 @@ function MapPage() {
         revenue: coorPopulation,
       });
 
+<<<<<<< HEAD
         alert("Successful update Marker")
       //success
     } catch (e) {
@@ -194,6 +294,49 @@ function MapPage() {
   }
    
 
+=======
+      alert("Successful update Marker");
+      //success
+    } catch (e) {
+      //error
+      alert("Error updating marker : ", e);
+    }
+  };
+
+  const deleteMarkers = async (e) => {
+    try {
+      const delMark = await deleteDoc(doc(db, "testmarkers", coorID));
+      //success
+
+      alert("Successful delete Marker");
+    } catch (e) {
+      //error
+      alert("Error deleting marker : ", e);
+    }
+  };
+
+  const fetchPost = async () => {
+    await getDocs(collection(db, "testmarkers")).then((querySnapshot) => {
+      const newData = querySnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      const newxx = querySnapshot.docs.map((doc) => ({
+        lat: doc.data().coords._lat,
+        lng: doc.data().coords._long,
+        name: doc.id,
+      }));
+
+      setData(newxx);
+    });
+
+    return () => fetchPost();
+  };
+
+  function createKey(marker) {
+    return marker.lat + marker.lng;
+  }
+>>>>>>> 84f274f (web important changes)
 
   return (
     <>
@@ -203,9 +346,13 @@ function MapPage() {
             <div className="card">
               <div className="card-header">
                 <h3 className="card-title">Map Markers</h3>
+<<<<<<< HEAD
                 <div className="card-tools">
            
                 </div>
+=======
+                <div className="card-tools"></div>
+>>>>>>> 84f274f (web important changes)
               </div>
               <div className="card-body table-responsive p-0">
                 <LoadScript googleMapsApiKey={api}>
@@ -217,6 +364,7 @@ function MapPage() {
                     center={center}
                     zoom={14.4746}
                     onLoad={fetchPost}
+<<<<<<< HEAD
 
                   >
                     
@@ -231,6 +379,17 @@ function MapPage() {
                        <Marker options={{icon:customMarker}}    onClick={(e) => handleMapClick(e,mark.name)}
                         key={createKey(mark)} position={mark} />
                     ))}   
+=======
+                  >
+                    {data.map((mark) => (
+                      <Marker
+                        options={{ icon: customMarker }}
+                        onClick={(e) => handleMapClick(e, mark.name)}
+                        key={createKey(mark)}
+                        position={mark}
+                      />
+                    ))}
+>>>>>>> 84f274f (web important changes)
 
                     <></>
                   </GoogleMap>
@@ -241,23 +400,36 @@ function MapPage() {
         </div>
       </div>
 
+<<<<<<< HEAD
 
         <MDBModal show={basicModal2} setShow={setBasicModal2} tabIndex="-1">
         <MDBModalDialog>
+=======
+      <MDBModal show={basicModal2} setShow={setBasicModal2} tabIndex="-1">
+        <MDBModalDialog class="modal-dialog modal-dialog-centered">
+>>>>>>> 84f274f (web important changes)
           <MDBModalContent>
             <MDBModalHeader>
               <MDBModalTitle>Adding Markers Business</MDBModalTitle>
             </MDBModalHeader>
             <MDBModalBody>
+<<<<<<< HEAD
            
 
+=======
+>>>>>>> 84f274f (web important changes)
               <MDBInput
                 wrapperClass="mb-4 w-100"
                 placeholder="Coordinates Latitude"
                 id="formControlLg"
                 type="text"
+<<<<<<< HEAD
                 value={coorlat} onChange={(e) => setCoorlat(e.target.value)}
 
+=======
+                value={coorlat}
+                onChange={(e) => setCoorlat(e.target.value)}
+>>>>>>> 84f274f (web important changes)
                 required
               />
               <MDBInput
@@ -265,8 +437,13 @@ function MapPage() {
                 placeholder="Coordinates Longtitude"
                 id="formControlLg"
                 type="text"
+<<<<<<< HEAD
                 value={coorlong} onChange={(e) => setCoorlong(e.target.value)}
 
+=======
+                value={coorlong}
+                onChange={(e) => setCoorlong(e.target.value)}
+>>>>>>> 84f274f (web important changes)
                 required
               />
               <MDBInput
@@ -274,8 +451,13 @@ function MapPage() {
                 placeholder="Place"
                 id="formControlLg"
                 type="text"
+<<<<<<< HEAD
                 value={coorname} onChange={(e) => setCoorname(e.target.value)}
 
+=======
+                value={coorname}
+                onChange={(e) => setCoorname(e.target.value)}
+>>>>>>> 84f274f (web important changes)
                 required
               />
               <MDBInput
@@ -283,8 +465,13 @@ function MapPage() {
                 placeholder="Land"
                 id="formControlLg"
                 type="text"
+<<<<<<< HEAD
                 value={coorland} onChange={(e) => setCoorLand(e.target.value)}
 
+=======
+                value={coorland}
+                onChange={(e) => setCoorLand(e.target.value)}
+>>>>>>> 84f274f (web important changes)
                 required
               />
               <MDBInput
@@ -292,18 +479,31 @@ function MapPage() {
                 placeholder="Land size"
                 id="formControlLg"
                 type="text"
+<<<<<<< HEAD
                 value={coorlandSize} onChange={(e) => setCoorlandSize(e.target.value)}
 
                 required
               />
        
+=======
+                value={coorlandSize}
+                onChange={(e) => setCoorlandSize(e.target.value)}
+                required
+              />
+
+>>>>>>> 84f274f (web important changes)
               <MDBInput
                 wrapperClass="mb-4 w-100"
                 placeholder="Total Population "
                 id="formControlLg"
                 type="text"
+<<<<<<< HEAD
                 value={coorPopulation} onChange={(e) => setCoorPopulation(e.target.value)}
 
+=======
+                value={coorPopulation}
+                onChange={(e) => setCoorPopulation(e.target.value)}
+>>>>>>> 84f274f (web important changes)
                 required
               />
               <MDBInput
@@ -311,6 +511,7 @@ function MapPage() {
                 placeholder="Revenue"
                 id="formControlLg"
                 type="text"
+<<<<<<< HEAD
                 value={coorRevenue} onChange={(e) => setCoorRevenue(e.target.value)}
                 required
 
@@ -320,25 +521,59 @@ function MapPage() {
 
             <MDBModalFooter>
               <MDBBtn onClick={addMarkers}  color="success">Add Place</MDBBtn>
+=======
+                value={coorRevenue}
+                onChange={(e) => setCoorRevenue(e.target.value)}
+                required
+              />
+            </MDBModalBody>
+
+            <MDBModalFooter>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-mdb-dismiss="modal"
+              >
+                Close
+              </button>
+              <button onClick={addMarkers} class="btn btn-primary">
+                Add Place
+              </button>
+>>>>>>> 84f274f (web important changes)
             </MDBModalFooter>
           </MDBModalContent>
         </MDBModalDialog>
       </MDBModal>
+<<<<<<< HEAD
     
 
       <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
         <MDBModalDialog>
+=======
+
+      <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
+        <MDBModalDialog class="modal-dialog modal-dialog-centered">
+>>>>>>> 84f274f (web important changes)
           <MDBModalContent>
             <MDBModalHeader>
               <MDBModalTitle>Existing Markers Business</MDBModalTitle>
             </MDBModalHeader>
             <MDBModalBody>
+<<<<<<< HEAD
             <MDBInput
+=======
+              <MDBInput
+>>>>>>> 84f274f (web important changes)
                 wrapperClass="mb-4 w-100"
                 placeholder="Coordinates Latitude"
                 id="formControlLg"
                 type="text"
+<<<<<<< HEAD
                 value={coorID} onChange={(e) => setCoorID(e.target.value)}
+=======
+                value={coorID}
+                onChange={(e) => setCoorID(e.target.value)}
+>>>>>>> 84f274f (web important changes)
                 hidden
                 required
               />
@@ -348,8 +583,13 @@ function MapPage() {
                 placeholder="Coordinates Latitude"
                 id="formControlLg"
                 type="text"
+<<<<<<< HEAD
                 value={coorlat} onChange={(e) => setCoorlat(e.target.value)}
 
+=======
+                value={coorlat}
+                onChange={(e) => setCoorlat(e.target.value)}
+>>>>>>> 84f274f (web important changes)
                 required
               />
               <MDBInput
@@ -357,8 +597,13 @@ function MapPage() {
                 placeholder="Coordinates Longtitude"
                 id="formControlLg"
                 type="text"
+<<<<<<< HEAD
                 value={coorlong} onChange={(e) => setCoorlong(e.target.value)}
 
+=======
+                value={coorlong}
+                onChange={(e) => setCoorlong(e.target.value)}
+>>>>>>> 84f274f (web important changes)
                 required
               />
               <MDBInput
@@ -366,8 +611,13 @@ function MapPage() {
                 placeholder="Place"
                 id="formControlLg"
                 type="text"
+<<<<<<< HEAD
                 value={coorname} onChange={(e) => setCoorname(e.target.value)}
 
+=======
+                value={coorname}
+                onChange={(e) => setCoorname(e.target.value)}
+>>>>>>> 84f274f (web important changes)
                 required
               />
               <MDBInput
@@ -375,8 +625,13 @@ function MapPage() {
                 placeholder="Land"
                 id="formControlLg"
                 type="text"
+<<<<<<< HEAD
                 value={coorland} onChange={(e) => setCoorLand(e.target.value)}
 
+=======
+                value={coorland}
+                onChange={(e) => setCoorLand(e.target.value)}
+>>>>>>> 84f274f (web important changes)
                 required
               />
               <MDBInput
@@ -384,18 +639,31 @@ function MapPage() {
                 placeholder="Land size"
                 id="formControlLg"
                 type="text"
+<<<<<<< HEAD
                 value={coorlandSize} onChange={(e) => setCoorlandSize(e.target.value)}
 
                 required
               />
              
+=======
+                value={coorlandSize}
+                onChange={(e) => setCoorlandSize(e.target.value)}
+                required
+              />
+
+>>>>>>> 84f274f (web important changes)
               <MDBInput
                 wrapperClass="mb-4 w-100"
                 placeholder="Total Population "
                 id="formControlLg"
                 type="text"
+<<<<<<< HEAD
                 value={coorPopulation} onChange={(e) => setCoorPopulation(e.target.value)}
 
+=======
+                value={coorPopulation}
+                onChange={(e) => setCoorPopulation(e.target.value)}
+>>>>>>> 84f274f (web important changes)
                 required
               />
               <MDBInput
@@ -403,6 +671,7 @@ function MapPage() {
                 placeholder="Revenue"
                 id="formControlLg"
                 type="text"
+<<<<<<< HEAD
                 value={coorRevenue} onChange={(e) => setCoorRevenue(e.target.value)}
                 required
 
@@ -413,6 +682,29 @@ function MapPage() {
             <MDBModalFooter>
               <MDBBtn onClick={updateMarkers}  color="warning">Update Place</MDBBtn>
               <MDBBtn onClick={deleteMarkers} color="danger">Delete Place</MDBBtn>
+=======
+                value={coorRevenue}
+                onChange={(e) => setCoorRevenue(e.target.value)}
+                required
+              />
+            </MDBModalBody>
+
+            <MDBModalFooter>
+              <button
+                onClick={updateMarkers}
+                color="warning"
+                class="btn btn-primary"
+              >
+                Update Place
+              </button>
+              <button
+                onClick={deleteMarkers}
+                color="danger"
+                class="btn btn-danger"
+              >
+                Delete Place
+              </button>
+>>>>>>> 84f274f (web important changes)
             </MDBModalFooter>
           </MDBModalContent>
         </MDBModalDialog>
@@ -422,4 +714,7 @@ function MapPage() {
 }
 
 export default MapPage;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 84f274f (web important changes)
