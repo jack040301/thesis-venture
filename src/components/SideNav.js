@@ -78,7 +78,7 @@ setUser
                 </Link>
               </li>
               <li className="nav-item">
-              <Link to="/config" className="nav-link">
+              <Link to="/configuration" className="nav-link">
                   <i className="nav-icon fas fa-tools" />
                   <p>Configuration</p>
                 </Link>

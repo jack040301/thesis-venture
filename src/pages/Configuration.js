@@ -1,5 +1,4 @@
-/*  import React, { useRef, useState } from "react";
-import {UserAuth } from '../auth/context'
+ import React, { useRef, useState } from "react";
 
 
 import {
@@ -12,7 +11,7 @@ import {
   MDBValidationItem
 } from "mdb-react-ui-kit";
 
-function App() {
+function Config() {
   const [formValue, setFormValue] = useState({
     email: "",
     password: "",
@@ -20,10 +19,10 @@ function App() {
     
   });
 
-  const { createUser, user } = UserAuth();
+//  const { createUser, user } = UserAuth();
 
 
-  async function handleSubmit(e) {
+  /* async function handleSubmit(e) {
 
     e.preventDefault();
     setError('')
@@ -51,7 +50,7 @@ function App() {
       setError(e.message)
       console.log(e.message)
     }
-  };
+  }; */
 
 
   const onChange = (e) => {
@@ -142,7 +141,7 @@ function App() {
                   </MDBCol>
 
                   <MDBCol md="2" size="12">
-                    <MDBBtn type="submit" onClick={handleSubmit}>Save Changes</MDBBtn>
+                    <MDBBtn type="submit" >Save Changes</MDBBtn>
                   </MDBCol>
                 </MDBRow>
               
@@ -156,5 +155,5 @@ function App() {
   );
 }
 
-export default App;
- */
+export default Config;
+ 

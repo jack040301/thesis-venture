@@ -64,7 +64,7 @@ function App() {
             }
           />
           <Route
-            path="/config"
+            path="/configuration"
             element={
               <ProtectedRoute>
                 {" "}
