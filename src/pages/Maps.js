@@ -191,6 +191,17 @@ function MapPage() {
    return marker.lat + marker.lng
 
   }
+
+  function setmodalclose2(){
+
+    return setBasicModal2(!basicModal2); //triggering the modal
+    
+  }
+  function setmodalclose(){
+
+    return setBasicModal(!basicModal); //triggering the modal
+    
+  }
    
 
   useEffect(()=>{
@@ -331,6 +342,7 @@ function MapPage() {
                 type="button"
                 class="btn btn-secondary"
                 data-mdb-dismiss="modal"
+                onClick={setmodalclose2}
               >
                 Close
               </button>
@@ -427,6 +439,14 @@ function MapPage() {
             </MDBModalBody>
 
             <MDBModalFooter>
+            <button
+                type="button"
+                class="btn btn-secondary"
+                data-mdb-dismiss="modal"
+                onClick={setmodalclose}
+              >
+                Close
+              </button>
               <button
                 onClick={updateMarkers}
                 color="warning"
