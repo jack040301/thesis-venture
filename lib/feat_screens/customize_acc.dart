@@ -17,6 +17,9 @@ class CustomizeAccScreen extends StatefulWidget {
   State<CustomizeAccScreen> createState() => _CustomizeAccScreenState();
 }
 
+final CollectionReference _users =
+    FirebaseFirestore.instance.collection('users');
+
 class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
   final _firstnameController = TextEditingController();
   final _lastnameController = TextEditingController();
@@ -26,9 +29,6 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
   final _confirmPasswordController = TextEditingController();
 
   final FirebaseAuth auth = FirebaseAuth.instance;
-
-  final CollectionReference _users =
-      FirebaseFirestore.instance.collection('users');
 
   @override
   void initState() {
@@ -169,7 +169,7 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               Container(
                 width: 350,
                 child: const Text(
-                  "Password",
+                  "New Password",
                   style: TextStyle(
                     height: 1.5,
                     fontSize: 18,
@@ -273,15 +273,16 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
         confirmPassword.isNotEmpty) {
       if (user != null) {
         if (confirmPassword == password) {
-          await _users.doc(GoogleUserStaticInfo().uid).update({
-            "firstname": _firstnameController.text,
-            "lastname": _lastnameController.text,
-            "password": _passwordController.text,
-          });
-          _changePassword(user, password, displayName, context, popSnackbar);
+          // await _users.doc(GoogleUserStaticInfo().uid).update({
+          //   "firstname": _firstnameController.text,
+          //   "lastname": _lastnameController.text,
+          //   //"password": _passwordController.text,
+          // });
+          _changePassword(user, password, confirmPassword, lname, fname,
+              displayName, context, popSnackbar);
 
-          ScaffoldMessenger.of(context).showSnackBar(
-              popSnackbar.popsnackbar("Successfully update your account"));
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //     popSnackbar.popsnackbar("Successfully update your account"));
           //   Navigator.of(context).popUntil((_) => count++ >= 2);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(popSnackbar
@@ -322,11 +323,38 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
   }
 }
 
-void _changePassword(User user, String password, String displayName, context,
+void _changePassword(
+    User user,
+    String password,
+    String confirmPassword,
+    String lname,
+    String fname,
+    String displayName,
+    context,
     PopSnackbar popSnackbar) async {
   user.updatePassword(password).then((_) {
+    PopSnackbar popSnackbar = PopSnackbar();
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //     popSnackbar.popsnackbar("Successfully update the password"));
+
+    //if (confirmPassword == password) {
+    _users.doc(GoogleUserStaticInfo().uid).update({
+      "firstname": fname,
+      "lastname": lname,
+      "password": password,
+    });
+
     ScaffoldMessenger.of(context).showSnackBar(
-        popSnackbar.popsnackbar("Successfully update the password"));
+        popSnackbar.popsnackbar("Successfully update your account"));
+    //   Navigator.of(context).popUntil((_) => count++ >= 2);
+    // } else {
+    //   ScaffoldMessenger.of(context).showSnackBar(popSnackbar
+    //       .popsnackbar("Password and Confirm Password are not the same"));
+    // }
+
+    Future.delayed(const Duration(seconds: 4)).then((value) =>
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const HomePage())));
   }).catchError((error) {
     ScaffoldMessenger.of(context).showSnackBar(
         popSnackbar.popsnackbar("Password cant be changed due to $error"));
@@ -342,7 +370,4 @@ void _changePassword(User user, String password, String displayName, context,
     ScaffoldMessenger.of(context).showSnackBar(
         popSnackbar.popsnackbar("User didnt use Google Sign in $error"));
   }); */
-  Future.delayed(const Duration(seconds: 5)).then((value) =>
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const HomePage())));
 }
