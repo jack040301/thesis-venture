@@ -1,5 +1,4 @@
- import React, { useRef, useState } from "react";
-
+import React, { useRef, useState } from "react";
 
 import {
   MDBBtn,
@@ -8,7 +7,7 @@ import {
   MDBCol,
   MDBInput,
   MDBValidation,
-  MDBValidationItem
+  MDBValidationItem,
 } from "mdb-react-ui-kit";
 
 function Config() {
@@ -16,11 +15,9 @@ function Config() {
     email: "",
     password: "",
     confirmpass: "",
-    
   });
 
-//  const { createUser, user } = UserAuth();
-
+  //  const { createUser, user } = UserAuth();
 
   /* async function handleSubmit(e) {
 
@@ -52,7 +49,6 @@ function Config() {
     }
   }; */
 
-
   const onChange = (e) => {
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
   };
@@ -62,15 +58,15 @@ function Config() {
       <div className="content-wrapper">
         <div className="row">
           <div className="col-12">
-            <div className="card">
-              <div className="card-header">
-                <h3 className="card-title">Configuration</h3>
-                <div className="card-tools">
-                  <div
-                    className="input-group input-group-sm"
-                    style={{ width: 300 }}
-                  >
-                    <input
+            <div className="card" style={{ height: 500 }}>
+              {/* <div className="card-header"> */}
+              <h3 className="card-title"> Configuration</h3>
+              <div className="card-tools">
+                <div
+                  className="input-group input-group-sm"
+                  style={{ width: 300 }}
+                >
+                  {/* <input
                       type="text"
                       name="table_search"
                       className="form-control float-right"
@@ -80,14 +76,13 @@ function Config() {
                       <button type="submit" className="btn btn-default">
                         <i className="fas fa-search" />
                       </button>
-                    </div>
-                  </div>
+                    </div> */}
                 </div>
               </div>
-              <MDBContainer fluid className='row g-3'>
-      
+              {/* </div> */}
+              <div fluid className="row lg-3">
                 <div className="d-flex align-items-center justify-content-center">
-                  <MDBCol lg="4" md="6" className="mb-4">
+                  <MDBCol md="8" className="mb-4">
                     <img
                       src="https://p.kindpng.com/picc/s/568-5680678_bandori-bangdream-mocaaoba-aobamoca-anime-icon-.png"
                       className="img-fluid rounded-circle"
@@ -99,8 +94,7 @@ function Config() {
                   tag="form"
                   className="d-flex justify-content-center align-items-center h-100"
                 >
-                  <MDBCol md="4">
-                
+                  <MDBCol md="8">
                     <MDBInput
                       value={formValue.email}
                       name="email"
@@ -108,45 +102,49 @@ function Config() {
                       id="validationCustom01"
                       required
                       type="email"
-                      label="Email"
+                      /* label="Email" */
+                      placeholder="Email"
+                      style={{ marginBottom: 10 }}
                     />
-                   
                   </MDBCol>
-                  <MDBCol md="4">
-                
-                    <MDBInput
+
+                  <MDBCol md="8">
+                    <input
                       value={formValue.password}
                       name="password"
                       onChange={onChange}
                       id="validationCustom02"
                       required
                       type="password"
-                      label="Password"
+                      /*  label="Password" */
+                      placeholder="Password"
+                      class="form-control"
+                      style={{ marginBottom: 10 }}
                     />
-                   
                   </MDBCol>
 
-                  <MDBCol md="6">
-                
-                    <MDBInput
+                  <MDBCol md="8">
+                    <input
                       value={formValue.confirmpass}
                       name="confirmpass"
                       onChange={onChange}
                       id="validationCustom03"
                       required
                       type="password"
-                      label="Confirm Password"
+                      /*  label="Confirm Password" */
+                      placeholder="Confirm Password"
+                      class="form-control"
+                      style={{ marginBottom: 10 }}
                     />
-                   
                   </MDBCol>
 
-                  <MDBCol md="2" size="12">
-                    <MDBBtn type="submit" >Save Changes</MDBBtn>
+                  <MDBCol md="8">
+                    <button type="submit" class="btn btn-primary">
+                      Save Changes
+                    </button>
                   </MDBCol>
                 </MDBRow>
-              
-              </MDBContainer>
-            
+              </div>
             </div>
           </div>
         </div>
@@ -156,4 +154,3 @@ function Config() {
 }
 
 export default Config;
- 

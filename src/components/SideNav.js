@@ -8,32 +8,20 @@ import { Link } from "react-router-dom";
 
 } from "mdb-react-ui-kit"; */
 
-
-
-export default function SideNav({
-user,
-setAuthState,
-setUser
-}) {
-
-
-
+export default function SideNav({ user, setAuthState, setUser }) {
   const signOutHandler = () => {
     signOut(auth)
-    .then(() => {
+      .then(() => {
         setUser(null);
-        setAuthState('login');
-    })
-    .catch((err) => console.log(err));
-}
-
+        setAuthState("login");
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div>
       <aside className="main-sidebar sidebar-dark-primary elevation-4">
-      <Link to="/dashboard" className="brand-link">
-
-       
+        <Link to="/dashboard" className="brand-link">
           <img
             src="dist/img/Venture.png"
             alt="AdminLTE Logo"
@@ -50,37 +38,35 @@ setUser
               role="menu"
               data-accordion="false"
             >
-              <li className="nav-item menu-open">
-                <a href="/dashboard" className="nav-link active">
+              <li className="nav-item">
+                <a href="/dashboard" className="nav-link">
                   <i className="nav-icon fas fa-tachometer-alt" />
                   <p>Dashboard</p>
                 </a>
               </li>
 
               <li className="nav-item">
-              <Link to="/map" className="nav-link">
-   
+                <Link to="/map" className="nav-link">
                   <i className="nav-icon fas fa-building" />
 
                   <p>Maps & Markers</p>
-             
                 </Link>
               </li>
 
-              <li className="nav-item">
-              <Link to="/user" className="nav-link">
+              {/* <li className="nav-item">
+                <Link to="/user" className="nav-link">
                   <i className="nav-icon fas fa-user" />
                   <p>Users</p>
-       </Link>
-              </li>
-              <li className="nav-item">
-              <Link to="/request" className="nav-link">
+                </Link>
+              </li> */}
+              {/* <li className="nav-item">
+                <Link to="/request" className="nav-link">
                   <i className="nav-icon fas fa-list" />
                   <p>Requests</p>
                 </Link>
-              </li>
+              </li> */}
               <li className="nav-item">
-              <Link to="/configuration" className="nav-link">
+                <Link to="/configuration" className="nav-link">
                   <i className="nav-icon fas fa-tools" />
                   <p>Configuration</p>
                 </Link>
@@ -97,6 +83,4 @@ setUser
       </aside>
     </div>
   );
-};
-
-
+}
