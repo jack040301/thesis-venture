@@ -1,14 +1,17 @@
 // Import the functions you need from the SDKs you need
+
 import { initializeApp } from "firebase/app";
+
 
 import {getAuth,
 createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut} from 'firebase/auth'
 
 import {getFirestore,  query, GeoPoint,
-  getDocs,
   collection,
   where,
+onSnapshot,
   doc,
+  getDocs,
   updateDoc,
   deleteDoc,
   addDoc,} from 'firebase/firestore'
@@ -156,4 +159,43 @@ export const addInFirestore = () => {
 }
 
 
-export {auth,doc,updateDoc,deleteDoc,GeoPoint,addDoc,collection, db, registerWithEmailAndPassword,  logout, sendPasswordReset, handleUserProfile, createUserWithEmailAndPassword}
+
+
+
+
+
+/* seEffect(() => {
+  const q = query(collection(db, "testmarkers"));
+  const unsubscribe = onSnapshot(q, (querySnapshot) => {
+  
+    querySnapshot.forEach((doc) => {
+      dataset.push({
+        ...doc.data(),
+        key: doc.id,
+        lat: doc.data().coords.latitude,
+        long : doc.data().coords.longitude
+      });
+      
+      //setData(dataset);
+
+      for (var i = 0; i < dataset.length; i++){
+        // look for the entry with a matching `code` value
+           // we found it
+          // obj[i].name is the matched result
+       marks.push({lat:doc.data().coords.latitude,lng:doc.data().coords.longitude})
+                                                                                                                                                                                                                                                                                                                                                                                                                                          
+
+      }
+
+
+      });
+  
+      return () => unsubscribe();
+        
+  });
+
+}, [] );
+ */
+
+
+export {auth,doc,query,getDocs,onSnapshot,updateDoc,deleteDoc,GeoPoint,addDoc,collection, db, registerWithEmailAndPassword,  logout, sendPasswordReset, handleUserProfile, createUserWithEmailAndPassword}
