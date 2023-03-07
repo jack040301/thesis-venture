@@ -194,6 +194,22 @@ function MapPage() {
   }
    
 
+  useEffect(()=>{
+    const collect = collection(db,"testmarkers")
+    const unsub = onSnapshot(collect, snapshot =>{
+
+      const markreal = snapshot.docs.map(doc=> ({ lat : doc.data().coords._lat, lng: doc.data().coords._long, name:doc.id}
+      ))
+    //  console.log(markreal)
+
+     setData(markreal)
+
+    })
+
+    return () =>{
+        unsub()
+    }
+  },[]) 
 
   return (
     <>
@@ -212,7 +228,6 @@ function MapPage() {
                   <GoogleMap
                     class="map"
                     onClick={(e) => handleMapClick2(e)}
-                    //trigger the function
                     mapContainerStyle={containerStyle}
                     center={center}
                     zoom={14.4746}
@@ -220,11 +235,6 @@ function MapPage() {
 
                   >
                     
-
-     
-
-            
-
                { 
               data.map( (mark) => (
                                         
