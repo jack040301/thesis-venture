@@ -298,6 +298,10 @@ class _LoginScreenState extends State<LoginScreen> {
           });
           // logOut();
         }
+
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => const HomePage(),
+        ));
       } else if (_emailController.text.isNotEmpty &
           _passwordController.text.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(sSnackBar);
@@ -324,9 +328,15 @@ class _LoginScreenState extends State<LoginScreen> {
               TextButton(
                 child: const Text('Got it'),
                 onPressed: () {
-                  Navigator.of(context).pop();
-                  _emailController.clear();
-                  _passwordController.clear();
+                  // const LoginScreen();
+
+                  // Navigator.of(context).pop();
+
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const LoginScreen(),
+                  ));
+                  // _emailController.clear();
+                  // _passwordController.clear();
                 },
               ),
             ],

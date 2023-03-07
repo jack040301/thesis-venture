@@ -101,7 +101,7 @@ class PopSnackbar extends FunctionAuthentication {
         return AlertDialog(
           title: const Text("LOGOUT"),
           content: const SingleChildScrollView(
-            child: Text("Are you sure to Logout?"),
+            child: Text("Are you sure you want to logout?"),
           ),
           actions: <Widget>[
             TextButton(

@@ -345,7 +345,7 @@ void _changePassword(
     });
 
     ScaffoldMessenger.of(context).showSnackBar(
-        popSnackbar.popsnackbar("Successfully update your account"));
+        popSnackbar.popsnackbar("Successfully updated your account"));
     //   Navigator.of(context).popUntil((_) => count++ >= 2);
     // } else {
     //   ScaffoldMessenger.of(context).showSnackBar(popSnackbar
