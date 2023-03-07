@@ -1,7 +1,7 @@
 import React from "react";
-import { signOut } from 'firebase/auth';
-import { auth } from '../firebase';
-import { Link } from 'react-router-dom'
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+import { Link } from "react-router-dom";
 
 /* import {
   MDBBtn,
@@ -32,6 +32,8 @@ setUser
     <div>
       <aside className="main-sidebar sidebar-dark-primary elevation-4">
       <Link to="/dashboard" className="brand-link">
+
+       
           <img
             src="dist/img/Venture.png"
             alt="AdminLTE Logo"
@@ -57,7 +59,7 @@ setUser
 
               <li className="nav-item">
               <Link to="/map" className="nav-link">
-           
+   
                   <i className="nav-icon fas fa-building" />
 
                   <p>Maps & Markers</p>
@@ -85,9 +87,8 @@ setUser
               </li>
               <li className="nav-item">
                 <a href="#" className="nav-link">
-
-                 <button onClick={signOutHandler}  size="lg">Logout</button>
-
+                  <i className="nav-icon fas fa-times" />
+                  <p onClick={signOutHandler}>Logout</p>
                 </a>
               </li>
             </ul>
@@ -97,3 +98,5 @@ setUser
     </div>
   );
 };
+
+

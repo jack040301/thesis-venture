@@ -1,24 +1,18 @@
-import React, {useContext} from 'react'
 
-import { signOut } from 'firebase/auth';
-import { auth } from '../firebase';
+import React, { useContext } from "react";
 
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
 
-
-export default function Dashboard({
-  user,
-  setAuthState,
-  setUser
-}) {
-
+export default function Dashboard({ user, setAuthState, setUser }) {
   const signOutHandler = () => {
-      signOut(auth)
+    signOut(auth)
       .then(() => {
-          setUser(null);
-          setAuthState('login');
+        setUser(null);
+        setAuthState("login");
       })
       .catch((err) => console.log(err));
-  }
+  };
 
 
   return (
@@ -48,7 +42,7 @@ export default function Dashboard({
                   </a>
                 </div>
               </div>
-              <div className="col-lg-3 col-6">
+              {/* <div className="col-lg-3 col-6">
                 <div className="small-box bg-success">
                   <div className="inner">
                     <h3>
@@ -63,8 +57,8 @@ export default function Dashboard({
                     More info <i className="fas fa-arrow-circle-right" />
                   </a>
                 </div>
-              </div>
-              <div className="col-lg-3 col-6">
+              </div> */}
+              {/* <div className="col-lg-3 col-6">
                 <div className="small-box bg-warning">
                   <div className="inner">
                     <h3>44</h3>
@@ -77,12 +71,12 @@ export default function Dashboard({
                     More info <i className="fas fa-arrow-circle-right" />
                   </a>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </section>
       </div>
     </div>
   );
-}
+};
 

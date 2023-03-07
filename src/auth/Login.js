@@ -1,7 +1,8 @@
-import React,  {  useRef,useState } from "react";
-import { Link, useNavigate  } from "react-router-dom"
+import React, { useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-import {UserAuth } from './context'
+import { UserAuth } from "./context";
+
 /* import { useNavigate } from "react-router-dom"; */
 
 import {
@@ -30,6 +31,7 @@ function Login() {
   const [password, setPassword] = useState("");
 
   async function handleSubmit(e) {
+
 
     e.preventDefault();
     setError('')
@@ -67,7 +69,8 @@ function Login() {
                 id="formControlLg"
                 type="email"
                 size="lg"
-                value={email} onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
               <MDBInput
@@ -89,7 +92,6 @@ function Login() {
               <br></br>
            {/*    <MDBBtn onClick={Login} size="lg">handle user profile</MDBBtn> */}
              <MDBBtn disabled={loading}  onClick={handleSubmit} size="lg">Login</MDBBtn>
-
               {/* <button
               onClick={() => {
                   navigate("/dashboard");

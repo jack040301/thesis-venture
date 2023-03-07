@@ -15,7 +15,6 @@ import {
   MDBModalFooter,
 } from "mdb-react-ui-kit";
 
-
 function MapPage() {
   const center = { lat: 14.774477, lng: 121.04483 };
   const [basicModal, setBasicModal] = useState(false);
@@ -95,8 +94,8 @@ function MapPage() {
   };
 
   const containerStyle = {
-    width: "1550px",
-    height: "500px",
+    width: "1650px",
+    height: "1000px",
   };
 
 
@@ -266,8 +265,8 @@ function MapPage() {
                 placeholder="Coordinates Latitude"
                 id="formControlLg"
                 type="text"
-                value={coorlat} onChange={(e) => setCoorlat(e.target.value)}
-
+                value={coorlat}
+                onChange={(e) => setCoorlat(e.target.value)}
                 required
               />
               <MDBInput
@@ -275,8 +274,8 @@ function MapPage() {
                 placeholder="Coordinates Longtitude"
                 id="formControlLg"
                 type="text"
-                value={coorlong} onChange={(e) => setCoorlong(e.target.value)}
-
+                value={coorlong}
+                onChange={(e) => setCoorlong(e.target.value)}
                 required
               />
               <MDBInput
@@ -284,8 +283,8 @@ function MapPage() {
                 placeholder="Place"
                 id="formControlLg"
                 type="text"
-                value={coorname} onChange={(e) => setCoorname(e.target.value)}
-
+                value={coorname}
+                onChange={(e) => setCoorname(e.target.value)}
                 required
               />
               <MDBInput
@@ -293,8 +292,8 @@ function MapPage() {
                 placeholder="Land"
                 id="formControlLg"
                 type="text"
-                value={coorland} onChange={(e) => setCoorLand(e.target.value)}
-
+                value={coorland}
+                onChange={(e) => setCoorLand(e.target.value)}
                 required
               />
               <MDBInput
@@ -302,18 +301,18 @@ function MapPage() {
                 placeholder="Land size"
                 id="formControlLg"
                 type="text"
-                value={coorlandSize} onChange={(e) => setCoorlandSize(e.target.value)}
-
+                value={coorlandSize}
+                onChange={(e) => setCoorlandSize(e.target.value)}
                 required
               />
-       
+
               <MDBInput
                 wrapperClass="mb-4 w-100"
                 placeholder="Total Population "
                 id="formControlLg"
                 type="text"
-                value={coorPopulation} onChange={(e) => setCoorPopulation(e.target.value)}
-
+                value={coorPopulation}
+                onChange={(e) => setCoorPopulation(e.target.value)}
                 required
               />
               <MDBInput
@@ -321,34 +320,42 @@ function MapPage() {
                 placeholder="Revenue"
                 id="formControlLg"
                 type="text"
-                value={coorRevenue} onChange={(e) => setCoorRevenue(e.target.value)}
+                value={coorRevenue}
+                onChange={(e) => setCoorRevenue(e.target.value)}
                 required
-
               />
-
             </MDBModalBody>
 
             <MDBModalFooter>
-              <MDBBtn onClick={addMarkers}  color="success">Add Place</MDBBtn>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-mdb-dismiss="modal"
+              >
+                Close
+              </button>
+              <button onClick={addMarkers} class="btn btn-primary">
+                Add Place
+              </button>
             </MDBModalFooter>
           </MDBModalContent>
         </MDBModalDialog>
       </MDBModal>
-    
 
       <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
-        <MDBModalDialog>
+        <MDBModalDialog class="modal-dialog modal-dialog-centered">
           <MDBModalContent>
             <MDBModalHeader>
               <MDBModalTitle>Existing Markers Business</MDBModalTitle>
             </MDBModalHeader>
             <MDBModalBody>
-            <MDBInput
+              <MDBInput
                 wrapperClass="mb-4 w-100"
                 placeholder="Coordinates Latitude"
                 id="formControlLg"
                 type="text"
-                value={coorID} onChange={(e) => setCoorID(e.target.value)}
+                value={coorID}
+                onChange={(e) => setCoorID(e.target.value)}
                 hidden
                 required
               />
@@ -358,8 +365,8 @@ function MapPage() {
                 placeholder="Coordinates Latitude"
                 id="formControlLg"
                 type="text"
-                value={coorlat} onChange={(e) => setCoorlat(e.target.value)}
-
+                value={coorlat}
+                onChange={(e) => setCoorlat(e.target.value)}
                 required
               />
               <MDBInput
@@ -367,8 +374,8 @@ function MapPage() {
                 placeholder="Coordinates Longtitude"
                 id="formControlLg"
                 type="text"
-                value={coorlong} onChange={(e) => setCoorlong(e.target.value)}
-
+                value={coorlong}
+                onChange={(e) => setCoorlong(e.target.value)}
                 required
               />
               <MDBInput
@@ -376,8 +383,8 @@ function MapPage() {
                 placeholder="Place"
                 id="formControlLg"
                 type="text"
-                value={coorname} onChange={(e) => setCoorname(e.target.value)}
-
+                value={coorname}
+                onChange={(e) => setCoorname(e.target.value)}
                 required
               />
               <MDBInput
@@ -385,8 +392,8 @@ function MapPage() {
                 placeholder="Land"
                 id="formControlLg"
                 type="text"
-                value={coorland} onChange={(e) => setCoorLand(e.target.value)}
-
+                value={coorland}
+                onChange={(e) => setCoorLand(e.target.value)}
                 required
               />
               <MDBInput
@@ -394,18 +401,18 @@ function MapPage() {
                 placeholder="Land size"
                 id="formControlLg"
                 type="text"
-                value={coorlandSize} onChange={(e) => setCoorlandSize(e.target.value)}
-
+                value={coorlandSize}
+                onChange={(e) => setCoorlandSize(e.target.value)}
                 required
               />
-             
+
               <MDBInput
                 wrapperClass="mb-4 w-100"
                 placeholder="Total Population "
                 id="formControlLg"
                 type="text"
-                value={coorPopulation} onChange={(e) => setCoorPopulation(e.target.value)}
-
+                value={coorPopulation}
+                onChange={(e) => setCoorPopulation(e.target.value)}
                 required
               />
               <MDBInput
@@ -413,16 +420,27 @@ function MapPage() {
                 placeholder="Revenue"
                 id="formControlLg"
                 type="text"
-                value={coorRevenue} onChange={(e) => setCoorRevenue(e.target.value)}
+                value={coorRevenue}
+                onChange={(e) => setCoorRevenue(e.target.value)}
                 required
-
               />
-
             </MDBModalBody>
 
             <MDBModalFooter>
-              <MDBBtn onClick={updateMarkers}  color="warning">Update Place</MDBBtn>
-              <MDBBtn onClick={deleteMarkers} color="danger">Delete Place</MDBBtn>
+              <button
+                onClick={updateMarkers}
+                color="warning"
+                class="btn btn-primary"
+              >
+                Update Place
+              </button>
+              <button
+                onClick={deleteMarkers}
+                color="danger"
+                class="btn btn-danger"
+              >
+                Delete Place
+              </button>
             </MDBModalFooter>
           </MDBModalContent>
         </MDBModalDialog>
@@ -432,4 +450,3 @@ function MapPage() {
 }
 
 export default MapPage;
-
