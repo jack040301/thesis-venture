@@ -20,10 +20,10 @@ class _LandingPageScreenState extends State<LandingPageScreen> {
             backgroundColor: Colors.white,
             foregroundColor: Colors.black,
             mini: true,
-            child: Icon(Icons.person),
+            child: const Icon(Icons.person),
             onPressed: () {},
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           FloatingActionButton(
@@ -31,7 +31,7 @@ class _LandingPageScreenState extends State<LandingPageScreen> {
             backgroundColor: Colors.white,
             foregroundColor: Colors.black,
             mini: true,
-            child: Icon(Icons.house),
+            child: const Icon(Icons.house),
             onPressed: () {},
           ),
         ],
@@ -45,23 +45,21 @@ class _LandingPageScreenState extends State<LandingPageScreen> {
             children: [
               Container(
                 margin: const EdgeInsets.fromLTRB(20, 630, 20, 0),
-                child: TextField(
+                child: const TextField(
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.fromLTRB(20, 10, 30, 10),
                     prefixIcon: Icon(Icons.search,
-                        color: const Color.fromARGB(255, 102, 103, 105)),
+                        color: Color.fromARGB(255, 102, 103, 105)),
                     hintText: "Search an area around Caloocan",
                     hintStyle: TextStyle(fontSize: 14.0),
                     filled: true,
                     fillColor: Colors.white,
                     enabledBorder: OutlineInputBorder(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(20.0)),
+                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
                       borderSide: BorderSide(color: Colors.transparent),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(20.0)),
+                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
                       borderSide: BorderSide(color: Colors.transparent),
                     ),
                   ),

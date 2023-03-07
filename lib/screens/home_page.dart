@@ -1,30 +1,21 @@
 import 'dart:async';
 import 'dart:collection';
-import 'package:firebase_core/firebase_core.dart';
 //import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:custom_marker/marker_icon.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:main_venture/feat_screens/dialogbutton.dart';
-import 'package:main_venture/feat_screens/prediction_dialog.dart';
+import 'package:main_venture/feat_screens/Dialogbutton.dart';
+import 'package:main_venture/feat_screens/layer_simulation.dart';
 import 'package:main_venture/feat_screens/profilenav.dart';
 import 'package:main_venture/models/auto_complete_results.dart';
 import 'package:main_venture/providers/search_places.dart';
 import 'package:main_venture/services/maps_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:geocoding/geocoding.dart';
-
-import '../feat_screens/widgset.dart';
-
-//Geocoder package is deprecated
-//import 'package:flutter_geocoder/geocoder.dart';
-
-//import 'dart:ui' as ui;
+import '../userInfo.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -33,14 +24,18 @@ class HomePage extends ConsumerStatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends ConsumerState<HomePage> {
+class _HomePageState extends ConsumerState<HomePage> with Userinformation {
   final Completer<GoogleMapController> _controller = Completer();
+  final Future<bool> _mapFuture =
+      Future.delayed(const Duration(milliseconds: 1000), () => true);
+
+  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
 
 //Debounce to throttle async calls during search
   Timer? _debounce;
 
 // toggling Ui as we need
-  bool searchToggle = true;
+  bool searchToggle = false;
 //
 //  bool searchToggle = false;
   bool radiusSlider = false;
@@ -50,23 +45,38 @@ class _HomePageState extends ConsumerState<HomePage> {
   // bool getmarker = true;
 
 // Markers set
-  Set<Marker> _markers = Set<Marker>();
-  Set<Marker> allmarkers = HashSet<Marker>();
+  Set<Marker> allmarkers = <Marker>{};
+  Set<Marker> _markers = <Marker>{};
+
+  // Set<Marker> allmarkers = HashSet<Marker>();
+
+  Map<MarkerId, Marker> _mapmarker = <MarkerId, Marker>{};
+
   //Map<MarkerId, Marker> _markerss = <MarkerId, Marker>{};
   Set<Polyline> _polylines = Set<Polyline>();
   int markerIdCounter = 1;
   int polylineIdCounter = 1;
-
+  String assre = '';
 // Text Editing Controllers
   TextEditingController searchController = TextEditingController();
   final TextEditingController _originController = TextEditingController();
   final TextEditingController _destinationController = TextEditingController();
-
+  FirebaseFirestore database =
+      FirebaseFirestore.instance; //instance of firestore
 // initial map position on load
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(14.774477, 121.04483),
     zoom: 14.4746,
   );
+
+  @override
+  void initState() {
+    userinfoFirestore();
+    addCustomIconMarker();
+    getBusiness();
+    //run the function before the map loads
+    super.initState();
+  }
 
   void _setMarker(point) {
     var counter = markerIdCounter++;
@@ -93,26 +103,75 @@ class _HomePageState extends ConsumerState<HomePage> {
         points: points.map((e) => LatLng(e.latitude, e.longitude)).toList()));
   }
 
-//Show marker from the firestore database
-  getMarkerData() async {
+  //converting custom icon marker to bytes
+  void addCustomIconMarker() {
+    String assetpicture = "assets/images/icons/venture.png";
+
+    BitmapDescriptor.fromAssetImage(const ImageConfiguration(), assetpicture)
+        .then((icon) => setState(() {
+              markerIcon = icon;
+            }));
+  }
+
+  List<DropdownData> dropdownDatas = [];
+  Future getBusiness() async {
     await FirebaseFirestore.instance
+        .collection("business")
+        .get()
+        .then((QuerySnapshot snapshot) => {
+              snapshot.docs.forEach((documents) async {
+                //var data = documents.data() as Map;
+
+                dropdownDatas.add(DropdownData(nameofbusiness: documents.id));
+              })
+            });
+  }
+
+  //this is the function for getting the users info in firestore
+  Future userinfoFirestore() async {
+/*     Stream<DocumentSnapshot> usersStream = FirebaseFirestore.instance
+        .collection('users')
+        .doc(GoogleUserStaticInfo().uid)
+        .snapshots();
+
+    usersStream.map(
+      (DocumentSnapshot doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        UserInfofirstname = data['firstname'];
+        UserInfolastname = data['lastname'];
+      },
+    ); */
+
+    final docRef = database.collection("users").doc(GoogleUserStaticInfo().uid);
+    docRef.get().then(
+      (DocumentSnapshot doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        // ...
+        UserInfofirstname = data['firstname'];
+        UserInfolastname = data['lastname'];
+      },
+      onError: (e) => print("Error getting document: $e"),
+    );
+  }
+
+//Show marker from the firestore database
+/*   Future getMarkerData() async {
+    await database
         .collection("markers")
         .get()
-        .then((QuerySnapshot querySnapshot) => {
-              querySnapshot.docs.forEach((documents) async {
+        .then((QuerySnapshot snapshot) => {
+              snapshot.docs.forEach((documents) async {
                 var data = documents.data() as Map;
+
                 allmarkers.add(Marker(
                     onTap: () async {
-                      await DialogQuestion(data["id"]).showMyDialog(context);
+                      await DialogQuestion(documents.id).showMyDialog(context);
                     },
                     infoWindow: InfoWindow(
                       title: data["place"],
                     ),
-                    markerId: MarkerId(data["id"]),
-                    icon: await MarkerIcon.pictureAsset(
-                        assetPath: 'assets/images/icons/venture.png',
-                        width: 100,
-                        height: 100),
+                    markerId: MarkerId(documents.id),
+                    icon: markerIcon,
                     position: LatLng(
                         data["coords"].latitude, data["coords"].longitude)));
               })
@@ -120,14 +179,68 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     setState(() {
       allmarkers;
-      print(allmarkers.toString());
     });
-  }
 
-//to automatically show marker to map
-  Widget getmarker(BuildContext context) {
-    getMarkerData();
-    return Text('');
+    return allmarkers;
+  } */
+
+  Future testMarker() async {
+
+    await FirebaseFirestore.instance
+        .collection("testmarkers")
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((documents) async {
+                var data = documents.data() as Map;
+
+                /*   print(data["coords"].latitude);
+                print(data["coords"].longitude); */
+
+                allmarkers.add(Marker(
+                    onTap: () async {
+                      await DialogQuestion(documents.id, dropdownDatas)
+                          .showMyDialog(context);
+                    },
+                    infoWindow: InfoWindow(
+                      title: data["place"],
+                    ),
+                    markerId: MarkerId(documents.id),
+                    icon: markerIcon,
+                    position: LatLng(
+                        data["coords"].latitude, data["coords"].longitude)));
+              })
+            });
+
+    setState(() {
+      allmarkers;
+    });
+
+    return allmarkers;
+
+    /*    await FirebaseFirestore.instance
+        .collection("markers")
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((documents) async {
+                var data = documents.data() as Map;
+
+                await allmarkers.add(Marker(
+                    onTap: () async {
+                      await DialogQuestion(data['id']).showMyDialog(context);
+                    },
+                    infoWindow: InfoWindow(title: data["place"]),
+                    markerId: MarkerId(data["id"]),
+                    icon: markerIcon,
+                    position: LatLng(
+                        data["coords"]!.latitude, data["coords"]!.longitude)));
+              })
+
+            });
+
+    setState(() {
+      allmarkers;
+      print(allmarkers.toString());
+    }); */
   }
 
   Widget builds(BuildContext context) {
@@ -156,308 +269,265 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
+    final _mapFuture =
+        Future.delayed(const Duration(milliseconds: 250), () => true);
 
     //Providers
     final allSearchResults = ref.watch(placeResultsProvider);
     final searchFlag = ref.watch(searchToggleProvider);
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  height: screenHeight,
-                  width: screenWidth,
-                  child: GoogleMap(
-                    mapType: MapType.normal,
-                    // markers: _markerss,
-                    markers: allmarkers,
-                    polylines: _polylines,
-                    initialCameraPosition: _kGooglePlex,
-                    onMapCreated: (GoogleMapController controller) {
-                      _controller.complete(controller);
-                    },
-                  ),
-                ),
-                pressedNear
-                    ? builds(context)
-                    : searchToggle
-                        ? Padding(
-                            padding: const EdgeInsets.fromLTRB(
-                                15.0, 40.0, 15.0, 5.0),
-                            child: Column(children: [
-                              Container(
-                                height: 50.0,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  color: Colors.white,
-                                ),
-                                child: TextFormField(
-                                  controller: searchController,
-                                  decoration: InputDecoration(
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 20.0, vertical: 15.0),
-                                      border: InputBorder.none,
-                                      hintText: 'Search',
-                                      suffixIcon: IconButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              searchToggle = false;
-                                              searchController.text = '';
-                                              _markers = {};
-                                              searchFlag.toggleSearch();
-                                            });
-                                          },
-                                          icon: const Icon(Icons.close))),
-                                  onChanged: (value) {
-                                    if (_debounce?.isActive ?? false) {
-                                      _debounce?.cancel();
-                                    }
-                                    _debounce =
-                                        Timer(const Duration(milliseconds: 700),
-                                            () async {
-                                      if (value.length > 2) {
-                                        if (!searchFlag.searchToggle) {
-                                          searchFlag.toggleSearch();
-                                          _markers = {};
-                                        }
-                                        List<AutoCompleteResult> searchResults =
-                                            await MapServices()
-                                                .searchPlaces(value);
+    return FutureBuilder(
+      future: testMarker(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasError) {
+          return const Text('Something went wrong');
+        }
 
-                                        allSearchResults
-                                            .setResults(searchResults);
-                                      } else {
-                                        List<AutoCompleteResult> emptyList = [];
-                                        allSearchResults.setResults(emptyList);
-                                      }
-                                    });
-                                  },
-                                ),
-                              ),
-                            ]),
-                          )
-                        : Container(),
-                searchFlag.searchToggle
-                    ? allSearchResults.allReturnedResults.length != 0
-                        ? Positioned(
-                            top: 100.0,
-                            left: 15.0,
-                            child: Container(
-                              height: 200.0,
-                              width: screenWidth - 30.0,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                color: Colors.white.withOpacity(0.7),
-                              ),
-                              child: ListView(
-                                children: [
-                                  ...allSearchResults.allReturnedResults
-                                      .map((e) => buildListItem(e, searchFlag))
-                                ],
-                              ),
-                            ))
-                        : Positioned(
-                            top: 100.0,
-                            left: 15.0,
-                            child: Container(
-                              height: 200.0,
-                              width: screenWidth - 30.0,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  color: Colors.white.withOpacity(0.7)),
-                              child: Center(
-                                child: Column(
-                                  children: [
-                                    const Text('No results to show',
-                                        style: TextStyle(
-                                            fontFamily: 'WorkSans',
-                                            fontWeight: FontWeight.w400)),
-                                    const SizedBox(height: 5.0),
-                                    Container(
-                                      width: 125.0,
-                                      child: ElevatedButton(
-                                        onPressed: () {
-                                          searchFlag.toggleSearch();
-                                        },
-                                        child: const Center(
-                                          child: Text(
-                                            'Close this',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontFamily: 'WorkSans',
-                                                fontWeight: FontWeight.w300),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ))
-                    : Container(),
-                getmarker(context), //to automatically show marker to map
-                getDirections
-                    ? Padding(
-                        padding: const EdgeInsets.fromLTRB(15.0, 40.0, 15.0, 5),
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 50.0,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                color: Colors.white,
-                              ),
-                              child: TextFormField(
-                                controller: _originController,
-                                decoration: const InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 20.0, vertical: 15.0),
-                                  border: InputBorder.none,
-                                  hintText: 'origin',
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 3.0),
-                            Container(
-                              height: 50.0,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                color: Colors.white,
-                              ),
-                              child: TextFormField(
-                                controller: _destinationController,
-                                decoration: InputDecoration(
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        horizontal: 20.0, vertical: 15.0),
-                                    border: InputBorder.none,
-                                    hintText: 'Destination',
-                                    suffixIcon: Container(
-                                      width: 96.8,
-                                      child: Row(
-                                        children: [
-                                          IconButton(
-                                              onPressed: () async {
-                                                var directions =
-                                                    await MapServices()
-                                                        .getDirections(
-                                                            _originController
-                                                                .text,
-                                                            _destinationController
-                                                                .text);
-                                                _markers = {};
-                                                _polylines = {};
-                                                gotoPlace(
-                                                  directions['start_location']
-                                                      ['lat'],
-                                                  directions['start_location']
-                                                      ['lng'],
-                                                  directions['end_location']
-                                                      ['lng'],
-                                                  directions['end_location']
-                                                      ['lat'],
-                                                  directions['bounds_ne'],
-                                                  directions['bounds_sw'],
-                                                );
-                                                _setPolyline(directions[
-                                                    'polyline_deoded']);
-                                              },
-                                              icon: const Icon(Icons.search)),
-                                          IconButton(
+        if (snapshot.hasData == false) {
+          return const Center(child: CircularProgressIndicator.adaptive());
+        }
+
+        return Scaffold(
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    HomeGoogleMap(
+                        screenHeight: screenHeight,
+                        screenWidth: screenWidth,
+                        allmarkers: allmarkers,
+                        polylines: _polylines,
+                        kGooglePlex: _kGooglePlex,
+                        controller: _controller),
+                    pressedNear
+                        ? builds(context)
+                        : searchToggle
+                            ? Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    15.0, 40.0, 15.0, 5.0),
+                                child: Column(children: [
+                                  Container(
+                                    height: 50.0,
+                                    width: 280,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      color: Colors.white,
+                                    ),
+                                    child: TextFormField(
+                                      controller: searchController,
+                                      decoration: InputDecoration(
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 20.0,
+                                                  vertical: 15.0),
+                                          border: InputBorder.none,
+                                          prefixIcon: const Icon(Icons.search),
+                                          hintText: 'Search',
+                                          suffixIcon: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  getDirections = false;
-                                                  _originController.text = '';
-                                                  _destinationController.text =
-                                                      '';
+                                                  searchToggle = false;
+                                                  searchController.text = '';
+                                                  _markers = {};
+                                                  searchFlag.toggleSearch();
                                                 });
                                               },
-                                              icon: const Icon(Icons.close))
-                                        ],
-                                      ),
-                                    )),
-                              ),
-                            )
-                          ],
-                        ),
-                      )
-                    : Container()
+                                              icon: const Icon(Icons.close))),
+                                      onChanged: (value) {
+                                        if (_debounce?.isActive ?? false) {
+                                          _debounce?.cancel();
+                                        }
+                                        _debounce = Timer(
+                                            const Duration(milliseconds: 700),
+                                            () async {
+                                          if (value.length > 2) {
+                                            if (!searchFlag.searchToggle) {
+                                              searchFlag.toggleSearch();
+                                              _markers = {};
+                                            }
+                                            List<AutoCompleteResult>
+                                                searchResults =
+                                                await MapServices()
+                                                    .searchPlaces(value);
+
+                                            allSearchResults
+                                                .setResults(searchResults);
+                                          } else {
+                                            List<AutoCompleteResult> emptyList =
+                                                [];
+                                            allSearchResults
+                                                .setResults(emptyList);
+                                          }
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ]),
+                              )
+                            : Container(),
+                    searchFlag.searchToggle
+                        ? allSearchResults.allReturnedResults.isNotEmpty
+                            ? Positioned(
+                                top: 100.0,
+                                left: 15.0,
+                                child: Container(
+                                  height: 200.0,
+                                  width: screenWidth - 30.0,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    color: Colors.white.withOpacity(0.7),
+                                  ),
+                                  child: ListView(
+                                    children: [
+                                      ...allSearchResults.allReturnedResults
+                                          .map((e) =>
+                                              buildListItem(e, searchFlag))
+                                    ],
+                                  ),
+                                ))
+                            : Positioned(
+                                top: 100.0,
+                                left: 15.0,
+                                child: HomeNoResultToShow(
+                                    screenWidth: screenWidth,
+                                    searchFlag: searchFlag))
+                        : Container(),
+
+                    //    getmarker(context), //to automatically show marker to map
+                    getDirections
+                        ? Padding(
+                            padding:
+                                const EdgeInsets.fromLTRB(15.0, 40.0, 15.0, 5),
+                            child: Column(
+                              children: [
+                                HomeOriginController(
+                                    originController: _originController),
+                                const SizedBox(height: 3.0),
+                                Container(
+                                  height: 50.0,
+                                  width: 280,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    color: Colors.white,
+                                  ),
+                                  child: TextFormField(
+                                    controller: _destinationController,
+                                    decoration: InputDecoration(
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                horizontal: 20.0,
+                                                vertical: 15.0),
+                                        border: InputBorder.none,
+                                        hintText: 'Destination',
+                                        suffixIcon: Container(
+                                          width: 96.8,
+                                          child: Row(
+                                            children: [
+                                              IconButton(
+                                                  onPressed: () async {
+                                                    var directions =
+                                                        await MapServices()
+                                                            .getDirections(
+                                                                _originController
+                                                                    .text,
+                                                                _destinationController
+                                                                    .text);
+                                                    _markers = {};
+                                                    _polylines = {};
+                                                    gotoPlace(
+                                                      directions[
+                                                              'start_location']
+                                                          ['lat'],
+                                                      directions[
+                                                              'start_location']
+                                                          ['lng'],
+                                                      directions['end_location']
+                                                          ['lng'],
+                                                      directions['end_location']
+                                                          ['lat'],
+                                                      directions['bounds_ne'],
+                                                      directions['bounds_sw'],
+                                                    );
+                                                    _setPolyline(directions[
+                                                        'polyline_deoded']);
+                                                  },
+                                                  icon:
+                                                      const Icon(Icons.search)),
+                                              IconButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      getDirections = false;
+                                                      _originController.text =
+                                                          '';
+                                                      _destinationController
+                                                          .text = '';
+                                                    });
+                                                  },
+                                                  icon: const Icon(Icons.close))
+                                            ],
+                                          ),
+                                        )),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        : Container()
+                  ],
+                )
               ],
-            )
-          ],
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
-      floatingActionButton: Column(
-        children: [
-          FloatingActionButton(
-            disabledElevation: 0,
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.black,
-            heroTag: null,
-            mini: true,
-            child: FirebaseAuth.instance.currentUser!.photoURL == null
-                ? const Image(image: AssetImage('assets/images/pic.png'))
-                : Image.network(
-                    FirebaseAuth.instance.currentUser!.photoURL ?? ""),
-            onPressed: () {
-              ProfileNav().showProfileNav(context);
-            },
+            ),
           ),
-          const SizedBox(
-            height: 10,
+          floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
+          floatingActionButton: Column(
+            children: [
+              const SizedBox(height: 12),
+              FloatingButtonUserProfile(
+                  UserInfofirstname: UserInfofirstname,
+                  UserInfolastname:
+                      UserInfolastname), //breaking the Widget of floating button and passing the data from the stateless widget below
+              const HomeFloatingDialog(),
+              FloatingActionButton(
+                disabledElevation: 0,
+                elevation: 0.0,
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                mini: true,
+                heroTag: null,
+                child: const Icon(Icons.search),
+                onPressed: () {
+                  setState(() {
+                    searchToggle = true;
+                    radiusSlider = false;
+                    pressedNear = false;
+                    cardTapped = false;
+                    getDirections = false;
+                  });
+                },
+              ),
+              FloatingActionButton(
+                disabledElevation: 0,
+                elevation: 0.0,
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                mini: true,
+                heroTag: null,
+                child: const Icon(Icons.navigation),
+                onPressed: () {
+                  setState(() {
+                    searchToggle = false;
+                    radiusSlider = false;
+                    pressedNear = false;
+                    cardTapped = false;
+                    getDirections = true;
+                  });
+                },
+              ),
+            ],
           ),
-          FloatingActionButton(
-            disabledElevation: 0,
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.black,
-            mini: true,
-            heroTag: null,
-            child: const Icon(Icons.business),
-            onPressed: () {
-              // PredictionDialog().showPredictionDialog(context);
-              //  DialogVenture.showInformationDialog(context);
-            },
-          ),
-          FloatingActionButton(
-            disabledElevation: 0,
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.black,
-            mini: true,
-            heroTag: null,
-            child: const Icon(Icons.search),
-            onPressed: () {
-              setState(() {
-                searchToggle = true;
-                radiusSlider = false;
-                pressedNear = false;
-                cardTapped = false;
-                getDirections = false;
-              });
-            },
-          ),
-          FloatingActionButton(
-            disabledElevation: 0,
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.black,
-            mini: true,
-            heroTag: null,
-            child: const Icon(Icons.navigation),
-            onPressed: () {
-              setState(() {
-                searchToggle = false;
-                radiusSlider = false;
-                pressedNear = false;
-                cardTapped = false;
-                getDirections = true;
-              });
-            },
-          ),
-        ],
-      ),
-      resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: false,
+        );
+      },
     );
   }
 
@@ -633,4 +703,208 @@ class _HomePageState extends ConsumerState<HomePage> {
       ),
     );
   }*/
+}
+
+class FloatingButtonUserProfile extends StatelessWidget {
+  FloatingButtonUserProfile({
+    super.key,
+    required this.UserInfofirstname,
+    required this.UserInfolastname,
+  });
+
+  final String UserInfofirstname,
+      UserInfolastname; //parameter to pass data from the stateless widget
+
+  final Stream<DocumentSnapshot> usersStream = FirebaseFirestore.instance
+      .collection('users')
+      .doc(GoogleUserStaticInfo().uid)
+      .snapshots();
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<DocumentSnapshot>(
+        stream: usersStream,
+        builder:
+            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return const Text('Something went wrong');
+          }
+
+          if (snapshot.hasData == false) {
+            return const CircularProgressIndicator.adaptive();
+          }
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          return FloatingActionButton(
+            disabledElevation: 0,
+            elevation: 0.0,
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            heroTag: null,
+            mini: true,
+            child: Profile().profile == null
+                ? const Image(image: AssetImage('assets/images/pic.png'))
+                : Image.network(Profile().profile ?? ""),
+            onPressed: () {
+              ProfileNav(
+                      firstname: data['firstname'], lastname: data['lastname'])
+                  .showProfileNav(context);
+              //parameter : data from firestore //pass in the profilenav.dart
+            },
+          );
+        });
+  }
+}
+
+class HomeNoResultToShow extends StatelessWidget {
+  const HomeNoResultToShow({
+    super.key,
+    required this.screenWidth,
+    required this.searchFlag,
+  });
+
+  final double screenWidth;
+  final SearchToggle searchFlag;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 200.0,
+      width: screenWidth - 30.0,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          color: Colors.white.withOpacity(0.7)),
+      child: Center(
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 5,
+            ),
+            const Text('No results to show',
+                style: TextStyle(
+                    fontFamily: 'WorkSans', fontWeight: FontWeight.w400)),
+            const SizedBox(height: 5.0),
+            Container(
+              width: 125.0,
+              child: ElevatedButton(
+                onPressed: () {
+                  searchFlag.toggleSearch();
+                },
+                child: const Center(
+                  child: Text(
+                    'Close this',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'WorkSans',
+                        fontWeight: FontWeight.w300),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class HomeGoogleMap extends StatelessWidget {
+  const HomeGoogleMap({
+    super.key,
+    required this.screenHeight,
+    required this.screenWidth,
+    required this.allmarkers,
+    required Set<Polyline> polylines,
+    required CameraPosition kGooglePlex,
+    required Completer<GoogleMapController> controller,
+  })  : _polylines = polylines,
+        _kGooglePlex = kGooglePlex,
+        _controller = controller;
+
+  final double screenHeight;
+  final double screenWidth;
+  final Set<Marker> allmarkers;
+  final Set<Polyline> _polylines;
+  final CameraPosition _kGooglePlex;
+  final Completer<GoogleMapController> _controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: screenHeight,
+      width: screenWidth,
+      child: GoogleMap(
+        mapType: MapType.normal,
+        // markers: _markerss,
+        markers: allmarkers,
+        polylines: _polylines,
+        initialCameraPosition: _kGooglePlex,
+        onMapCreated: (GoogleMapController controller) {
+          _controller.complete(controller);
+        },
+      ),
+    );
+  }
+}
+
+class HomeFloatingDialog extends StatelessWidget {
+  const HomeFloatingDialog({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      disabledElevation: 0,
+      elevation: 0.0,
+      backgroundColor: Colors.white,
+      foregroundColor: Colors.black,
+      mini: true,
+      heroTag: null,
+      child: const Icon(Icons.business),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const LayerSimulationScreen()),
+        );
+      },
+    );
+  }
+}
+
+class HomeOriginController extends StatelessWidget {
+  const HomeOriginController({
+    super.key,
+    required TextEditingController originController,
+  }) : _originController = originController;
+
+  final TextEditingController _originController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 50.0,
+      width: 280,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        color: Colors.white,
+      ),
+      child: TextFormField(
+        controller: _originController,
+        decoration: const InputDecoration(
+          contentPadding:
+              EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+          border: InputBorder.none,
+          hintText: 'origin',
+        ),
+      ),
+    );
+  }
+}
+
+//Object For User
+class Userinformation {
+  String UserInfofirstname = "";
+  String UserInfolastname = "";
 }

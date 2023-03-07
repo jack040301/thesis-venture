@@ -39,7 +39,7 @@ class AutoCompleteResult {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['description'] = description;
     if (matchedSubstrings != null) {
       data['matched_substrings'] =
@@ -70,7 +70,7 @@ class MatchedSubstrings {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['length'] = length;
     data['offset'] = offset;
     return data;
@@ -97,7 +97,7 @@ class StructuredFormatting {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['main_text'] = mainText;
     if (mainTextMatchedSubstrings != null) {
       data['main_text_matched_substrings'] =
@@ -120,7 +120,7 @@ class Terms {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['offset'] = offset;
     data['value'] = value;
     return data;
@@ -139,7 +139,7 @@ class SecondaryTextMatchedSubstrings {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['length'] = length;
     data['offset'] = offset;
     return data;
@@ -158,7 +158,7 @@ class MainTextMatchedSubstrings {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['length'] = length;
     data['offset'] = offset;
     return data;

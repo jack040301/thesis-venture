@@ -1,14 +1,11 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:main_venture/auth_screens/signup.dart';
-import 'package:main_venture/auth_screens/login.dart';
-import 'package:main_venture/feat_screens/profile_screen.dart';
+
 import 'package:main_venture/screens/home_page.dart';
 
 class Emailverificationscreen extends StatefulWidget {
-  //const emailverificationscreen({super.key});
+  const Emailverificationscreen({super.key});
 
   @override
   //State<emailverificationscreen> createState() =>]emailverificationscreenState();
@@ -29,7 +26,7 @@ class EmailverificationscreenState extends State<Emailverificationscreen> {
       sendEmailVerification();
 
       timer = Timer.periodic(
-        Duration(seconds: 5),
+        const Duration(seconds: 5),
         (_) => checkEmailVerified(),
       );
     }
@@ -58,10 +55,10 @@ class EmailverificationscreenState extends State<Emailverificationscreen> {
       await user.sendEmailVerification();
 
       setState(() => canResendEmail = false);
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
       setState(() => canResendEmail = true);
     } catch (e) {
-      print(e);
+      //print(e);
     }
   }
 

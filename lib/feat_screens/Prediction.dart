@@ -1,7 +1,13 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 
 //this is only a sample
 class PredictionDialog {
+  String name, address, population;
+
+  PredictionDialog(
+      {required this.name, required this.address, required this.population});
+
   Future showPredictionDialog(BuildContext context) {
     return showDialog(
       context: context,
@@ -15,7 +21,7 @@ class PredictionDialog {
                 children: [
                   const Text(''),
                   const Padding(
-                    padding: EdgeInsets.fromLTRB(20, 0, 5, 0),
+                    padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
                     child: Text(
                       'PINNED LOCATIONS',
                       style: TextStyle(
@@ -43,31 +49,31 @@ class PredictionDialog {
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Text(
-                    'NORTH CALOOCAN',
-                    style: TextStyle(
+                    'Name: $name',
+                    style: const TextStyle(
                       fontSize: 20,
                       height: 3,
                       fontFamily: 'Questrial',
                     ),
                   ),
                   Text(
-                    'Population',
-                    style: TextStyle(
+                    'Population: $address',
+                    style: const TextStyle(
                       fontSize: 15,
                       height: 2,
                       fontFamily: 'Questrial',
                     ),
                   ),
-                  Text(
-                    '1,661,584',
+                  const Text(
+                    '261,729',
                     style: TextStyle(
                       fontSize: 23,
                       fontFamily: 'Questrial',
                     ),
                   ),
-                  Text(
+                  const Text(
                     'Revenue Per Year',
                     style: TextStyle(
                       fontSize: 15,
@@ -75,14 +81,14 @@ class PredictionDialog {
                       fontFamily: 'Questrial',
                     ),
                   ),
-                  Text(
-                    '6,811,974,121.00',
+                  const Text(
+                    '1,073,006,946.81',
                     style: TextStyle(
                       fontSize: 23,
                       fontFamily: 'Questrial',
                     ),
                   ),
-                  Text(
+                  const Text(
                     'Land per sq',
                     style: TextStyle(
                       fontSize: 15,
@@ -90,14 +96,14 @@ class PredictionDialog {
                       fontFamily: 'Questrial',
                     ),
                   ),
-                  Text(
-                    '17,333.33',
+                  const Text(
+                    '5,240,000',
                     style: TextStyle(
                       fontSize: 23,
                       fontFamily: 'Questrial',
                     ),
                   ),
-                  Text(
+                  const Text(
                     'Budget Required for the Area',
                     style: TextStyle(
                       fontSize: 15,
@@ -105,30 +111,15 @@ class PredictionDialog {
                       fontFamily: 'Questrial',
                     ),
                   ),
-                  Text(
-                    '693,333.2',
+                  const Text(
+                    '8,000 per sqm',
                     style: TextStyle(
                       fontSize: 23,
                       fontFamily: 'Questrial',
                     ),
                   ),
-                  /*    Text(
-                                                'Related Businesses',
-                                                style: TextStyle(
-                                                  fontSize: 15,
-                                                  height: 2,
-                                                  fontFamily: 'Questrial',
-                                                ),
-                                              ),
-                                              Text(
-                                                '2',
-                                                style: TextStyle(
-                                                  fontSize: 23,
-                                                  fontFamily: 'Questrial',
-                                                ),
-                                              ), */
-                  Text(
-                    '67%',
+                  const Text(
+                    '70%',
                     style: TextStyle(
                       fontSize: 40,
                       height: 2,

@@ -1,4 +1,5 @@
-/* import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -24,10 +25,10 @@ class _SlidingPanelScreenState extends State<SlidingPanelScreen> {
             foregroundColor: Colors.black,
             heroTag: null,
             mini: true,
-            child: Icon(Icons.person),
+            child: const Icon(Icons.person),
             onPressed: () {},
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           FloatingActionButton(
@@ -36,7 +37,7 @@ class _SlidingPanelScreenState extends State<SlidingPanelScreen> {
             foregroundColor: Colors.black,
             mini: true,
             heroTag: null,
-            child: Icon(Icons.house),
+            child: const Icon(Icons.house),
             onPressed: () {},
           ),
         ],
@@ -47,7 +48,7 @@ class _SlidingPanelScreenState extends State<SlidingPanelScreen> {
         minHeight: panelHeightClosed,
         color: Colors.transparent,
         panel: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20.0),
@@ -103,13 +104,13 @@ class _SlidingPanelScreenState extends State<SlidingPanelScreen> {
                       onPressed: () {},
                       style: OutlinedButton.styleFrom(
                         backgroundColor: Colors.transparent,
-                        side: BorderSide(
+                        side: const BorderSide(
                             color: Color.fromARGB(255, 64, 146, 210)),
                         shape: const RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20))),
                       ),
-                      icon: ImageIcon(
+                      icon: const ImageIcon(
                         AssetImage("assets/images/icons/device.png"),
                         color: Color.fromARGB(255, 64, 146, 210),
                         size: 18.0,
@@ -131,15 +132,14 @@ class _SlidingPanelScreenState extends State<SlidingPanelScreen> {
   }
 }
 
+// ignore: must_be_immutable
 class ImagesPinned extends StatelessWidget {
   String imgPath;
-  ImagesPinned(this.imgPath);
+  ImagesPinned(this.imgPath, {super.key});
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 0, horizontal: 3),
+      margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 3),
       child: Column(
         children: [
           ClipRRect(
@@ -163,11 +163,11 @@ class BarIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: Container(
         width: 80,
         height: 6,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Color.fromARGB(255, 115, 99, 99),
           borderRadius: BorderRadius.all(Radius.circular(15)),
         ),
@@ -175,4 +175,3 @@ class BarIndicator extends StatelessWidget {
     );
   }
 }
- */

@@ -1,12 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_password_strength/flutter_password_strength.dart';
 import 'package:main_venture/component/customComponent.dart';
 import 'package:main_venture/auth_screens/login.dart';
-import 'package:main_venture/auth_screen.dart';
-import 'package:main_venture/feat_screens/profile_screen.dart';
 import 'package:main_venture/auth_screens/email_verification.dart';
+import 'package:main_venture/userInfo.dart';
 
 class SignupWidget extends StatefulWidget {
   const SignupWidget({Key? key}) : super(key: key);
@@ -344,7 +345,7 @@ class _SignupWidgetState extends State<SignupWidget> {
             ),
             GestureDetector(
                 onTap: () async {
-                  await const AuthScreen().signInWithGoogle();
+                  await Functio().signInWithGoogle();
                 },
                 child: Material(
                   color: const Color.fromARGB(255, 0, 110, 195),
@@ -374,14 +375,14 @@ class _SignupWidgetState extends State<SignupWidget> {
   Future<void> createAccount() async {
     //emailverificationscreen();
 
-    print('Create account executed');
+    //print('Create account executed');
 
     try {
       if (emailController.text.isNotEmpty &
           passwordController.text.isNotEmpty &
           firstNameController.text.isNotEmpty &
           lastNameController.text.isNotEmpty) {
-        print('The fields is not empty');
+        //     print('The fields is not empty');
         await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
               email: emailController.text.trim(),
@@ -393,11 +394,11 @@ class _SignupWidgetState extends State<SignupWidget> {
                   'email': value.user!.email,
                 }));
       } else {
-        print('Fields are empty');
+        //    print('Fields are empty');
       }
     } on FirebaseAuthException catch (e) {
       /// Showing Error with AlertDialog if the user enter the wrong Email and Password
-      print('Signup exception: ${e.message}');
+      //  print('Signup exception: ${e.message}');
       showDialog<void>(
         context: context,
         barrierDismissible: false,
@@ -425,22 +426,21 @@ class _SignupWidgetState extends State<SignupWidget> {
     }
 
     try {
-      String curUser =
-          FirebaseAuth.instance.currentUser?.email ?? 'no current user';
+      FirebaseAuth.instance.currentUser?.email ?? 'no current user';
       FirebaseAuth.instance.authStateChanges().listen((User? user) {
         if (user == null) {
-          print('***************************************** User is null');
-          print('Current User: $curUser');
+          //   print('***************************************** User is null');
+          // print('Current User: $curUser');
         } else {
-          print('User: ${user.email}');
+          //print('User: ${user.email}');
           rmSignup(context);
         }
       });
     } on FirebaseAuthException catch (e) {
-      String curUser =
-          FirebaseAuth.instance.currentUser?.email ?? 'no current user';
-      print('User Exeption: ${e.message}');
-      print('Current User: $curUser');
+      FirebaseAuth.instance.currentUser?.email ?? 'no current user';
+      //print('User Exeption: ${e.message}');
+      log(e as String);
+      //print('Current User: $curUser');
     }
   }
 }
@@ -450,7 +450,7 @@ Future<void> rmSignup(BuildContext context) async {
     Navigator.push(
       context,
       //MaterialPageRoute(builder: (context) => const ProfileScreen()),
-      MaterialPageRoute(builder: (context) => Emailverificationscreen()),
+      MaterialPageRoute(builder: (context) => const Emailverificationscreen()),
     );
 
     /*Navigator.removeRoute(
@@ -458,6 +458,7 @@ Future<void> rmSignup(BuildContext context) async {
       MaterialPageRoute(builder: (context) => const SignupWidget()),
     );*/
   } catch (e) {
-    print('Routing: removing signup screen exception => $e');
+    log(e as String);
+    // print('Routing: removing signup screen exception => $e');
   }
 }
