@@ -1,4 +1,21 @@
+<<<<<<< Updated upstream
 import React from "react";
+=======
+import React, { useContext } from "react";
+
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+
+export default function Dashboard({ user, setAuthState, setUser }) {
+  const signOutHandler = () => {
+    signOut(auth)
+      .then(() => {
+        setUser(null);
+        setAuthState("login");
+      })
+      .catch((err) => console.log(err));
+  };
+>>>>>>> Stashed changes
 
 const Dashboard = () => {
   return (
@@ -24,7 +41,7 @@ const Dashboard = () => {
                   </a>
                 </div>
               </div>
-              <div className="col-lg-3 col-6">
+              {/* <div className="col-lg-3 col-6">
                 <div className="small-box bg-success">
                   <div className="inner">
                     <h3>
@@ -39,8 +56,8 @@ const Dashboard = () => {
                     More info <i className="fas fa-arrow-circle-right" />
                   </a>
                 </div>
-              </div>
-              <div className="col-lg-3 col-6">
+              </div> */}
+              {/* <div className="col-lg-3 col-6">
                 <div className="small-box bg-warning">
                   <div className="inner">
                     <h3>44</h3>
@@ -53,13 +70,17 @@ const Dashboard = () => {
                     More info <i className="fas fa-arrow-circle-right" />
                   </a>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </section>
       </div>
     </div>
   );
+<<<<<<< Updated upstream
 };
 
 export default Dashboard;
+=======
+}
+>>>>>>> Stashed changes

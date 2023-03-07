@@ -1,5 +1,12 @@
+<<<<<<< Updated upstream:src/Login.js
 import React from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
+=======
+import React, { useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+import { UserAuth } from "./context";
+>>>>>>> Stashed changes:src/auth/Login.js
 /* import { useNavigate } from "react-router-dom"; */
 
 import {
@@ -15,6 +22,31 @@ import {
 } from "mdb-react-ui-kit";
 
 function Login() {
+<<<<<<< Updated upstream:src/Login.js
+=======
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const { signIn } = UserAuth();
+
+  const [email, setEmail] = useState("");
+
+  const [password, setPassword] = useState("");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setError("");
+    try {
+      await signIn(email, password);
+      navigate("/dashboard");
+    } catch (e) {
+      setError(e.message);
+      console.log(e.message);
+    }
+  }
+
+>>>>>>> Stashed changes:src/auth/Login.js
   /* let navigate = useNavigate();
   navigate("/dashboard"); */
 
@@ -38,6 +70,12 @@ function Login() {
                 id="formControlLg"
                 type="email"
                 size="lg"
+<<<<<<< Updated upstream:src/Login.js
+=======
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+>>>>>>> Stashed changes:src/auth/Login.js
               />
               <MDBInput
                 wrapperClass="mb-4 w-100"
@@ -45,6 +83,12 @@ function Login() {
                 id="formControlLg"
                 type="password"
                 size="lg"
+<<<<<<< Updated upstream:src/Login.js
+=======
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+>>>>>>> Stashed changes:src/auth/Login.js
               />
 
               <MDBCheckbox
@@ -54,8 +98,20 @@ function Login() {
                 label="Remember password"
               />
               <br></br>
+<<<<<<< Updated upstream:src/Login.js
 
               <MDBBtn size="lg">Login</MDBBtn>
+=======
+              {/*    <MDBBtn onClick={Login} size="lg">handle user profile</MDBBtn> */}
+              <button
+                disabled={loading}
+                onClick={handleSubmit}
+                size="lg"
+                class="btn btn-primary"
+              >
+                Login
+              </button>
+>>>>>>> Stashed changes:src/auth/Login.js
 
               {/* <button
               onClick={() => {
