@@ -103,16 +103,35 @@ function MapPage() {
 
 
     try {
+
+
+      
+          if(coorlat !== null && coorlat !==""
+          && coorlong !== null && coorlong !==""
+          && coorname !== null && coorname !==""
+          && coorland !== null && coorland !==""
+          && coorlandSize !== null && coorlandSize !==""
+          && coorPopulation !== null && coorPopulation !==""
+          ){
+   
+       
+
+
       const docRef = await addDoc(collection(db, "testmarkers"), {
         coords: new GeoPoint(coorlat, coorlong),
         place: coorname,
         land: coorland,
         landsize: coorlandSize,
         population: coorPopulation,
-        revenue: coorPopulation,
+        revenue: coorRevenue,
 
       });
      alert("Successful Adding Marker")
+      }
+
+
+      alert("Please do not leave fields blank")
+
 
       //success
     } catch (e) {
@@ -128,6 +147,15 @@ function MapPage() {
     const docRef = doc(db, 'testmarkers', coorID);
 
     try {
+
+      if(coorlat !== null && coorlat !==""
+      && coorlong !== null && coorlong !==""
+      && coorname !== null && coorname !==""
+      && coorland !== null && coorland !==""
+      && coorlandSize !== null && coorlandSize !==""
+      && coorPopulation !== null && coorPopulation !==""
+      ){
+
       const updateMarker = await updateDoc(docRef, {
         coords: new GeoPoint(coorlat, coorlong),
         place: coorname,
@@ -138,6 +166,10 @@ function MapPage() {
       });
 
         alert("Successful update Marker")
+    }   
+    
+    alert("Please do not leave fields blank")
+
       //success
     } catch (e) {
       //error
@@ -150,10 +182,15 @@ function MapPage() {
 
     try {
 
+      if(coorID !== null && coorID !==""){
       const delMark = await deleteDoc(doc(db, "testmarkers", coorID));
       //success
 
       alert("Successful delete Marker")
+
+    }
+
+    alert("Unable to delete Marker")
 
     } catch (e) {
       //error

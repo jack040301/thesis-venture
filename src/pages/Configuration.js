@@ -89,6 +89,13 @@ const { createUser, user } = UserAuth();
     e.preventDefault();
     setError('')
     try {
+
+      if(formValue.oldpassword !== null &&
+        formValue.oldpassword !== ""&&
+        formValue.password !== null &&
+        formValue.password !== ""&&
+        formValue.confirmpass !== null &&
+        formValue.confirmpass !== ""){
     if(formValue.password === formValue.confirmpass){  
 
       const emailCred = EmailAuthProvider.credential(user.email,formValue.oldpassword)
@@ -121,6 +128,10 @@ reauthenticateWithCredential(user, emailCred).then(() => {
       alert('password and confirm password not matched')
       setError('password and confirm password not matched')
     }
+
+    alert('Do not leave the fields blank')
+  
+  }
 
     } catch (e) {
       setError(e.message)

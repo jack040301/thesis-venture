@@ -18,27 +18,34 @@ import {
 } from "mdb-react-ui-kit";
 
 function Login() {
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+  const navigate  = useNavigate ()
 
   const { signIn } = UserAuth();
+
 
   const [email, setEmail] = useState("");
 
   const [password, setPassword] = useState("");
 
   async function handleSubmit(e) {
+
+
     e.preventDefault();
-    setError("");
+    setError('')
     try {
-      await signIn(email, password);
-      navigate("/dashboard");
+      await signIn(email, password)
+      navigate('/dashboard')
     } catch (e) {
-      setError(e.message);
-      console.log(e.message);
+      alert(e.message)
+      setError(e.message)
+      console.log(e.message)
     }
-  }
+  };
+
+
 
   /* let navigate = useNavigate();
   navigate("/dashboard"); */
@@ -73,9 +80,8 @@ function Login() {
                 id="formControlLg"
                 type="password"
                 size="lg"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
+                value={password} onChange={(e) => setPassword(e.target.value)}
+              required
               />
 
               <MDBCheckbox
@@ -85,12 +91,12 @@ function Login() {
                 label="Remember password"
               />
               <br></br>
-              {/*    <MDBBtn onClick={Login} size="lg">handle user profile</MDBBtn> */}
-              <button
+           {/*    <MDBBtn onClick={Login} size="lg">handle user profile</MDBBtn> */}
+           <button
                 disabled={loading}
                 onClick={handleSubmit}
                 size="lg"
-                class="btn btn-primary"
+                className="btn btn-primary"
               >
                 Login
               </button>
@@ -101,7 +107,14 @@ function Login() {
               >
                 Login
               </button> */}
-
+              
+              {/* <button
+              onClick={() => {
+                  navigate("/dashboard");
+                }}
+              >
+                Login
+              </button> */}
               <hr className="my-4" />
 
               {/* <MDBBtn
