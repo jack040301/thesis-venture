@@ -307,7 +307,7 @@ function MapPage() {
             </MDBModalHeader>
             <MDBModalBody>
            
-
+              
               <MDBInput
                 wrapperClass="mb-4 w-100"
                 placeholder="Coordinates Latitude"
@@ -339,7 +339,7 @@ function MapPage() {
                 wrapperClass="mb-4 w-100"
                 placeholder="Land"
                 id="formControlLg"
-                type="text"
+                type="number"
                 value={coorland}
                 onChange={(e) => setCoorLand(e.target.value)}
                 required
@@ -348,7 +348,7 @@ function MapPage() {
                 wrapperClass="mb-4 w-100"
                 placeholder="Land size"
                 id="formControlLg"
-                type="text"
+                type="number"
                 value={coorlandSize}
                 onChange={(e) => setCoorlandSize(e.target.value)}
                 required
@@ -358,7 +358,7 @@ function MapPage() {
                 wrapperClass="mb-4 w-100"
                 placeholder="Total Population "
                 id="formControlLg"
-                type="text"
+                type="number"
                 value={coorPopulation}
                 onChange={(e) => setCoorPopulation(e.target.value)}
                 required
@@ -367,23 +367,25 @@ function MapPage() {
                 wrapperClass="mb-4 w-100"
                 placeholder="Revenue"
                 id="formControlLg"
-                type="text"
+                type="number"
                 value={coorRevenue}
                 onChange={(e) => setCoorRevenue(e.target.value)}
                 required
+                
               />
+              <div className='invalid-feedback'>Please Revenue</div>
             </MDBModalBody>
 
             <MDBModalFooter>
               <button
                 type="button"
-                class="btn btn-secondary"
+                className="btn btn-secondary"
                 data-mdb-dismiss="modal"
                 onClick={setmodalclose2}
               >
                 Close
               </button>
-              <button onClick={addMarkers} class="btn btn-primary">
+              <button onClick={addMarkers} className="btn btn-primary">
                 Add Place
               </button>
             </MDBModalFooter>
@@ -478,7 +480,7 @@ function MapPage() {
             <MDBModalFooter>
             <button
                 type="button"
-                class="btn btn-secondary"
+                className="btn btn-secondary"
                 data-mdb-dismiss="modal"
                 onClick={setmodalclose}
               >
@@ -487,14 +489,14 @@ function MapPage() {
               <button
                 onClick={updateMarkers}
                 color="warning"
-                class="btn btn-primary"
+                className="btn btn-primary"
               >
                 Update Place
               </button>
               <button
                 onClick={deleteMarkers}
                 color="danger"
-                class="btn btn-danger"
+                className="btn btn-danger"
               >
                 Delete Place
               </button>
