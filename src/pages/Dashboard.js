@@ -1,8 +1,9 @@
 
-import React, { useContext } from "react";
+import React, { useState, useEffect } from "react";
 
 import { signOut } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, collection,db,onSnapshot } from "../firebase";
+
 
 export default function Dashboard({ user, setAuthState, setUser }) {
   const signOutHandler = () => {
@@ -13,6 +14,49 @@ export default function Dashboard({ user, setAuthState, setUser }) {
       })
       .catch((err) => console.log(err));
   };
+
+  const [countUser, setCountUser] = useState("")
+
+
+  useEffect (()=>{
+    const collect = collection(db,"users")
+    const unsub = onSnapshot(collect, snapshot =>{
+
+      const markreal = snapshot.docs.map(doc=> ({ 
+        ...doc.data()
+      }
+      ))
+    //  console.log(markreal)
+    //  alert(markreal.length)
+      setCountUser(markreal.length)
+     //setData(markreal)
+
+    })
+
+    return () =>{
+        unsub()
+    }
+   
+    //const collectionRef = db.collection('users');
+   // const collectionRef = collection(db,"users")
+    //const snapshot =  collectionRef.count().get();
+  //  console.log(snapshot.data().count);
+    
+
+   // alert(snapshot.data().count)
+    /* const unsub = onSnapshot(collect, snapshot =>{
+
+      const markreal = snapshot.docs.da. 
+    //  console.log(markreal)
+
+     setData(markreal)
+
+    })
+
+    return () =>{
+        unsub()
+    } */
+  },[]) 
 
 
   return (
@@ -31,7 +75,7 @@ export default function Dashboard({ user, setAuthState, setUser }) {
               <div className="col-lg-3 col-6">
                 <div className="small-box bg-info">
                   <div className="inner">
-                    <h3>150</h3>
+                    <h3>{countUser}</h3>
                     <p>Total Users</p>
                   </div>
                   <div className="icon">

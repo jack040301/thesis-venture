@@ -1,13 +1,13 @@
 import React, { useRef, useState } from "react";
+import {addDoc,collection,db} from "../firebase";
+import { UserAuth } from "../auth/context";
 
 import {
-  MDBBtn,
-  MDBContainer,
+
   MDBRow,
   MDBCol,
   MDBInput,
-  MDBValidation,
-  MDBValidationItem,
+
 } from "mdb-react-ui-kit";
 
 function Config() {
@@ -16,38 +16,60 @@ function Config() {
     password: "",
     confirmpass: "",
   });
+  const [error, setError] = useState("")
 
-  //  const { createUser, user } = UserAuth();
+  const { createUser, user } = UserAuth();
 
-  /* async function handleSubmit(e) {
+  function resetall(){
+
+    setFormValue({
+      email: "",
+      password: "",
+      confirmpass: "",
+    })
+  }
+
+
+  async function handleSubmit(e) {
 
     e.preventDefault();
     setError('')
     try {
-    if(password === confirmpass){  
-      await createUser(email, password).then(() =>
+    if(formValue.password === formValue.confirmpass){  
+      await createUser(formValue.email, formValue.password).then(() =>
     {
       addDoc(collection(db, "users"), {
         uid: user.uid,
         authProvider: "local",
-        email,
+        email: formValue.email,
         role:'admin',
       });
 
+      alert('Successfull create admin')
+
+      resetall()
     }).catch((err)=>{
       setError(err.message)
+
+      alert(err.message)
     })
 
-      e.target.reset();
+    resetall();
+    
     }else{
+
+      alert('password and confirm password not matched')
       setError('password and confirm password not matched')
     }
 
     } catch (e) {
       setError(e.message)
-      console.log(e.message)
+      alert(e.message)
+      resetall()
+
+     // console.log(e.message)
     }
-  }; */
+  }; 
 
   const onChange = (e) => {
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
@@ -60,7 +82,7 @@ function Config() {
           <div className="col-12">
             <div className="card" style={{ height: 500 }}>
               {/* <div className="card-header"> */}
-              <h3 className="card-title"> Configuration</h3>
+              <h3 className="card-title"> Create Admin Account</h3>
               <div className="card-tools">
                 <div
                   className="input-group input-group-sm"
@@ -82,13 +104,13 @@ function Config() {
               {/* </div> */}
               <div fluid className="row lg-3">
                 <div className="d-flex align-items-center justify-content-center">
-                  <MDBCol md="8" className="mb-4">
+                 {/*  <MDBCol md="8" className="mb-4">
                     <img
                       src="https://p.kindpng.com/picc/s/568-5680678_bandori-bangdream-mocaaoba-aobamoca-anime-icon-.png"
                       className="img-fluid rounded-circle"
                       alt=""
                     />
-                  </MDBCol>
+                  </MDBCol> */}
                 </div>
                 <MDBRow
                   tag="form"
@@ -139,7 +161,7 @@ function Config() {
                   </MDBCol>
 
                   <MDBCol md="8">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" onClick={handleSubmit} class="btn btn-primary">
                       Save Changes
                     </button>
                   </MDBCol>
