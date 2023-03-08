@@ -1,12 +1,19 @@
-import React from "react";
+/* import React from "react"; */
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import { Link } from "react-router-dom";
-
-/* import {
+import React, { useState } from "react";
+import {
   MDBBtn,
-
-} from "mdb-react-ui-kit"; */
+  MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalHeader,
+  MDBModalTitle,
+  MDBModalBody,
+  MDBModalFooter,
+  MDBContainer,
+} from "mdb-react-ui-kit";
 
 export default function SideNav({ user, setAuthState, setUser }) {
   const signOutHandler = () => {
@@ -17,9 +24,30 @@ export default function SideNav({ user, setAuthState, setUser }) {
       })
       .catch((err) => console.log(err));
   };
+  const [basicModal, setBasicModal] = useState(false);
+  const toggleShow = () => setBasicModal(!basicModal);
 
   return (
     <div>
+      {/* Modal Codes */}
+      <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
+                <MDBModalDialog>
+                  <MDBModalContent>
+                    <MDBModalHeader>
+                      <MDBModalTitle>Log out</MDBModalTitle>
+                    </MDBModalHeader>
+                    <MDBModalBody>Are you sure you want to log out your account?</MDBModalBody>
+
+                    <MDBModalFooter>
+                      <button color="secondary" className="btn btn-secondary" onClick={toggleShow}>
+                        Cancel
+                      </button>
+                      <button className="btn btn-primary" onClick={signOutHandler}>Logout</button>
+                    </MDBModalFooter>
+                  </MDBModalContent>
+                </MDBModalDialog>
+              </MDBModal>
+            {/* End of Modal */}
       <aside className="main-sidebar sidebar-dark-primary elevation-4">
         <Link to="/dashboard" className="brand-link">
           <img
@@ -74,9 +102,12 @@ export default function SideNav({ user, setAuthState, setUser }) {
               <li className="nav-item">
                 <a href="#" className="nav-link">
                   <i className="nav-icon fas fa-times" />
-                  <p onClick={signOutHandler}>Logout</p>
+                  <p onClick={toggleShow}>Logout</p>
                 </a>
               </li>
+              
+              
+
             </ul>
           </nav>
         </div>
