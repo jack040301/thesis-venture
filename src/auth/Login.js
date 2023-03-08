@@ -51,6 +51,7 @@ function Login() {
   navigate("/dashboard"); */
 
   return (
+    <form>
     <MDBContainer fluid>
       <MDBRow className="d-flex justify-content-center align-items-center h-100">
         <MDBCol col="12">
@@ -139,6 +140,7 @@ function Login() {
         </MDBCol>
       </MDBRow>
     </MDBContainer>
+    </form>
   );
 }
 
