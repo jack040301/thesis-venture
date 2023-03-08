@@ -119,6 +119,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                       },
                       controller: firstNameController,
                       keyboardType: TextInputType.name,
+                      textCapitalization: TextCapitalization.words,
                       decoration: InputDecoration(
                         hintText: "Firstname",
                         filled: true,
@@ -166,6 +167,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                       },
                       controller: lastNameController,
                       keyboardType: TextInputType.name,
+                      textCapitalization: TextCapitalization.words,
                       decoration: InputDecoration(
                         hintText: "Lastname",
                         filled: true,

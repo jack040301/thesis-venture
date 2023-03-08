@@ -95,10 +95,20 @@ class DialogQuestion {
                     const SizedBox(
                       height: 5.0,
                     ),
-                    const Align(
-                      alignment: Alignment.topRight,
-                      child: Icon(Icons.close),
-                    ),
+                    Align(
+                        alignment: Alignment.topRight,
+                        child: IconButton(
+                            icon: const Icon(Icons.close),
+                            onPressed: () => Navigator.of(context).pop())
+                        // child: Icon(Icons.close),
+                        // ontap: () async {
+                        //     // ito yun sana kapag initinallize dapat
+
+                        //     //  getMarkerData();
+                        //     //  getMarkerData();
+                        //     await demogResult(context);
+                        //   } ///////////////////////////////
+                        ),
                     const SizeBoxTwenty(),
 
                     const Text("What kind of business do you prefer?",

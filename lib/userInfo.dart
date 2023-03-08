@@ -99,7 +99,7 @@ class PopSnackbar extends FunctionAuthentication {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("LOGOUT"),
+          title: const Text("Logout"),
           content: const SingleChildScrollView(
             child: Text("Are you sure you want to logout?"),
           ),

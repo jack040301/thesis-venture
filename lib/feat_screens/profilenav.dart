@@ -12,9 +12,12 @@ import 'settings.dart';
 class ProfileNav {
   final String firstname,
       lastname; // init firstname lastname string for class parameters
+
   ProfileNav(
       {required this.firstname,
       required this.lastname}); //get the firstname lastname in the homepage.dart
+
+  // late final fname = firstname.length > 1;
 
   Future<void> showProfileNav(BuildContext context) async {
     return await showDialog(
@@ -64,7 +67,8 @@ class ProfileNav {
                                 width: 50.0,
                               ),
                         label: Text(
-                            "${firstname.toUpperCase()} ${lastname.toUpperCase()}", //display firstname and lastname from the firestore
+                            //  fname = firstname.length > 1? firstname![1];
+                            "${firstname[0].toUpperCase() + firstname.substring(1).toLowerCase()} ${lastname[0].toUpperCase() + lastname.substring(1).toLowerCase()}", //display firstname and lastname from the firestore
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 22.0)),
                       ),
