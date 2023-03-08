@@ -5,17 +5,17 @@ import 'package:flutter/material.dart';
 import 'data_population.dart';
 
 class BarchartPop extends StatelessWidget {
-  final String markerid;
-  const BarchartPop({super.key, required this.markerid});
-
+ // final String markerid;
+  //const BarchartPop({super.key, required this.markerid});
+ const BarchartPop({super.key});
   @override
   Widget build(BuildContext context) {
-    String docuid = markerid;
+ //   String docuid = markerid;
     CollectionReference population =
-        FirebaseFirestore.instance.collection("markers");
+        FirebaseFirestore.instance.collection("testmarkers");
 
     return FutureBuilder<DocumentSnapshot>(
-      future: population.doc(docuid).get(),
+      future: population.doc("SZRH2HoNBjRGpY4RuaoD").get(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {
           return const Text("Error");
@@ -50,7 +50,7 @@ class BarchartPop extends StatelessWidget {
             ),
           ];
 
-          List<charts.Series<BarChartModel, String>> series = [
+           List<charts.Series<BarChartModel, String>> series = [
             charts.Series(
               id: "population",
               data: data,
@@ -63,11 +63,9 @@ class BarchartPop extends StatelessWidget {
           ];
 
           return Scaffold(
-            appBar: AppBar(
-              title: const Text("Population"),
-              centerTitle: true,
-              backgroundColor: Colors.green[700],
-            ),
+
+
+
             body: Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
               child: charts.BarChart(
@@ -77,6 +75,10 @@ class BarchartPop extends StatelessWidget {
                 domainAxis: const charts.OrdinalAxisSpec(),
               ),
             ),
+
+
+
+
           );
         }
         return const Center(child: CircularProgressIndicator.adaptive());

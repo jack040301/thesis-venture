@@ -219,7 +219,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       onTap: () async {
                         // const AuthScreen().signInWithGoogle();
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          duration: const Duration(seconds: 4),
+                          duration: const Duration(seconds: 2),
                           content: Row(
                             children: const <Widget>[
                               CircularProgressIndicator(),
