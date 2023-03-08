@@ -1,7 +1,7 @@
 /* import React from "react"; */
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import React, { useState } from "react";
 import {
   MDBBtn,
@@ -42,7 +42,7 @@ export default function SideNav({ user, setAuthState, setUser }) {
                       <button color="secondary" className="btn btn-secondary" onClick={toggleShow}>
                         Cancel
                       </button>
-                      <button className="btn btn-danger" onClick={signOutHandler}>Logout</button>
+                      <button className="btn btn-primary" onClick={signOutHandler}>Logout</button>
                     </MDBModalFooter>
                   </MDBModalContent>
                 </MDBModalDialog>
@@ -59,7 +59,8 @@ export default function SideNav({ user, setAuthState, setUser }) {
           <span className="brand-text font-weight-light">Venture</span>
         </Link>
         <div className="sidebar">
-          <nav className="mt-2">
+          <nav className="mt-2"
+          > 
             <ul
               className="nav nav-pills nav-sidebar flex-column"
               data-widget="treeview"
@@ -67,18 +68,19 @@ export default function SideNav({ user, setAuthState, setUser }) {
               data-accordion="false"
             >
               <li className="nav-item">
-                <a href="/dashboard" className="nav-link">
+                <NavLink 
+                to="/dashboard" className="nav-link">
                   <i className="nav-icon fas fa-tachometer-alt" />
                   <p>Dashboard</p>
-                </a>
+                </NavLink>
               </li>
 
               <li className="nav-item">
-                <Link to="/map" className="nav-link">
+                <NavLink to="/map" className="nav-link">
                   <i className="nav-icon fas fa-building" />
 
                   <p>Maps & Markers</p>
-                </Link>
+                </NavLink>
               </li>
 
               {/* <li className="nav-item">
@@ -94,10 +96,10 @@ export default function SideNav({ user, setAuthState, setUser }) {
                 </Link>
               </li> */}
               <li className="nav-item">
-                <Link to="/configuration" className="nav-link">
+                <NavLink to="/configuration" className="nav-link">
                   <i className="nav-icon fas fa-tools" />
                   <p>Configuration</p>
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item">
                 <a href="#" className="nav-link">
