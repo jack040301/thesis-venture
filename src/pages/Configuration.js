@@ -154,8 +154,8 @@ reauthenticateWithCredential(user, emailCred).then(() => {
         <div className="row">
           <div className="col-12">
             <div className="card" style={{ height: 500 }}>
-              {/* <div className="card-header"> */}
-              <h3 className="card-title"> Create Admin Account</h3>
+            <div className="card-header">
+              <h3 className="card-title"> Account Configuration</h3>
               <div className="card-tools">
                 <div
                   className="input-group input-group-sm"
@@ -173,6 +173,7 @@ reauthenticateWithCredential(user, emailCred).then(() => {
                       </button>
                     </div> */}
                 </div>
+              </div>
               </div>
               {/* </div> */}
               <div fluid className="row lg-3">
@@ -200,7 +201,7 @@ reauthenticateWithCredential(user, emailCred).then(() => {
                       disabled
                       /* label="Email" */
                       placeholder="Email"
-                      style={{ marginBottom: 10 }}
+                      style={{ marginBottom: 10}}
                     />
                   </MDBCol>
 
