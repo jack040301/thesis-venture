@@ -92,6 +92,7 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               ),
               TextField(
                 controller: _firstnameController,
+                textCapitalization: TextCapitalization.words,
                 decoration: InputDecoration(
                   labelStyle: const TextStyle(
                     color: Colors.black,
@@ -121,6 +122,7 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               ),
               TextField(
                 controller: _lastnameController,
+                textCapitalization: TextCapitalization.words,
                 decoration: InputDecoration(
                   labelStyle: const TextStyle(
                     color: Colors.black,

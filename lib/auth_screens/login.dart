@@ -33,6 +33,19 @@ class _LoginScreenState extends State<LoginScreen> {
     content: Text('Email Field Must Fill!'),
   );
 
+  final textFieldFocusNode = FocusNode();
+  bool _obscured = true;
+  void _toggleObscured() {
+    setState(() {
+      _obscured = !_obscured;
+      if (textFieldFocusNode.hasPrimaryFocus) {
+        return; // If focus is on text field, dont unfocus
+      } else {
+        textFieldFocusNode.canRequestFocus = true;
+      } // Prevents focus if tap on eye
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return loading
@@ -104,6 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 15.0,
                     ),
+
                     const Text("Password",
                         style: TextStyle(
                           color: Color.fromARGB(255, 74, 74, 74),
@@ -112,47 +126,74 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 4.0,
                     ),
+                    // password
+                    // TextField(
+                    //   enableSuggestions: false,
+                    //   autocorrect: false,
+                    //   controller: _passwordController,
+                    //   obscureText: true,
+                    //   decoration: InputDecoration(
+                    //     border: InputBorder.none,
+                    //     hintText: "Password",
+                    //     filled: true,
+                    //     fillColor: const Color.fromARGB(255, 230, 230, 230),
+                    //     enabledBorder: OutlineInputBorder(
+                    //       borderRadius:
+                    //           const BorderRadius.all(Radius.circular(5.0)),
+                    //       borderSide: BorderSide(
+                    //           color: const Color.fromARGB(255, 230, 230, 230)
+                    //               .withOpacity(0.5),
+                    //           width: 2),
+                    //     ),
+                    //     focusedBorder: OutlineInputBorder(
+                    //       borderRadius:
+                    //           const BorderRadius.all(Radius.circular(5.0)),
+                    //       borderSide: BorderSide(
+                    //           color: const Color.fromARGB(255, 230, 230, 230)
+                    //               .withOpacity(0.5)),
+                    //     ),
+                    //     errorBorder: OutlineInputBorder(
+                    //       borderRadius:
+                    //           const BorderRadius.all(Radius.circular(5.0)),
+                    //       borderSide: BorderSide(
+                    //           color: Colors.redAccent.withOpacity(0.5)),
+                    //     ),
+                    //     suffix: InkWell(
+                    //       onTap: () {},
+                    //       child: const Icon(Icons.visibility,
+                    //           color: Color.fromARGB(255, 74, 74, 74)),
+                    //     ),
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   height: 20.0,
+                    // ),
                     TextField(
-                      enableSuggestions: false,
-                      autocorrect: false,
                       controller: _passwordController,
-                      obscureText: true,
+                      obscureText: _obscured,
+                      focusNode: textFieldFocusNode,
                       decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Password",
+                        hintText: '************',
+                        labelStyle: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 25,
+                        ),
+                        fillColor: Colors.grey.shade200,
                         filled: true,
-                        fillColor: const Color.fromARGB(255, 230, 230, 230),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(
-                              color: const Color.fromARGB(255, 230, 230, 230)
-                                  .withOpacity(0.5),
-                              width: 2),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(
-                              color: const Color.fromARGB(255, 230, 230, 230)
-                                  .withOpacity(0.5)),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(
-                              color: Colors.redAccent.withOpacity(0.5)),
+                        border: const OutlineInputBorder(
+                          borderSide: BorderSide.none,
                         ),
                         suffix: InkWell(
-                          onTap: () {},
-                          child: const Icon(Icons.visibility,
-                              color: Color.fromARGB(255, 74, 74, 74)),
+                          onTap: _toggleObscured,
+                          child: Icon(
+                              _obscured
+                                  ? Icons.visibility
+                                  : Icons.visibility_off_rounded,
+                              color: const Color.fromARGB(255, 74, 74, 74)),
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
+
                     SizedBox(
                       width: double.infinity,
                       child: RawMaterialButton(
@@ -167,6 +208,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 TextStyle(color: Colors.white, fontSize: 15.0)),
                       ),
                     ),
+
                     const SizedBox(
                       height: 15.0,
                     ),
