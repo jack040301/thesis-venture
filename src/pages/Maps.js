@@ -298,7 +298,7 @@ function MapPage() {
         </div>
       </div>
 
-
+        <form>
         <MDBModal show={basicModal2} setShow={setBasicModal2} tabIndex="-1">
         <MDBModalDialog>
           <MDBModalContent>
@@ -392,7 +392,9 @@ function MapPage() {
           </MDBModalContent>
         </MDBModalDialog>
       </MDBModal>
+      </form>
 
+      <form>
       <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
         <MDBModalDialog class="modal-dialog modal-dialog-centered">
           <MDBModalContent>
@@ -504,6 +506,7 @@ function MapPage() {
           </MDBModalContent>
         </MDBModalDialog>
       </MDBModal>
+      </form>
     </>
   );
 }
