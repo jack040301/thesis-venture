@@ -8,7 +8,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:main_venture/feat_screens/Dialogbutton.dart';
-import 'package:main_venture/feat_screens/layer_simulation.dart';
+// import 'package:main_venture/feat_screens/layer_simulation.dart';
 import 'package:main_venture/feat_screens/profilenav.dart';
 import 'package:main_venture/models/auto_complete_results.dart';
 import 'package:main_venture/providers/search_places.dart';
@@ -185,7 +185,6 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
   } */
 
   Future testMarker() async {
-
     await FirebaseFirestore.instance
         .collection("testmarkers")
         .get()
@@ -486,7 +485,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
                   UserInfofirstname: UserInfofirstname,
                   UserInfolastname:
                       UserInfolastname), //breaking the Widget of floating button and passing the data from the stateless widget below
-              const HomeFloatingDialog(),
+              // const HomeFloatingDialog(),
               FloatingActionButton(
                 disabledElevation: 0,
                 elevation: 0.0,
@@ -847,31 +846,31 @@ class HomeGoogleMap extends StatelessWidget {
   }
 }
 
-class HomeFloatingDialog extends StatelessWidget {
-  const HomeFloatingDialog({
-    super.key,
-  });
+// class HomeFloatingDialog extends StatelessWidget {
+//   const HomeFloatingDialog({
+//     super.key,
+//   });
 
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      disabledElevation: 0,
-      elevation: 0.0,
-      backgroundColor: Colors.white,
-      foregroundColor: Colors.black,
-      mini: true,
-      heroTag: null,
-      child: const Icon(Icons.business),
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const LayerSimulationScreen()),
-        );
-      },
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return FloatingActionButton(
+//       disabledElevation: 0,
+//       elevation: 0.0,
+//       backgroundColor: Colors.white,
+//       foregroundColor: Colors.black,
+//       mini: true,
+//       heroTag: null,
+//       child: const Icon(Icons.business),
+//       onPressed: () {
+//         Navigator.push(
+//           context,
+//           MaterialPageRoute(
+//               builder: (context) => const LayerSimulationScreen()),
+//         );
+//       },
+//     );
+//   }
+// }
 
 class HomeOriginController extends StatelessWidget {
   const HomeOriginController({

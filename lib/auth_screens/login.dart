@@ -297,11 +297,11 @@ class _LoginScreenState extends State<LoginScreen> {
             loading = false;
           });
           // logOut();
+        } else {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => const HomePage(),
+          ));
         }
-
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => const HomePage(),
-        ));
       } else if (_emailController.text.isNotEmpty &
           _passwordController.text.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(sSnackBar);

@@ -286,7 +286,7 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
           //   Navigator.of(context).popUntil((_) => count++ >= 2);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(popSnackbar
-              .popsnackbar("Password and Confirm Password are not the same"));
+              .popsnackbar("Password and Confirm Password did not match"));
         }
       } else {
         ScaffoldMessenger.of(context)

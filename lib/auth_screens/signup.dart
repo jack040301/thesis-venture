@@ -454,7 +454,7 @@ class _SignupWidgetState extends State<SignupWidget> {
       //print('Current User: $curUser');
     }
   }
-}
+} // class close
 
 Future<void> rmSignup(BuildContext context) async {
   try {

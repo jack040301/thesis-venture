@@ -71,7 +71,8 @@ class ProfileNav {
                       const SizedBox(
                         height: 20.0,
                       ),
-                      TextButton.icon(
+
+                      /*TextButton.icon(
                         onPressed: () {
                           Navigator.push(
                               context,
@@ -86,7 +87,8 @@ class ProfileNav {
                         label: const Text('Pinned Locations',
                             style:
                                 TextStyle(color: Colors.black, fontSize: 15.0)),
-                      ),
+                      ),*/
+
                       TextButton.icon(
                         onPressed: () {
                           SetDialog().showMyDialog(context);
