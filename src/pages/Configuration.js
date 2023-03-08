@@ -1,6 +1,9 @@
-import React, { useRef, useState } from "react";
-import {addDoc,collection,db} from "../firebase";
+import React, { useEffect, useRef, useState } from "react";
+import {addDoc,auth,collection,db} from "../firebase";
 import { UserAuth } from "../auth/context";
+import { updatePassword, reauthenticateWithCredential} from "../firebase";
+
+import { EmailAuthCredential } from "firebase/auth";
 
 import {
 
@@ -9,28 +12,35 @@ import {
   MDBInput,
 
 } from "mdb-react-ui-kit";
+import { EmailAuthProvider } from "firebase/auth";
 
 function Config() {
+      
   const [formValue, setFormValue] = useState({
-    email: "",
+    oldpassword: "",   
     password: "",
     confirmpass: "",
   });
+
+  const [configemail, setConfigEmail] = useState("")
   const [error, setError] = useState("")
 
-  const { createUser, user } = UserAuth();
+const { createUser, user } = UserAuth();
 
   function resetall(){
 
     setFormValue({
-      email: "",
+      oldpassword:"",
       password: "",
       confirmpass: "",
     })
   }
 
+  var emal = user.email;
+  
 
-  async function handleSubmit(e) {
+
+  /* async function handleSubmit(e) {
 
     e.preventDefault();
     setError('')
@@ -69,9 +79,61 @@ function Config() {
 
      // console.log(e.message)
     }
+  };  */
+
+
+  async function handleSubmit(e) {
+
+
+
+    e.preventDefault();
+    setError('')
+    try {
+    if(formValue.password === formValue.confirmpass){  
+
+      const emailCred = EmailAuthProvider.credential(user.email,formValue.oldpassword)
+
+
+reauthenticateWithCredential(user, emailCred).then(() => {
+  
+  updatePassword(user, formValue.password).then(()=>{
+
+    alert('Successfull Update Password')  
+    resetall()
+    
+  }).catch((e)=>{
+
+    alert('Error Updating Password : ' , e)  
+    resetall()
+
+  }) 
+ 
+  
+}).catch((error) => {
+
+  alert('reauthenticating failed')
+});
+
+   
+    
+    }else{
+
+      alert('password and confirm password not matched')
+      setError('password and confirm password not matched')
+    }
+
+    } catch (e) {
+      setError(e.message)
+      alert(e.message)
+      resetall()
+
+     // console.log(e.message)
+    }
   }; 
+  
 
   const onChange = (e) => {
+    setConfigEmail(user.email)
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
   };
 
@@ -118,14 +180,30 @@ function Config() {
                 >
                   <MDBCol md="8">
                     <MDBInput
-                      value={formValue.email}
+                      value={emal}
                       name="email"
-                      onChange={onChange}
+                      
                       id="validationCustom01"
                       required
                       type="email"
+                      disabled
                       /* label="Email" */
                       placeholder="Email"
+                      style={{ marginBottom: 10 }}
+                    />
+                  </MDBCol>
+
+                  <MDBCol md="8">
+                    <input
+                      value={formValue.oldpassword}
+                      name="oldpassword"
+                      onChange={onChange}
+                      id="validationCustom01"
+                      required
+                      type="password"
+                      /*  label="Password" */
+                      placeholder="Current Password"
+                      class="form-control"
                       style={{ marginBottom: 10 }}
                     />
                   </MDBCol>
@@ -139,7 +217,7 @@ function Config() {
                       required
                       type="password"
                       /*  label="Password" */
-                      placeholder="Password"
+                      placeholder="New Password"
                       class="form-control"
                       style={{ marginBottom: 10 }}
                     />
@@ -161,7 +239,7 @@ function Config() {
                   </MDBCol>
 
                   <MDBCol md="8">
-                    <button type="submit" onClick={handleSubmit} class="btn btn-primary">
+                    <button type="submit" onClick={handleSubmit} className="btn btn-primary">
                       Save Changes
                     </button>
                   </MDBCol>

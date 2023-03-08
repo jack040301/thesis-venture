@@ -3,7 +3,7 @@
 import { initializeApp } from "firebase/app";
 
 
-import {getAuth,
+import {updatePassword,getAuth, reauthenticateWithCredential,
 createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut} from 'firebase/auth'
 
 import {getFirestore,  query, GeoPoint,
@@ -154,9 +154,14 @@ export const getCurrentUser = () => {
 }
 
 
-export const addInFirestore = () => {
+/* export const reauthenticateUpdatePassword = () => {
+
+ const user = auth.currentUser;
+
+const credential = promptF
 
 }
+ */
 
 
 
@@ -198,4 +203,4 @@ export const addInFirestore = () => {
  */
 
 
-export {auth,doc,query,getDocs,onSnapshot,updateDoc,deleteDoc,GeoPoint,addDoc,collection, db, registerWithEmailAndPassword,  logout, sendPasswordReset, handleUserProfile, createUserWithEmailAndPassword}
+export {reauthenticateWithCredential,auth,doc,query,getDocs,onSnapshot,updateDoc,deleteDoc,GeoPoint,addDoc,collection, db, registerWithEmailAndPassword,  logout, sendPasswordReset, handleUserProfile, createUserWithEmailAndPassword, updatePassword}
