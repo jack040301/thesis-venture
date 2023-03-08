@@ -42,7 +42,7 @@ export default function SideNav({ user, setAuthState, setUser }) {
                       <button color="secondary" className="btn btn-secondary" onClick={toggleShow}>
                         Cancel
                       </button>
-                      <button className="btn btn-primary" onClick={signOutHandler}>Logout</button>
+                      <button className="btn btn-danger" onClick={signOutHandler}>Logout</button>
                     </MDBModalFooter>
                   </MDBModalContent>
                 </MDBModalDialog>

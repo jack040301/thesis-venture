@@ -41,7 +41,7 @@ function Login() {
     } catch (e) {
       alert(e.message)
       setError(e.message)
-      console.log(e.message)
+     // console.log(e.message)
     }
   };
 
