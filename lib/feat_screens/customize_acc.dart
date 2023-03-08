@@ -92,7 +92,6 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               ),
               TextField(
                 controller: _firstnameController,
-                textCapitalization: TextCapitalization.words,
                 decoration: InputDecoration(
                   labelStyle: const TextStyle(
                     color: Colors.black,
@@ -122,7 +121,6 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               ),
               TextField(
                 controller: _lastnameController,
-                textCapitalization: TextCapitalization.words,
                 decoration: InputDecoration(
                   labelStyle: const TextStyle(
                     color: Colors.black,
@@ -168,6 +166,8 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               const SizedBox(
                 height: 20.0,
               ),
+
+              //NEW PASSWORD
               Container(
                 width: 350,
                 child: const Text(
@@ -208,6 +208,8 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               const SizedBox(
                 height: 20.0,
               ),
+
+              //CONFIRM PASSWORD
               Container(
                 width: 350,
                 child: const Text(
@@ -234,6 +236,14 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
                   border: const OutlineInputBorder(
                     borderSide: BorderSide.none,
                   ),
+                  // suffix: InkWell(
+                  //   onTap: _toggleObscured,
+                  //   child: Icon(
+                  //       _obscured
+                  //           ? Icons.visibility
+                  //           : Icons.visibility_off_rounded,
+                  //       color: const Color.fromARGB(255, 74, 74, 74)),
+                  // ),
                 ),
               ),
               const SizedBox(

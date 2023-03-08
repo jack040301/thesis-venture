@@ -14,13 +14,18 @@ class DialogQuestion {
   List<DropdownData> dropdownDatas = [];
   var selectdropval = "";
 
+  var Questionall = const SnackBar(
+    content: Text(
+        '1No Empty answers Allowed! Please fill all the questions correctly'),
+  );
+
   final TextEditingController areaBudgetController = TextEditingController();
   final areaController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   static const colortext = Color.fromARGB(255, 74, 74, 74);
 
-  Future<void> demogResult(BuildContext context) async {
+  Future demogResult(BuildContext context) async {
     await Navigator.push(
         context,
         MaterialPageRoute(
@@ -87,6 +92,7 @@ class DialogQuestion {
           return StatefulBuilder(builder: (context, setState) {
             return AlertDialog(
               content: Form(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
 //key: _formKey,
                 child: SingleChildScrollView(
                     child: Column(
@@ -123,6 +129,11 @@ class DialogQuestion {
                     DropdownButtonFormField<DropdownData>(
                       icon: const Icon(Icons.keyboard_arrow_down_rounded),
                       isExpanded: true,
+                      validator: (value) {
+                        return selectdropval!.isNotEmpty
+                            ? null
+                            : 'Invalid Input';
+                      },
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all((15.0)),
                         enabledBorder: OutlineInputBorder(
@@ -153,7 +164,6 @@ class DialogQuestion {
                         fillColor: const Color.fromARGB(255, 230, 230, 230),
                       ),
                       dropdownColor: const Color.fromARGB(255, 230, 230, 230),
-
 //value: dropdownValue,
                       items: dropdownDatas.map<DropdownMenuItem<DropdownData>>(
                           (DropdownData data) {
@@ -283,10 +293,15 @@ class DialogQuestion {
 
                         onPressed: () async {
                           // ito yun sana kapag initinallize dapat
-
+                          if (selectdropval.isEmpty) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(Questionall);
+                          }
                           //  getMarkerData();
                           //  getMarkerData();
-                          await demogResult(context);
+                          else {
+                            await demogResult(context);
+                          }
                         },
                         elevation: 0.0,
                         padding: const EdgeInsets.symmetric(vertical: 15.0),
