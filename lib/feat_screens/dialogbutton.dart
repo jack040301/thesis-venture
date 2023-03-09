@@ -24,6 +24,11 @@ class DialogQuestion {
         Text('No zero values Allowed! Please fill all the questions correctly'),
   );
 
+  var Questionall2 = const SnackBar(
+    content: Text(
+        'No business budget match! Please fill all the questions correctly'),
+  );
+
   final TextEditingController areaBudgetController = TextEditingController();
   final areaController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -223,9 +228,9 @@ class DialogQuestion {
                         ],
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
-                          hintText: "0",
+                          hintText: "200328 or 206044",
                           filled: true,
-                          fillColor: const Color.fromARGB(255, 230, 230, 230),
+                          fillColor: Color.fromARGB(255, 230, 230, 230),
                           enabledBorder: OutlineInputBorder(
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(5.0)),
@@ -313,12 +318,18 @@ class DialogQuestion {
                               areaController.text.isEmpty) {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(Questionall);
-                          } else if (areaBudgetController.text.contains("0") ||
-                              areaController.text.contains("0")) {
+                          } else if (areaBudgetController.text ==
+                                  0.toString() ||
+                              areaController.text == 0.toString()) {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(Questionall1);
-                          } else {
+                          } else if (areaBudgetController.text ==
+                                  200328.toString() ||
+                              areaBudgetController.text == 206044.toString()) {
                             await demogResult(context);
+                          } else {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(Questionall2);
                           }
                         },
                         elevation: 0.0,
