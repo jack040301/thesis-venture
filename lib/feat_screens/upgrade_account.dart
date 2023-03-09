@@ -46,7 +46,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
               ),
               Container(
                 color: Colors.white,
-                padding: const EdgeInsets.fromLTRB(35, 20, 35, 7),
+                padding: const EdgeInsets.fromLTRB(30, 20, 30, 7),
                 child: Row(
                   children: const <Widget>[
                     ImageIcon(
@@ -67,11 +67,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
                 ),
               ),
               Container(
-                width: 350,
-                height: 200,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                ),
+                color: Colors.white,
                 padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                 child: const Center(
                   child: Text(
@@ -84,7 +80,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
               ),
               Container(
                 color: Colors.white,
-                padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
+                padding: const EdgeInsets.fromLTRB(30, 13, 30, 5),
                 child: Row(
                   children: const <Widget>[
                     Image(
@@ -104,12 +100,8 @@ class WidgetUpgradeAccount extends StatelessWidget {
                 ),
               ),
               Container(
-                width: 350,
-                height: 30,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                ),
-                padding: const EdgeInsets.fromLTRB(32, 2, 35, 7),
+                color: Colors.white,
+                padding: const EdgeInsets.fromLTRB(35, 2, 35, 250),
                 child: const Center(
                   child: Text("ucc.venture@gmail.com",
                       style: TextStyle(
@@ -119,11 +111,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
                 ),
               ),
               Container(
-                width: 350,
-                height: 400,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                ),
+                color: Colors.white,
                 padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
               ),
             ],
