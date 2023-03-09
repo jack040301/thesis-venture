@@ -17,7 +17,11 @@ class DialogQuestion {
 
   var Questionall = const SnackBar(
     content: Text(
-        '1No Empty answers Allowed! Please fill all the questions correctly'),
+        'No Empty answers Allowed! Please fill all the questions correctly'),
+  );
+  var Questionall1 = const SnackBar(
+    content:
+        Text('No zero values Allowed! Please fill all the questions correctly'),
   );
 
   final TextEditingController areaBudgetController = TextEditingController();
@@ -256,12 +260,12 @@ class DialogQuestion {
                     const SizeBoxTen(),
                     TextFormField(
                         controller: areaController,
+                        enableInteractiveSelection: false,
                         validator: (areaController) {
                           return areaController!.isNotEmpty
                               ? null
                               : 'Invalid Input';
                         },
-                        enableInteractiveSelection: false,
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly
                         ],
@@ -305,10 +309,15 @@ class DialogQuestion {
                           if (selectdropval.isEmpty) {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(Questionall);
-                          }
-                          //  getMarkerData();
-                          //  getMarkerData();
-                          else {
+                          } else if (areaBudgetController.text.isEmpty ||
+                              areaController.text.isEmpty) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(Questionall);
+                          } else if (areaBudgetController.text.contains("0") ||
+                              areaController.text.contains("0")) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(Questionall1);
+                          } else {
                             await demogResult(context);
                           }
                         },

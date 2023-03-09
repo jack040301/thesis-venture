@@ -56,7 +56,7 @@ class _DemogResultState extends State<DemogResult> {
         context,
         MaterialPageRoute(
             builder: (context) => SyncLineChart(
-                //markerid: widget.budget,
+                //         markerid: widget.budget,
                 )));
   }
 
@@ -193,12 +193,8 @@ class _DemogResultState extends State<DemogResult> {
                             ),
                             DemogPlace(data: data),
                             Container(
-                              width: 350,
-                              height: 20,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                              ),
                               padding: const EdgeInsets.fromLTRB(35, 2, 35, 2),
+                              color: Colors.white,
                               child: const Center(
                                 child: Text("Population", //POPULATION
                                     style: TextStyle(
@@ -208,12 +204,8 @@ class _DemogResultState extends State<DemogResult> {
                             ),
                             DemogPopulation(popstrB: popstrB),
                             Container(
-                              width: 350,
-                              height: 20,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                              ),
                               padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
+                              color: Colors.white,
                               child: const Center(
                                 child: Text(
                                     "Revenue per year", //REVENUE PER YEAR
@@ -223,12 +215,8 @@ class _DemogResultState extends State<DemogResult> {
                               ),
                             ),
                             Container(
-                              width: 350,
-                              height: 45,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                              ),
                               padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
+                              color: Colors.white,
                               child: Center(
                                 child: Text(revstrB, //REVENUE PER YEAR
                                     style: const TextStyle(
@@ -237,12 +225,8 @@ class _DemogResultState extends State<DemogResult> {
                               ),
                             ),
                             Container(
-                              width: 350,
-                              height: 20,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                              ),
                               padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
+                              color: Colors.white,
                               child: const Center(
                                 child: Text("Land per SqM", //LAND PER SQ
                                     style: TextStyle(
@@ -252,12 +236,8 @@ class _DemogResultState extends State<DemogResult> {
                             ),
                             LandPerSQM(landstr: landstr),
                             Container(
-                              width: 350,
-                              height: 20,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                              ),
                               padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
+                              color: Colors.white,
                               child: const Center(
                                 child: Text("Budget required for the area",
                                     //BUDGET REQUIRED FOR THE AREA
@@ -268,12 +248,8 @@ class _DemogResultState extends State<DemogResult> {
                             ),
                             BudgetRequiredArea(landbudgetstrB: landbudgetstrB),
                             Container(
-                              width: 350,
-                              height: 30,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                              ),
                               padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
+                              color: Colors.white,
                               child: const Center(
                                 child: Text("Your ideal business is",
                                     style: TextStyle(
@@ -283,12 +259,8 @@ class _DemogResultState extends State<DemogResult> {
                             ),
                             IdealBusinessResult(resultfinal: resultfinal),
                             Container(
-                              width: 350,
-                              height: 40,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                              ),
                               padding: const EdgeInsets.fromLTRB(35, 0, 35, 5),
+                              color: Colors.white,
                               child: Center(
                                 child: Text(widget.ideal,
                                     // ideal ni user
@@ -298,12 +270,8 @@ class _DemogResultState extends State<DemogResult> {
                               ),
                             ),
                             Container(
-                              width: 350,
-                              height: 20,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                              ),
                               padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
+                              color: Colors.white,
                               child: const Center(
                                 child: Text("Business Type",
                                     style: TextStyle(
@@ -312,12 +280,8 @@ class _DemogResultState extends State<DemogResult> {
                               ),
                             ),
                             Container(
-                              width: 350,
-                              height: 45,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                              ),
                               padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
+                              color: Colors.white,
                               child: const Center(
                                 child: Text("Coffee Shop",
                                     //BUDGET REQUIRED FOR THE AREA
@@ -327,12 +291,8 @@ class _DemogResultState extends State<DemogResult> {
                               ),
                             ),
                             Container(
-                              width: 350,
-                              height: 20,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                              ),
                               padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
+                              color: Colors.white,
                               child: const Center(
                                 child: Text("Suggested business for you",
                                     style: TextStyle(
@@ -341,12 +301,8 @@ class _DemogResultState extends State<DemogResult> {
                               ),
                             ),
                             Container(
-                              width: 350,
-                              height: 45,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                              ),
                               padding: const EdgeInsets.fromLTRB(35, 0, 35, 5),
+                              color: Colors.white,
                               child: Center(
                                 child: GestureDetector(
                                   onTap: () {
@@ -362,12 +318,9 @@ class _DemogResultState extends State<DemogResult> {
                               ),
                             ),
                             Container(
-                                height: 50,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                ),
                                 padding:
                                     const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                                color: Colors.white,
                                 child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
@@ -465,12 +418,8 @@ class IdealBusinessResult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 350,
-      height: 45,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-      ),
       padding: const EdgeInsets.fromLTRB(35, 0, 35, 5),
+      color: Colors.white,
       child: Center(
         child: Text(resultfinal,
             style: const TextStyle(
@@ -492,12 +441,8 @@ class BudgetRequiredArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 350,
-      height: 45,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-      ),
       padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
+      color: Colors.white,
       child: Center(
         child: Text(landbudgetstrB,
             //BUDGET REQUIRED FOR THE AREA
@@ -520,12 +465,8 @@ class LandPerSQM extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 350,
-      height: 45,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-      ),
       padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
+      color: Colors.white,
       child: Center(
         child: Text('$landstr' 'sqm', //LAND PER SQ
             style: const TextStyle(
@@ -547,12 +488,8 @@ class DemogPopulation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 350,
-      height: 45,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-      ),
       padding: const EdgeInsets.fromLTRB(35, 2, 35, 10),
+      color: Colors.white,
       child: Center(
         child: Text(popstrB, //POPULATION
             style: const TextStyle(
