@@ -1,5 +1,6 @@
 //import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:main_venture/models/demog_result.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -207,12 +208,16 @@ class DialogQuestion {
                     const SizeBoxTen(),
                     TextFormField(
                         controller: areaBudgetController,
-                        keyboardType: TextInputType.number,
                         validator: (areaBudgetController) {
                           return areaBudgetController!.isNotEmpty
                               ? null
                               : 'Invalid Input';
                         },
+                        enableInteractiveSelection: false,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           hintText: "0",
                           filled: true,
@@ -250,13 +255,17 @@ class DialogQuestion {
                         )),
                     const SizeBoxTen(),
                     TextFormField(
-// controller: areaController,
-                        keyboardType: TextInputType.number,
+                        controller: areaController,
                         validator: (areaController) {
                           return areaController!.isNotEmpty
                               ? null
                               : 'Invalid Input';
                         },
+                        enableInteractiveSelection: false,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           hintText: '0',
                           filled: true,
