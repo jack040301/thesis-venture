@@ -3,7 +3,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import { logout } from "../auth/context";
 import { Link, NavLink } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   MDBBtn,
   MDBModal,
@@ -16,21 +16,36 @@ import {
   MDBContainer,
 } from "mdb-react-ui-kit";
 
+import ReactToast from "./Toast/toast"/* import Component of toast */
+
+
 export default function SideNav({ user, setAuthState, setUser }) {
+
+  const toastRef = useRef()
+
   const signOutHandler = () => {
     signOut(auth)
       .then(() => {
            // setUser(null)
            // setAuthState("login")
+
+    toastRef.current.showToast('Do not leave the fields blank')
+
         //        setAuthState("login");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => 
+      
+    toastRef.current.showToast(err.message)
+    );
   };
   const [basicModal, setBasicModal] = useState(false);
   const toggleShow = () => setBasicModal(!basicModal);
 
   return (
-    <div>
+    <>
+<ReactToast ref={toastRef} timeout={2000} />
+
+   <div>
       {/* Modal Codes */}
       <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
                 <MDBModalDialog>
@@ -114,5 +129,7 @@ export default function SideNav({ user, setAuthState, setUser }) {
         </div>
       </aside>
     </div>
+    </>
+ 
   );
 }

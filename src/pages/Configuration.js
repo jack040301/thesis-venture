@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import {addDoc,auth,collection,db} from "../firebase";
 import { UserAuth, createModAcc } from "../auth/context";
 import { updatePassword, reauthenticateWithCredential} from "../firebase";
+import ReactToast from "../components/Toast/toast"/* import Component of toast */
+
 
 import {
 
@@ -19,6 +21,7 @@ import { EmailAuthProvider } from "firebase/auth";
 //const [rPassword, setRetypePassword] = useState("");
 
 function Config() {
+  const toastRef = useRef()
       
   const [formValue, setFormValue] = useState({
     oldpassword: "",   
@@ -79,26 +82,32 @@ const { createUser, user } = UserAuth();
         role:'admin',
       });
 
-      alert('Successfull create admin')
+      toastRef.current.showToast("Successfull create admin")
+
+   //   alert('Successfull create admin')
 
       resetall()
     }).catch((err)=>{
       setError(err.message)
+      toastRef.current.showToast(err.message)
 
-      alert(err.message)
+    //  alert(err.message)
     })
 
     resetallMod()
     
     }else{
 
-      alert('password and confirm password not matched')
+      toastRef.current.showToast("password and confirm password not matched")
+
+//      alert('password and confirm password not matched')
       setError('password and confirm password not matched')
     }
 
-    } catch (e) {
-      setError(e.message)
-      alert(e.message)
+    } catch (error) {
+      setError(error.message)
+      toastRef.current.showToast(error.message)
+
       resetall()
 
      // console.log(e.message)
@@ -129,12 +138,16 @@ reauthenticateWithCredential(user, emailCred).then(() => {
   
   updatePassword(user, formValue.password).then(()=>{
 
-    alert('Successfull Update Password')  
+   // alert('Successfull Update Password')  
+    toastRef.current.showToast('Successfull Update Password')
+
     resetall()
     
   }).catch((e)=>{
 
-    alert('Error Updating Password : ' , e)  
+   // alert('Error Updating Password : ' , e)  
+    toastRef.current.showToast('Error Updating Password  ', e )
+
     resetall()
 
   }) 
@@ -142,28 +155,37 @@ reauthenticateWithCredential(user, emailCred).then(() => {
   
 }).catch((error) => {
 
-  alert('reauthenticating failed')
+  toastRef.current.showToast("Reauthenticating failed : ", error.message)
+
+//  alert('reauthenticating failed')
 });
 
    
     
     }else{
 
-      alert('password and confirm password not matched')
+     // alert('password and confirm password not matched')
       setError('password and confirm password not matched')
+
+    toastRef.current.showToast('password and confirm password not matched')
+
     }
 
-    alert('Do not leave the fields blank')
+    toastRef.current.showToast('Do not leave the fields blank')
+
+
+  //  alert('Do not leave the fields blank')
   
   }
 
-    } catch (e) {
-      setError(e.message)
-      alert(e.message)
-      resetall()
+} catch (e) {
+  //setError(e.message)
+  toastRef.current.showToast(e.message)
 
-     // console.log(e.message)
-    }
+  resetall()
+
+ // console.log(e.message)
+}
   }; 
   
 
@@ -178,6 +200,8 @@ reauthenticateWithCredential(user, emailCred).then(() => {
 
   return (
     <>
+<ReactToast ref={toastRef} timeout={2000} />
+
       <div className="content-wrapper">
         <div className="row">
           <div className="col-12">

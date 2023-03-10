@@ -42,7 +42,11 @@ function Login() {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists() && docSnap.data().role === "admin") {
+      
+      toastRef.current.showToast("Logging in....")
+      
       navigate('/dashboard')
+
 
     }else{
 
@@ -73,14 +77,20 @@ function Login() {
     
   })
   .catch((error) => {
-      console.log(error)
+//      console.log(error)
+
+      toastRef.current.showToast(error)
+
   });   
 
 
 
     } catch (e) {
-      alert(e.message)
-      setError(e.message)
+      //alert(e.message)
+
+      toastRef.current.showToast(e.message)
+
+      //setError(e.message)
      // console.log(e.message)
     }
   };
