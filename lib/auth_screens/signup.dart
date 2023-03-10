@@ -8,6 +8,7 @@ import 'package:main_venture/component/customComponent.dart';
 import 'package:main_venture/auth_screens/login.dart';
 import 'package:main_venture/auth_screens/email_verification.dart';
 import 'package:main_venture/userInfo.dart';
+import 'package:flutter/services.dart';
 
 class SignupWidget extends StatefulWidget {
   const SignupWidget({Key? key}) : super(key: key);
@@ -215,6 +216,12 @@ class _SignupWidgetState extends State<SignupWidget> {
                       },
                       controller: emailController,
                       keyboardType: TextInputType.emailAddress,
+                      enableInteractiveSelection: false,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp('[a-zA-Z0-9_.@]')),
+                        //FilteringTextInputFormatter.deny(RegExp(r'[/\\]')),
+                      ],
                       decoration: InputDecoration(
                         hintText: "email@gmail.com",
                         filled: true,

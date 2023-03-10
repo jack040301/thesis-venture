@@ -228,7 +228,7 @@ class DialogQuestion {
                         ],
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
-                          hintText: "200328 or 206044",
+                          hintText: " Please enter 200328",
                           filled: true,
                           fillColor: Color.fromARGB(255, 230, 230, 230),
                           enabledBorder: OutlineInputBorder(
@@ -324,8 +324,7 @@ class DialogQuestion {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(Questionall1);
                           } else if (areaBudgetController.text ==
-                                  200328.toString() ||
-                              areaBudgetController.text == 206044.toString()) {
+                              200328.toString()) {
                             await demogResult(context);
                           } else {
                             ScaffoldMessenger.of(context)
