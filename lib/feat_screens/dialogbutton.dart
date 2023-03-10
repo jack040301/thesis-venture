@@ -232,7 +232,7 @@ class DialogQuestion {
                       icon: const Icon(Icons.keyboard_arrow_down_rounded),
                       isExpanded: true,
                       validator: (value) {
-                        return selectdropval!.isNotEmpty
+                        return selectbusinessassump!.isNotEmpty
                             ? null
                             : 'Invalid Input';
                       },
@@ -292,7 +292,7 @@ class DialogQuestion {
                         });
                       },
 //value: selectedbusinesstype,
-                      hint: const Text('Choose your Business'),
+                      hint: const Text('Choose Budget'),
                       style: const TextStyle(
                         color: Color.fromARGB(255, 74, 74, 74),
                         fontSize: 15.0,
@@ -395,21 +395,18 @@ class DialogQuestion {
 
                         onPressed: () async {
                           // ito yun sana kapag initinallize dapat
-                          if (selectdropval.isEmpty) {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(Questionall);
-                          } else if (areaBudgetController.text.isEmpty ||
+                          if (selectdropval.isEmpty ||
+                              selectbusinessassump.isEmpty ||
                               areaController.text.isEmpty) {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(Questionall);
-                          } else if (areaBudgetController.text ==
-                                  0.toString() ||
-                              areaController.text == 0.toString()) {
+                          } else if (areaController.text == 0.toString()) {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(Questionall1);
-                          } else if (areaBudgetController.text ==
-                              200328.toString()) {
-                            await demogResult(context);
+                          } else if (selectbusinessassump.isNotEmpty &&
+                              selectbusinessassump.isNotEmpty &&
+                              areaController.text.isNotEmpty) {
+                            demogResult(context);
                           } else {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(Questionall2);
