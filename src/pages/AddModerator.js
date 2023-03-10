@@ -6,6 +6,9 @@ import { updatePassword, reauthenticateWithCredential } from "../firebase";
 import { MDBRow, MDBCol, MDBInput } from "mdb-react-ui-kit";
 import { EmailAuthProvider } from "firebase/auth";
 
+import ReactToast from "../components/Toast/toast"; /* import Component of toast */
+
+
 //const navigate  = useNavigate ();
 //const [email, setEmail] = useState("");
 
@@ -13,12 +16,9 @@ import { EmailAuthProvider } from "firebase/auth";
 //const [rPassword, setRetypePassword] = useState("");
 
 function Config() {
-  const [formValue, setFormValue] = useState({
-    oldpassword: "",
-    password: "",
-    confirmpass: "",
-  });
+  const toastRef = useRef();
 
+ 
   const [formMod, setformMod] = useState({
     modEmail: "",
     modPass: "",
@@ -30,14 +30,7 @@ function Config() {
 
   const { createUser, user } = UserAuth();
 
-  function resetall() {
-    setFormValue({
-      oldpassword: "",
-      password: "",
-      confirmpass: "",
-    });
-  }
-
+ 
   function resetallMod() {
     setformMod({
       modEmail: "",
@@ -62,90 +55,47 @@ function Config() {
               role: "admin",
             });
 
-            alert("Successfull create admin");
+          //  alert("Successfull create admin");
 
-            resetall();
+          toastRef.current.showToast("Successfull Update Password");
+          resetallMod();
           })
           .catch((err) => {
             setError(err.message);
 
-            alert(err.message);
+            toastRef.current.showToast(err.message);
+
+//            alert(err.message);
           });
 
         resetallMod();
       } else {
-        alert("password and confirm password not matched");
+        toastRef.current.showToast("password and confirm password not matched");
+
+        //alert("password and confirm password not matched");
         setError("password and confirm password not matched");
       }
     } catch (e) {
       setError(e.message);
-      alert(e.message);
-      resetall();
+      toastRef.current.showToast(e.message);
+
+//      alert(e.message);
+resetallMod();
 
       // console.log(e.message)
     }
   }
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setError("");
-    try {
-      if (
-        formValue.oldpassword !== null &&
-        formValue.oldpassword !== "" &&
-        formValue.password !== null &&
-        formValue.password !== "" &&
-        formValue.confirmpass !== null &&
-        formValue.confirmpass !== ""
-      ) {
-        if (formValue.password === formValue.confirmpass) {
-          const emailCred = EmailAuthProvider.credential(
-            user.email,
-            formValue.oldpassword
-          );
-
-          reauthenticateWithCredential(user, emailCred)
-            .then(() => {
-              updatePassword(user, formValue.password)
-                .then(() => {
-                  alert("Successfull Update Password");
-                  resetall();
-                })
-                .catch((e) => {
-                  alert("Error Updating Password : ", e);
-                  resetall();
-                });
-            })
-            .catch((error) => {
-              alert("reauthenticating failed");
-            });
-        } else {
-          alert("password and confirm password not matched");
-          setError("password and confirm password not matched");
-        }
-
-        alert("Do not leave the fields blank");
-      }
-    } catch (e) {
-      setError(e.message);
-      alert(e.message);
-      resetall();
-
-      // console.log(e.message)
-    }
-  }
-
-  const onChange = (e) => {
-    setConfigEmail(user.email);
-    setFormValue({ ...formValue, [e.target.name]: e.target.value });
-  };
+  
 
   const onChangeMod = (e) => {
-    setFormValue({ ...formMod, [e.target.name]: e.target.value });
+    setformMod({ ...formMod, [e.target.name]: e.target.value });
   };
 
   return (
     <>
+      <ReactToast ref={toastRef} timeout={2000} />
+
       <div className="content-wrapper">
         <div className="row">
           <div className="col-12">

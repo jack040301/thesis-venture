@@ -8,7 +8,6 @@ import {
   MDBModalDialog,
   MDBModalContent,
   MDBModalHeader,
-  MDBBtn,
   MDBModalTitle,
   MDBModalBody,
   MDBInput,
