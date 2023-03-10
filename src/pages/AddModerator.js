@@ -151,7 +151,7 @@ function Config() {
           <div className="col-12">
             <div className="card" style={{ height: 500 }}>
               <div className="card-header">
-                <h3 className="card-title"> Account Configuration</h3>
+                <h3 className="card-title"> Add Moderator Account</h3>
                 <div className="card-tools">
                   <div
                     className="input-group input-group-sm"
@@ -186,7 +186,7 @@ function Config() {
                   tag="form"
                   className="d-flex justify-content-center align-items-center h-100"
                 >
-                  <MDBCol md="8">
+                  {/*  <MDBCol md="8">
                     <MDBInput
                       value={emal}
                       name="email"
@@ -194,13 +194,13 @@ function Config() {
                       required
                       type="email"
                       disabled
-                      /* label="Email" */
+                      
                       placeholder="Email"
                       style={{ marginBottom: 10 }}
                     />
-                  </MDBCol>
+                  </MDBCol> */}
 
-                  <MDBCol md="8">
+                  {/*  <MDBCol md="8">
                     <input
                       value={formValue.oldpassword}
                       name="oldpassword"
@@ -208,14 +208,14 @@ function Config() {
                       id="validationCustom01"
                       required
                       type="password"
-                      /*  label="Password" */
+                     
                       placeholder="Current Password"
                       class="form-control"
                       style={{ marginBottom: 10 }}
                     />
-                  </MDBCol>
+                  </MDBCol> */}
 
-                  <MDBCol md="8">
+                  {/* <MDBCol md="8">
                     <input
                       value={formValue.password}
                       name="password"
@@ -223,8 +223,51 @@ function Config() {
                       id="validationCustom02"
                       required
                       type="password"
-                      /*  label="Password" */
+                      
                       placeholder="New Password"
+                      class="form-control"
+                      style={{ marginBottom: 10 }}
+                    />
+                  </MDBCol> */}
+
+                  {/*  <MDBCol md="8">
+                    <input
+                      value={formValue.confirmpass}
+                      name="confirmpass"
+                      onChange={onChange}
+                      id="validationCustom03"
+                      required
+                      type="password"
+                      
+                      placeholder="Confirm Password"
+                      class="form-control"
+                      style={{ marginBottom: 10 }}
+                    />
+                  </MDBCol> */}
+
+                  {/* <MDBCol md="8">
+                    <button
+                      type="submit"
+                      onClick={handleSubmit}
+                      className="btn btn-primary"
+                    >
+                      Save Changes
+                    </button>
+                  </MDBCol> */}
+                  {/*  <MDBCol md="8">
+                    <h3 className="card-title"> Moderator</h3>
+                  </MDBCol> */}
+
+                  <MDBCol md="8">
+                    <input
+                      value={formMod.email}
+                      name="email"
+                      onChange={onChangeMod}
+                      id="validationCustom012"
+                      required
+                      type="email"
+                      /*  label="Password" */
+                      placeholder="Email"
                       class="form-control"
                       style={{ marginBottom: 10 }}
                     />
@@ -232,10 +275,25 @@ function Config() {
 
                   <MDBCol md="8">
                     <input
-                      value={formValue.confirmpass}
+                      value={formMod.modPass}
+                      name="password"
+                      onChange={onChangeMod}
+                      id="validationCustom08"
+                      required
+                      type="password"
+                      /*  label="Password" */
+                      placeholder="Password"
+                      class="form-control"
+                      style={{ marginBottom: 10 }}
+                    />
+                  </MDBCol>
+
+                  <MDBCol md="8">
+                    <input
+                      value={formMod.modConfirmpass}
                       name="confirmpass"
-                      onChange={onChange}
-                      id="validationCustom03"
+                      onChange={onChangeMod}
+                      id="validationCustom09"
                       required
                       type="password"
                       /*  label="Confirm Password" */
@@ -248,63 +306,12 @@ function Config() {
                   <MDBCol md="8">
                     <button
                       type="submit"
-                      onClick={handleSubmit}
+                      onClick={AddModerator}
                       className="btn btn-primary"
                     >
-                      Save Changes
-                    </button>
-                  </MDBCol>
-                  {/* <MDBCol md="8">
-                    <h3 className="card-title"> Moderator</h3>
-                  </MDBCol> */}
-
-                  {/* <MDBCol md="8">
-                    <input
-                      value={formMod.email}
-                      name="email"
-                      onChange={onChangeMod}
-                      id="validationCustom012"
-                      required
-                      type="email"
-                      placeholder="Email"
-                      class="form-control"
-                      style={{ marginBottom: 10 }}
-                    />
-                  </MDBCol> */}
-
-                  {/* <MDBCol md="8">
-                    <input
-                      value={formMod.modPass}
-                      name="password"
-                      onChange={onChangeMod}
-                      id="validationCustom08"
-                      required
-                      type="password"
-                      placeholder="Password"
-                      class="form-control"
-                      style={{ marginBottom: 10 }}
-                    />
-                  </MDBCol> */}
-
-                  {/* <MDBCol md="8">
-                    <input
-                      value={formMod.modConfirmpass}
-                      name="confirmpass"
-                      onChange={onChangeMod}
-                      id="validationCustom09"
-                      required
-                      type="password"
-                      placeholder="Confirm Password"
-                      class="form-control"
-                      style={{ marginBottom: 10 }}
-                    />
-                  </MDBCol> */}
-
-                  {/* <MDBCol md="8">
-                    <button type="submit" onClick={AddModerator} className="btn btn-primary">
                       Add moderator account
                     </button>
-                  </MDBCol> */}
+                  </MDBCol>
                 </MDBRow>
               </div>
             </div>

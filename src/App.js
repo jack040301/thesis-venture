@@ -6,7 +6,7 @@ import Request from "./pages/Requests";
 import Configuration from "./pages/Configuration";
 import Header from "./components/Header";
 import Sidenav from "./components/SideNav";
-
+import AddModerator from "./pages/AddModerator";
 import Login from "./auth/Login";
 import ProtectedRoute from "./auth/PrivateRoute";
 import { AuthContextProvider } from "./auth/context";
@@ -17,7 +17,7 @@ function App() {
     <div>
       <AuthContextProvider>
         <Routes>
-          <Route path="/" element={<Login  />} />
+          <Route path="/" element={<Login />} />
 
           <Route
             path="/dashboard"
@@ -49,6 +49,17 @@ function App() {
                 <Header />
                 <Sidenav />
                 <Users />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/addmoderator"
+            element={
+              <ProtectedRoute>
+                {" "}
+                <Header />
+                <Sidenav />
+                <AddModerator />
               </ProtectedRoute>
             }
           />

@@ -20,8 +20,8 @@ export default function SideNav({ user, setAuthState, setUser }) {
   const signOutHandler = () => {
     signOut(auth)
       .then(() => {
-           // setUser(null)
-           // setAuthState("login")
+        // setUser(null)
+        // setAuthState("login")
         //        setAuthState("login");
       })
       .catch((err) => console.log(err));
@@ -33,23 +33,31 @@ export default function SideNav({ user, setAuthState, setUser }) {
     <div>
       {/* Modal Codes */}
       <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
-                <MDBModalDialog>
-                  <MDBModalContent>
-                    <MDBModalHeader>
-                      <MDBModalTitle>Log out</MDBModalTitle>
-                    </MDBModalHeader>
-                    <MDBModalBody>Are you sure you want to log out your account?</MDBModalBody>
+        <MDBModalDialog>
+          <MDBModalContent>
+            <MDBModalHeader>
+              <MDBModalTitle>Log out</MDBModalTitle>
+            </MDBModalHeader>
+            <MDBModalBody>
+              Are you sure you want to log out your account?
+            </MDBModalBody>
 
-                    <MDBModalFooter>
-                      <button color="secondary" className="btn btn-secondary" onClick={toggleShow}>
-                        Cancel
-                      </button>
-                      <button className="btn btn-danger" onClick={signOutHandler}>Logout</button>
-                    </MDBModalFooter>
-                  </MDBModalContent>
-                </MDBModalDialog>
-              </MDBModal>
-            {/* End of Modal */}
+            <MDBModalFooter>
+              <button
+                color="secondary"
+                className="btn btn-secondary"
+                onClick={toggleShow}
+              >
+                Cancel
+              </button>
+              <button className="btn btn-danger" onClick={signOutHandler}>
+                Logout
+              </button>
+            </MDBModalFooter>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
+      {/* End of Modal */}
       <aside className="main-sidebar sidebar-dark-primary elevation-4">
         <Link to="/dashboard" className="brand-link">
           <img
@@ -61,8 +69,7 @@ export default function SideNav({ user, setAuthState, setUser }) {
           <span className="brand-text font-weight-light">Venture</span>
         </Link>
         <div className="sidebar">
-          <nav className="mt-2"
-          > 
+          <nav className="mt-2">
             <ul
               className="nav nav-pills nav-sidebar flex-column"
               data-widget="treeview"
@@ -70,8 +77,7 @@ export default function SideNav({ user, setAuthState, setUser }) {
               data-accordion="false"
             >
               <li className="nav-item">
-                <NavLink 
-                to="/dashboard" className="nav-link">
+                <NavLink to="/dashboard" className="nav-link">
                   <i className="nav-icon fas fa-tachometer-alt" />
                   <p>Dashboard</p>
                 </NavLink>
@@ -79,18 +85,18 @@ export default function SideNav({ user, setAuthState, setUser }) {
 
               <li className="nav-item">
                 <NavLink to="/map" className="nav-link">
-                  <i className="nav-icon fas fa-building" />
+                  <i className="nav-icon fas fa-map-marker" />
 
                   <p>Maps & Markers</p>
                 </NavLink>
               </li>
 
-              {/* <li className="nav-item">
-                <Link to="/user" className="nav-link">
-                  <i className="nav-icon fas fa-user" />
-                  <p>Users</p>
+              <li className="nav-item">
+                <Link to="/addmoderator" className="nav-link">
+                  <i className="nav-icon fas fa-user-plus" />
+                  <p>Add Moderators</p>
                 </Link>
-              </li> */}
+              </li>
               {/* <li className="nav-item">
                 <Link to="/request" className="nav-link">
                   <i className="nav-icon fas fa-list" />
@@ -100,9 +106,9 @@ export default function SideNav({ user, setAuthState, setUser }) {
               <li className="nav-item">
                 <NavLink to="/configuration" className="nav-link">
                   <i className="nav-icon fas fa-tools" />
-                  <p>Configuration</p>
+                  <p>Account Configuration</p>
                 </NavLink>
-              </li>              
+              </li>
               <li className="nav-item">
                 <a href="#" className="nav-link">
                   <i className="nav-icon fas fa-times" />
