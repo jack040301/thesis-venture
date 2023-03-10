@@ -41,60 +41,9 @@ function Config() {
     });
   }
 
-  function resetallMod() {
-    setformMod({
-      modEmail: "",
-      modPass: "",
-      modConfirmpass: "",
-    });
-  }
-
   var emal = user.email;
 
-  async function AddModerator(e) {
-    e.preventDefault();
-    setError("");
-    try {
-      if (formMod.modPass === formMod.modConfirmpass) {
-        await createUser(formMod.email, formMod.modPass)
-          .then(() => {
-            addDoc(collection(db, "users"), {
-              uid: user.uid,
-              authProvider: "local",
-              email: formMod.modEmail,
-              role: "admin",
-            });
-
-            toastRef.current.showToast("Successfull create admin");
-
-            //   alert('Successfull create admin')
-
-            resetall();
-          })
-          .catch((err) => {
-            setError(err.message);
-            toastRef.current.showToast(err.message);
-
-            //  alert(err.message)
-          });
-
-        resetallMod();
-      } else {
-        toastRef.current.showToast("password and confirm password not matched");
-
-        //      alert('password and confirm password not matched')
-        setError("password and confirm password not matched");
-      }
-    } catch (error) {
-      setError(error.message);
-      toastRef.current.showToast(error.message);
-
-      resetall();
-
-      // console.log(e.message)
-    }
-  }
-
+ 
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
@@ -165,9 +114,7 @@ function Config() {
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
   };
 
-  const onChangeMod = (e) => {
-    setFormValue({ ...formMod, [e.target.name]: e.target.value });
-  };
+ 
 
   return (
     <>
