@@ -9,7 +9,9 @@ import 'package:main_venture/userInfo.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class SyncLineChart extends StatelessWidget {
-  SyncLineChart({super.key});
+    final String markerid;
+
+  SyncLineChart({super.key,required this.markerid});
 
   late TooltipBehavior _tooltipBehavior;
   late TooltipBehavior _tooltip;
@@ -156,7 +158,10 @@ class SyncLineChart extends StatelessWidget {
                                     ),
                                     const Text("Bar Chart Forecast",
                                         style: TextStyle(fontSize: 19.0)),
-                                    const Expanded(child: BarchartPop()),
+                                     Expanded(child: 
+                                    BarchartPop(
+                                      markerid:markerid,
+                                    )),
                                     const Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(

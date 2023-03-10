@@ -27,6 +27,8 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  final _currentPassword = TextEditingController();
+
 
   final FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -166,6 +168,46 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               const SizedBox(
                 height: 20.0,
               ),
+               Container(
+                width: 350,
+                child: const Text(
+                  "Current Password",
+                  style: TextStyle(
+                    height: 1.5,
+                    fontSize: 18,
+                  ),
+
+                  textAlign: TextAlign.left, // has impact
+                ),
+              ),
+              TextField(
+                controller: _currentPassword,
+                obscureText: _obscured,
+                focusNode: textFieldFocusNode,
+                decoration: InputDecoration(
+                  hintText: '************',
+                  labelStyle: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 25,
+                  ),
+                  fillColor: Colors.grey.shade200,
+                  filled: true,
+                  border: const OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                  ),
+                  suffix: InkWell(
+                    onTap: _toggleObscured,
+                    child: Icon(
+                        _obscured
+                            ? Icons.visibility
+                            : Icons.visibility_off_rounded,
+                        color: const Color.fromARGB(255, 74, 74, 74)),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20.0,
+              ),
 
               //NEW PASSWORD
               Container(
@@ -277,6 +319,8 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
     final String lname = _lastnameController.text;
     final String password = _passwordController.text;
     final String confirmPassword = _confirmPasswordController.text;
+    final String currentpass = _currentPassword.text;
+    final String? currentemail = user!.email;
     // if (lname != null) {
     final String displayName = fname + lname;
     if (fname.isNotEmpty &&
@@ -291,7 +335,7 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
           //   //"password": _passwordController.text,
           // });
           _changePassword(user, password, confirmPassword, lname, fname,
-              displayName, context, popSnackbar);
+              displayName,currentpass,currentemail!,context, popSnackbar);
 
           // ScaffoldMessenger.of(context).showSnackBar(
           //     popSnackbar.popsnackbar("Successfully update your account"));
@@ -342,18 +386,32 @@ void _changePassword(
     String lname,
     String fname,
     String displayName,
+    String currentpass, 
+    String currentemail,
     context,
     PopSnackbar popSnackbar) async {
+
+
+
+final usersd =  FirebaseAuth.instance.currentUser;
+final cred = EmailAuthProvider.credential(
+    email: currentemail, password: currentpass);
+
+usersd!.reauthenticateWithCredential(cred).then((value) {
+
   user.updatePassword(password).then((_) {
     PopSnackbar popSnackbar = PopSnackbar();
     // ScaffoldMessenger.of(context).showSnackBar(
     //     popSnackbar.popsnackbar("Successfully update the password"));
 
     //if (confirmPassword == password) {
+
+
+
     _users.doc(GoogleUserStaticInfo().uid).update({
       "firstname": fname,
       "lastname": lname,
-      "password": password,
+     // "password": password,
     });
 
     ScaffoldMessenger.of(context).showSnackBar(
@@ -371,6 +429,17 @@ void _changePassword(
     ScaffoldMessenger.of(context).showSnackBar(
         popSnackbar.popsnackbar("Password cant be changed due to $error"));
   });
+
+
+    // ignore: invalid_return_type_for_catch_error
+    }).catchError((e)=>{
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        popSnackbar.popsnackbar("Password cant be changed due to $e"))
+    });
+
+
+  
 
 /*   await user
       .updateDisplayName(displayName)

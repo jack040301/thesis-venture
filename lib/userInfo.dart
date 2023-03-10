@@ -165,7 +165,8 @@ class DialogShowBusiness {
                 //var data = documents.data() as Map;
                 var data = documents.data() as Map;
 
-                datalist = [DropdownData(nameofbusiness: data['name'])];
+                datalist = [DropdownData(nameofbusiness: data['name'],
+            )];
               })
             });
   }
@@ -174,5 +175,13 @@ class DialogShowBusiness {
 class DropdownData {
   final String nameofbusiness;
 
+
   DropdownData({required this.nameofbusiness});
+}
+
+class DropdownDataAssumption {
+  final String budgetassump;
+
+
+  DropdownDataAssumption({required this.budgetassump});
 }

@@ -40,22 +40,23 @@ class _DemogResultState extends State<DemogResult> {
   }
 
   // ignore: non_constant_identifier_names
-  Future<void> StatisForecasting(BuildContext context) async {
+ /*  Future<void> StatisForecasting(BuildContext context) async {
     await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => BarchartPop(
-          // markerid: widget.marker,
+          markerid: widget.marker,
         ),
       ),
     );
-  }
+  } */
 
   Future<void> ChartForecasting(BuildContext context) async {
     await Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => SyncLineChart(
+            markerid: widget.marker,
               //         markerid: widget.budget,
             )));
   }
@@ -174,7 +175,7 @@ class _DemogResultState extends State<DemogResult> {
                 backgroundColor: Colors.transparent,
 
                 title: const Text("Demographical Result"),
-                //  title: Text(widget.ideal),
+               //  title: Text(widget.ideal),
                 foregroundColor: const Color.fromARGB(255, 44, 45, 48),
                 elevation: 0.0,
                 leading: const BackButton(
@@ -263,10 +264,10 @@ class _DemogResultState extends State<DemogResult> {
                                 Container(
                                   padding: const EdgeInsets.fromLTRB(35, 0, 35, 5),
                                   color: Colors.white,
-                                  child: Center(
+                                  child: const Center(
                                     child: Text("ideal",
                                         // ideal ni user
-                                        style: const TextStyle(
+                                        style:  TextStyle(
                                             color: Color.fromARGB(255, 44, 45, 48),
                                             fontSize: 21.0)), // <-- Text
                                   ),
@@ -284,10 +285,10 @@ class _DemogResultState extends State<DemogResult> {
                                 Container(
                                   padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
                                   color: Colors.white,
-                                  child: const Center(
-                                    child: Text("Coffee Shop",
+                                  child:  Center(
+                                    child: Text(widget.ideal,
                                         //BUDGET REQUIRED FOR THE AREA
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             color: Color.fromARGB(255, 44, 45, 48),
                                             fontSize: 20.0)), // <-- Text
                                   ),
@@ -361,11 +362,11 @@ class _DemogResultState extends State<DemogResult> {
                                                     Navigator.of(context).popUntil(
                                                             (_) => count++ >= 2);
                                                   },
-                                                  icon: Icon(
+                                                  icon: const Icon(
                                                     Icons.file_download_outlined,
                                                     size: 18.0,
                                                   ),
-                                                  label: Text(
+                                                  label: const Text(
                                                     "Download",
                                                     style: TextStyle(
                                                         color: Colors.white),
@@ -382,7 +383,9 @@ class _DemogResultState extends State<DemogResult> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) =>
-                                                              SyncLineChart()));
+                                                              SyncLineChart(
+                                                                      markerid: widget.marker,
+                                                              )));
                                                   //getMarkerData();
                                                   //   getBusinessData();
                                                 },
