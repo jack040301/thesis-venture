@@ -6,14 +6,14 @@ import { auth, collection,db,onSnapshot } from "../firebase";
 
 
 export default function Dashboard({ user, setAuthState, setUser }) {
-  const signOutHandler = () => {
+/*   const signOutHandler = () => {
     signOut(auth)
       .then(() => {
         setUser(null);
         setAuthState("login");
       })
       .catch((err) => console.log(err));
-  };
+  }; */
 
   const [countUser, setCountUser] = useState("")
 

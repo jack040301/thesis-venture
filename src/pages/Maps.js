@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState,useRef, useEffect } from "react";
 import customMarker from '../Assets/x.png';
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { db, addDoc, collection, GeoPoint, updateDoc, deleteDoc, doc, getDocs, query,onSnapshot, getMarkers } from "../firebase";
@@ -14,6 +14,8 @@ import {
   MDBInput,
   MDBModalFooter,
 } from "mdb-react-ui-kit";
+import ReactToast from "../components/Toast/toast"/* import Component of toast */
+
 
 function MapPage() {
   const center = { lat: 14.774477, lng: 121.04483 };
@@ -39,6 +41,7 @@ function MapPage() {
   const [data, setData] = useState(markers);
 
 
+  const toastRef = useRef()
   
 
   function resetAllFilters() {
@@ -46,14 +49,26 @@ function MapPage() {
     setCoorlandSize("");
     setCoorLand("");
     setCoorRevenue("");
+    setCoorPastpopu("");
+    setCoorPresentpopu("");
+    setCoorPopulation("");
   }
 
-  const handleMapClick = (e,name) => {
+  const handleMapClick = (e,name,land,popu_past,popu_present,population,revenue) => {
+
+    
     resetAllFilters();
 
     setCoorlat(e.latLng.lat())
     setCoorlong(e.latLng.lng())
     setCoorID(name);
+    setCoorLand(land);
+    setCoorPastpopu(popu_past);
+    setCoorPresentpopu(popu_present);
+    setCoorPopulation(population);
+    setCoorRevenue(revenue);
+
+
 
 
 
@@ -67,7 +82,10 @@ function MapPage() {
         setCoorname(data.results[0].formatted_address)
 
       })
-      .catch(err => console.warn(err.message));
+      .catch(err => 
+        
+      toastRef.current.showToast(err.message)
+      );
 
     return setBasicModal(!basicModal); //triggering the modal
   };
@@ -92,7 +110,9 @@ function MapPage() {
         setCoorname(data.results[0].formatted_address)
 
       })
-      .catch(err => console.warn(err.message));
+      .catch(err => 
+      toastRef.current.showToast(err.message)
+      );
 
     return setBasicModal2(!basicModal2); //triggering the modal
   };
@@ -133,25 +153,31 @@ function MapPage() {
         popu_present: coorPresentpopu,
         popu_future: future,
         popu_past: coorPastpopu,
-        landsize: coorlandSize,
+        land_size: coorlandSize,
         population: coorPopulation,
         revenue: coorRevenue,
 
       });
-     alert("Successful Adding Marker")
+      toastRef.current.showToast("Successful Adding Marker")
+
+     //alert("")
       }
 
 
-      alert("Please do not leave fields blank")
+      //alert("Please do not leave fields blank")
 
+      toastRef.current.showToast("Please do not leave fields blank")
 
       //success
     } catch (e) {
       //error
-      alert("Error adding Marker : " , e)
+
+      toastRef.current.showToast("Error adding Marker : " , e)
+
+      //alert("Error adding Marker : " , e)
 
 
-      console.error("Error adding document: ", e);
+  //    console.error("Error adding document: ", e);
     }
   }
 
@@ -173,28 +199,43 @@ function MapPage() {
 
         const future = coorPresentpopu * 0.49;
 
+ /*        console.log(coorname,
+          coorland,
+          coorPastpopu, coorPresentpopu, 
+           coorlandSize,coorPopulation,coorRevenue, 
+           + "\n" + future)
+ */
 
-      const updateMarker = await updateDoc(docRef, {
+       const updateMarker = await updateDoc(docRef, {
         coords: new GeoPoint(coorlat, coorlong),
         place: coorname,
         land: coorland,
         popu_present:coorPresentpopu,
         popu_past: coorPastpopu,
         popu_future:future,
-        landsize: coorlandSize,
+        land_size: coorlandSize,
         population: coorPopulation,
-        revenue: coorPopulation,
+        revenue: coorRevenue,
       });
+ 
+      toastRef.current.showToast("Successful update Marker")
 
-        alert("Successful update Marker")
+//        alert("Successful update Marker")
+        
     }   
+    toastRef.current.showToast("Please do not leave fields blank")
+
     
-    alert("Please do not leave fields blank")
+    
+  //  alert("Please do not leave fields blank")
 
       //success
     } catch (e) {
+
+      toastRef.current.showToast("Error updating marker : " , e)
+
       //error
-      alert("Error updating marker : " , e)
+      //alert("Error updating marker : " , e)
 
     }
   }
@@ -207,15 +248,22 @@ function MapPage() {
       const delMark = await deleteDoc(doc(db, "testmarkers", coorID));
       //success
 
-      alert("Successful delete Marker")
+      //alert("Successful delete Marker")
+
+      toastRef.current.showToast("Successful delete Marker")
 
     }
 
-    alert("Unable to delete Marker")
+    toastRef.current.showToast("Unable to delete Marker")
+
+ //   alert("Unable to delete Marker")
 
     } catch (e) {
       //error
-      alert("Error deleting marker : " , e)
+
+    toastRef.current.showToast("Error deleting marker : ", e)
+
+     // alert("Error deleting marker : " , e)
 
     }
   }
@@ -234,7 +282,13 @@ function MapPage() {
             const newData = querySnapshot.docs
                 .map((doc) => ({...doc.data(), id:doc.id}));
               const newxx = querySnapshot.docs.map((doc)=>
-              ({ lat : doc.data().coords._lat, lng: doc.data().coords._long, name:doc.id}));
+              ({ lat : doc.data().coords._lat, lng: doc.data().coords._long,
+              name:doc.id,
+              land:doc.data().land,
+              popu_past:doc.data().popu_past,
+              popu_present:doc.data().popu_present,
+              population:doc.data().population,
+              revenue:doc.data().revenue}));
 
             setData(newxx);
 
@@ -281,6 +335,8 @@ function MapPage() {
 
   return (
     <>
+<ReactToast ref={toastRef} timeout={2000} />
+
       <div className="content-wrapper">
         <div className="row">
           <div className="col-12">
@@ -306,7 +362,9 @@ function MapPage() {
                { 
               data.map( (mark) => (
                                         
-                       <Marker options={{icon:customMarker}}    onClick={(e) => handleMapClick(e,mark.name)}
+                       <Marker options={{icon:customMarker}}    onClick={(e) => handleMapClick(e,mark.name,
+                        mark.land,mark.popu_past,mark.popu_present,
+                        mark.popu_present,mark.population,mark.revenue)}
                         key={createKey(mark)} position={mark} />
                     ))}   
 
@@ -337,6 +395,7 @@ function MapPage() {
                 value={coorlat}
                 onChange={(e) => setCoorlat(e.target.value)}
                 required
+                disabled
               />
               <MDBInput
                 wrapperClass="mb-4 w-100"
@@ -346,6 +405,7 @@ function MapPage() {
                 value={coorlong}
                 onChange={(e) => setCoorlong(e.target.value)}
                 required
+                disabled
               />
               <MDBInput
                 wrapperClass="mb-4 w-100"
@@ -355,6 +415,7 @@ function MapPage() {
                 value={coorname}
                 onChange={(e) => setCoorname(e.target.value)}
                 required
+                disabled
               />
               <MDBInput
                 wrapperClass="mb-4 w-100"
@@ -436,9 +497,9 @@ function MapPage() {
       </MDBModal>
       </form>
 
-      <form>
+     {/*  <form> */}
       <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
-        <MDBModalDialog class="modal-dialog modal-dialog-centered">
+        <MDBModalDialog className="modal-dialog modal-dialog-centered">
           <MDBModalContent>
             <MDBModalHeader>
               <MDBModalTitle>Existing Markers Business</MDBModalTitle>
@@ -453,6 +514,7 @@ function MapPage() {
                 onChange={(e) => setCoorID(e.target.value)}
                 hidden
                 required
+                disabled
               />
 
               <MDBInput
@@ -463,6 +525,7 @@ function MapPage() {
                 value={coorlat}
                 onChange={(e) => setCoorlat(e.target.value)}
                 required
+                disabled
               />
               <MDBInput
                 wrapperClass="mb-4 w-100"
@@ -472,6 +535,7 @@ function MapPage() {
                 value={coorlong}
                 onChange={(e) => setCoorlong(e.target.value)}
                 required
+                disabled
               />
               <MDBInput
                 wrapperClass="mb-4 w-100"
@@ -481,6 +545,8 @@ function MapPage() {
                 value={coorname}
                 onChange={(e) => setCoorname(e.target.value)}
                 required
+                disabled
+
               />
               <MDBInput
                 wrapperClass="mb-4 w-100"
@@ -569,7 +635,7 @@ function MapPage() {
           </MDBModalContent>
         </MDBModalDialog>
       </MDBModal>
-      </form>
+   {/*    </form> */}
     </>
   );
 }
