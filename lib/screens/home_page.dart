@@ -391,87 +391,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
                                     screenWidth: screenWidth,
                                     searchFlag: searchFlag))
                         : Container(),
-
                     //    getmarker(context), //to automatically show marker to map
-                    getDirections
-                        ? Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(15.0, 40.0, 15.0, 5),
-                            child: Column(
-                              children: [
-                                HomeOriginController(
-                                    originController: _originController),
-                                const SizedBox(height: 3.0),
-                                Container(
-                                  height: 50.0,
-                                  width: 280,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    color: Colors.white,
-                                  ),
-                                  child: TextFormField(
-                                    controller: _destinationController,
-                                    decoration: InputDecoration(
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                                horizontal: 20.0,
-                                                vertical: 15.0),
-                                        border: InputBorder.none,
-                                        hintText: 'Destination',
-                                        suffixIcon: Container(
-                                          width: 96.8,
-                                          child: Row(
-                                            children: [
-                                              IconButton(
-                                                  onPressed: () async {
-                                                    var directions =
-                                                        await MapServices()
-                                                            .getDirections(
-                                                                _originController
-                                                                    .text,
-                                                                _destinationController
-                                                                    .text);
-                                                    _markers = {};
-                                                    _polylines = {};
-                                                    gotoPlace(
-                                                      directions[
-                                                              'start_location']
-                                                          ['lat'],
-                                                      directions[
-                                                              'start_location']
-                                                          ['lng'],
-                                                      directions['end_location']
-                                                          ['lng'],
-                                                      directions['end_location']
-                                                          ['lat'],
-                                                      directions['bounds_ne'],
-                                                      directions['bounds_sw'],
-                                                    );
-                                                    _setPolyline(directions[
-                                                        'polyline_deoded']);
-                                                  },
-                                                  icon:
-                                                      const Icon(Icons.search)),
-                                              IconButton(
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      getDirections = false;
-                                                      _originController.text =
-                                                          '';
-                                                      _destinationController
-                                                          .text = '';
-                                                    });
-                                                  },
-                                                  icon: const Icon(Icons.close))
-                                            ],
-                                          ),
-                                        )),
-                                  ),
-                                )
-                              ],
-                            ),
-                          )
-                        : Container()
                   ],
                 )
               ],
@@ -518,7 +438,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
                     radiusSlider = false;
                     pressedNear = false;
                     cardTapped = false;
-                    getDirections = true;
+                    getDirections = false;
                   });
                 },
               ),
