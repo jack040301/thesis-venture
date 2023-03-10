@@ -6,24 +6,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:main_venture/auth_screens/login.dart';
 
 import 'auth_screen.dart';
-
-// final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-// final CollectionReference _collection = _firestore.collection('users');
 
 class GoogleUserStaticInfo {
   final name = FirebaseAuth.instance.currentUser!.displayName;
   final uid = FirebaseAuth.instance.currentUser!.uid;
   final email = FirebaseAuth.instance.currentUser!.email;
-  // final names = FirebaseAuth.instance.currentUser!.displayName.split(' ');
-  //  f(String? name){
-  //   if(name != null && name.length > 1){
-  //       final Name = FirebaseAuth.instance.currentUser?.displayName.split(' ');
-  //     late final lastname = Name?[0];
-  //     late final firstname = Name?.length;
-  //     }
-  // }
+
   final names = FirebaseAuth.instance.currentUser!.displayName?.split(' ');
   late final lastname = names![0];
   late final firstname = names!.length > 1 ? names![1] : '';
@@ -38,6 +29,8 @@ class FunctionAuthentication with GoogleUserStaticInfo {
     try {
       await GoogleSignIn().signOut();
       await FirebaseAuth.instance.signOut();
+      // Navigator.of(context).pushReplacement(
+      // MaterialPageRoute(builder: (context) => const LoginScreen()));
       //  print('Signout initiated');
     } catch (e) {
       //print("error in sign in $e");
@@ -113,10 +106,16 @@ class PopSnackbar extends FunctionAuthentication {
             TextButton(
               child: const Text('Logout'),
               onPressed: () async {
-                await logOut().then((value) =>
-                    Navigator.of(context, rootNavigator: true).pushReplacement(
-                        MaterialPageRoute(
-                            builder: (context) => const AuthScreen())));
+                // FunctionAuthentication;
+                // await logOut().then((value) =>
+                //     Navigator.of(context, rootNavigator: true)
+                //         .pushAndRemoveUntil(MaterialPageRoute(
+                //             builder: (context) => const LoginScreen())));
+                await logOut().then((value) => Navigator.of(context,
+                        rootNavigator: true)
+                    .pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                        (route) => false));
               },
             ),
           ],
@@ -139,15 +138,6 @@ class Functio {
     //create a new credential
     final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-
-    // await users.doc(uid).set({
-    //   'firstname': 'Firstname',
-    //   'lastname': 'Lastname',
-    //   'email': 'Email',
-    // }).onError((error, stackTrace) => Println(error.toString()));
-
-    // final FirebaseFirestore  user =
-    //     (await FirebaseAuth.instance.signInWithCredential(credential)).user;
 
     //once signed in, return the user credential
     return await FirebaseAuth.instance.signInWithCredential(credential);

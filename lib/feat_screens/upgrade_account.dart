@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:main_venture/auth_screens/login.dart';
+import 'package:main_venture/screens/home_page.dart';
 
 class UpgradeAccScreen extends StatefulWidget {
   const UpgradeAccScreen({super.key});
@@ -99,17 +101,34 @@ class WidgetUpgradeAccount extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                color: Colors.white,
-                padding: const EdgeInsets.fromLTRB(35, 2, 35, 250),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                  );
+                },
+                // color: Colors.white,
+                // padding: const EdgeInsets.fromLTRB(35, 2, 35, 250),
                 child: const Center(
                   child: Text("ucc.venture@gmail.com",
                       style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          color: Color.fromARGB(255, 44, 45, 48),
-                          fontSize: 17.0)), // <-- Text
+                        color: Color.fromARGB(255, 74, 74, 74),
+                        fontSize: 14.0,
+                      )), // <-- Text
                 ),
               ),
+              // Container(
+              //   color: Colors.white,
+              //   padding: const EdgeInsets.fromLTRB(35, 2, 35, 250),
+              //   child: const Center(
+              //     child: Text("ucc.venture@gmail.com",
+              //         style: TextStyle(
+              //             decoration: TextDecoration.underline,
+              //             color: Color.fromARGB(255, 44, 45, 48),
+              //             fontSize: 17.0)), // <-- Text
+              //   ),
+              // ),
               Container(
                 color: Colors.white,
                 padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
