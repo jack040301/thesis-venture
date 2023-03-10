@@ -4,8 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth, signInWithEmailAndPassword, doc,getDoc, db } from "../firebase";
 import { UserAuth } from "./context";
 
-import {Toast} from '../components/Toast/toast'
-/* import { useNavigate } from "react-router-dom"; */
+
+import ReactToast from "../components/Toast/toast"/* import Component of toast */
 
 import {
   MDBBtn,
@@ -20,6 +20,7 @@ import {
 } from "mdb-react-ui-kit";
 
 function Login() {
+  const toastRef = useRef()
 
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
@@ -45,7 +46,8 @@ function Login() {
 
     }else{
 
-        //Toast()
+//Toast message
+      toastRef.current.showToast("Youre not allowed to Login")
       return logout()
     }
   }
@@ -90,8 +92,10 @@ function Login() {
 
   return (
     <form>
-
-
+{/* Toast Ui */}
+<ReactToast ref={toastRef} timeout={2000} />
+   
+   
     <MDBContainer fluid>
       <MDBRow className="d-flex justify-content-center align-items-center h-100">
         <MDBCol col="12">
