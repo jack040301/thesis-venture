@@ -114,17 +114,26 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
   }
 
   List<DropdownData> dropdownDatas = [];
+  List<DropdownDataAssumption> dropdownAssumption = [];
+
   Future getBusiness() async {
     await FirebaseFirestore.instance
         .collection("business")
         .get()
         .then((QuerySnapshot snapshot) => {
               snapshot.docs.forEach((documents) async {
+                var data = documents.data() as Map;
                 //var data = documents.data() as Map;
 
                 dropdownDatas.add(DropdownData(nameofbusiness: documents.id));
-              })
+                dropdownAssumption.add(DropdownDataAssumption(budgetassump:data['budgetassump']));
+              })  
             });
+
+
+          //  await FirebaseFirestore.instance.collection("assumptions").doc("budgetassump").get();
+
+
   }
 
   //this is the function for getting the users info in firestore
