@@ -10,10 +10,14 @@ class DialogQuestion {
 //////////////////////////////////////////////////////////////////////////////
   final String markerid;
 //use this string to get the clicked marker id
-  DialogQuestion(this.markerid, this.dropdownDatas); //do not remove this
-  CollectionReference mark = FirebaseFirestore.instance.collection("business");
+  DialogQuestion(this.markerid, this.dropdownDatas,
+      this.dropdownAssumption); //do not remove this
+  //CollectionReference mark = FirebaseFirestore.instance.collection("business");
   List<DropdownData> dropdownDatas = [];
+  List<DropdownDataAssumption> dropdownAssumption = [];
+
   var selectdropval = "";
+  var selectbusinessassump = "";
 
   var Questionall = const SnackBar(
     content: Text(
@@ -41,7 +45,7 @@ class DialogQuestion {
         MaterialPageRoute(
             builder: (context) => DemogResult(
                 marker: markerid,
-                budget: areaBudgetController.text,
+                budget: selectbusinessassump,
                 ideal: selectdropval)));
   }
 
@@ -99,6 +103,8 @@ class DialogQuestion {
         context: context,
         builder: (context) {
 //bool isChecked = false;
+          // value slider
+
           return StatefulBuilder(builder: (context, setState) {
             return AlertDialog(
               content: Form(
@@ -206,6 +212,12 @@ class DialogQuestion {
                       ),
                     ),
 
+                    //this is another
+
+                    const SizeBoxTwenty(),
+
+//DROPDOWN
+
 //TEXT BOX 2
                     const SizeBoxTwenty(),
 
@@ -215,7 +227,79 @@ class DialogQuestion {
                           fontSize: 16.0,
                         )),
                     const SizeBoxTen(),
-                    TextFormField(
+
+                    DropdownButtonFormField<DropdownDataAssumption>(
+                      icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                      isExpanded: true,
+                      validator: (value) {
+                        return selectbusinessassump!.isNotEmpty
+                            ? null
+                            : 'Invalid Input';
+                      },
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all((15.0)),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 230, 230, 230)
+                                  .withOpacity(0.5),
+                              width: 2),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 230, 230, 230)
+                                  .withOpacity(0.5),
+                              width: 2),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 230, 230, 230)
+                                  .withOpacity(0.5),
+                              width: 2),
+                        ),
+                        filled: true,
+                        fillColor: const Color.fromARGB(255, 230, 230, 230),
+                      ),
+                      dropdownColor: const Color.fromARGB(255, 230, 230, 230),
+//value: dropdownValue,
+                      items: dropdownAssumption
+                          .map<DropdownMenuItem<DropdownDataAssumption>>(
+                              (DropdownDataAssumption data) {
+                        return DropdownMenuItem<DropdownDataAssumption>(
+                          value: data,
+                          child: Text(data.budgetassump),
+                        );
+                      }).toList(),
+                      /*  dropitems
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value,
+                                style: const TextStyle(
+                                  color: Color.fromARGB(255, 74, 74, 74),
+                                  fontSize: 14.0,
+                                )));
+                      }).toList(), */
+                      onChanged: (value) {
+                        setState(() {
+// selectedbusinesstype = selecteditem;
+                          selectbusinessassump = value!.budgetassump;
+                        });
+                      },
+//value: selectedbusinesstype,
+                      hint: const Text('Choose Budget'),
+                      style: const TextStyle(
+                        color: Color.fromARGB(255, 74, 74, 74),
+                        fontSize: 15.0,
+                      ),
+                    ),
+
+                    /*    TextFormField(
                         controller: areaBudgetController,
                         validator: (areaBudgetController) {
                           return areaBudgetController!.isNotEmpty
@@ -252,7 +336,7 @@ class DialogQuestion {
                             borderSide: BorderSide(
                                 color: Colors.redAccent.withOpacity(0.5)),
                           ),
-                        )),
+                        )), */
 
 // TEXT BOX 3
 
@@ -311,21 +395,18 @@ class DialogQuestion {
 
                         onPressed: () async {
                           // ito yun sana kapag initinallize dapat
-                          if (selectdropval.isEmpty) {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(Questionall);
-                          } else if (areaBudgetController.text.isEmpty ||
+                          if (selectdropval.isEmpty ||
+                              selectbusinessassump.isEmpty ||
                               areaController.text.isEmpty) {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(Questionall);
-                          } else if (areaBudgetController.text ==
-                                  0.toString() ||
-                              areaController.text == 0.toString()) {
+                          } else if (areaController.text == 0.toString()) {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(Questionall1);
-                          } else if (areaBudgetController.text ==
-                              200328.toString()) {
-                            await demogResult(context);
+                          } else if (selectbusinessassump.isNotEmpty &&
+                              selectbusinessassump.isNotEmpty &&
+                              areaController.text.isNotEmpty) {
+                            demogResult(context);
                           } else {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(Questionall2);

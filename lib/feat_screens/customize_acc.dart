@@ -28,6 +28,7 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  final _currentPassword = TextEditingController();
 
   final FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -172,9 +173,6 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
                   ),
                 ),
               ), */
-              const SizedBox(
-                height: 20.0,
-              ),
 
               //NEW PASSWORD
               Container(
@@ -371,10 +369,11 @@ void _changePassword(
     //     popSnackbar.popsnackbar("Successfully update the password"));
 
     //if (confirmPassword == password) {
+
     _users.doc(GoogleUserStaticInfo().uid).update({
       "firstname": fname,
       "lastname": lname,
-      "password": password,
+      // "password": password,
     });
 
     ScaffoldMessenger.of(context).showSnackBar(
@@ -392,6 +391,8 @@ void _changePassword(
     ScaffoldMessenger.of(context).showSnackBar(
         popSnackbar.popsnackbar("Password cant be changed due to $error"));
   });
+
+  // ignore: invalid_return_type_for_catch_error
 
 /*   await user
       .updateDisplayName(displayName)

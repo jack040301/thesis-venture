@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'data_population.dart';
 
 class BarchartPop extends StatelessWidget {
- // final String markerid;
-  //const BarchartPop({super.key, required this.markerid});
- const BarchartPop({super.key});
+ final String markerid;
+const BarchartPop({super.key, required this.markerid});
+ //const BarchartPop({super.key});
   @override
   Widget build(BuildContext context) {
  //   String docuid = markerid;
@@ -15,7 +15,7 @@ class BarchartPop extends StatelessWidget {
         FirebaseFirestore.instance.collection("testmarkers");
 
     return FutureBuilder<DocumentSnapshot>(
-      future: population.doc("SZRH2HoNBjRGpY4RuaoD").get(),
+      future: population.doc(markerid).get(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {
           return const Text("Error");

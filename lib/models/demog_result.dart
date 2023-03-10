@@ -9,6 +9,9 @@ import 'forecasting/forecasting_linechart.dart';
 import 'package:main_venture/models/forecasting/forecasting_linechart.dart';
 import 'forecasting/forecasting_population.dart';
 import 'package:main_venture/userInfo.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 
 import 'dart:io';
 import 'dart:typed_data';
@@ -45,7 +48,7 @@ class _DemogResultState extends State<DemogResult> {
   }
 
   // ignore: non_constant_identifier_names
-  Future<void> StatisForecasting(BuildContext context) async {
+  /*  Future<void> StatisForecasting(BuildContext context) async {
     await Navigator.push(
       context,
       MaterialPageRoute(
@@ -54,7 +57,7 @@ class _DemogResultState extends State<DemogResult> {
             ),
       ),
     );
-  }
+  } */
 
   Future<void> ChartForecasting(BuildContext context) async {
     await Navigator.push(
@@ -75,17 +78,20 @@ class _DemogResultState extends State<DemogResult> {
       (QuerySnapshot doc) {
         doc.docs.forEach((documents) async {
           var data = documents.data() as Map;
+
+          //  debugPrint(data);
+
           businessname = data['name'];
           businessbudget = data['budget'];
           landbudget = data['land value'];
           landrevenue = data['revenue'];
           landpop = data['population'];
           //landbudget = data['land value'];
-          landrevenue = data['revenue'];
+          //    landrevenue = data['revenue'];
           //landpop = data['population'];
 
 // for coversion of var to String
-          landbudgetstrA = data['land value'].toString();
+          // landbudgetstrA = data['land value'].toString();
           revstrA = data['revenue_standard'].toString();
           popstrA = data['population'].toString();
         });
@@ -186,7 +192,7 @@ class _DemogResultState extends State<DemogResult> {
           String landbudgetstrB = data['land'].toString();
           double landbudgetdblB = double.parse(landbudgetstrB);
 
-          double landbudgetdblA = double.parse(landbudgetstrA);
+          double landbudgetdblA = double.parse(landbudget);
           /*  double landbudgetdblfinalA = landbudgetdblB - landbudgetdblB;
           double landbudgetdblfinalB = landbudgetdblB - landbudgetdblfinalA;
           double landbudgetdblfinalC =
@@ -447,6 +453,54 @@ class _DemogResultState extends State<DemogResult> {
       },
     );
   }
+}
+
+//PDF DESIGN
+Future<Uint8List> buildPdf(
+    PdfPageFormat format,
+    String businessbudget,
+    businessname,
+    popstrB,
+    revstrB,
+    landstr,
+    landbudgetstrB,
+    resultfinal,
+    ideal) async {
+  // Create the Pdf document
+  final pw.Document doc = pw.Document();
+
+  // Add one page with centered text "Hello World"
+  doc.addPage(
+    pw.Page(
+      pageFormat: format,
+      build: (pw.Context context) {
+        return pw.ConstrainedBox(
+          constraints: const pw.BoxConstraints.expand(),
+          child: pw.FittedBox(
+            // ignore: prefer_interpolation_to_compose_strings
+            child: pw.Text(businessbudget +
+                "\n " +
+                businessname +
+                "\n " +
+                popstrB +
+                "\n " +
+                revstrB +
+                "\n " +
+                landstr +
+                "\n " +
+                landbudgetstrB +
+                "\n " +
+                resultfinal +
+                "\n " +
+                ideal),
+          ),
+        );
+      },
+    ),
+  );
+
+  // Build and return the final Pdf file data
+  return await doc.save();
 }
 
 class IdealBusinessResult extends StatelessWidget {
