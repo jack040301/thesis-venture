@@ -123,20 +123,18 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
         .then((QuerySnapshot snapshot) => {
               snapshot.docs.forEach((documents) async {
                 var data = documents.data() as Map;
-                      
+
                 //var data = documents.data() as Map;
 
                 dropdownDatas.add(DropdownData(nameofbusiness: documents.id));
-                dropdownAssumption.add(DropdownDataAssumption(budgetassump:data['budgetassump']));
+                dropdownAssumption.add(
+                    DropdownDataAssumption(budgetassump: data['budgetassump']));
 
-              //  debugPrint(data['budgetassump']);
-              })  
+                //  debugPrint(data['budgetassump']);
+              })
             });
 
-
-          //  await FirebaseFirestore.instance.collection("assumptions").doc("budgetassump").get();
-
-
+    //  await FirebaseFirestore.instance.collection("assumptions").doc("budgetassump").get();
   }
 
   //this is the function for getting the users info in firestore
@@ -209,7 +207,9 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 
                 allmarkers.add(Marker(
                     onTap: () async {
-                      await DialogQuestion(documents.id, dropdownDatas, dropdownAssumption).showMyDialog(context);
+                      await DialogQuestion(
+                              documents.id, dropdownDatas, dropdownAssumption)
+                          .showMyDialog(context);
                     },
                     infoWindow: InfoWindow(
                       title: data["place"],
