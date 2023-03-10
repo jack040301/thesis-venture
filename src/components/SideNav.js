@@ -107,9 +107,6 @@ export default function SideNav({ user, setAuthState, setUser }) {
                   <p onClick={toggleShow}>Logout</p>
                 </a>
               </li>
-              
-              
-
             </ul>
           </nav>
         </div>

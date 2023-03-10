@@ -28,6 +28,10 @@ function MapPage() {
   const [coorlandSize, setCoorlandSize] = useState('');
   const [coorPopulation, setCoorPopulation] = useState('');
   const [coorRevenue, setCoorRevenue] = useState('');
+  const [coorPastpopu, setCoorPastpopu] = useState('');
+  const [coorPresentpopu, setCoorPresentpopu] = useState('');
+
+
   const [coorID, setCoorID] = useState('');
   let markers = [ ]
 
@@ -112,15 +116,23 @@ function MapPage() {
           && coorland !== null && coorland !==""
           && coorlandSize !== null && coorlandSize !==""
           && coorPopulation !== null && coorPopulation !==""
+          && coorPastpopu !== null && coorPastpopu !==""
+          && coorPresentpopu !== null && coorPresentpopu !==""
+
+
           ){
    
        
+            const future = coorPresentpopu * 0.49;
 
 
       const docRef = await addDoc(collection(db, "testmarkers"), {
         coords: new GeoPoint(coorlat, coorlong),
         place: coorname,
         land: coorland,
+        popu_present: coorPresentpopu,
+        popu_future: future,
+        popu_past: coorPastpopu,
         landsize: coorlandSize,
         population: coorPopulation,
         revenue: coorRevenue,
@@ -154,12 +166,21 @@ function MapPage() {
       && coorland !== null && coorland !==""
       && coorlandSize !== null && coorlandSize !==""
       && coorPopulation !== null && coorPopulation !==""
+      && coorPastpopu !== null && coorPastpopu !==""
+      && coorPresentpopu !== null && coorPresentpopu !==""
+
       ){
+
+        const future = coorPresentpopu * 0.49;
+
 
       const updateMarker = await updateDoc(docRef, {
         coords: new GeoPoint(coorlat, coorlong),
         place: coorname,
         land: coorland,
+        popu_present:coorPresentpopu,
+        popu_past: coorPastpopu,
+        popu_future:future,
         landsize: coorlandSize,
         population: coorPopulation,
         revenue: coorPopulation,
@@ -363,6 +384,27 @@ function MapPage() {
                 onChange={(e) => setCoorPopulation(e.target.value)}
                 required
               />
+
+              <MDBInput
+                wrapperClass="mb-4 w-100"
+                placeholder="Past Population "
+                id="formControlLg"
+                type="number"
+                value={coorPastpopu}
+                onChange={(e) => setCoorPastpopu(e.target.value)}
+                required
+              />
+
+              <MDBInput
+                wrapperClass="mb-4 w-100"
+                placeholder="Present Population "
+                id="formControlLg"
+                type="number"
+                value={coorPresentpopu}
+                onChange={(e) => setCoorPresentpopu(e.target.value)}
+                required
+              />
+
               <MDBInput
                 wrapperClass="mb-4 w-100"
                 placeholder="Revenue"
@@ -468,6 +510,27 @@ function MapPage() {
                 onChange={(e) => setCoorPopulation(e.target.value)}
                 required
               />
+              
+              <MDBInput
+                wrapperClass="mb-4 w-100"
+                placeholder="Total Population "
+                id="formControlLg"
+                type="number"
+                value={coorPastpopu}
+                onChange={(e) => setCoorPastpopu(e.target.value)}
+                required
+              />
+
+            <MDBInput
+                wrapperClass="mb-4 w-100"
+                placeholder="Present Population "
+                id="formControlLg"
+                type="number"
+                value={coorPresentpopu}
+                onChange={(e) => setCoorPresentpopu(e.target.value)}
+                required
+              />
+
               <MDBInput
                 wrapperClass="mb-4 w-100"
                 placeholder="Revenue"
