@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:main_venture/screens/home_page.dart';
 import 'package:main_venture/auth_screens/login.dart';
+import 'package:flutter/services.dart';
 
 import '../userInfo.dart';
 
@@ -92,6 +93,10 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               ),
               TextField(
                 controller: _firstnameController,
+                enableInteractiveSelection: false,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9_.]')),
+                ],
                 decoration: InputDecoration(
                   labelStyle: const TextStyle(
                     color: Colors.black,
@@ -121,6 +126,10 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               ),
               TextField(
                 controller: _lastnameController,
+                enableInteractiveSelection: false,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9_.]')),
+                ],
                 decoration: InputDecoration(
                   labelStyle: const TextStyle(
                     color: Colors.black,
@@ -184,6 +193,11 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
                 controller: _passwordController,
                 obscureText: _obscured,
                 focusNode: textFieldFocusNode,
+                enableInteractiveSelection: false,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(
+                      RegExp('[=a-zA-Z0-9á-úÁ-Ú_.!@#%^&*()/{}:;' '""<>-],')),
+                ],
                 decoration: InputDecoration(
                   hintText: '************',
                   labelStyle: const TextStyle(
@@ -225,6 +239,11 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               TextField(
                 obscureText: true,
                 controller: _confirmPasswordController,
+                enableInteractiveSelection: false,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(
+                      RegExp('[=a-zA-Z0-9á-úÁ-Ú_.!@#%^&*()/{}:;' '""<>-],')),
+                ],
                 decoration: InputDecoration(
                   hintText: '************',
                   labelStyle: const TextStyle(

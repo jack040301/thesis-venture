@@ -68,7 +68,8 @@ class ProfileNav {
                               ),
                         label: Text(
                             //  fname = firstname.length > 1? firstname![1];
-                            "${firstname[0].toUpperCase() + firstname.substring(1).toLowerCase()} ${lastname[0].toUpperCase() + lastname.substring(1).toLowerCase()}", //display firstname and lastname from the firestore
+                            "$firstname $lastname",
+                            // "${firstname[0].toUpperCase() + firstname.substring(1).toLowerCase()} ${lastname[0].toUpperCase() + lastname.substring(1).toLowerCase()}", //display firstname and lastname from the firestore
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 22.0)),
                       ),
