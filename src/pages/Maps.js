@@ -213,7 +213,7 @@ function MapPage() {
         popu_present:coorPresentpopu,
         popu_past: coorPastpopu,
         popu_future:future,
-        landsize: coorlandSize,
+        land_size: coorlandSize,
         population: coorPopulation,
         revenue: coorRevenue,
       });
