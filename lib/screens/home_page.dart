@@ -35,7 +35,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
   Timer? _debounce;
 
 // toggling Ui as we need
-  bool searchToggle = false;
+  bool searchToggle = true;
 //
 //  bool searchToggle = false;
   bool radiusSlider = false;
@@ -331,16 +331,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
                                           border: InputBorder.none,
                                           prefixIcon: const Icon(Icons.search),
                                           hintText: 'Search',
-                                          suffixIcon: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  searchToggle = false;
-                                                  searchController.text = '';
-                                                  _markers = {};
-                                                  searchFlag.toggleSearch();
-                                                });
-                                              },
-                                              icon: const Icon(Icons.close))),
+                                          ),
                                       onChanged: (value) {
                                         if (_debounce?.isActive ?? false) {
                                           _debounce?.cancel();
@@ -415,42 +406,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
                   UserInfolastname:
                       UserInfolastname), //breaking the Widget of floating button and passing the data from the stateless widget below
               // const HomeFloatingDialog(),
-              FloatingActionButton(
-                disabledElevation: 0,
-                elevation: 0.0,
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black,
-                mini: true,
-                heroTag: null,
-                child: const Icon(Icons.search),
-                onPressed: () {
-                  setState(() {
-                    searchToggle = true;
-                    radiusSlider = false;
-                    pressedNear = false;
-                    cardTapped = false;
-                    getDirections = false;
-                  });
-                },
-              ),
-              FloatingActionButton(
-                disabledElevation: 0,
-                elevation: 0.0,
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black,
-                mini: true,
-                heroTag: null,
-                child: const Icon(Icons.navigation),
-                onPressed: () {
-                  setState(() {
-                    searchToggle = false;
-                    radiusSlider = false;
-                    pressedNear = false;
-                    cardTapped = false;
-                    getDirections = false;
-                  });
-                },
-              ),
+
             ],
           ),
           resizeToAvoidBottomInset: false,
