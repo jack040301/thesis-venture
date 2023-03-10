@@ -7,6 +7,7 @@ import Configuration from "./pages/Configuration";
 import Header from "./components/Header";
 import Sidenav from "./components/SideNav";
 import AddModerator from "./pages/AddModerator";
+import ManageModerator from "./pages/ManageModerator";
 import Login from "./auth/Login";
 import ProtectedRoute from "./auth/PrivateRoute";
 import { AuthContextProvider } from "./auth/context";
@@ -60,6 +61,17 @@ function App() {
                 <Header />
                 <Sidenav />
                 <AddModerator />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/managemoderator"
+            element={
+              <ProtectedRoute>
+                {" "}
+                <Header />
+                <Sidenav />
+                <ManageModerator />
               </ProtectedRoute>
             }
           />
