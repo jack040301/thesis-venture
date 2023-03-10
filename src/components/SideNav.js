@@ -108,10 +108,10 @@ export default function SideNav({ user, setAuthState, setUser }) {
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link to="/managemoderator" className="nav-link">
+                  <NavLink to="/managemoderator" className="nav-link">
                     <i className="nav-icon fas fa-users" />
                     <p>Manage Moderators</p>
-                  </Link>
+                  </NavLink>
                 </li>
                 {/* <li className="nav-item">
                 <Link to="/request" className="nav-link">
