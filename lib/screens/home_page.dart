@@ -209,8 +209,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 
                 allmarkers.add(Marker(
                     onTap: () async {
-                      await DialogQuestion(documents.id, dropdownDatas, dropdownAssumption)
-                          .showMyDialog(context);
+                      await DialogQuestion(documents.id, dropdownDatas, dropdownAssumption).showMyDialog(context);
                     },
                     infoWindow: InfoWindow(
                       title: data["place"],

@@ -10,8 +10,7 @@ class DialogQuestion {
 //////////////////////////////////////////////////////////////////////////////
   final String markerid;
 //use this string to get the clicked marker id
-  DialogQuestion(this.markerid, this.dropdownDatas,
-      this.dropdownAssumption); //do not remove this
+  DialogQuestion(this.markerid, this.dropdownDatas, this.dropdownAssumption); //do not remove this
   //CollectionReference mark = FirebaseFirestore.instance.collection("business");
   List<DropdownData> dropdownDatas = [];
   List<DropdownDataAssumption> dropdownAssumption = [];
@@ -292,7 +291,7 @@ class DialogQuestion {
                         });
                       },
 //value: selectedbusinesstype,
-                      hint: const Text('Choose your Business'),
+                      hint: const Text('Choose your Budget Range'),
                       style: const TextStyle(
                         color: Color.fromARGB(255, 74, 74, 74),
                         fontSize: 15.0,
@@ -351,9 +350,15 @@ class DialogQuestion {
                         controller: areaController,
                         enableInteractiveSelection: false,
                         validator: (areaController) {
-                          return areaController!.isNotEmpty
-                              ? null
-                              : 'Invalid Input';
+                          if (areaController!.isEmpty )  {
+                            return "Please fill this field correctly";
+                          }
+                          else if ( !RegExp (r'^[0-9]+$').hasMatch(areaController!))  {
+                            return "No Special characters allowed! Please fill this field correctly";
+                          }
+                          else {
+                            return null;
+                          }
                         },
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly
@@ -402,8 +407,7 @@ class DialogQuestion {
                               areaController.text.isEmpty) {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(Questionall);
-                          } else if (areaBudgetController.text ==
-                                  0.toString() ||
+                          } else if (
                               areaController.text == 0.toString()) {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(Questionall1);
