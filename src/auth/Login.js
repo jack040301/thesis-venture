@@ -1,8 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+import { auth, signInWithEmailAndPassword, doc,getDoc, db } from "../firebase";
 import { UserAuth } from "./context";
 
+import {Toast} from '../components/Toast/toast'
 /* import { useNavigate } from "react-router-dom"; */
 
 import {
@@ -23,21 +25,57 @@ function Login() {
   const [loading, setLoading] = useState(false)
   const navigate  = useNavigate ()
 
-  const { signIn } = UserAuth();
+  const { logout } = UserAuth();
 
 
   const [email, setEmail] = useState("");
 
   const [password, setPassword] = useState("");
 
+
+
+  async function getdata(userid){
+
+
+    const docRef = doc(db, "users",userid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists() && docSnap.data().role === "admin") {
+      navigate('/dashboard')
+
+    }else{
+
+        //Toast()
+      return logout()
+    }
+  }
+  
   async function handleSubmit(e) {
+
 
 
     e.preventDefault();
     setError('')
+
+    
     try {
-      await signIn(email, password)
-      navigate('/dashboard')
+
+       signInWithEmailAndPassword(auth, email, password)
+  .then((userCredential) =>  {
+    // Signed in
+    
+    var user = userCredential.user;
+  
+
+    getdata(user.uid)
+    
+  })
+  .catch((error) => {
+      console.log(error)
+  });   
+
+
+
     } catch (e) {
       alert(e.message)
       setError(e.message)
@@ -52,6 +90,8 @@ function Login() {
 
   return (
     <form>
+
+
     <MDBContainer fluid>
       <MDBRow className="d-flex justify-content-center align-items-center h-100">
         <MDBCol col="12">

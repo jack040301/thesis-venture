@@ -1,6 +1,7 @@
 /* import React from "react"; */
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
+import { logout } from "../auth/context";
 import { Link, NavLink } from "react-router-dom";
 import React, { useState } from "react";
 import {
@@ -19,8 +20,9 @@ export default function SideNav({ user, setAuthState, setUser }) {
   const signOutHandler = () => {
     signOut(auth)
       .then(() => {
-        setUser(null);
-        setAuthState("login");
+           // setUser(null)
+           // setAuthState("login")
+        //        setAuthState("login");
       })
       .catch((err) => console.log(err));
   };
@@ -100,7 +102,7 @@ export default function SideNav({ user, setAuthState, setUser }) {
                   <i className="nav-icon fas fa-tools" />
                   <p>Configuration</p>
                 </NavLink>
-              </li>
+              </li>              
               <li className="nav-item">
                 <a href="#" className="nav-link">
                   <i className="nav-icon fas fa-times" />

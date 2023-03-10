@@ -1,9 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import {addDoc,auth,collection,db} from "../firebase";
-import { UserAuth } from "../auth/context";
+import { UserAuth, createModAcc } from "../auth/context";
 import { updatePassword, reauthenticateWithCredential} from "../firebase";
-
-import { EmailAuthCredential } from "firebase/auth";
 
 import {
 
@@ -14,6 +12,12 @@ import {
 } from "mdb-react-ui-kit";
 import { EmailAuthProvider } from "firebase/auth";
 
+//const navigate  = useNavigate ();
+//const [email, setEmail] = useState("");
+
+//const [password, setPassword] = useState("");
+//const [rPassword, setRetypePassword] = useState("");
+
 function Config() {
       
   const [formValue, setFormValue] = useState({
@@ -22,8 +26,16 @@ function Config() {
     confirmpass: "",
   });
 
+
+  const [formMod, setformMod] = useState({
+    modEmail: "",   
+    modPass: "",
+    modConfirmpass: "",
+  });
+
   const [configemail, setConfigEmail] = useState("")
   const [error, setError] = useState("")
+
 
 const { createUser, user } = UserAuth();
 
@@ -34,24 +46,36 @@ const { createUser, user } = UserAuth();
       password: "",
       confirmpass: "",
     })
+
   }
+
+  function resetallMod(){
+
+    setformMod({
+      modEmail: "",   
+      modPass: "",
+      modConfirmpass: "",
+    })
+
+  }
+
 
   var emal = user.email;
   
 
 
-  /* async function handleSubmit(e) {
+ async function AddModerator(e) {
 
     e.preventDefault();
     setError('')
     try {
-    if(formValue.password === formValue.confirmpass){  
-      await createUser(formValue.email, formValue.password).then(() =>
+    if(formMod.modPass === formMod.modConfirmpass){  
+      await createUser(formMod.email, formMod.modPass).then(() =>
     {
       addDoc(collection(db, "users"), {
         uid: user.uid,
         authProvider: "local",
-        email: formValue.email,
+        email: formMod.modEmail,
         role:'admin',
       });
 
@@ -64,7 +88,7 @@ const { createUser, user } = UserAuth();
       alert(err.message)
     })
 
-    resetall();
+    resetallMod()
     
     }else{
 
@@ -79,7 +103,7 @@ const { createUser, user } = UserAuth();
 
      // console.log(e.message)
     }
-  };  */
+  };  
 
 
   async function handleSubmit(e) {
@@ -146,6 +170,10 @@ reauthenticateWithCredential(user, emailCred).then(() => {
   const onChange = (e) => {
     setConfigEmail(user.email)
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
+  };
+
+  const onChangeMod = (e) => {
+    setFormValue({ ...formMod, [e.target.name]: e.target.value });
   };
 
   return (
@@ -253,6 +281,60 @@ reauthenticateWithCredential(user, emailCred).then(() => {
                   <MDBCol md="8">
                     <button type="submit" onClick={handleSubmit} className="btn btn-primary">
                       Save Changes
+                    </button>
+                  </MDBCol>
+                  <MDBCol md="8">
+                  <h3 className="card-title"> Moderator</h3>
+                  </MDBCol>
+                  
+                  <MDBCol md="8">
+                    <input
+                      value={formMod.email}
+                      name="email"
+                      onChange={onChangeMod}
+                      id="validationCustom012"
+                      required
+                      type="email"
+                      /*  label="Password" */
+                      placeholder="Email"
+                      class="form-control"
+                      style={{ marginBottom: 10 }}
+                    />
+                  </MDBCol>
+
+                  <MDBCol md="8">
+                    <input
+                      value={formMod.modPass}
+                      name="password"
+                      onChange={onChangeMod}
+                      id="validationCustom08"
+                      required
+                      type="password"
+                      /*  label="Password" */
+                      placeholder="Password"
+                      class="form-control"
+                      style={{ marginBottom: 10 }}
+                    />
+                  </MDBCol>
+
+                  <MDBCol md="8">
+                    <input
+                      value={formMod.modConfirmpass}
+                      name="confirmpass"
+                      onChange={onChangeMod}
+                      id="validationCustom09"
+                      required
+                      type="password"
+                      /*  label="Confirm Password" */
+                      placeholder="Confirm Password"
+                      class="form-control"
+                      style={{ marginBottom: 10 }}
+                    />
+                  </MDBCol>
+
+                  <MDBCol md="8">
+                    <button type="submit" onClick={AddModerator} className="btn btn-primary">
+                      Add moderator account
                     </button>
                   </MDBCol>
                 </MDBRow>

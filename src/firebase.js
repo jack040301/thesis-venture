@@ -12,6 +12,7 @@ import {getFirestore,  query, GeoPoint,
 onSnapshot,
   doc,
   getDocs,
+  getDoc,
   updateDoc,
   deleteDoc,
   addDoc,} from 'firebase/firestore'
@@ -203,4 +204,4 @@ const credential = promptF
  */
 
 
-export {reauthenticateWithCredential,auth,doc,query,getDocs,onSnapshot,updateDoc,deleteDoc,GeoPoint,addDoc,collection, db, registerWithEmailAndPassword,  logout, sendPasswordReset, handleUserProfile, createUserWithEmailAndPassword, updatePassword}
+export {getDoc, where, signInWithEmailAndPassword,reauthenticateWithCredential,auth,doc,query,getDocs,onSnapshot,updateDoc,deleteDoc,GeoPoint,addDoc,collection, db, registerWithEmailAndPassword,  logout, sendPasswordReset, handleUserProfile, createUserWithEmailAndPassword, updatePassword}

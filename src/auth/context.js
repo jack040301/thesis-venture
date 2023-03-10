@@ -22,6 +22,11 @@ export const AuthContextProvider = ({ children }) => {
   };
 
    const signIn = (email, password) =>  {
+
+    //const uidAdmin = "1kViopJ11qaXUHNbaq85D0EYG6V2";
+
+
+
     return signInWithEmailAndPassword(auth, email, password)
    }
 
@@ -33,6 +38,8 @@ export const AuthContextProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       //console.log(currentUser);
       setUser(currentUser);
+
+      //console.log(currentUser)
     });
     return () => {
       unsubscribe();
@@ -49,3 +56,14 @@ export const AuthContextProvider = ({ children }) => {
 export const UserAuth = () => {
   return useContext(UserContext);
 };
+
+/* export const createModAcc = (email, password) => {
+  createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential)=>{
+    const user = userCredential.user;
+
+  }).catch((error)=>{
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  });
+ }; */
