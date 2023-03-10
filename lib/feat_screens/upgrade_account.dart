@@ -1,6 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:main_venture/auth_screens/login.dart';
 import 'package:main_venture/screens/home_page.dart';
+import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../userInfo.dart';
 
 class UpgradeAccScreen extends StatefulWidget {
   const UpgradeAccScreen({super.key});
@@ -102,11 +106,19 @@ class WidgetUpgradeAccount extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomePage()),
-                  );
+                onTap: () async {
+                  String email = Uri.encodeComponent("ucc.venture@gmail.com");
+                  String subject = Uri.encodeComponent("Hello Flutter");
+                  String body =
+                      Uri.encodeComponent("Hi! I'm Flutter Developer");
+                  print(subject); //output: Hello%20Flutter
+                  Uri mail =
+                      Uri.parse("mailto:$email?subject=$subject&body=$body");
+                  if (await launchUrl(mail)) {
+                    //email app opened
+                  } else {
+                    //email app is not opened
+                  }
                 },
                 // color: Colors.white,
                 // padding: const EdgeInsets.fromLTRB(35, 2, 35, 250),
@@ -139,60 +151,97 @@ class WidgetUpgradeAccount extends StatelessWidget {
   }
 }
 
+// showAlertDialog(BuildContext context) {
+//   // Create button
+//   Widget okButton = TextButton(
+//     child: const Text("OK"),
+//     onPressed: () {
+//       Navigator.of(context).pop();
+//     },
+//   );
+
+//   // Create AlertDialog
+//   AlertDialog alert = AlertDialog(
+//     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+//     content: Column(
+//       mainAxisSize: MainAxisSize.min,
+//       children: const <Widget>[
+//         Align(alignment: Alignment.topRight, child: Icon(Icons.close)),
+//         SizedBox(
+//           height: 30.0,
+//         ),
+//         Text(
+//           "Your request has been sent to the administrator!",
+//           textAlign: TextAlign.center,
+//           style: TextStyle(
+//               color: Colors.black, fontSize: 17.0, fontWeight: FontWeight.bold),
+//         ),
+//       ],
+//     ),
+//     actions: [
+//       Container(
+//         width: 350,
+//         height: 60,
+//         decoration: const BoxDecoration(
+//           color: Colors.white,
+//         ),
+//         padding: const EdgeInsets.fromLTRB(35, 2, 35, 15),
+//         child: RawMaterialButton(
+//           fillColor: const Color.fromARGB(255, 0, 110, 195),
+//           onPressed: () {},
+//           elevation: 0.0,
+//           padding: const EdgeInsets.fromLTRB(27, 10, 27, 10),
+//           shape:
+//               RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+//           child: const Text("Okay",
+//               style: TextStyle(color: Colors.white, fontSize: 15.0)),
+//         ),
+//       ),
+//     ],
+//   );
+
+//   // show the dialog
+//   showDialog(
+//     context: context,
+//     builder: (BuildContext context) {
+//       return alert;
+//     },
+//   );
+// }
 showAlertDialog(BuildContext context) {
-  // Create button
-  Widget okButton = TextButton(
-    child: const Text("OK"),
-    onPressed: () {
-      Navigator.of(context).pop();
-    },
-  );
-
-  // Create AlertDialog
-  AlertDialog alert = AlertDialog(
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-    content: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: const <Widget>[
-        Align(alignment: Alignment.topRight, child: Icon(Icons.close)),
-        SizedBox(
-          height: 30.0,
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Open Mailer"),
+          backgroundColor: Colors.redAccent,
         ),
-        Text(
-          "Your request has been sent to the administrator!",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              color: Colors.black, fontSize: 17.0, fontWeight: FontWeight.bold),
-        ),
-      ],
-    ),
-    actions: [
-      Container(
-        width: 350,
-        height: 60,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-        ),
-        padding: const EdgeInsets.fromLTRB(35, 2, 35, 15),
-        child: RawMaterialButton(
-          fillColor: const Color.fromARGB(255, 0, 110, 195),
-          onPressed: () {},
-          elevation: 0.0,
-          padding: const EdgeInsets.fromLTRB(27, 10, 27, 10),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-          child: const Text("Okay",
-              style: TextStyle(color: Colors.white, fontSize: 15.0)),
-        ),
-      ),
-    ],
-  );
-
-  // show the dialog
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
+        body: Container(
+            padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+            alignment: Alignment.topCenter,
+            child: Column(
+              children: [
+                ElevatedButton(
+                    onPressed: () async {
+                      String emailFrom = Uri.encodeComponent(
+                          GoogleUserStaticInfo().email.toString());
+                      String email =
+                          Uri.encodeComponent("mail@fluttercampus.com");
+                      String subject = Uri.encodeComponent("Hello Flutter");
+                      String body =
+                          Uri.encodeComponent("Hi! I'm Flutter Developer");
+                      print(subject); //output: Hello%20Flutter
+                      Uri mail = Uri.parse(
+                          "mailto:$email?subject=$subject&body=$body");
+                      if (await launchUrl(mail)) {
+                        //email app opened
+                      } else {
+                        //email app is not opened
+                        print('Could not launch $mail');
+                      }
+                    },
+                    child: Text("Mail Us Now"))
+              ],
+            )));
+  }
 }
