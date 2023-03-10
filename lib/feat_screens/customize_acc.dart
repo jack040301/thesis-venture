@@ -191,13 +191,14 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               ),
               TextField(
                 controller: _passwordController,
-                obscureText: _obscured,
-                focusNode: textFieldFocusNode,
                 enableInteractiveSelection: false,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(
-                      RegExp('[=a-zA-Z0-9á-úÁ-Ú_.!@#%^&*()/{}:;' '""<>-],')),
+                      RegExp('[a-zA-Z0-9á-úÁ-Ú_.!@#%^&*()/{}:;' '""<>-]')),
+                  // FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
                 ],
+                obscureText: _obscured,
+                focusNode: textFieldFocusNode,
                 decoration: InputDecoration(
                   hintText: '************',
                   labelStyle: const TextStyle(
@@ -242,7 +243,8 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
                 enableInteractiveSelection: false,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(
-                      RegExp('[=a-zA-Z0-9á-úÁ-Ú_.!@#%^&*()/{}:;' '""<>-],')),
+                      RegExp('[a-zA-Z0-9á-úÁ-Ú_.!@#%^&*()/{}:;' '""<>-]')),
+                  // FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
                 ],
                 decoration: InputDecoration(
                   hintText: '************',

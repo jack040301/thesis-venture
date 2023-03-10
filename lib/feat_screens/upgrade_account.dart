@@ -226,7 +226,7 @@ showAlertDialog(BuildContext context) {
                       String emailFrom = Uri.encodeComponent(
                           GoogleUserStaticInfo().email.toString());
                       String email =
-                          Uri.encodeComponent("mail@fluttercampus.com");
+                          Uri.encodeComponent("ucc.venture@gmail.com");
                       String subject = Uri.encodeComponent("Hello Flutter");
                       String body =
                           Uri.encodeComponent("Hi! I'm Flutter Developer");

@@ -272,7 +272,7 @@ class DialogQuestion {
                               : 'Invalid Input';
                         },
                         inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly
+                          FilteringTextInputFormatter.allow(RegExp('[0-9.]')),
                         ],
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(

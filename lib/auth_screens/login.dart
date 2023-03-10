@@ -269,18 +269,23 @@ class _LoginScreenState extends State<LoginScreen> {
                             ],
                           ),
                         ));
+                        // PopSnackbar popSnackbar = PopSnackbar();
 
                         await Functio().signInWithGoogle();
                         var usersCheck =
                             await users.doc(GoogleUserStaticInfo().uid).get();
 
                         if (!usersCheck.exists) {
+                          //  ScaffoldMessenger.of(context).showSnackBar(popSnackbar
+                          //   .popsnackbar("Successfully updated your account"));
                           await users.doc(GoogleUserStaticInfo().uid).set({
                             'firstname': GoogleUserStaticInfo().firstname,
                             'lastname': GoogleUserStaticInfo().lastname,
                             'email': GoogleUserStaticInfo().email,
                           }).onError((error, stackTrace) => (error.toString()));
                         }
+                        // ScaffoldMessenger.of(context).showSnackBar(popSnackbar
+                        //     .popsnackbar("Successfully updated your account"));
                       },
                       child: Material(
                         color: const Color.fromARGB(255, 0, 110, 195),
@@ -361,10 +366,10 @@ class _LoginScreenState extends State<LoginScreen> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Error Happened'),
+            title: const Text('Invalid Credentials.'),
             content: const SingleChildScrollView(
               child: Text(
-                  "The Email and Password that you Entered is Not valid ,Try Enter a valid Email and Password."),
+                  "Invalid Credentials. Please enter a valid Email Address and Password."),
             ),
             actions: <Widget>[
               TextButton(

@@ -121,6 +121,12 @@ class _SignupWidgetState extends State<SignupWidget> {
                       controller: firstNameController,
                       keyboardType: TextInputType.name,
                       textCapitalization: TextCapitalization.words,
+                      enableInteractiveSelection: false,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp('[a-zA-Z0-9.-]')),
+                        //FilteringTextInputFormatter.deny(RegExp(r'[/\\]')),
+                      ],
                       decoration: InputDecoration(
                         hintText: "Firstname",
                         filled: true,
@@ -169,6 +175,12 @@ class _SignupWidgetState extends State<SignupWidget> {
                       controller: lastNameController,
                       keyboardType: TextInputType.name,
                       textCapitalization: TextCapitalization.words,
+                      enableInteractiveSelection: false,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp('[a-zA-Z0-9.-]')),
+                        //FilteringTextInputFormatter.deny(RegExp(r'[/\\]')),
+                      ],
                       decoration: InputDecoration(
                         hintText: "Lastname",
                         filled: true,
@@ -332,59 +344,59 @@ class _SignupWidgetState extends State<SignupWidget> {
                     fontSize: 14.0,
                   )),
             ),
-            Row(children: const <Widget>[
-              Expanded(
-                child: Divider(
-                    color: Color.fromARGB(255, 105, 105, 105), endIndent: 20),
-              ),
-              Text(
-                "or",
-                style: TextStyle(color: Color.fromARGB(255, 74, 74, 74)),
-              ),
-              SizedBox(
-                height: 50.0,
-              ),
-              Expanded(
-                child: Divider(
-                    color: Color.fromARGB(255, 105, 105, 105), indent: 20),
-              ),
-            ]),
-            const SizedBox(
-              height: 10.0,
-            ),
-            GestureDetector(
-                onTap: () async {
-                  await Functio().signInWithGoogle();
-                  var usersCheck =
-                      await users.doc(GoogleUserStaticInfo().uid).get();
+            // Row(children: const <Widget>[
+            //   Expanded(
+            //     child: Divider(
+            //         color: Color.fromARGB(255, 105, 105, 105), endIndent: 20),
+            //   ),
+            //   Text(
+            //     "or",
+            //     style: TextStyle(color: Color.fromARGB(255, 74, 74, 74)),
+            //   ),
+            //   SizedBox(
+            //     height: 50.0,
+            //   ),
+            //   Expanded(
+            //     child: Divider(
+            //         color: Color.fromARGB(255, 105, 105, 105), indent: 20),
+            //   ),
+            // ]),
+            // const SizedBox(
+            //   height: 10.0,
+            // ),
+            // GestureDetector(
+            //     onTap: () async {
+            //       await Functio().signInWithGoogle();
+            //       var usersCheck =
+            //           await users.doc(GoogleUserStaticInfo().uid).get();
 
-                  if (!usersCheck.exists) {
-                    await users.doc(GoogleUserStaticInfo().uid).set({
-                      'firstname': GoogleUserStaticInfo().firstname,
-                      'lastname': GoogleUserStaticInfo().lastname,
-                      'email': GoogleUserStaticInfo().email,
-                    }).onError((error, stackTrace) => (error.toString()));
-                  }
-                },
-                child: Material(
-                  color: const Color.fromARGB(255, 0, 110, 195),
-                  elevation: 8,
-                  borderRadius: BorderRadius.circular(5.0),
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Ink.image(
-                            image:
-                                const AssetImage('assets/images/google2.png'),
-                            height: 40,
-                            width: 30),
-                        const SizedBox(width: 10.0, height: 50),
-                        const Text('Continue With Google',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 14.0)),
-                      ]),
-                ))
+            //       if (!usersCheck.exists) {
+            //         await users.doc(GoogleUserStaticInfo().uid).set({
+            //           'firstname': GoogleUserStaticInfo().firstname,
+            //           'lastname': GoogleUserStaticInfo().lastname,
+            //           'email': GoogleUserStaticInfo().email,
+            //         }).onError((error, stackTrace) => (error.toString()));
+            //       }
+            //     },
+            //     child: Material(
+            //       color: const Color.fromARGB(255, 0, 110, 195),
+            //       elevation: 8,
+            //       borderRadius: BorderRadius.circular(5.0),
+            //       clipBehavior: Clip.antiAliasWithSaveLayer,
+            //       child: Row(
+            //           mainAxisAlignment: MainAxisAlignment.center,
+            //           children: [
+            //             Ink.image(
+            //                 image:
+            //                     const AssetImage('assets/images/google2.png'),
+            //                 height: 40,
+            //                 width: 30),
+            //             const SizedBox(width: 10.0, height: 50),
+            //             const Text('Continue With Google',
+            //                 style:
+            //                     TextStyle(color: Colors.white, fontSize: 14.0)),
+            //           ]),
+            //     ))
           ],
         ),
       ),
