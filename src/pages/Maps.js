@@ -49,14 +49,26 @@ function MapPage() {
     setCoorlandSize("");
     setCoorLand("");
     setCoorRevenue("");
+    setCoorPastpopu("");
+    setCoorPresentpopu("");
+    setCoorPopulation("");
   }
 
-  const handleMapClick = (e,name) => {
+  const handleMapClick = (e,name,land,popu_past,popu_present,population,revenue) => {
+
+    
     resetAllFilters();
 
     setCoorlat(e.latLng.lat())
     setCoorlong(e.latLng.lng())
     setCoorID(name);
+    setCoorLand(land);
+    setCoorPastpopu(popu_past);
+    setCoorPresentpopu(popu_present);
+    setCoorPopulation(population);
+    setCoorRevenue(revenue);
+
+
 
 
 
@@ -141,7 +153,7 @@ function MapPage() {
         popu_present: coorPresentpopu,
         popu_future: future,
         popu_past: coorPastpopu,
-        landsize: coorlandSize,
+        land_size: coorlandSize,
         population: coorPopulation,
         revenue: coorRevenue,
 
@@ -187,8 +199,14 @@ function MapPage() {
 
         const future = coorPresentpopu * 0.49;
 
+ /*        console.log(coorname,
+          coorland,
+          coorPastpopu, coorPresentpopu, 
+           coorlandSize,coorPopulation,coorRevenue, 
+           + "\n" + future)
+ */
 
-      const updateMarker = await updateDoc(docRef, {
+       const updateMarker = await updateDoc(docRef, {
         coords: new GeoPoint(coorlat, coorlong),
         place: coorname,
         land: coorland,
@@ -197,9 +215,9 @@ function MapPage() {
         popu_future:future,
         landsize: coorlandSize,
         population: coorPopulation,
-        revenue: coorPopulation,
+        revenue: coorRevenue,
       });
-
+ 
       toastRef.current.showToast("Successful update Marker")
 
 //        alert("Successful update Marker")
@@ -264,7 +282,13 @@ function MapPage() {
             const newData = querySnapshot.docs
                 .map((doc) => ({...doc.data(), id:doc.id}));
               const newxx = querySnapshot.docs.map((doc)=>
-              ({ lat : doc.data().coords._lat, lng: doc.data().coords._long, name:doc.id}));
+              ({ lat : doc.data().coords._lat, lng: doc.data().coords._long,
+              name:doc.id,
+              land:doc.data().land,
+              popu_past:doc.data().popu_past,
+              popu_present:doc.data().popu_present,
+              population:doc.data().population,
+              revenue:doc.data().revenue}));
 
             setData(newxx);
 
@@ -338,7 +362,9 @@ function MapPage() {
                { 
               data.map( (mark) => (
                                         
-                       <Marker options={{icon:customMarker}}    onClick={(e) => handleMapClick(e,mark.name)}
+                       <Marker options={{icon:customMarker}}    onClick={(e) => handleMapClick(e,mark.name,
+                        mark.land,mark.popu_past,mark.popu_present,
+                        mark.popu_present,mark.population,mark.revenue)}
                         key={createKey(mark)} position={mark} />
                     ))}   
 
@@ -471,9 +497,9 @@ function MapPage() {
       </MDBModal>
       </form>
 
-      <form>
+     {/*  <form> */}
       <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
-        <MDBModalDialog class="modal-dialog modal-dialog-centered">
+        <MDBModalDialog className="modal-dialog modal-dialog-centered">
           <MDBModalContent>
             <MDBModalHeader>
               <MDBModalTitle>Existing Markers Business</MDBModalTitle>
@@ -609,7 +635,7 @@ function MapPage() {
           </MDBModalContent>
         </MDBModalDialog>
       </MDBModal>
-      </form>
+   {/*    </form> */}
     </>
   );
 }
