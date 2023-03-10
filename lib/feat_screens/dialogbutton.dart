@@ -10,14 +10,14 @@ class DialogQuestion {
 //////////////////////////////////////////////////////////////////////////////
   final String markerid;
 //use this string to get the clicked marker id
-  DialogQuestion(this.markerid, this.dropdownDatas); //do not remove this
+  DialogQuestion(this.markerid, this.dropdownDatas,
+      this.dropdownAssumption); //do not remove this
   //CollectionReference mark = FirebaseFirestore.instance.collection("business");
   List<DropdownData> dropdownDatas = [];
-  List<DropdownDataAssumption> dropdownAssump = [];
+  List<DropdownDataAssumption> dropdownAssumption = [];
 
   var selectdropval = "";
   var selectbusinessassump = "";
-
 
   var Questionall = const SnackBar(
     content: Text(
@@ -45,7 +45,7 @@ class DialogQuestion {
         MaterialPageRoute(
             builder: (context) => DemogResult(
                 marker: markerid,
-                budget: areaBudgetController.text,
+                budget: selectbusinessassump,
                 ideal: selectdropval)));
   }
 
@@ -99,14 +99,11 @@ class DialogQuestion {
   }
  */
   Future showMyDialog(BuildContext context) {
-
-  
-
     return showDialog(
         context: context,
         builder: (context) {
 //bool isChecked = false;
- // value slider
+          // value slider
 
           return StatefulBuilder(builder: (context, setState) {
             return AlertDialog(
@@ -220,9 +217,18 @@ class DialogQuestion {
                     const SizeBoxTwenty(),
 
 //DROPDOWN
-         
 
-              DropdownButtonFormField<DropdownDataAssumption>(
+//TEXT BOX 2
+                    const SizeBoxTwenty(),
+
+                    const Text("Enter budget for the area (per square meter)",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 74, 74, 74),
+                          fontSize: 16.0,
+                        )),
+                    const SizeBoxTen(),
+
+                    DropdownButtonFormField<DropdownDataAssumption>(
                       icon: const Icon(Icons.keyboard_arrow_down_rounded),
                       isExpanded: true,
                       validator: (value) {
@@ -261,8 +267,9 @@ class DialogQuestion {
                       ),
                       dropdownColor: const Color.fromARGB(255, 230, 230, 230),
 //value: dropdownValue,
-                      items: dropdownAssump.map<DropdownMenuItem<DropdownDataAssumption>>(
-                          (DropdownDataAssumption data) {
+                      items: dropdownAssumption
+                          .map<DropdownMenuItem<DropdownDataAssumption>>(
+                              (DropdownDataAssumption data) {
                         return DropdownMenuItem<DropdownDataAssumption>(
                           value: data,
                           child: Text(data.budgetassump),
@@ -281,7 +288,7 @@ class DialogQuestion {
                       onChanged: (value) {
                         setState(() {
 // selectedbusinesstype = selecteditem;
-                          selectdropval = value!.budgetassump;
+                          selectbusinessassump = value!.budgetassump;
                         });
                       },
 //value: selectedbusinesstype,
@@ -292,18 +299,7 @@ class DialogQuestion {
                       ),
                     ),
 
-                    
-
-//TEXT BOX 2
-                    const SizeBoxTwenty(),
-
-                    const Text("Enter budget for the area (per square meter)",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 74, 74, 74),
-                          fontSize: 16.0,
-                        )),
-                    const SizeBoxTen(),
-                    TextFormField(
+                    /*    TextFormField(
                         controller: areaBudgetController,
                         validator: (areaBudgetController) {
                           return areaBudgetController!.isNotEmpty
@@ -340,7 +336,7 @@ class DialogQuestion {
                             borderSide: BorderSide(
                                 color: Colors.redAccent.withOpacity(0.5)),
                           ),
-                        )),
+                        )), */
 
 // TEXT BOX 3
 

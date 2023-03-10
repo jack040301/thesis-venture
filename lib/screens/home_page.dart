@@ -123,10 +123,13 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
         .then((QuerySnapshot snapshot) => {
               snapshot.docs.forEach((documents) async {
                 var data = documents.data() as Map;
+                      
                 //var data = documents.data() as Map;
 
                 dropdownDatas.add(DropdownData(nameofbusiness: documents.id));
                 dropdownAssumption.add(DropdownDataAssumption(budgetassump:data['budgetassump']));
+
+              //  debugPrint(data['budgetassump']);
               })  
             });
 
@@ -206,7 +209,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 
                 allmarkers.add(Marker(
                     onTap: () async {
-                      await DialogQuestion(documents.id, dropdownDatas)
+                      await DialogQuestion(documents.id, dropdownDatas, dropdownAssumption)
                           .showMyDialog(context);
                     },
                     infoWindow: InfoWindow(
