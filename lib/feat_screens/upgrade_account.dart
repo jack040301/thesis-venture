@@ -118,6 +118,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
                     //email app opened
                   } else {
                     //email app is not opened
+                    print('Could not launch $mail');
                   }
                 },
                 // color: Colors.white,

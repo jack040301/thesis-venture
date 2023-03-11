@@ -407,7 +407,6 @@ class DialogQuestion {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(Questionall);
                           } else if (areaController.text == 0.toString()) {
-                          } else if (areaController.text == 0.toString()) {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(Questionall1);
                           } else if (selectbusinessassump.isNotEmpty &&
