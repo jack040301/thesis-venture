@@ -73,6 +73,12 @@ dependencies:
   image_gallery_saver:
   permission_handler:
   syncfusion_flutter_charts:
+ # flutter_pdf:
+  pdf:
+  path_provider:
+  open_file: ^3.2.1
+ # printing:
+
 
 dev_dependencies:
   flutter_launcher_icons: ^0.10.0

@@ -17,6 +17,7 @@ class DialogQuestion {
 
   var selectdropval = "";
   var selectbusinessassump = "";
+  String budget = "";
 
   var Questionall = const SnackBar(
     content: Text(
@@ -45,7 +46,9 @@ class DialogQuestion {
             builder: (context) => DemogResult(
                 marker: markerid,
                 budget: selectbusinessassump,
-                ideal: selectdropval)));
+                ideal: selectdropval,
+                budgetf : budget
+            )));
   }
 
   /* List<DropdownMenuItem> get dropdownItems {
@@ -288,6 +291,16 @@ class DialogQuestion {
                         setState(() {
 // selectedbusinesstype = selecteditem;
                           selectbusinessassump = value!.budgetassump;
+                          if(selectbusinessassump.toString().contains("200k")){
+                            budget = "200328";
+
+                          }
+                         else if(selectbusinessassump.toString().contains("More than 200k")){
+                            budget = "206044";
+                          }
+                          else if(selectbusinessassump.toString().contains("Less than 200k")){
+                            budget = "196225";
+                          }
                         });
                       },
 //value: selectedbusinesstype,
@@ -414,7 +427,19 @@ class DialogQuestion {
                           } else if (selectbusinessassump.isNotEmpty &&
                               selectbusinessassump.isNotEmpty &&
                               areaController.text.isNotEmpty) {
-                            demogResult(context);
+                            if(selectbusinessassump.toString().contains("200k")){
+                               budget = "200328";
+                              demogResult(context);
+                            }
+                            else if(selectbusinessassump.toString().contains("More than 200k")){
+                               budget = "206044";
+                              demogResult(context);
+                            }
+                            else if(selectbusinessassump.toString().contains("Less than 200k")){
+                               budget = "196225";
+                              demogResult(context);
+                            }
+
                           } else {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(Questionall2);

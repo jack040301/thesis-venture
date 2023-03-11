@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -10,13 +12,21 @@ import 'package:main_venture/models/forecasting/forecasting_linechart.dart';
 import 'forecasting/forecasting_population.dart';
 import 'package:main_venture/userInfo.dart';
 
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:path_provider/path_provider.dart';
+
 class DemogResult extends StatefulWidget {
   const DemogResult(
       {super.key,
       required this.marker,
       required this.budget,
-      required this.ideal});
-  final String marker, ideal, budget;
+     // required this.ideal
+     required this.ideal,
+      required this.budgetf
+      });
+ // final String marker, ideal, budget;
+  final String marker, ideal, budget, budgetf;
   @override
   State<DemogResult> createState() => _DemogResultState();
 }
@@ -30,7 +40,7 @@ class _DemogResultState extends State<DemogResult> {
   String revstrA = '';
 
   // ignore: prefer_typing_uninitialized_variables
-  var businessname, businessbudget, landbudget, landrevenue, landpop;
+  var businessname, businessbudget, landbudget, landrevenue, landpop, budgets;
 
   @override
   void initState() {
@@ -65,8 +75,9 @@ class _DemogResultState extends State<DemogResult> {
     CollectionReference business =
         FirebaseFirestore.instance.collection("business");
     // var bud = widget.budget.trim();
-    String budgetf = widget.budget.toString();
-    final docRef = business.where("budgetassump", isEqualTo: budgetf);
+    //String budgetfinal = widget.budget.toString();
+    String budgetfinal = widget.budgetf.toString();
+    final docRef = business.where("budget", isEqualTo: budgetfinal);
     await docRef.get().then(
       (QuerySnapshot doc) {
         doc.docs.forEach((documents) async {
@@ -76,9 +87,10 @@ class _DemogResultState extends State<DemogResult> {
 
           businessname = data['name'];
           businessbudget = data['budget'];
-          landbudget = data['land value'];
-          landrevenue = data['revenue'];
+          landbudget = data['land_value'];
+          landrevenue = data['revenue_standard'];
           landpop = data['population'];
+          budgets = data['budget'];
           //landbudget = data['land value'];
           //    landrevenue = data['revenue'];
           //landpop = data['population'];
@@ -132,7 +144,8 @@ class _DemogResultState extends State<DemogResult> {
               snapshot.data!.data() as Map<String, dynamic>;
 
           //for land size
-          String landstr = data['land size'].toString();
+          String landstr = budgets.toString();
+          //String landstr = data['land_size'].toString();
           //  String landstrfinal = '${landstr}sqm';
 
           // for population
@@ -198,7 +211,7 @@ class _DemogResultState extends State<DemogResult> {
                             ),
                             DemogPlace(data: data),
                             Container(
-                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 2),
+                              padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
                               color: Colors.white,
                               child: const Center(
                                 child: Text("Population", //POPULATION
@@ -209,7 +222,7 @@ class _DemogResultState extends State<DemogResult> {
                             ),
                             DemogPopulation(popstrB: popstrB),
                             Container(
-                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
+                              padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
                               color: Colors.white,
                               child: const Center(
                                 child: Text(
@@ -230,7 +243,7 @@ class _DemogResultState extends State<DemogResult> {
                               ),
                             ),
                             Container(
-                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
+                              padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
                               color: Colors.white,
                               child: const Center(
                                 child: Text("Land per SqM", //LAND PER SQ
@@ -241,7 +254,7 @@ class _DemogResultState extends State<DemogResult> {
                             ),
                             LandPerSQM(landstr: landstr),
                             Container(
-                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
+                              padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
                               color: Colors.white,
                               child: const Center(
                                 child: Text("Budget required for the area",
@@ -253,11 +266,12 @@ class _DemogResultState extends State<DemogResult> {
                             ),
                             BudgetRequiredArea(landbudgetstrB: landbudgetstrB),
                             Container(
-                              padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
+                              padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
                               color: Colors.white,
                               child: const Center(
                                 child: Text(
-                                    "The Feasibilty (%) of your ideal business is",
+                                    textAlign: TextAlign.justify,
+                                    "The Feasibilty (%) of your ideal \n business is",
                                     style: TextStyle(
                                         color: Color.fromARGB(255, 65, 99, 200),
                                         fontSize: 16.0)), // <-- Text
@@ -265,18 +279,18 @@ class _DemogResultState extends State<DemogResult> {
                             ),
                             IdealBusinessResult(resultfinal: resultfinal),
                             Container(
-                              padding: const EdgeInsets.fromLTRB(35, 0, 35, 5),
+                              padding: const EdgeInsets.fromLTRB(35, 5, 35, 10),
                               color: Colors.white,
                               child: const Center(
                                 child: Text("ideal",
                                     // ideal ni user
                                     style: TextStyle(
-                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        color: Color.fromARGB(255, 65, 99, 200),
                                         fontSize: 21.0)), // <-- Text
                               ),
                             ),
                             Container(
-                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
+                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 5),
                               color: Colors.white,
                               child: const Center(
                                 child: Text("Business Type",
@@ -297,7 +311,7 @@ class _DemogResultState extends State<DemogResult> {
                               ),
                             ),
                             Container(
-                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
+                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 5),
                               color: Colors.white,
                               child: const Center(
                                 child: Text("Suggested business for you",
@@ -307,7 +321,7 @@ class _DemogResultState extends State<DemogResult> {
                               ),
                             ),
                             Container(
-                              padding: const EdgeInsets.fromLTRB(35, 0, 35, 5),
+                              padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
                               color: Colors.white,
                               child: Center(
                                 child: GestureDetector(
@@ -325,7 +339,7 @@ class _DemogResultState extends State<DemogResult> {
                             ),
                             Container(
                                 padding:
-                                    const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                                    const EdgeInsets.fromLTRB(10, 5, 10, 20),
                                 color: Colors.white,
                                 child: Row(
                                     mainAxisAlignment:
@@ -350,7 +364,9 @@ class _DemogResultState extends State<DemogResult> {
                                                     70, 40), //////// HERE
                                               ),
                                               onPressed: () async {
-                                                final image =
+                                                await PdfApi.generateCenteredText('Sample Text');
+
+                                              /*  final image =
                                                     await screenshotController
                                                         .capture(
                                                             delay:
@@ -363,7 +379,7 @@ class _DemogResultState extends State<DemogResult> {
                                                 await savingImage(image);
                                                 int count = 0;
                                                 Navigator.of(context).popUntil(
-                                                    (_) => count++ >= 2);
+                                                    (_) => count++ >= 2); */
                                               },
                                               icon: const Icon(
                                                 Icons.file_download_outlined,
@@ -537,3 +553,52 @@ class DemogPlace extends StatelessWidget {
     );
   }
 }
+
+/*
+Future<void> main() async {
+  final pdf = pw.Document();
+  PopSnackbar popSnackbar = PopSnackbar();
+  pdf.addPage(
+    pw.Page(
+      build: (pw.Context context) => pw.Center(
+        child: pw.Text('Hello World!'),
+      ),
+    ),
+  );
+
+  return result['filepath'];
+
+  final file = File('example.pdf');
+  await file.writeAsBytes(await pdf.save());
+} */
+class PdfApi {
+  static Future<File> generateCenteredText (String text) async{
+    final pdf = pw.Document();
+   // PopSnackbar popSnackbar = PopSnackbar();
+    pdf.addPage(
+        pw.Page(
+          build: (pw.Context context) => pw.Center(
+            child: pw.Text(text, style: pw.TextStyle( fontSize: 48)),
+          ),
+        ));
+
+    return saveDocument (name: 'my_example.pdf' , pdf: pdf);
+  }
+
+  static Future<File> saveDocument({
+    required String name,
+    required pw.Document pdf,
+}) async {
+    final bytes = await pdf.save();
+    
+    final dir = await getApplicationDocumentsDirectory();
+    final file = File ('${dir.path}/$name');
+    
+    await file.writeAsBytes(bytes);
+
+    return file;
+  }
+
+}
+
+
