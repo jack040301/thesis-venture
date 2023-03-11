@@ -551,7 +551,7 @@ function MapPage() {
                 wrapperClass="mb-4 w-100"
                 placeholder="Land"
                 id="formControlLg"
-                type="text"
+                type="number"
                 value={coorland}
                 onChange={(e) => setCoorLand(e.target.value)}
                 required
@@ -560,7 +560,7 @@ function MapPage() {
                 wrapperClass="mb-4 w-100"
                 placeholder="Land size"
                 id="formControlLg"
-                type="text"
+                type="number"
                 value={coorlandSize}
                 onChange={(e) => setCoorlandSize(e.target.value)}
                 required
@@ -570,7 +570,7 @@ function MapPage() {
                 wrapperClass="mb-4 w-100"
                 placeholder="Total Population "
                 id="formControlLg"
-                type="text"
+                type="number"
                 value={coorPopulation}
                 onChange={(e) => setCoorPopulation(e.target.value)}
                 required
@@ -600,7 +600,7 @@ function MapPage() {
                 wrapperClass="mb-4 w-100"
                 placeholder="Revenue"
                 id="formControlLg"
-                type="text"
+                type="number"
                 value={coorRevenue}
                 onChange={(e) => setCoorRevenue(e.target.value)}
                 required
