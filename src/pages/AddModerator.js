@@ -19,10 +19,16 @@ function Config() {
   const toastRef = useRef();
 
  
-  const [formMod, setformMod] = useState({
+ /*  const [formMod, setformMod] = useState({
     modEmail: "",
-    modPass: "",
-    modConfirmpass: "",
+    password: "",
+    confirmpass: "",
+  }); */
+
+  const [formValue, setFormValue] = useState({
+    email: "",
+    password: "",
+    confirmpass: "",
   });
 
   const [configemail, setConfigEmail] = useState("");
@@ -32,26 +38,25 @@ function Config() {
 
  
   function resetallMod() {
-    setformMod({
-      modEmail: "",
-      modPass: "",
-      modConfirmpass: "",
+    setFormValue({
+      oldpassword: "",
+      password: "",
+      confirmpass: "",
     });
   }
-
   var emal = user.email;
 
   async function AddModerator(e) {
     e.preventDefault();
     setError("");
     try {
-      if (formMod.modPass === formMod.modConfirmpass) {
-        await createUser(formMod.email, formMod.modPass)
+      if (formValue.password === formValue.confirmpass) {
+        await createUser(formValue.email, formValue.password)
           .then(() => {
             addDoc(collection(db, "users"), {
               uid: user.uid,
               authProvider: "local",
-              email: formMod.modEmail,
+              email: formValue.email,
               role: "admin",
             });
 
@@ -86,11 +91,11 @@ resetallMod();
     }
   }
 
-  
-
-  const onChangeMod = (e) => {
-    setformMod({ ...formMod, [e.target.name]: e.target.value });
+  const onChange = (e) => {
+    setFormValue({ ...formValue, [e.target.name]: e.target.value });
   };
+
+
 
   return (
     <>
@@ -210,9 +215,9 @@ resetallMod();
 
                   <MDBCol md="8">
                     <input
-                      value={formMod.email}
+                      value={formValue.email}
                       name="email"
-                      onChange={onChangeMod}
+                      onChange={onChange}
                       id="validationCustom012"
                       required
                       type="email"
@@ -224,25 +229,38 @@ resetallMod();
                   </MDBCol>
 
                   <MDBCol md="8">
-                    <input
+
+                  <input
+                      value={formValue.password}
+                      name="password"
+                      onChange={onChange}
+                      id="validationCustom02"
+                      required
+                      type="password"
+                      /*  label="Password" */
+                      placeholder="New Password"
+                      class="form-control"
+                      style={{ marginBottom: 10 }}
+                    />
+
+                  {/*   <input
                       value={formMod.modPass}
                       name="password"
                       onChange={onChangeMod}
                       id="validationCustom08"
                       required
                       type="password"
-                      /*  label="Password" */
                       placeholder="Password"
                       class="form-control"
                       style={{ marginBottom: 10 }}
-                    />
+                    /> */}
                   </MDBCol>
 
                   <MDBCol md="8">
                     <input
-                      value={formMod.modConfirmpass}
+                      value={formValue.confirmpass}
                       name="confirmpass"
-                      onChange={onChangeMod}
+                      onChange={onChange}
                       id="validationCustom09"
                       required
                       type="password"

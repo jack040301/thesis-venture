@@ -95,9 +95,13 @@ function Config() {
           );
         }
 
-        toastRef.current.showToast("Do not leave the fields blank");
+        //toastRef.current.showToast("Do not leave the fields blank");
 
         //  alert('Do not leave the fields blank')
+      }else{
+      
+        toastRef.current.showToast("Do not leave the fields blank");
+
       }
     } catch (e) {
       //setError(e.message)

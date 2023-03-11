@@ -31,10 +31,12 @@ function App() {
             }
           />
 
-          <Route
+
+<Route
             path="/map"
             element={
               <ProtectedRoute>
+                {" "}
                 <Header />
                 <Sidenav />
                 <MapPage />
