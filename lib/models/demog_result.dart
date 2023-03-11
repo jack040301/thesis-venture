@@ -9,14 +9,6 @@ import 'forecasting/forecasting_linechart.dart';
 import 'package:main_venture/models/forecasting/forecasting_linechart.dart';
 import 'forecasting/forecasting_population.dart';
 import 'package:main_venture/userInfo.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
-
-import 'dart:io';
-import 'dart:typed_data';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart ' as pw;
 
 class DemogResult extends StatefulWidget {
   const DemogResult(
@@ -53,8 +45,8 @@ class _DemogResultState extends State<DemogResult> {
       context,
       MaterialPageRoute(
         builder: (context) => BarchartPop(
-            // markerid: widget.marker,
-            ),
+          markerid: widget.marker,
+        ),
       ),
     );
   } */
@@ -64,16 +56,17 @@ class _DemogResultState extends State<DemogResult> {
         context,
         MaterialPageRoute(
             builder: (context) => SyncLineChart(
-                //         markerid: widget.budget,
+                  markerid: widget.marker,
+                  //         markerid: widget.budget,
                 )));
   }
 
   Future getBusinessData() async {
     CollectionReference business =
         FirebaseFirestore.instance.collection("business");
-    var bud = widget.budget.trim();
-    String budgetf = bud.toString();
-    final docRef = business.where("budget", isEqualTo: budgetf);
+    // var bud = widget.budget.trim();
+    String budgetf = widget.budget.toString();
+    final docRef = business.where("budgetassump", isEqualTo: budgetf);
     await docRef.get().then(
       (QuerySnapshot doc) {
         doc.docs.forEach((documents) async {
@@ -111,44 +104,11 @@ class _DemogResultState extends State<DemogResult> {
     final filename = 'screenshot_$time';
     final result = await ImageGallerySaver.saveImage(bytes, name: filename);
 
-    // pw.Document pdf = pw.Document();
-    // pdf.addPage(
-    //   pw.Page(
-    //     pageFormat: PdfPageFormat.a4,
-    //     build: (context) {
-    //       return pw.Expanded(
-    //         // change this line to this:
-    //         child: pw.Image(pw.MemoryImage(result), fit: pw.BoxFit.contain),
-    //       );
-    //     },
-    //   ),
-    // );
-    // File pdfFile = File('Your path + File name');
-    // pdfFile.writeAsBytesSync(await pdf.save());
-    ////////////////////////////////////
-
     // ignore: use_build_context_synchronously
     ScaffoldMessenger.of(context)
         .showSnackBar(popSnackbar.popsnackbar("Sucessfully Downloaded Result"));
     return result['filepath'];
   }
-
-  // Future getPdf(Uint8List image) async {
-  //   pw.Document pdf = pw.Document();
-  //   pdf.addPage(
-  //     pw.Page(
-  //       pageFormat: PdfPageFormat.a4,
-  //       build: (context) {
-  //         return pw.Expanded(
-  //           // change this line to this:
-  //           child: pw.Image(pw.MemoryImage(image), fit: pw.BoxFit.contain),
-  //         );
-  //       },
-  //     ),
-  //   );
-  //   File pdfFile = File('Your path + File name');
-  //   pdfFile.writeAsBytesSync(await pdf.save());
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -238,7 +198,7 @@ class _DemogResultState extends State<DemogResult> {
                             ),
                             DemogPlace(data: data),
                             Container(
-                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 2),
+                              padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
                               color: Colors.white,
                               child: const Center(
                                 child: Text("Population", //POPULATION
@@ -249,7 +209,7 @@ class _DemogResultState extends State<DemogResult> {
                             ),
                             DemogPopulation(popstrB: popstrB),
                             Container(
-                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
+                              padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
                               color: Colors.white,
                               child: const Center(
                                 child: Text(
@@ -270,7 +230,7 @@ class _DemogResultState extends State<DemogResult> {
                               ),
                             ),
                             Container(
-                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
+                              padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
                               color: Colors.white,
                               child: const Center(
                                 child: Text("Land per SqM", //LAND PER SQ
@@ -281,7 +241,7 @@ class _DemogResultState extends State<DemogResult> {
                             ),
                             LandPerSQM(landstr: landstr),
                             Container(
-                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
+                              padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
                               color: Colors.white,
                               child: const Center(
                                 child: Text("Budget required for the area",
@@ -293,11 +253,12 @@ class _DemogResultState extends State<DemogResult> {
                             ),
                             BudgetRequiredArea(landbudgetstrB: landbudgetstrB),
                             Container(
-                              padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
+                              padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
                               color: Colors.white,
                               child: const Center(
                                 child: Text(
-                                    "The Feasibilty (%) of your ideal business is",
+                                    textAlign: TextAlign.justify,
+                                    "The Feasibilty (%) of your ideal \n business is",
                                     style: TextStyle(
                                         color: Color.fromARGB(255, 65, 99, 200),
                                         fontSize: 16.0)), // <-- Text
@@ -305,18 +266,18 @@ class _DemogResultState extends State<DemogResult> {
                             ),
                             IdealBusinessResult(resultfinal: resultfinal),
                             Container(
-                              padding: const EdgeInsets.fromLTRB(35, 0, 35, 5),
+                              padding: const EdgeInsets.fromLTRB(35, 5, 35, 10),
                               color: Colors.white,
-                              child: Center(
+                              child: const Center(
                                 child: Text("ideal",
                                     // ideal ni user
-                                    style: const TextStyle(
-                                        color: Color.fromARGB(255, 44, 45, 48),
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 65, 99, 200),
                                         fontSize: 21.0)), // <-- Text
                               ),
                             ),
                             Container(
-                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
+                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 5),
                               color: Colors.white,
                               child: const Center(
                                 child: Text("Business Type",
@@ -328,16 +289,16 @@ class _DemogResultState extends State<DemogResult> {
                             Container(
                               padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
                               color: Colors.white,
-                              child: const Center(
-                                child: Text("Coffee Shop",
+                              child: Center(
+                                child: Text(widget.ideal,
                                     //BUDGET REQUIRED FOR THE AREA
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Color.fromARGB(255, 44, 45, 48),
                                         fontSize: 20.0)), // <-- Text
                               ),
                             ),
                             Container(
-                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
+                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 5),
                               color: Colors.white,
                               child: const Center(
                                 child: Text("Suggested business for you",
@@ -347,7 +308,7 @@ class _DemogResultState extends State<DemogResult> {
                               ),
                             ),
                             Container(
-                              padding: const EdgeInsets.fromLTRB(35, 0, 35, 5),
+                              padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
                               color: Colors.white,
                               child: Center(
                                 child: GestureDetector(
@@ -365,7 +326,7 @@ class _DemogResultState extends State<DemogResult> {
                             ),
                             Container(
                                 padding:
-                                    const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                                    const EdgeInsets.fromLTRB(10, 5, 10, 20),
                                 color: Colors.white,
                                 child: Row(
                                     mainAxisAlignment:
@@ -401,17 +362,15 @@ class _DemogResultState extends State<DemogResult> {
 
                                                 if (image == null) return;
                                                 await savingImage(image);
-                                                /////////////////////////////////////////////
-                                                // await getPdf(image);
                                                 int count = 0;
                                                 Navigator.of(context).popUntil(
                                                     (_) => count++ >= 2);
                                               },
-                                              icon: Icon(
+                                              icon: const Icon(
                                                 Icons.file_download_outlined,
                                                 size: 18.0,
                                               ),
-                                              label: Text(
+                                              label: const Text(
                                                 "Download",
                                                 style: TextStyle(
                                                     color: Colors.white),
@@ -428,7 +387,9 @@ class _DemogResultState extends State<DemogResult> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      SyncLineChart()));
+                                                      SyncLineChart(
+                                                        markerid: widget.marker,
+                                                      )));
                                           //getMarkerData();
                                           //   getBusinessData();
                                         },
@@ -453,54 +414,6 @@ class _DemogResultState extends State<DemogResult> {
       },
     );
   }
-}
-
-//PDF DESIGN
-Future<Uint8List> buildPdf(
-    PdfPageFormat format,
-    String businessbudget,
-    businessname,
-    popstrB,
-    revstrB,
-    landstr,
-    landbudgetstrB,
-    resultfinal,
-    ideal) async {
-  // Create the Pdf document
-  final pw.Document doc = pw.Document();
-
-  // Add one page with centered text "Hello World"
-  doc.addPage(
-    pw.Page(
-      pageFormat: format,
-      build: (pw.Context context) {
-        return pw.ConstrainedBox(
-          constraints: const pw.BoxConstraints.expand(),
-          child: pw.FittedBox(
-            // ignore: prefer_interpolation_to_compose_strings
-            child: pw.Text(businessbudget +
-                "\n " +
-                businessname +
-                "\n " +
-                popstrB +
-                "\n " +
-                revstrB +
-                "\n " +
-                landstr +
-                "\n " +
-                landbudgetstrB +
-                "\n " +
-                resultfinal +
-                "\n " +
-                ideal),
-          ),
-        );
-      },
-    ),
-  );
-
-  // Build and return the final Pdf file data
-  return await doc.save();
 }
 
 class IdealBusinessResult extends StatelessWidget {
