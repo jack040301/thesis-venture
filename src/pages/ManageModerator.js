@@ -1,6 +1,70 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import {collection, db,onSnapshot, query,where } from "../firebase";
+
 
 function ManageModerator() {
+
+   const [data, setData] = useState([]);
+   const [search,setSearch] = useState([]);
+
+
+  useEffect(()=>{
+    
+    fulldata()
+  },[]) 
+
+
+  function fulldata () {
+
+  
+    const collect = query(collection(db,"users"),where("role","==","admin"));
+    const unsub = onSnapshot(collect, snapshot =>{
+
+      const admintable = snapshot.docs.map(doc=> ({ email:doc.data().email, adminid:doc.id}
+      ))
+
+
+     setData(admintable)
+
+    })
+
+    return () =>{
+        unsub()
+    }
+  }
+
+
+ async  function searchModerator(){
+
+  if(search !== null && search !== ""){
+
+    const collect = query(collection(db,"users"),where("role","==","admin"), where("email","==",search));
+    const unsub = onSnapshot(collect, snapshot =>{
+
+      const admintable = snapshot.docs.map(doc=> ({ email:doc.data().email, adminid:doc.id}
+      ))
+
+     setData(admintable)
+
+    })
+
+    return () =>{
+        unsub()
+    }
+
+
+  }else{
+ 
+    fulldata();
+
+    
+  }
+
+  
+  } 
+
+
+
   return (
     <>
       <div className="content-wrapper">
@@ -19,9 +83,11 @@ function ManageModerator() {
                       name="table_search"
                       className="form-control float-right"
                       placeholder="Search"
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
                     />
                     <div className="input-group-append">
-                      <button type="submit" className="btn btn-default">
+                      <button type="submit" onClick={searchModerator} className="btn btn-default">
                         <i className="fas fa-search" />
                       </button>
                     </div>
@@ -33,61 +99,29 @@ function ManageModerator() {
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>User</th>
-                      <th>Date</th>
+                      <th>Email</th>
+                      <th>Role</th>
                       <th>Status</th>
-                      <th>Reason</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>183</td>
-                      <td>John Doe</td>
-                      <td>11-7-2014</td>
-                      <td>
-                        <span className="tag tag-success">Approved</span>
-                      </td>
-                      <td>
-                        Bacon ipsum dolor sit amet salami venison chicken flank
-                        fatback doner.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>219</td>
-                      <td>Alexander Pierce</td>
-                      <td>11-7-2014</td>
-                      <td>
-                        <span className="tag tag-warning">Pending</span>
-                      </td>
-                      <td>
-                        Bacon ipsum dolor sit amet salami venison chicken flank
-                        fatback doner.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>657</td>
-                      <td>Bob Doe</td>
-                      <td>11-7-2014</td>
-                      <td>
-                        <span className="tag tag-primary">Approved</span>
-                      </td>
-                      <td>
-                        Bacon ipsum dolor sit amet salami venison chicken flank
-                        fatback doner.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>175</td>
-                      <td>Mike Doe</td>
-                      <td>11-7-2014</td>
-                      <td>
-                        <span className="tag tag-danger">Denied</span>
-                      </td>
-                      <td>
-                        Bacon ipsum dolor sit amet salami venison chicken flank
-                        fatback doner.
-                      </td>
-                    </tr>
+
+                  { 
+              data.map( (mark) => (
+                   
+                
+                <tr key={mark.adminid}>
+                <td>{mark.adminid}</td>
+                <td>{mark.email}</td>
+                <td>Moderator</td>
+                <td>
+                  <span className="tag tag-success">Approved</span>
+                </td>
+                
+              </tr>
+                   
+                    ))}   
+                   
                   </tbody>
                 </table>
               </div>
