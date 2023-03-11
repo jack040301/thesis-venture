@@ -53,7 +53,7 @@ function MapPage() {
     setCoorPopulation("");
   }
 
-  const handleMapClick = (e,name,land,popu_past,popu_present,population,revenue) => {
+  const handleMapClick = (e,name,land,land_size,popu_past,popu_present,population,revenue) => {
 
     
     resetAllFilters();
@@ -62,11 +62,11 @@ function MapPage() {
     setCoorlong(e.latLng.lng())
     setCoorID(name);
     setCoorLand(land);
+    setCoorlandSize(land_size);
     setCoorPastpopu(popu_past);
     setCoorPresentpopu(popu_present);
     setCoorPopulation(population);
     setCoorRevenue(revenue);
-
 
 
 
@@ -284,6 +284,7 @@ function MapPage() {
               ({ lat : doc.data().coords._lat, lng: doc.data().coords._long,
               name:doc.id,
               land:doc.data().land,
+              land_size:doc.data().land_size,
               popu_past:doc.data().popu_past,
               popu_present:doc.data().popu_present,
               population:doc.data().population,
@@ -319,7 +320,13 @@ function MapPage() {
     const collect = collection(db,"testmarkers")
     const unsub = onSnapshot(collect, snapshot =>{
 
-      const markreal = snapshot.docs.map(doc=> ({ lat : doc.data().coords._lat, lng: doc.data().coords._long, name:doc.id}
+      const markreal = snapshot.docs.map(doc=> ({ lat : doc.data().coords._lat, lng: doc.data().coords._long, name:doc.id,
+        land:doc.data().land,
+        land_size:doc.data().land_size,
+        popu_past:doc.data().popu_past,
+        popu_present:doc.data().popu_present,
+        population:doc.data().population,
+        revenue:doc.data().revenue}
       ))
     //  console.log(markreal)
 
@@ -362,7 +369,7 @@ function MapPage() {
               data.map( (mark) => (
                                         
                        <Marker options={{icon:customMarker}}    onClick={(e) => handleMapClick(e,mark.name,
-                        mark.land,mark.popu_past,mark.popu_present,
+                        mark.land,mark.land_size,mark.popu_past,mark.popu_present,
                         mark.popu_present,mark.population,mark.revenue)}
                         key={createKey(mark)} position={mark} />
                     ))}   
