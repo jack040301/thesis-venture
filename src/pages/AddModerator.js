@@ -62,7 +62,7 @@ function Config() {
 
           //  alert("Successfull create admin");
 
-          toastRef.current.showToast("Successfull Update Password");
+          toastRef.current.showToast("Successfully Updated Password");
           resetallMod();
           })
           .catch((err) => {

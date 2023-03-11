@@ -1,12 +1,15 @@
 .react-toast-container {
-    background-color: black;
+    background-color: #292929;
     color: white;
-    position: fixed;
-    top: 20px;
+    position: "top-right";
+    top: 10px;
     left: 20px;
-    padding: 15px;
+    padding: 20px;
     border-radius: 5px;
     z-index: 1000;
+    float: right;
+    margin-right: 20px;
+    margin-top: 20px;
     transform: translateY(-500px);
     transition: 0.4s;
 }

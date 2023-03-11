@@ -1,0 +1,28 @@
+body {
+  background-color: white;
+  
+}
+form{
+  margin: auto;
+  position: center;
+}
+.mx-auto{
+  background-color: #292929;
+}
+.mb-2{
+  color: #D0D0D2;
+}
+.mb-3{
+  margin-top: 20px;
+  color: #D0D0D2;
+}
+.emailtext{
+  margin-top: 20px;
+  color: #D0D0D2;
+}
+.passwordtext{
+  color: #D0D0D2;
+}
+.btnlogin{
+  height: 50px;
+}

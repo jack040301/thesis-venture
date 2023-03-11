@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { auth, signInWithEmailAndPassword, doc,getDoc, db } from "../firebase";
 import { UserAuth } from "./context";
-
+import "./Login.css";
 
 import ReactToast from "../components/Toast/toast"/* import Component of toast */
 
@@ -51,7 +51,7 @@ function Login() {
     }else{
 
 //Toast message
-      toastRef.current.showToast("Youre not allowed to Login")
+      toastRef.current.showToast("Invalid credentials. Please try again.")
       return logout()
     }
   }
@@ -110,15 +110,15 @@ function Login() {
       <MDBRow className="d-flex justify-content-center align-items-center h-100">
         <MDBCol col="12">
           <MDBCard
-            className="bg-white my-5 mx-auto"
+            className="my-5 mx-auto"
             style={{ borderRadius: "1rem", maxWidth: "500px" }}
           >
             <MDBCardBody className="p-5 w-100 d-flex flex-column">
               <h2 className="fw-bold mb-2 text-center">Log in</h2>
-              <p className="text-white-50 mb-3">
-                Please enter your login and password!
-              </p>
-
+              {/* <p className=" mb-3">
+                Please enter your valid credentials.
+              </p> */}
+              <label className="emailtext">Email Address</label>
               <MDBInput
                 wrapperClass="mb-4 w-100"
                 placeholder="Email address"
@@ -129,6 +129,7 @@ function Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
+              <label className="passwordtext">Password</label>
               <MDBInput
                 wrapperClass="mb-4 w-100"
                 placeholder="Password"
@@ -139,19 +140,19 @@ function Login() {
               required
               />
 
-              <MDBCheckbox
+              {/* <MDBCheckbox
                 name="flexCheck"
                 id="flexCheckDefault"
                 className="mb-4"
                 label="Remember password"
-              />
+              /> */}
               <br></br>
            {/*    <MDBBtn onClick={Login} size="lg">handle user profile</MDBBtn> */}
            <button
                 disabled={loading}
                 onClick={handleSubmit}
                 size="lg"
-                className="btn btn-primary"
+                className="btn btn-primary btnlogin"
               >
                 Login
               </button>
