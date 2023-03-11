@@ -36,6 +36,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.9.0"
+
   barcode:
     dependency: transitive
     description:
@@ -43,6 +44,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.3"
+
   bloc:
     dependency: transitive
     description:
@@ -875,6 +877,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
+
   win32:
     dependency: transitive
     description:
@@ -889,6 +892,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+
   xml:
     dependency: transitive
     description:
