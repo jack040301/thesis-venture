@@ -281,6 +281,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             'email': GoogleUserStaticInfo().email,
                           }).onError((error, stackTrace) => (error.toString()));
                         }
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const HomePage()));
                       },
                       child: Material(
                         color: const Color.fromARGB(255, 0, 110, 195),

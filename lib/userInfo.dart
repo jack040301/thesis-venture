@@ -33,8 +33,9 @@ class FunctionAuthentication with GoogleUserStaticInfo {
       // MaterialPageRoute(builder: (context) => const LoginScreen()));
       //  print('Signout initiated');
     } catch (e) {
-      //print("error in sign in $e");
+      print("error in sign in $e");
     }
+
     try {
       FirebaseAuth.instance.authStateChanges().listen((User? user) {
         if (user == null) {
@@ -107,17 +108,18 @@ class PopSnackbar extends FunctionAuthentication {
               child: const Text('Logout'),
               onPressed: () async {
                 // FunctionAuthentication;
-                // await logOut().then((value) =>
-                //     Navigator.of(context, rootNavigator: true)
-                //         .pushAndRemoveUntil(MaterialPageRoute(
-                //             builder: (context) => const LoginScreen())));
+                await logOut();
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen()),
+                    (Route route) => false);
                 // await logOut().then((value) => Navigator.of(context)
                 //     .pushNamedAndRemoveUntil('/login', (Route route) => false));
 
-                await logOut().then((value) => Navigator.of(context)
-                    .pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => LoginScreen()),
-                        (Route route) => true));
+                // await logOut().then((value) => Navigator.of(context)
+                //     .pushAndRemoveUntil(
+                //         MaterialPageRoute(builder: (context) => LoginScreen()),
+                //         (Route route) => true));
 
                 // await logOut().then((value) => Navigator.of(context,
                 //         rootNavigator: true)
