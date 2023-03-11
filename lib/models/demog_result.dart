@@ -40,7 +40,7 @@ class _DemogResultState extends State<DemogResult> {
   }
 
   // ignore: non_constant_identifier_names
-  Future<void> StatisForecasting(BuildContext context) async {
+  /*  Future<void> StatisForecasting(BuildContext context) async {
     await Navigator.push(
       context,
       MaterialPageRoute(
@@ -49,41 +49,43 @@ class _DemogResultState extends State<DemogResult> {
         ),
       ),
     );
-  }
+  } */
 
   Future<void> ChartForecasting(BuildContext context) async {
     await Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => ForecastingLineChart(
-                  business: businessname,
+            builder: (context) => SyncLineChart(
+                  markerid: widget.marker,
+                  //         markerid: widget.budget,
                 )));
   }
 
- Future getBusinessData() async {
+  Future getBusinessData() async {
     CollectionReference business =
         FirebaseFirestore.instance.collection("business");
-    var bud = widget.budget.trim();
-    String budgetf = bud.toString();
-    final docRef = business.where("budget",
-        isEqualTo:
-            budgetf); 
+    // var bud = widget.budget.trim();
+    String budgetf = widget.budget.toString();
+    final docRef = business.where("budgetassump", isEqualTo: budgetf);
     await docRef.get().then(
       (QuerySnapshot doc) {
         doc.docs.forEach((documents) async {
           var data = documents.data() as Map;
+
+          //  debugPrint(data);
+
           businessname = data['name'];
           businessbudget = data['budget'];
           landbudget = data['land value'];
           landrevenue = data['revenue'];
           landpop = data['population'];
           //landbudget = data['land value'];
-          landrevenue = data['revenue'];
+          //    landrevenue = data['revenue'];
           //landpop = data['population'];
 
 // for coversion of var to String
-          landbudgetstrA = data['land value'].toString();
-          revstrA = data['revenue'].toString();
+          // landbudgetstrA = data['land value'].toString();
+          revstrA = data['revenue_standard'].toString();
           popstrA = data['population'].toString();
         });
       },
@@ -137,26 +139,27 @@ class _DemogResultState extends State<DemogResult> {
           String popstrB = data['population'].toString();
           double popdblB = double.parse(popstrB);
           double popdblA = double.parse(popstrA);
-          double popdblfinal = (popdblB / popdblB) * 100;
+          double popdblfinal = (popdblB / popdblA) * 100;
 
           // for revenue
           String revstrB = data['revenue'].toString();
           double revdblB = double.parse(revstrB);
 
           double revdblA = double.parse(revstrA);
-          double revdblfinal = (revdblB / revdblB) * 100;
+          double revdblfinal = (revdblB / revdblA) * 100;
 
           // for budget
           String landbudgetstrB = data['land'].toString();
           double landbudgetdblB = double.parse(landbudgetstrB);
 
-          double landbudgetdblA = double.parse(landbudgetstrA);
+          double landbudgetdblA = double.parse(landbudget);
           /*  double landbudgetdblfinalA = landbudgetdblB - landbudgetdblB;
           double landbudgetdblfinalB = landbudgetdblB - landbudgetdblfinalA;
           double landbudgetdblfinalC =
               (landbudgetdblfinalB / landbudgetdblB) * 100; */
-          double landbudgetdblfinalA = landbudgetdblB - landbudgetdblA;
-          double landbudgetdblfinalB = landbudgetdblA - landbudgetdblfinalA;
+          double landbudgetdblfinalA = landbudgetdblB - landbudgetdblA; //2600
+          double landbudgetdblfinalB =
+              landbudgetdblA - landbudgetdblfinalA; // 2800
           double landbudgetdblfinalC =
               (landbudgetdblfinalB / landbudgetdblA) * 100;
           if (landbudgetdblfinalC > 100) {
@@ -182,256 +185,215 @@ class _DemogResultState extends State<DemogResult> {
                 ),
               ),
               body: Screenshot(
-                controller: screenshotController,
-                child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(
-                            height: 10.0,
-                          ),
-                          DemogPlace(data: data),
-                          Container(
-                            width: 350,
-                            height: 20,
-                            decoration: const BoxDecoration(
+                  controller: screenshotController,
+                  child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: SingleChildScrollView(
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            DemogPlace(data: data),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
                               color: Colors.white,
-                            ),
-                            padding: const EdgeInsets.fromLTRB(35, 2, 35, 2),
-                            child: const Center(
-                              child: Text("Population", //POPULATION
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 44, 45, 48),
-                                      fontSize: 15.0)), // <-- Text
-                            ),
-                          ),
-                          DemogPopulation(popstrB: popstrB),
-                          Container(
-                            width: 350,
-                            height: 20,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                            ),
-                            padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
-                            child: const Center(
-                              child: Text("Revenue per year", //REVENUE PER YEAR
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 44, 45, 48),
-                                      fontSize: 15.0)), // <-- Text
-                            ),
-                          ),
-                          Container(
-                            width: 350,
-                            height: 45,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                            ),
-                            padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
-                            child: Center(
-                              child: Text(revstrB, //REVENUE PER YEAR
-                                  style: const TextStyle(
-                                      color: Color.fromARGB(255, 44, 45, 48),
-                                      fontSize: 20.0)), // <-- Text
-                            ),
-                          ),
-                          Container(
-                            width: 350,
-                            height: 20,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                            ),
-                            padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
-                            child: const Center(
-                              child: Text("Land per SqM", //LAND PER SQ
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 44, 45, 48),
-                                      fontSize: 15.0)), // <-- Text
-                            ),
-                          ),
-
-                          LandPerSQM(landstr: landstr),
-                          Container(
-                            width: 350,
-                            height: 20,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                            ),
-                            padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
-                            child: const Center(
-                              child: Text("Budget required for the area",
-                                  //BUDGET REQUIRED FOR THE AREA
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 44, 45, 48),
-                                      fontSize: 15.0)), // <-- Text
-                            ),
-                          ),
-                          BudgetRequiredArea(landbudgetstrB: landbudgetstrB),
-                          Container(
-                            width: 350,
-                            height: 30,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                            ),
-                            padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
-                            child: const Center(
-                              child: Text("Your ideal business is",
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 65, 99, 200),
-                                      fontSize: 16.0)), // <-- Text
-                            ),
-                          ),
-                          IdealBusinessResult(resultfinal: resultfinal),
-                          Container(
-                            width: 350,
-                            height: 40,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                            ),
-                            padding: const EdgeInsets.fromLTRB(35, 0, 35, 5),
-                            child: Center(
-                              child: Text(widget.ideal,
-                                  // ideal ni user
-                                  style: const TextStyle(
-                                      color: Color.fromARGB(255, 65, 99, 200),
-                                      fontSize: 21.0)), // <-- Text
-                            ),
-                          ),
-                          Container(
-                            width: 350,
-                            height: 20,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                            ),
-                            padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
-                            child: const Center(
-                              child: Text("Business Type",
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 44, 45, 48),
-                                      fontSize: 15.0)), // <-- Text
-                            ),
-                          ),
-                          Container(
-                            width: 350,
-                            height: 45,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                            ),
-                            padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
-                            child: const Center(
-                              child: Text("Coffee Shop",
-                                  //BUDGET REQUIRED FOR THE AREA
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 44, 45, 48),
-                                      fontSize: 20.0)), // <-- Text
-                            ),
-                          ),
-                          Container(
-                            width: 350,
-                            height: 20,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                            ),
-                            padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
-                            child: const Center(
-                              child: Text("Suggested business for you",
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 44, 45, 48),
-                                      fontSize: 15.0)), // <-- Text
-                            ),
-                          ),
-                          Container(
-                            width: 350,
-                            height: 45,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                            ),
-                            padding: const EdgeInsets.fromLTRB(35, 0, 35, 5),
-                            child: Center(
-                              child: GestureDetector(
-                                onTap: () {
-                                  // StatisForecasting(context);
-                                  ChartForecasting(context);
-                                },
-                                child: Text(businessname,
-                                    style: const TextStyle(
-                                        color: Color.fromARGB(255, 65, 99, 200),
-                                        fontSize: 20.0)),
-                              ), // <-- Text
-                            ),
-                          ),
-                          Container(
-                              height: 50,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
+                              child: const Center(
+                                child: Text("Population", //POPULATION
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 15.0)), // <-- Text
                               ),
-                              padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                    Expanded(
-                                        child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              elevation: 0.0,
-                                              padding:
-                                                  const EdgeInsets.all(10.0),
-                                              primary: const Color.fromARGB(255,
-                                                  0, 110, 195), // background
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          5.0)),
-                                              minimumSize: const Size(
-                                                  70, 40), //////// HERE
-                                            ),
-                                            onPressed: () async {
-                                              final image =
-                                                  await screenshotController
-                                                      .capture(
-                                                          delay: const Duration(
-                                                              milliseconds: 10),
-                                                          pixelRatio: 1.5);
+                            ),
+                            DemogPopulation(popstrB: popstrB),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
+                              color: Colors.white,
+                              child: const Center(
+                                child: Text(
+                                    "Revenue per year", //REVENUE PER YEAR
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 15.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
+                              color: Colors.white,
+                              child: Center(
+                                child: Text(revstrB, //REVENUE PER YEAR
+                                    style: const TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 20.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
+                              color: Colors.white,
+                              child: const Center(
+                                child: Text("Land per SqM", //LAND PER SQ
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 15.0)), // <-- Text
+                              ),
+                            ),
+                            LandPerSQM(landstr: landstr),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
+                              color: Colors.white,
+                              child: const Center(
+                                child: Text("Budget required for the area",
+                                    //BUDGET REQUIRED FOR THE AREA
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 15.0)), // <-- Text
+                              ),
+                            ),
+                            BudgetRequiredArea(landbudgetstrB: landbudgetstrB),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
+                              color: Colors.white,
+                              child: const Center(
+                                child: Text(
+                                    textAlign: TextAlign.justify,
+                                    "The Feasibilty (%) of your ideal \n business is",
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 65, 99, 200),
+                                        fontSize: 16.0)), // <-- Text
+                              ),
+                            ),
+                            IdealBusinessResult(resultfinal: resultfinal),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(35, 5, 35, 10),
+                              color: Colors.white,
+                              child: const Center(
+                                child: Text("ideal",
+                                    // ideal ni user
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 65, 99, 200),
+                                        fontSize: 21.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 5),
+                              color: Colors.white,
+                              child: const Center(
+                                child: Text("Business Type",
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 15.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
+                              color: Colors.white,
+                              child: Center(
+                                child: Text(widget.ideal,
+                                    //BUDGET REQUIRED FOR THE AREA
+                                    style: const TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 20.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 5),
+                              color: Colors.white,
+                              child: const Center(
+                                child: Text("Suggested business for you",
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 15.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
+                              color: Colors.white,
+                              child: Center(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    // StatisForecasting(context);
+                                    ChartForecasting(context);
+                                  },
+                                  child: Text(businessname,
+                                      style: const TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 65, 99, 200),
+                                          fontSize: 20.0)),
+                                ), // <-- Text
+                              ),
+                            ),
+                            Container(
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 5, 10, 20),
+                                color: Colors.white,
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      Expanded(
+                                          child: ElevatedButton.icon(
+                                              style: ElevatedButton.styleFrom(
+                                                elevation: 0.0,
+                                                padding:
+                                                    const EdgeInsets.all(10.0),
+                                                primary: const Color.fromARGB(
+                                                    255,
+                                                    0,
+                                                    110,
+                                                    195), // background
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5.0)),
+                                                minimumSize: const Size(
+                                                    70, 40), //////// HERE
+                                              ),
+                                              onPressed: () async {
+                                                final image =
+                                                    await screenshotController
+                                                        .capture(
+                                                            delay:
+                                                                const Duration(
+                                                                    milliseconds:
+                                                                        10),
+                                                            pixelRatio: 1.5);
 
-                                              if (image == null) return;
-                                              await savingImage(image);
-                                            },
-                                            child: const Text(
-                                              "Download",
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            ))),
-                                    //Spacer(),
-                                    const SizedBox(
-                                      width: 10.0,
-                                    ),
+                                                if (image == null) return;
+                                                await savingImage(image);
+                                                int count = 0;
+                                                Navigator.of(context).popUntil(
+                                                    (_) => count++ >= 2);
+                                              },
+                                              icon: const Icon(
+                                                Icons.file_download_outlined,
+                                                size: 18.0,
+                                              ),
+                                              label: const Text(
+                                                "Download",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ))),
+                                      //Spacer(),
+                                      const SizedBox(
+                                        width: 10.0,
+                                      ),
 
-                                    Expanded(
-                                      child: TextButton(
+                                      Expanded(
+                                          child: TextButton(
                                         onPressed: () {
-                                          int count = 0;
-                                          Navigator.of(context)
-                                              .popUntil((_) => count++ >= 2);
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      SyncLineChart(
+                                                        markerid: widget.marker,
+                                                      )));
+                                          //getMarkerData();
+                                          //   getBusinessData();
                                         },
                                         style: TextButton.styleFrom(
-
-                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Expanded(
-                                    child: ElevatedButton.icon(
-                                        style: ElevatedButton.styleFrom(
-                                          elevation: 0.0,
-                                          padding: const EdgeInsets.all(10.0),
-                                          primary: const Color.fromARGB(
-                                              255, 0, 110, 195), // background
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5.0)),
-
                                           minimumSize:
                                               const Size(70, 40), //<-- SEE HERE
                                           side: const BorderSide(
@@ -440,44 +402,10 @@ class _DemogResultState extends State<DemogResult> {
                                             width: 3,
                                           ),
                                         ),
-
                                         child: const Text('Done'),
-                                        onPressed: () {},
-                                        icon: Icon(Icons.file_download_outlined,
-                                          size: 18.0,
-                                        ),
-                            label: Text(
-                                          "Download",
-                                          style: TextStyle(color: Colors.white),
-                                        ))),
-                                //Spacer(),
-                               const SizedBox(
-                                  width: 10.0,
-                                ),
-
-                                Expanded(
-                                  child: TextButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => const PointsLineChart()));
-                                      //getMarkerData();
-                                      //   getBusinessData();
-                                    },
-                                    style: TextButton.styleFrom(
-                                      minimumSize:
-                                          const Size(70, 40), //<-- SEE HERE
-                                      side: const BorderSide(
-                                        color: Color.fromARGB(255, 0, 110, 195),
-                                        width: 3,
-                     ),
-                                    ),
-                                  ]))
-                        ],
-                      ),
-                    )),
-              ));
+                                      ))
+                                    ]))
+                          ])))));
         }
 
         return const Center(
@@ -499,12 +427,8 @@ class IdealBusinessResult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 350,
-      height: 45,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-      ),
       padding: const EdgeInsets.fromLTRB(35, 0, 35, 5),
+      color: Colors.white,
       child: Center(
         child: Text(resultfinal,
             style: const TextStyle(
@@ -526,12 +450,8 @@ class BudgetRequiredArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 350,
-      height: 45,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-      ),
       padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
+      color: Colors.white,
       child: Center(
         child: Text(landbudgetstrB,
             //BUDGET REQUIRED FOR THE AREA
@@ -554,12 +474,8 @@ class LandPerSQM extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 350,
-      height: 45,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-      ),
       padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
+      color: Colors.white,
       child: Center(
         child: Text('$landstr' 'sqm', //LAND PER SQ
             style: const TextStyle(
@@ -581,12 +497,8 @@ class DemogPopulation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 350,
-      height: 45,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-      ),
       padding: const EdgeInsets.fromLTRB(35, 2, 35, 10),
+      color: Colors.white,
       child: Center(
         child: Text(popstrB, //POPULATION
             style: const TextStyle(

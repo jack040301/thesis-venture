@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:main_venture/screens/home_page.dart';
 import 'package:main_venture/auth_screens/login.dart';
+import 'package:flutter/services.dart';
 
 import '../userInfo.dart';
 
@@ -17,6 +18,9 @@ class CustomizeAccScreen extends StatefulWidget {
   State<CustomizeAccScreen> createState() => _CustomizeAccScreenState();
 }
 
+final CollectionReference _users =
+    FirebaseFirestore.instance.collection('users');
+
 class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
   final _firstnameController = TextEditingController();
   final _lastnameController = TextEditingController();
@@ -24,11 +28,9 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  final _currentPassword = TextEditingController();
 
   final FirebaseAuth auth = FirebaseAuth.instance;
-
-  final CollectionReference _users =
-      FirebaseFirestore.instance.collection('users');
 
   @override
   void initState() {
@@ -38,8 +40,8 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
   }
 
   void inputData() {
-    _lastnameController.text = widget.firstname;
-    _firstnameController.text = widget.lastname;
+    _lastnameController.text = widget.lastname;
+    _firstnameController.text = widget.firstname;
 
     // here you write the codes to input the data into firestore
   }
@@ -92,6 +94,10 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               ),
               TextField(
                 controller: _firstnameController,
+                enableInteractiveSelection: false,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9_.]')),
+                ],
                 decoration: InputDecoration(
                   labelStyle: const TextStyle(
                     color: Colors.black,
@@ -121,6 +127,10 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               ),
               TextField(
                 controller: _lastnameController,
+                enableInteractiveSelection: false,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9_.]')),
+                ],
                 decoration: InputDecoration(
                   labelStyle: const TextStyle(
                     color: Colors.black,
@@ -163,13 +173,12 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
                   ),
                 ),
               ), */
-              const SizedBox(
-                height: 20.0,
-              ),
+
+              //NEW PASSWORD
               Container(
                 width: 350,
                 child: const Text(
-                  "Password",
+                  "New Password",
                   style: TextStyle(
                     height: 1.5,
                     fontSize: 18,
@@ -180,6 +189,12 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               ),
               TextField(
                 controller: _passwordController,
+                enableInteractiveSelection: false,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(
+                      RegExp('[a-zA-Z0-9á-úÁ-Ú_.!@#%^&*()/{}:;' '""<>-]')),
+                  // FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
+                ],
                 obscureText: _obscured,
                 focusNode: textFieldFocusNode,
                 decoration: InputDecoration(
@@ -206,7 +221,9 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               const SizedBox(
                 height: 20.0,
               ),
-              /*   Container(
+
+              //CONFIRM PASSWORD
+              Container(
                 width: 350,
                 child: const Text(
                   "Confirm Password",
@@ -221,6 +238,12 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               TextField(
                 obscureText: true,
                 controller: _confirmPasswordController,
+                enableInteractiveSelection: false,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(
+                      RegExp('[a-zA-Z0-9á-úÁ-Ú_.!@#%^&*()/{}:;' '""<>-]')),
+                  // FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
+                ],
                 decoration: InputDecoration(
                   hintText: '************',
                   labelStyle: const TextStyle(
@@ -232,8 +255,16 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
                   border: const OutlineInputBorder(
                     borderSide: BorderSide.none,
                   ),
+                  // suffix: InkWell(
+                  //   onTap: _toggleObscured,
+                  //   child: Icon(
+                  //       _obscured
+                  //           ? Icons.visibility
+                  //           : Icons.visibility_off_rounded,
+                  //       color: const Color.fromARGB(255, 74, 74, 74)),
+                  // ),
                 ),
-              ), */
+              ),
               const SizedBox(
                 height: 20.0,
               ),
@@ -272,15 +303,22 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
         password.isNotEmpty &&
         confirmPassword.isNotEmpty) {
       if (user != null) {
-        await _users.doc(GoogleUserStaticInfo().uid).update({
-          "firstname": _firstnameController.text,
-          "lastname": _lastnameController.text,
-        });
-        _changePassword(user, password, displayName, context, popSnackbar);
+        if (confirmPassword == password) {
+          // await _users.doc(GoogleUserStaticInfo().uid).update({
+          //   "firstname": _firstnameController.text,
+          //   "lastname": _lastnameController.text,
+          //   //"password": _passwordController.text,
+          // });
+          _changePassword(user, password, confirmPassword, lname, fname,
+              displayName, context, popSnackbar);
 
-        ScaffoldMessenger.of(context).showSnackBar(
-            popSnackbar.popsnackbar("Successfully update your account"));
-        //   Navigator.of(context).popUntil((_) => count++ >= 2);
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //     popSnackbar.popsnackbar("Successfully update your account"));
+          //   Navigator.of(context).popUntil((_) => count++ >= 2);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(popSnackbar
+              .popsnackbar("Password and Confirm Password did not match"));
+        }
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(popSnackbar.popsnackbar("User is null"));
@@ -316,15 +354,45 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
   }
 }
 
-void _changePassword(User user, String password, String displayName, context,
+void _changePassword(
+    User user,
+    String password,
+    String confirmPassword,
+    String lname,
+    String fname,
+    String displayName,
+    context,
     PopSnackbar popSnackbar) async {
   user.updatePassword(password).then((_) {
+    PopSnackbar popSnackbar = PopSnackbar();
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //     popSnackbar.popsnackbar("Successfully update the password"));
+
+    //if (confirmPassword == password) {
+
+    _users.doc(GoogleUserStaticInfo().uid).update({
+      "firstname": fname,
+      "lastname": lname,
+      // "password": password,
+    });
+
     ScaffoldMessenger.of(context).showSnackBar(
-        popSnackbar.popsnackbar("Successfully update the password"));
+        popSnackbar.popsnackbar("Successfully updated your account"));
+    //   Navigator.of(context).popUntil((_) => count++ >= 2);
+    // } else {
+    //   ScaffoldMessenger.of(context).showSnackBar(popSnackbar
+    //       .popsnackbar("Password and Confirm Password are not the same"));
+    // }
+
+    Future.delayed(const Duration(seconds: 4)).then((value) =>
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const HomePage())));
   }).catchError((error) {
     ScaffoldMessenger.of(context).showSnackBar(
         popSnackbar.popsnackbar("Password cant be changed due to $error"));
   });
+
+  // ignore: invalid_return_type_for_catch_error
 
 /*   await user
       .updateDisplayName(displayName)

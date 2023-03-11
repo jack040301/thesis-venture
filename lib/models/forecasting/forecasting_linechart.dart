@@ -4,11 +4,14 @@ import 'dart:math';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:main_venture/models/forecasting/forecasting_population.dart';
 import 'package:main_venture/userInfo.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+class SyncLineChart extends StatelessWidget {
+    final String markerid;
 
-class PointsLineChart extends StatelessWidget {
-  PointsLineChart({super.key});
+  SyncLineChart({super.key,required this.markerid});
+
 
   late TooltipBehavior _tooltipBehavior;
   late TooltipBehavior _tooltip;
@@ -57,6 +60,7 @@ class PointsLineChart extends StatelessWidget {
           ),
         ),
         body: Padding(
+
           padding: const EdgeInsets.all(10.0),
     child: SingleChildScrollView(
     child: Column(
@@ -178,6 +182,7 @@ class PointsLineChart extends StatelessWidget {
               }
               return const Center(child: CircularProgressIndicator.adaptive());
             })]))));
+
   }
 
   List<ChartSeries<dynamic, dynamic>> getData(context) {

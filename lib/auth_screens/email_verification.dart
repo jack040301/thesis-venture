@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:main_venture/screens/home_page.dart';
+import 'login.dart';
 
 class Emailverificationscreen extends StatefulWidget {
   const Emailverificationscreen({super.key});
@@ -79,6 +80,7 @@ class EmailverificationscreenState extends State<Emailverificationscreen> {
                   style: TextStyle(fontSize: 20),
                   textAlign: TextAlign.center,
                 ),
+                // resend email
                 const SizedBox(height: 24),
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
@@ -86,11 +88,27 @@ class EmailverificationscreenState extends State<Emailverificationscreen> {
                   ),
                   icon: const Icon(Icons.email, size: 32),
                   label: const Text(
-                    'Resent Email',
-                    style: TextStyle(fontSize: 24),
+                    'Resend Email',
+                    style: TextStyle(fontSize: 15),
                   ),
                   onPressed: canResendEmail ? sendEmailVerification : null,
                 ),
+                //cancel
+                const SizedBox(height: 24),
+                ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(50),
+                    ),
+                    icon: const Icon(Icons.cancel, size: 32),
+                    label: const Text(
+                      'Cancel',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ));
+                    }),
               ],
             ),
           ),

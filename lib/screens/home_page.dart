@@ -8,7 +8,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:main_venture/feat_screens/Dialogbutton.dart';
-import 'package:main_venture/feat_screens/layer_simulation.dart';
+// import 'package:main_venture/feat_screens/layer_simulation.dart';
 import 'package:main_venture/feat_screens/profilenav.dart';
 import 'package:main_venture/models/auto_complete_results.dart';
 import 'package:main_venture/providers/search_places.dart';
@@ -35,7 +35,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
   Timer? _debounce;
 
 // toggling Ui as we need
-  bool searchToggle = false;
+  bool searchToggle = true;
 //
 //  bool searchToggle = false;
   bool radiusSlider = false;
@@ -114,17 +114,27 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
   }
 
   List<DropdownData> dropdownDatas = [];
+  List<DropdownDataAssumption> dropdownAssumption = [];
+
   Future getBusiness() async {
     await FirebaseFirestore.instance
         .collection("business")
         .get()
         .then((QuerySnapshot snapshot) => {
               snapshot.docs.forEach((documents) async {
+                var data = documents.data() as Map;
+
                 //var data = documents.data() as Map;
 
                 dropdownDatas.add(DropdownData(nameofbusiness: documents.id));
+                dropdownAssumption.add(
+                    DropdownDataAssumption(budgetassump: data['budgetassump']));
+
+                //  debugPrint(data['budgetassump']);
               })
             });
+
+    //  await FirebaseFirestore.instance.collection("assumptions").doc("budgetassump").get();
   }
 
   //this is the function for getting the users info in firestore
@@ -185,7 +195,6 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
   } */
 
   Future testMarker() async {
-
     await FirebaseFirestore.instance
         .collection("testmarkers")
         .get()
@@ -198,7 +207,8 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 
                 allmarkers.add(Marker(
                     onTap: () async {
-                      await DialogQuestion(documents.id, dropdownDatas)
+                      await DialogQuestion(
+                              documents.id, dropdownDatas, dropdownAssumption)
                           .showMyDialog(context);
                     },
                     infoWindow: InfoWindow(
@@ -316,23 +326,14 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
                                     child: TextFormField(
                                       controller: searchController,
                                       decoration: InputDecoration(
-                                          contentPadding:
-                                              const EdgeInsets.symmetric(
-                                                  horizontal: 20.0,
-                                                  vertical: 15.0),
-                                          border: InputBorder.none,
-                                          prefixIcon: const Icon(Icons.search),
-                                          hintText: 'Search',
-                                          suffixIcon: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  searchToggle = false;
-                                                  searchController.text = '';
-                                                  _markers = {};
-                                                  searchFlag.toggleSearch();
-                                                });
-                                              },
-                                              icon: const Icon(Icons.close))),
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                horizontal: 20.0,
+                                                vertical: 15.0),
+                                        border: InputBorder.none,
+                                        prefixIcon: const Icon(Icons.search),
+                                        hintText: 'Search',
+                                      ),
                                       onChanged: (value) {
                                         if (_debounce?.isActive ?? false) {
                                           _debounce?.cancel();
@@ -392,87 +393,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
                                     screenWidth: screenWidth,
                                     searchFlag: searchFlag))
                         : Container(),
-
                     //    getmarker(context), //to automatically show marker to map
-                    getDirections
-                        ? Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(15.0, 40.0, 15.0, 5),
-                            child: Column(
-                              children: [
-                                HomeOriginController(
-                                    originController: _originController),
-                                const SizedBox(height: 3.0),
-                                Container(
-                                  height: 50.0,
-                                  width: 280,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    color: Colors.white,
-                                  ),
-                                  child: TextFormField(
-                                    controller: _destinationController,
-                                    decoration: InputDecoration(
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                                horizontal: 20.0,
-                                                vertical: 15.0),
-                                        border: InputBorder.none,
-                                        hintText: 'Destination',
-                                        suffixIcon: Container(
-                                          width: 96.8,
-                                          child: Row(
-                                            children: [
-                                              IconButton(
-                                                  onPressed: () async {
-                                                    var directions =
-                                                        await MapServices()
-                                                            .getDirections(
-                                                                _originController
-                                                                    .text,
-                                                                _destinationController
-                                                                    .text);
-                                                    _markers = {};
-                                                    _polylines = {};
-                                                    gotoPlace(
-                                                      directions[
-                                                              'start_location']
-                                                          ['lat'],
-                                                      directions[
-                                                              'start_location']
-                                                          ['lng'],
-                                                      directions['end_location']
-                                                          ['lng'],
-                                                      directions['end_location']
-                                                          ['lat'],
-                                                      directions['bounds_ne'],
-                                                      directions['bounds_sw'],
-                                                    );
-                                                    _setPolyline(directions[
-                                                        'polyline_deoded']);
-                                                  },
-                                                  icon:
-                                                      const Icon(Icons.search)),
-                                              IconButton(
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      getDirections = false;
-                                                      _originController.text =
-                                                          '';
-                                                      _destinationController
-                                                          .text = '';
-                                                    });
-                                                  },
-                                                  icon: const Icon(Icons.close))
-                                            ],
-                                          ),
-                                        )),
-                                  ),
-                                )
-                              ],
-                            ),
-                          )
-                        : Container()
                   ],
                 )
               ],
@@ -486,43 +407,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
                   UserInfofirstname: UserInfofirstname,
                   UserInfolastname:
                       UserInfolastname), //breaking the Widget of floating button and passing the data from the stateless widget below
-              const HomeFloatingDialog(),
-              FloatingActionButton(
-                disabledElevation: 0,
-                elevation: 0.0,
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black,
-                mini: true,
-                heroTag: null,
-                child: const Icon(Icons.search),
-                onPressed: () {
-                  setState(() {
-                    searchToggle = true;
-                    radiusSlider = false;
-                    pressedNear = false;
-                    cardTapped = false;
-                    getDirections = false;
-                  });
-                },
-              ),
-              FloatingActionButton(
-                disabledElevation: 0,
-                elevation: 0.0,
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black,
-                mini: true,
-                heroTag: null,
-                child: const Icon(Icons.navigation),
-                onPressed: () {
-                  setState(() {
-                    searchToggle = false;
-                    radiusSlider = false;
-                    pressedNear = false;
-                    cardTapped = false;
-                    getDirections = true;
-                  });
-                },
-              ),
+              // const HomeFloatingDialog(),
             ],
           ),
           resizeToAvoidBottomInset: false,
@@ -847,31 +732,31 @@ class HomeGoogleMap extends StatelessWidget {
   }
 }
 
-class HomeFloatingDialog extends StatelessWidget {
-  const HomeFloatingDialog({
-    super.key,
-  });
+// class HomeFloatingDialog extends StatelessWidget {
+//   const HomeFloatingDialog({
+//     super.key,
+//   });
 
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      disabledElevation: 0,
-      elevation: 0.0,
-      backgroundColor: Colors.white,
-      foregroundColor: Colors.black,
-      mini: true,
-      heroTag: null,
-      child: const Icon(Icons.business),
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const LayerSimulationScreen()),
-        );
-      },
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return FloatingActionButton(
+//       disabledElevation: 0,
+//       elevation: 0.0,
+//       backgroundColor: Colors.white,
+//       foregroundColor: Colors.black,
+//       mini: true,
+//       heroTag: null,
+//       child: const Icon(Icons.business),
+//       onPressed: () {
+//         Navigator.push(
+//           context,
+//           MaterialPageRoute(
+//               builder: (context) => const LayerSimulationScreen()),
+//         );
+//       },
+//     );
+//   }
+// }
 
 class HomeOriginController extends StatelessWidget {
   const HomeOriginController({

@@ -34,85 +34,109 @@ class WidgetTermsAndCondition extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(5, 0, 0, 20),
-              child: Row(
-                children: [
-                  const ImageIcon(
-                    AssetImage("assets/images/icons/note.png"),
-                    color: Colors.black,
-                    size: 23,
+        padding: const EdgeInsets.all(20.0),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                color: Colors.white,
+                padding: const EdgeInsets.fromLTRB(30, 20, 30, 7),
+                child: Row(
+                  children: const <Widget>[
+                    const ImageIcon(
+                      AssetImage("assets/images/icons/note.png"),
+                      color: Colors.black,
+                      size: 18,
+                    ),
+                    SizedBox(
+                      width: 10.0,
+                    ),
+                    Expanded(
+                      child: Text(
+                        ' Terms and Conditon',
+                        style: TextStyle(
+                            height: 1.5,
+                            color: Color.fromARGB(255, 33, 33, 33),
+                            fontSize: 16),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Container(
+                color: Colors.white,
+                padding: const EdgeInsets.fromLTRB(30, 2, 30, 7),
+                child: const Text(
+                  'You must agree to the Venture Terms of Conditions in order to use Venture. Please carefully read each of these documents. "Terms" refer to all of these agreements as a whole. They lay out what we anticipate from you as a user of our services and what you can anticipate from us. The Privacy Policy is not a part of these terms, but we encourage you to read it to learn more about how to edit, manage, export, and delete your information.',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 97, 97, 97),
+                    fontFamily: 'Questrial',
+                    fontSize: 16,
                   ),
-                  Text(
-                    ' Terms and Conditon',
-                    style: TextStyle(
-                        height: 1.5,
-                        fontFamily: 'Questrial',
-                        color: Colors.grey.shade900,
-                        fontSize: 20),
+                ),
+              ),
+              Container(
+                color: Colors.white,
+                padding: const EdgeInsets.fromLTRB(30, 2, 30, 7),
+                child: const Text(
+                  '1. License. The Venture Terms and Conditions grant you a license to make use of certain features, including those that allow you to: a. view and annotate maps b. publicly display content with proper attribution online.',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 74, 74, 74),
+                    fontFamily: 'Questrial',
+                    fontSize: 16,
                   ),
-                ],
+                ),
               ),
-            ),
-            Text(
-              'You must agree to the Venture Terms of Conditions in order to use Venture. Please carefully read each of these documents. "Terms" refer to all of these agreements as a whole. They lay out what we anticipate from you as a user of our services and what you can anticipate from us. The Privacy Policy is not a part of these terms, but we encourage you to read it to learn more about how to edit, manage, export, and delete your information.',
-              textAlign: TextAlign.justify,
-              style: TextStyle(
-                height: 1.5,
-                color: Colors.grey.shade700,
-                fontFamily: 'Questrial',
-                fontSize: 20,
+              Container(
+                color: Colors.white,
+                padding: const EdgeInsets.fromLTRB(30, 2, 30, 7),
+                child: const Text(
+                  '2. Prohibited Actions. Your observance of the restrictions on use in this license agreement You might not be able to use Venture (or allow those acting on your behalf to do so.) a.create a new product or service based on Venture, or redistribute or sell any portion of Venture.b. copy the content c. mass download the content or generate bulk feeds (or permit others to do so).',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 74, 74, 74),
+                    fontFamily: 'Questrial',
+                    fontSize: 16,
+                  ),
+                ),
               ),
-            ),
-            Text(
-              ' 1. License. The Venture Terms and Conditions grant you a license to make use of certain features, including those that allow you to: a. view and annotate maps b. publicly display content with proper attribution online.',
-              textAlign: TextAlign.justify,
-              style: TextStyle(
-                height: 1.5,
-                color: Colors.grey.shade700,
-                fontFamily: 'Questrial',
-                fontSize: 20,
+              Container(
+                color: Colors.white,
+                padding: const EdgeInsets.fromLTRB(30, 2, 30, 7),
+                child: const Text(
+                  '3. Assumption of Risk: Actual Conditions. Use Venture at your own risk and use the map data, traffic, directions, and other content at your own risk even though actual conditions may differ from the results and content of the map. You are always in charge of your actions and their effects.',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 74, 74, 74),
+                    fontFamily: 'Questrial',
+                    fontSize: 16,
+                  ),
+                ),
               ),
-            ),
-            Text(
-              ' 2. Prohibited Actions. Your observance of the restrictions on use in this license agreement You might not be able to use Venture (or allow those acting on your behalf to do so.) a.create a new product or service based on Venture, or redistribute or sell any portion of Venture.b. copy the content c. mass download the content or generate bulk feeds (or permit others to do so).',
-              textAlign: TextAlign.justify,
-              style: TextStyle(
-                height: 1.5,
-                color: Colors.grey.shade700,
-                fontFamily: 'Questrial',
-                fontSize: 20,
-              ),
-            ),
-            Text(
-              ' 3. Assumption of Risk: Actual Conditions. Use Venture at your own risk and use the map data, traffic, directions, and other content at your own risk even though actual conditions may differ from the results and content of the map. You are always in charge of your actions and their effects.',
-              textAlign: TextAlign.justify,
-              style: TextStyle(
-                height: 1.5,
-                color: Colors.grey.shade700,
-                fontFamily: 'Questrial',
-                fontSize: 20,
-              ),
-            ),
-            Text(
-              ' 4. Your Content in Venture: The terms of service for Venture, including the license in the section titled "Permission to use your content," apply to any content you upload, submit, store, send, or receive through Venture. However, since it is not uploaded or submitted to Venture, locally stored content that stays on your device is not covered by this license.',
-              textAlign: TextAlign.justify,
-              style: TextStyle(
-                height: 1.5,
-                color: Colors.grey.shade700,
-                fontFamily: 'Questrial',
-                fontSize: 20,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+              Container(
+                color: Colors.white,
+                padding: const EdgeInsets.fromLTRB(30, 2, 30, 20),
+                child: const Text(
+                  '4. Your Content in Venture: The terms of service for Venture, including the license in the section titled "Permission to use your content," apply to any content you upload, submit, store, send, or receive through Venture. However, since it is not uploaded or submitted to Venture, locally stored content that stays on your device is not covered by this license.',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 74, 74, 74),
+                    fontFamily: 'Questrial',
+                    fontSize: 16,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }

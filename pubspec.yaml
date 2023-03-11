@@ -73,6 +73,9 @@ dependencies:
   image_gallery_saver:
   permission_handler:
   syncfusion_flutter_charts:
+  url_launcher: ^6.1.10
+  pdf: ^3.8.4
+  share_plus: ^6.3.1
 
 dev_dependencies:
   flutter_launcher_icons: ^0.10.0

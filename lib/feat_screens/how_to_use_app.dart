@@ -50,7 +50,7 @@ class ContentHowToUse extends StatelessWidget {
                   ImageIcon(
                     AssetImage("assets/images/icons/device.png"),
                     color: Color.fromARGB(255, 28, 28, 28),
-                    size: 20,
+                    size: 18,
                   ),
                   Text(
                     ' How to use the app',
@@ -72,27 +72,19 @@ class ContentHowToUse extends StatelessWidget {
               ),
             ),
             Container(
-              width: 350,
-              height: 30,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-              ),
+              color: Colors.white,
               padding: const EdgeInsets.fromLTRB(20, 2, 40, 7),
               child: const Center(
                 child: Text("Creating and Log-in Account",
                     textAlign: TextAlign.justify,
                     style: TextStyle(
                         color: Color.fromARGB(255, 28, 28, 28),
-                        fontSize: 19.0)), // <-- Text
+                        fontSize: 18.0)), // <-- Text
               ),
             ),
             Container(
-              width: 350,
-              height: 90,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-              ),
               padding: const EdgeInsets.fromLTRB(40, 2, 35, 7),
+              color: Colors.white,
               child: const Center(
                 child: Text(
                   '1. On your Mobile phone or tablet, open the Venture application.',
@@ -100,18 +92,14 @@ class ContentHowToUse extends StatelessWidget {
                   style: TextStyle(
                     height: 1.5,
                     color: Color.fromARGB(255, 54, 54, 54),
-                    fontSize: 18,
+                    fontSize: 16,
                   ),
                 ),
               ),
             ),
             Container(
-              width: 350,
-              height: 170,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-              ),
               padding: const EdgeInsets.fromLTRB(40, 2, 35, 7),
+              color: Colors.white,
               child: const Center(
                 child: Text(
                   '2. If you do not have an Account, you can create your account by Signing-up Requirements or you can connect to your Google to create an account.',
@@ -119,18 +107,14 @@ class ContentHowToUse extends StatelessWidget {
                   style: TextStyle(
                     height: 1.5,
                     color: Color.fromARGB(255, 54, 54, 54),
-                    fontSize: 18,
+                    fontSize: 16,
                   ),
                 ),
               ),
             ),
             Container(
-              width: 350,
-              height: 115,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-              ),
               padding: const EdgeInsets.fromLTRB(40, 2, 35, 7),
+              color: Colors.white,
               child: const Center(
                 child: Text(
                   '3. Now you have an account, proceed to log-in your account so you can go to the landing page.',
@@ -138,7 +122,7 @@ class ContentHowToUse extends StatelessWidget {
                   style: TextStyle(
                     height: 1.5,
                     color: Color.fromARGB(255, 54, 54, 54),
-                    fontSize: 18,
+                    fontSize: 16,
                   ),
                 ),
               ),
@@ -155,27 +139,19 @@ class ContentHowToUse extends StatelessWidget {
               ),
             ),
             Container(
-              width: 350,
-              height: 30,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-              ),
               padding: const EdgeInsets.fromLTRB(20, 2, 70, 7),
+              color: Colors.white,
               child: const Center(
                 child: Text("Search and Pin Location",
                     textAlign: TextAlign.justify,
                     style: TextStyle(
                         color: Color.fromARGB(255, 28, 28, 28),
-                        fontSize: 19.0)), // <-- Text
+                        fontSize: 18.0)), // <-- Text
               ),
             ),
             Container(
-              width: 350,
-              height: 165,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-              ),
               padding: const EdgeInsets.fromLTRB(40, 2, 35, 7),
+              color: Colors.white,
               child: const Center(
                 child: Text(
                   '1. Now you are done claiming your daily rewards you can search and pin location on the map by tapping your preferred location to start a business.',
@@ -184,18 +160,14 @@ class ContentHowToUse extends StatelessWidget {
                     height: 1.5,
                     color: Color.fromARGB(255, 54, 54, 54),
                     fontFamily: 'Questrial',
-                    fontSize: 18,
+                    fontSize: 16,
                   ),
                 ),
               ),
             ),
             Container(
-              width: 350,
-              height: 140,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-              ),
               padding: const EdgeInsets.fromLTRB(40, 2, 35, 7),
+              color: Colors.white,
               child: const Center(
                 child: Text(
                   '2. Once you select your preferred location for your business, you can choose what business you prefer then proceed.',
@@ -203,18 +175,14 @@ class ContentHowToUse extends StatelessWidget {
                   style: TextStyle(
                     height: 1.5,
                     color: Color.fromARGB(255, 54, 54, 54),
-                    fontSize: 18,
+                    fontSize: 16,
                   ),
                 ),
               ),
             ),
             Container(
-              width: 350,
-              height: 260,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-              ),
-              padding: const EdgeInsets.fromLTRB(40, 2, 35, 0),
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 15),
+              color: Colors.white,
               child: const Center(
                 child: Text(
                   '3. After Venture calculated the data, the result is available for viewing the computation of the population, traffic and utility services and it will display the percentage if your chosen business is appropriate for your preferred location.',
@@ -222,7 +190,7 @@ class ContentHowToUse extends StatelessWidget {
                   style: TextStyle(
                     height: 1.5,
                     color: Color.fromARGB(255, 54, 54, 54),
-                    fontSize: 18,
+                    fontSize: 16,
                   ),
                 ),
               ),
