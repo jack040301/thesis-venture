@@ -132,7 +132,7 @@ class _DemogResultState extends State<DemogResult> {
               snapshot.data!.data() as Map<String, dynamic>;
 
           //for land size
-          String landstr = data['land size'].toString();
+          String landstr = data['land_size'].toString();
           //  String landstrfinal = '${landstr}sqm';
 
           // for population
