@@ -161,11 +161,15 @@ function MapPage() {
 
      //alert("")
       }
+      else {
+
+        toastRef.current.showToast("Please do not leave fields blank")
+  
+      }
 
 
       //alert("Please do not leave fields blank")
 
-      toastRef.current.showToast("Please do not leave fields blank")
 
       //success
     } catch (e) {
@@ -221,8 +225,11 @@ function MapPage() {
 
 //        alert("Successful update Marker")
         
-    }   
-    toastRef.current.showToast("Please do not leave fields blank")
+    } else {
+
+      toastRef.current.showToast("Please do not leave fields blank")
+
+    }
 
     
     
