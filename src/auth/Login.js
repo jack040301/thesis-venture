@@ -53,9 +53,11 @@ function Login() {
     }else{
 
 //Toast message
-      localStorage.removeItem("email");
-      toastRef.current.showToast("Invalid credentials. Please try again.")
-      return logout()
+
+      //toastRef.current.showToast("Invalid credentials. Please try again.")
+        localStorage.removeItem("email");
+      logout()
+
     }
   }
   
@@ -82,10 +84,19 @@ function Login() {
     
   })
   .catch((error) => {
-//      console.log(error)
+      //console.log(error)
+      var errorCode = error.code;
+      var errorMessage = error.message;
 
-      toastRef.current.showToast(error)
+      if(errorCode === 'auth/user-not-found'){
+        toastRef.current.showToast("Invalid credentials. Please enter valid email address.")
+      }else if(errorCode === 'auth/wrong-password'){
+        toastRef.current.showToast("Invalid credentials. Please enter a valid password")
+      }else if(errorCode === 'auth/invalid-email'){
+        toastRef.current.showToast("Invalid credentials. Please enter a valid email address")
+      }
 
+      //toastRef.current.showToast(error.toString())
   });   
 
 
