@@ -201,9 +201,9 @@ void _changePassword(User user, String password, String confirmPassword,
     });
 
     ScaffoldMessenger.of(context).showSnackBar(
-        popSnackbar.popsnackbar("Successfully updated your account"));
+        popSnackbar.popsnackbar("Successfully updated your Password"));
 
-    Future.delayed(const Duration(seconds: 4)).then((value) =>
+    Future.delayed(const Duration(seconds: 1)).then((value) =>
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const HomePage())));
   }).catchError((error) {
