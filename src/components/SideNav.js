@@ -1,11 +1,9 @@
 /* import React from "react"; */
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
-import { logout } from "../auth/context";
 import { Link, NavLink } from "react-router-dom";
 import React, { useState, useRef } from "react";
 import {
-  MDBBtn,
   MDBModal,
   MDBModalDialog,
   MDBModalContent,
@@ -13,7 +11,6 @@ import {
   MDBModalTitle,
   MDBModalBody,
   MDBModalFooter,
-  MDBContainer,
 } from "mdb-react-ui-kit";
 
 import ReactToast from "./Toast/toast"; /* import Component of toast */

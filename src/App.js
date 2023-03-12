@@ -30,7 +30,6 @@ function App() {
             path="/"
             element={
               <Protect>
-           
               <Login/>
               </Protect>
             }

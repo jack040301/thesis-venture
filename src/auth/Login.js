@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { auth, signInWithEmailAndPassword, doc,getDoc, db } from "../firebase";
 import { UserAuth } from "./context";
@@ -9,15 +9,12 @@ import ReactToast from "../components/Toast/toast"/* import Component of toast *
 
 
 import {
-  MDBBtn,
   MDBContainer,
   MDBRow,
   MDBCol,
   MDBCard,
   MDBCardBody,
   MDBInput,
-  MDBIcon,
-  MDBCheckbox,
 } from "mdb-react-ui-kit";
 
 function Login() {
@@ -86,7 +83,7 @@ function Login() {
   .catch((error) => {
       //console.log(error)
       var errorCode = error.code;
-      var errorMessage = error.message;
+    //  var errorMessage = error.message;
 
       if(errorCode === 'auth/user-not-found'){
         toastRef.current.showToast("Invalid credentials. Please enter valid email address.")

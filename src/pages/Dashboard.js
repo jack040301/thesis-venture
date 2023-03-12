@@ -1,8 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 
-import { signOut } from "firebase/auth";
-import { auth, collection,db,onSnapshot } from "../firebase";
+import { collection,db,onSnapshot } from "../firebase";
 
 
 export default function Dashboard({ user, setAuthState, setUser }) {

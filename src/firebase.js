@@ -88,7 +88,7 @@ const registerWithEmailAndPassword = async (email, password) => {
   }
 }; */
 
-const logInWithEmailAndPassword = async (email, password) => {
+/* const logInWithEmailAndPassword = async (email, password) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
 
@@ -98,7 +98,7 @@ const logInWithEmailAndPassword = async (email, password) => {
     alert(err.message);
   }
 
-}; 
+};  */
 
 
 const sendPasswordReset = async (email) => {
