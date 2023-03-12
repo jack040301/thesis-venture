@@ -66,7 +66,7 @@ function Config() {
       ) {
         if (formValue.password === formValue.confirmpass) {
           const emailCred = EmailAuthProvider.credential(
-            user.email,
+            configureEmail,
             formValue.oldpassword
           );
 
