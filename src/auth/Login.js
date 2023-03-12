@@ -51,8 +51,8 @@ function Login() {
     }else{
 
 //Toast message
-      toastRef.current.showToast("Invalid credentials. Please try again.")
-      return logout()
+      //toastRef.current.showToast("Invalid credentials. Please try again.")
+      logout()
     }
   }
   
@@ -77,9 +77,9 @@ function Login() {
     
   })
   .catch((error) => {
-//      console.log(error)
+      console.log(error)
 
-      toastRef.current.showToast(error)
+      //toastRef.current.showToast(error)
 
   });   
 
