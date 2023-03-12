@@ -175,96 +175,96 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               ), */
 
               //NEW PASSWORD
-              Container(
-                width: 350,
-                child: const Text(
-                  "New Password",
-                  style: TextStyle(
-                    height: 1.5,
-                    fontSize: 18,
-                  ),
+              // Container(
+              //   width: 350,
+              //   child: const Text(
+              //     "New Password",
+              //     style: TextStyle(
+              //       height: 1.5,
+              //       fontSize: 18,
+              //     ),
 
-                  textAlign: TextAlign.left, // has impact
-                ),
-              ),
-              TextField(
-                controller: _passwordController,
-                enableInteractiveSelection: false,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(
-                      RegExp('[a-zA-Z0-9á-úÁ-Ú_.!@#%^&*()/{}:;' '""<>-]')),
-                  // FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
-                ],
-                obscureText: _obscured,
-                focusNode: textFieldFocusNode,
-                decoration: InputDecoration(
-                  hintText: '************',
-                  labelStyle: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 25,
-                  ),
-                  fillColor: Colors.grey.shade200,
-                  filled: true,
-                  border: const OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                  ),
-                  suffix: InkWell(
-                    onTap: _toggleObscured,
-                    child: Icon(
-                        _obscured
-                            ? Icons.visibility
-                            : Icons.visibility_off_rounded,
-                        color: const Color.fromARGB(255, 74, 74, 74)),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 20.0,
-              ),
+              //     textAlign: TextAlign.left, // has impact
+              //   ),
+              // ),
+              // TextField(
+              //   controller: _passwordController,
+              //   enableInteractiveSelection: false,
+              //   inputFormatters: [
+              //     FilteringTextInputFormatter.allow(
+              //         RegExp('[a-zA-Z0-9á-úÁ-Ú_.!@#%^&*()/{}:;' '""<>-]')),
+              //     // FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
+              //   ],
+              //   obscureText: _obscured,
+              //   focusNode: textFieldFocusNode,
+              //   decoration: InputDecoration(
+              //     hintText: '************',
+              //     labelStyle: const TextStyle(
+              //       color: Colors.black,
+              //       fontSize: 25,
+              //     ),
+              //     fillColor: Colors.grey.shade200,
+              //     filled: true,
+              //     border: const OutlineInputBorder(
+              //       borderSide: BorderSide.none,
+              //     ),
+              //     suffix: InkWell(
+              //       onTap: _toggleObscured,
+              //       child: Icon(
+              //           _obscured
+              //               ? Icons.visibility
+              //               : Icons.visibility_off_rounded,
+              //           color: const Color.fromARGB(255, 74, 74, 74)),
+              //     ),
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 20.0,
+              // ),
 
-              //CONFIRM PASSWORD
-              Container(
-                width: 350,
-                child: const Text(
-                  "Confirm Password",
-                  style: TextStyle(
-                    height: 1.5,
-                    fontSize: 18,
-                  ),
+              // //CONFIRM PASSWORD
+              // Container(
+              //   width: 350,
+              //   child: const Text(
+              //     "Confirm Password",
+              //     style: TextStyle(
+              //       height: 1.5,
+              //       fontSize: 18,
+              //     ),
 
-                  textAlign: TextAlign.left, // has impact
-                ),
-              ),
-              TextField(
-                obscureText: true,
-                controller: _confirmPasswordController,
-                enableInteractiveSelection: false,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(
-                      RegExp('[a-zA-Z0-9á-úÁ-Ú_.!@#%^&*()/{}:;' '""<>-]')),
-                  // FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
-                ],
-                decoration: InputDecoration(
-                  hintText: '************',
-                  labelStyle: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 25,
-                  ),
-                  fillColor: Colors.grey.shade200,
-                  filled: true,
-                  border: const OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                  ),
-                  // suffix: InkWell(
-                  //   onTap: _toggleObscured,
-                  //   child: Icon(
-                  //       _obscured
-                  //           ? Icons.visibility
-                  //           : Icons.visibility_off_rounded,
-                  //       color: const Color.fromARGB(255, 74, 74, 74)),
-                  // ),
-                ),
-              ),
+              //     textAlign: TextAlign.left, // has impact
+              //   ),
+              // ),
+              // TextField(
+              //   obscureText: true,
+              //   controller: _confirmPasswordController,
+              //   enableInteractiveSelection: false,
+              //   inputFormatters: [
+              //     FilteringTextInputFormatter.allow(
+              //         RegExp('[a-zA-Z0-9á-úÁ-Ú_.!@#%^&*()/{}:;' '""<>-]')),
+              //     // FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
+              //   ],
+              //   decoration: InputDecoration(
+              //     hintText: '************',
+              //     labelStyle: const TextStyle(
+              //       color: Colors.black,
+              //       fontSize: 25,
+              //     ),
+              //     fillColor: Colors.grey.shade200,
+              //     filled: true,
+              //     border: const OutlineInputBorder(
+              //       borderSide: BorderSide.none,
+              //     ),
+              //     // suffix: InkWell(
+              //     //   onTap: _toggleObscured,
+              //     //   child: Icon(
+              //     //       _obscured
+              //     //           ? Icons.visibility
+              //     //           : Icons.visibility_off_rounded,
+              //     //       color: const Color.fromARGB(255, 74, 74, 74)),
+              //     // ),
+              //   ),
+              // ),
               const SizedBox(
                 height: 20.0,
               ),
@@ -294,31 +294,13 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
 
     final String fname = _firstnameController.text;
     final String lname = _lastnameController.text;
-    final String password = _passwordController.text;
-    final String confirmPassword = _confirmPasswordController.text;
+    // final String password = _passwordController.text;
+    // final String confirmPassword = _confirmPasswordController.text;
     // if (lname != null) {
     final String displayName = fname + lname;
-    if (fname.isNotEmpty &&
-        lname.isNotEmpty &&
-        password.isNotEmpty &&
-        confirmPassword.isNotEmpty) {
+    if (fname.isNotEmpty && lname.isNotEmpty) {
       if (user != null) {
-        if (confirmPassword == password) {
-          // await _users.doc(GoogleUserStaticInfo().uid).update({
-          //   "firstname": _firstnameController.text,
-          //   "lastname": _lastnameController.text,
-          //   //"password": _passwordController.text,
-          // });
-          _changePassword(user, password, confirmPassword, lname, fname,
-              displayName, context, popSnackbar);
-
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //     popSnackbar.popsnackbar("Successfully update your account"));
-          //   Navigator.of(context).popUntil((_) => count++ >= 2);
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(popSnackbar
-              .popsnackbar("Password and Confirm Password did not match"));
-        }
+        _changeName(user, lname, fname, displayName, context, popSnackbar);
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(popSnackbar.popsnackbar("User is null"));
@@ -326,8 +308,8 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
       // print("Password isnt match");
     } else {
       //print("Please fill out all Fields");
-      popSnackbar.showErrorDialog(_confirmPasswordController,
-          _passwordController, context, "Please fill out all the fields");
+      popSnackbar.showErrorDialog(_firstnameController, _lastnameController,
+          context, "Please fill out all the fields");
       /*  showDialog<void>(
         context: context,
         barrierDismissible: false,
@@ -354,43 +336,43 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
   }
 }
 
-void _changePassword(
+void _changeName(
     User user,
-    String password,
-    String confirmPassword,
+    // String password,
+    // String confirmPassword,
     String lname,
     String fname,
     String displayName,
     context,
     PopSnackbar popSnackbar) async {
-  user.updatePassword(password).then((_) {
-    PopSnackbar popSnackbar = PopSnackbar();
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //     popSnackbar.popsnackbar("Successfully update the password"));
+  // user.updatePassword(password).then((_) {
+  PopSnackbar popSnackbar = PopSnackbar();
+  // ScaffoldMessenger.of(context).showSnackBar(
+  //     popSnackbar.popsnackbar("Successfully update the password"));
 
-    //if (confirmPassword == password) {
+  //if (confirmPassword == password) {
 
-    _users.doc(GoogleUserStaticInfo().uid).update({
-      "firstname": fname,
-      "lastname": lname,
-      // "password": password,
-    });
-
-    ScaffoldMessenger.of(context).showSnackBar(
-        popSnackbar.popsnackbar("Successfully updated your account"));
-    //   Navigator.of(context).popUntil((_) => count++ >= 2);
-    // } else {
-    //   ScaffoldMessenger.of(context).showSnackBar(popSnackbar
-    //       .popsnackbar("Password and Confirm Password are not the same"));
-    // }
-
-    Future.delayed(const Duration(seconds: 4)).then((value) =>
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const HomePage())));
-  }).catchError((error) {
-    ScaffoldMessenger.of(context).showSnackBar(
-        popSnackbar.popsnackbar("Password cant be changed due to $error"));
+  _users.doc(GoogleUserStaticInfo().uid).update({
+    "firstname": fname,
+    "lastname": lname,
+    // "password": password,
   });
+
+  ScaffoldMessenger.of(context).showSnackBar(
+      popSnackbar.popsnackbar("Successfully updated your account"));
+  //   Navigator.of(context).popUntil((_) => count++ >= 2);
+  // } else {
+  //   ScaffoldMessenger.of(context).showSnackBar(popSnackbar
+  //       .popsnackbar("Password and Confirm Password are not the same"));
+  // }
+
+  Future.delayed(const Duration(seconds: 2)).then((value) =>
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const HomePage())));
+  // }).catchError((error) {
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //       popSnackbar.popsnackbar("Password cant be changed due to $error"));
+  // });
 
   // ignore: invalid_return_type_for_catch_error
 
