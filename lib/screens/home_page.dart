@@ -314,7 +314,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
                         : searchToggle
                             ? Padding(
                                 padding: const EdgeInsets.fromLTRB(
-                                    15.0, 50.0, 15.0, 5.0),
+                                    15.0, 70.0, 15.0, 5.0),
                                 child: Column(children: [
                                   Container(
                                     height: 50.0,
@@ -402,7 +402,8 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
           floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
           floatingActionButton: Column(
             children: [
-              const SizedBox(height: 12),
+              const SizedBox(height: 30),
+
               FloatingButtonUserProfile(
                   UserInfofirstname: UserInfofirstname,
                   UserInfolastname:
@@ -625,6 +626,8 @@ class FloatingButtonUserProfile extends StatelessWidget {
             elevation: 0.0,
             backgroundColor: Colors.white,
             foregroundColor: Colors.black,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             heroTag: null,
             mini: true,
             child: Profile().profile == null
