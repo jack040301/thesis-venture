@@ -77,9 +77,10 @@ function Login() {
     
   })
   .catch((error) => {
-      console.log(error)
+      //console.log(error)
 
       toastRef.current.showToast('baka male password mo')
+      //toastRef.current.showToast(error)
 
   });   
 
