@@ -34,6 +34,7 @@ function Login() {
 
   const [password, setPassword] = useState("");
 
+ // const [loggedemail,setLoggedEmail] = useState("");
 
 
   async function getdata(userid){
@@ -52,6 +53,7 @@ function Login() {
     }else{
 
 //Toast message
+      localStorage.removeItem("email");
       toastRef.current.showToast("Invalid credentials. Please try again.")
       return logout()
     }
@@ -73,8 +75,10 @@ function Login() {
     
     var user = userCredential.user;
   
-
+    localStorage.setItem("email",user.email);
+  //  setLoggedEmail(user.email)
     getdata(user.uid)
+
     
   })
   .catch((error) => {
@@ -201,3 +205,4 @@ function Login() {
 }
 
 export default Login;
+
