@@ -78,10 +78,16 @@ function Login() {
   })
   .catch((error) => {
       //console.log(error)
+      var errorCode = error.code;
+      var errorMessage = error.message;
 
-      toastRef.current.showToast(error.toString())
-      //toastRef.current.showToast(error)
+      if(errorCode === 'auth/user-not-found'){
+        toastRef.current.showToast("Invalid credentials. Please enter valid email address.")
+      }else if(errorCode === 'auth/wrong-password'){
+        toastRef.current.showToast("Invalid credentials. Please enter a valid password")
+      }
 
+      //toastRef.current.showToast(error.toString())
   });   
 
 
