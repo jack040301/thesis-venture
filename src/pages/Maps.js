@@ -258,9 +258,11 @@ function MapPage() {
 
       toastRef.current.showToast("Successful delete Marker")
 
-    }
+    }else {
 
-    toastRef.current.showToast("Unable to delete Marker")
+      toastRef.current.showToast("Unable to delete Marker")
+
+    }
 
  //   alert("Unable to delete Marker")
 
