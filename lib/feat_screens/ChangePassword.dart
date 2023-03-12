@@ -76,6 +76,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         FilteringTextInputFormatter.allow(RegExp(
                             '[a-zA-Z0-9á-úÁ-Ú_.!@#%^&*()/{}:;' '""<>-]')),
                       ],
+                      obscureText: _obscured,
                       decoration: InputDecoration(
                         hintText: '************',
                         labelStyle: const TextStyle(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:main_venture/feat_screens/pinnedlocation_new.dart';
+// import 'package:main_venture/feat_screens/pinnedlocation_new.dart';
 import 'package:main_venture/feat_screens/upgrade_account.dart';
 
 import '../userInfo.dart';

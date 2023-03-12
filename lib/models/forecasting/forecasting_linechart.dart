@@ -285,13 +285,14 @@ class SyncLineChart extends StatelessWidget {
                                                       Expanded(
                                                           child: TextButton(
                                                         onPressed: () {
-                                                          Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        const HomePage()),
-                                                          );
+                                                          Navigator.of(context)
+                                                              .pushAndRemoveUntil(
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              const HomePage()),
+                                                                  (Route route) =>
+                                                                      false);
                                                         },
                                                         style: TextButton
                                                             .styleFrom(

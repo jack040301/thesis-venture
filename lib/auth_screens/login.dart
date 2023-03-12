@@ -372,15 +372,9 @@ class _LoginScreenState extends State<LoginScreen> {
               TextButton(
                 child: const Text('Got it'),
                 onPressed: () {
-                  // const LoginScreen();
-
-                  // Navigator.of(context).pop();
-
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => const LoginScreen(),
                   ));
-                  // _emailController.clear();
-                  // _passwordController.clear();
                 },
               ),
             ],
@@ -388,5 +382,5 @@ class _LoginScreenState extends State<LoginScreen> {
         },
       );
     }
-  }
-}
+  } //signIn close
+}// class closing
