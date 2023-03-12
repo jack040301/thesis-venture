@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { addDoc, db, setDoc, registerWithEmailAndPassword, doc } from "../firebase";
+import { addDoc, db, setDoc, createUserWithEmailAndPassword, doc,auth } from "../firebase";
 
 import { MDBRow, MDBCol } from "mdb-react-ui-kit";
 
@@ -51,7 +51,7 @@ const [emailtwo, setEmailtwo] = useState("");
     try {
       if (formValuetwo.password === formValuetwo.confirmpass) {
 
-        await registerWithEmailAndPassword(emailtwo, formValuetwo.password)
+        await createUserWithEmailAndPassword(auth,emailtwo, formValuetwo.password)
           .then((userCredential) => {
 
             const usersinfo = userCredential;
