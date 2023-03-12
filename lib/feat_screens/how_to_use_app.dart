@@ -42,24 +42,24 @@ class ContentHowToUse extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              color: Colors.white,
-              padding: const EdgeInsets.fromLTRB(35, 20, 35, 7),
-              child: Row(
-                children: const [
-                  ImageIcon(
-                    AssetImage("assets/images/icons/device.png"),
-                    color: Color.fromARGB(255, 28, 28, 28),
-                    size: 18,
-                  ),
-                  Text(
-                    ' How to use the app',
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 28, 28, 28), fontSize: 19),
-                  ),
-                ],
-              ),
-            ),
+            //Container(
+            //  color: Colors.white,
+            //  padding: const EdgeInsets.fromLTRB(35, 20, 35, 7),
+            //  child: Row(
+            //children: const [
+            //ImageIcon(
+            //  AssetImage("assets/images/icons/device.png"),
+            //  color: Color.fromARGB(255, 28, 28, 28),
+            //   size: 18,
+            // ),
+            // Text(
+            //  ' How to use the app',
+            //    style: TextStyle(
+            //      color: Color.fromARGB(255, 28, 28, 28), fontSize: 19),
+            // ),
+            //  ],
+            // ),
+            //     ),
 
             //CREATING AND LOG IN ACCOUNT
             Container(
@@ -77,8 +77,8 @@ class ContentHowToUse extends StatelessWidget {
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(20, 2, 40, 7),
               child: const Center(
-                child: Text("\t\tCreating and Log-in Account\n",
-                    textAlign: TextAlign.justify,
+                child: Text("\t\t\t\t\t\t\t\t\t\tCreating and Log-in Account\n",
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Color.fromARGB(255, 28, 28, 28),
                         fontSize: 18.0)), // <-- Text
@@ -161,8 +161,8 @@ class ContentHowToUse extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(20, 2, 70, 7),
               color: Colors.white,
               child: const Center(
-                child: Text("\t\t\t\t\t\t\t\tSelecting a Pinned Location\n",
-                    textAlign: TextAlign.justify,
+                child: Text("\t\t\t\t\t\t\t\t\t\tSelecting a Pinned Location\n",
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Color.fromARGB(255, 28, 28, 28),
                         fontSize: 18.0)), // <-- Text
@@ -383,8 +383,8 @@ class ContentHowToUse extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(20, 2, 40, 7),
               child: const Center(
                 child: Text(
-                    "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tCustomize Account \n(for changing personal information)\n",
-                    textAlign: TextAlign.justify,
+                    "Customize Account \n(for changing personal information)\n",
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Color.fromARGB(255, 28, 28, 28),
                         fontSize: 18.0)), // <-- Text
@@ -483,8 +483,8 @@ class ContentHowToUse extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(20, 2, 40, 7),
               child: const Center(
                 child: Text(
-                    "Change Password (for changing the \n\t\t\t\t\t\t\t\t\tventure account’s password)\n",
-                    textAlign: TextAlign.justify,
+                    "Change Password \n (for changing the venture account’s password)\n",
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Color.fromARGB(255, 28, 28, 28),
                         fontSize: 18.0)), // <-- Text
@@ -584,8 +584,8 @@ class ContentHowToUse extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(20, 2, 40, 7),
               child: const Center(
                 child: Text(
-                    "\t\t\t\t\t\t\t\tSending Request for pinning of location",
-                    textAlign: TextAlign.justify,
+                    "\t\t\t\t\t\t\t\t\t\tSending Request for pinning of location",
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Color.fromARGB(255, 28, 28, 28),
                         fontSize: 18.0)), // <-- Text

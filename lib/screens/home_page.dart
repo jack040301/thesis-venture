@@ -314,7 +314,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
                         : searchToggle
                             ? Padding(
                                 padding: const EdgeInsets.fromLTRB(
-                                    15.0, 40.0, 15.0, 5.0),
+                                    15.0, 50.0, 15.0, 5.0),
                                 child: Column(children: [
                                   Container(
                                     height: 50.0,

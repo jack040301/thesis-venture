@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:main_venture/models/demog_result.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:main_venture/userInfo.dart';
 
 class DialogQuestion {
@@ -133,7 +133,8 @@ class DialogQuestion {
                         ),
                     const SizeBoxTwenty(),
 
-                    const Text("What kind of business do you prefer?",
+                    const Text(
+                        "What kind of business do you prefer?\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
                         style: TextStyle(
                           color: Color.fromARGB(255, 74, 74, 74),
                           fontSize: 16.0,
@@ -342,7 +343,8 @@ class DialogQuestion {
 // TEXT BOX 3
 
                     const SizeBoxTwenty(),
-                    const Text("Enter value of area (per square meter)",
+                    const Text(
+                        "Enter value of area (per square meter)\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
                         style: TextStyle(
                           color: Color.fromARGB(255, 74, 74, 74),
                           fontSize: 16.0,
@@ -406,6 +408,7 @@ class DialogQuestion {
                               areaController.text.isEmpty) {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(Questionall);
+                          } else if (areaController.text == 0.toString()) {
                           } else if (areaController.text == 0.toString()) {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(Questionall1);
