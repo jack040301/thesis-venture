@@ -20,7 +20,7 @@ class _UpgradeAccScreenState extends State<UpgradeAccScreen> {
       backgroundColor: const Color.fromARGB(255, 241, 242, 242),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: const Text('Upgrade Account'),
+        title: const Text('Request for Pinning of Location'),
         foregroundColor: const Color.fromARGB(255, 44, 45, 48),
         elevation: 0.0,
         leading: const BackButton(
@@ -64,7 +64,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
                       width: 10.0,
                     ),
                     Expanded(
-                      child: Text('Upgrade your account as space owners',
+                      child: Text('Sending Request for pinning of location',
                           style: TextStyle(
                               color: Color.fromARGB(255, 44, 45, 48),
                               fontSize: 16.0)),
@@ -77,71 +77,97 @@ class WidgetUpgradeAccount extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                 child: const Center(
                   child: Text(
-                      "Upgrading your account allows you to add your commercial space to be rented and be available on map. It can be seen by the other users of the application. Tap the link provided below to submit your request for upgrading your account.\nNote: Approval of requests may take up to 24 hrs to approve.",
+                      "Sending a request to the Venture admin requires the user to submit a form containing the Land Value, Land Size, Land Population, Population Past, Population Present, and Revenue. Response can be expected for at least 72 hours after requesting. After checking that the information provided is correct and valid, the admin will input the information provided by the user in the admin website, and the pin can now be seen on the map in the Venture mobile application.\n\n",
                       textAlign: TextAlign.justify,
                       style: TextStyle(
                           color: Color.fromARGB(255, 44, 45, 48),
                           fontSize: 17.0)), // <-- Text
                 ),
               ),
-              Container(
-                color: Colors.white,
-                padding: const EdgeInsets.fromLTRB(30, 13, 30, 5),
-                child: Row(
-                  children: const <Widget>[
-                    Image(
-                        image: AssetImage('assets/images/gmail.png'),
-                        height: 15,
-                        width: 23),
-                    SizedBox(
-                      width: 7.0,
-                    ),
-                    Expanded(
-                      child: Text('Email us at:',
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 44, 45, 48),
-                              fontSize: 17.0)),
-                    )
-                  ],
-                ),
-              ),
-              GestureDetector(
-                onTap: () async {
-                  String email = Uri.encodeComponent("ucc.venture@gmail.com");
-                  String subject = Uri.encodeComponent("Hello Flutter");
-                  String body =
-                      Uri.encodeComponent("Hi! I'm Flutter Developer");
-                  print(subject); //output: Hello%20Flutter
-                  Uri mail =
-                      Uri.parse("mailto:$email?subject=$subject&body=$body");
-                  if (await launchUrl(mail)) {
-                    //email app opened
-                  } else {
-                    //email app is not opened
-                    print('Could not launch $mail');
-                  }
-                },
-                // color: Colors.white,
-                // padding: const EdgeInsets.fromLTRB(35, 2, 35, 250),
-                child: const Center(
-                  child: Text("ucc.venture@gmail.com",
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 74, 74, 74),
-                        fontSize: 14.0,
-                      )), // <-- Text
-                ),
-              ),
               // Container(
               //   color: Colors.white,
-              //   padding: const EdgeInsets.fromLTRB(35, 2, 35, 250),
-              //   child: const Center(
-              //     child: Text("ucc.venture@gmail.com",
-              //         style: TextStyle(
-              //             decoration: TextDecoration.underline,
-              //             color: Color.fromARGB(255, 44, 45, 48),
-              //             fontSize: 17.0)), // <-- Text
+              //   padding: const EdgeInsets.fromLTRB(30, 13, 30, 5),
+              //   child: Row(
+              //     children: const <Widget>[
+              //       Image(
+              //           image: AssetImage('assets/images/gmail.png'),
+              //           height: 15,
+              //           width: 23),
+              //       SizedBox(
+              //         width: 7.0,
+              //       ),
+              //       Expanded(
+              //         child: Text('Email us at:',
+              //             style: TextStyle(
+              //                 color: Color.fromARGB(255, 44, 45, 48),
+              //                 fontSize: 17.0)),
+              //       )
+              //     ],
               //   ),
               // ),
+              GestureDetector(
+                // onTap: () async {
+                //   String email = Uri.encodeComponent("ucc.venture@gmail.com");
+                //   String subject = Uri.encodeComponent("Hello Flutter");
+                //   String body =
+                //   Uri.encodeComponent("Hi! I'm Flutter Developer");
+                //   print(subject); //output: Hello%20Flutter
+                //   Uri mail =
+                //   Uri.parse("mailto:$email?subject=$subject&body=$body");
+                //   if (await launchUrl(mail)) {
+                //     //email app opened
+                //   } else {
+                //     //email app is not opened
+                //   }
+                // },
+                // color: Colors.white,
+                // padding: const EdgeInsets.fromLTRB(35, 2, 35, 250),
+
+                child: RawMaterialButton(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+                  fillColor: const Color.fromARGB(255, 0, 110, 195),
+                  // icon: Icon(Icons.code),
+                  //color: Colors.green,
+                  onPressed: () async {
+                    new Image.asset("assets/imgaes/icons/gmail.png");
+                    //new Tab(icon: new Icon(Icons.arrow_forward),
+                    // icon: Icon(Icons.email, size: 18);
+                    String email = Uri.encodeComponent("ucc.venture@gmail.com");
+                    String subject =
+                        Uri.encodeComponent("Request  for Pinning Location");
+                    String body = Uri.encodeComponent(
+                        "(Fill out the necessary information below that will be used for pinning of location request, and wait for at least 72 hours for the response of the admin. The pinned location will then be reflected on the application. All information provided will be kept confidential.) \n\n Location:\n\nGeopoint\nLatitude   :\nLongitude: \n\nPopulation past: \n\nPopulation Present: \n\nLand value: \n\nLand size ( km² ): \n\nRevenue (The total earnings of the are/barangay you are at):");
+                    print(subject); //output: Hello%20Flutter
+                    Uri mail =
+                        Uri.parse("mailto:$email?subject=$subject&body=$body");
+                    if (await launchUrl(mail)) {
+                      //email app opened
+                    } else {
+                      //email app is not opened
+                    }
+                  },
+
+                  child: const Center(
+                    child: Text("Send Request",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          fontSize: 20.0,
+                        )), // <-- Text
+                  ),
+                ),
+                // Container(
+                //   color: Colors.white,
+                //   padding: const EdgeInsets.fromLTRB(35, 2, 35, 250),
+                //   child: const Center(
+                //     child: Text("ucc.venture@gmail.com",
+                //         style: TextStyle(
+                //             decoration: TextDecoration.underline,
+                //             color: Color.fromARGB(255, 44, 45, 48),
+                //             fontSize: 17.0)), // <-- Text
+                //   ),
+              ),
               Container(
                 color: Colors.white,
                 padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
@@ -209,40 +235,40 @@ class WidgetUpgradeAccount extends StatelessWidget {
 //     },
 //   );
 // }
-showAlertDialog(BuildContext context) {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("Open Mailer"),
-          backgroundColor: Colors.redAccent,
-        ),
-        body: Container(
-            padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-            alignment: Alignment.topCenter,
-            child: Column(
-              children: [
-                ElevatedButton(
-                    onPressed: () async {
-                      String emailFrom = Uri.encodeComponent(
-                          GoogleUserStaticInfo().email.toString());
-                      String email =
-                          Uri.encodeComponent("ucc.venture@gmail.com");
-                      String subject = Uri.encodeComponent("Hello Flutter");
-                      String body =
-                          Uri.encodeComponent("Hi! I'm Flutter Developer");
-                      print(subject); //output: Hello%20Flutter
-                      Uri mail = Uri.parse(
-                          "mailto:$email?subject=$subject&body=$body");
-                      if (await launchUrl(mail)) {
-                        //email app opened
-                      } else {
-                        //email app is not opened
-                        print('Could not launch $mail');
-                      }
-                    },
-                    child: Text("Mail Us Now"))
-              ],
-            )));
-  }
-}
+// showAlertDialog(BuildContext context) {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//         appBar: AppBar(
+//           title: Text("Open Mailer"),
+//           backgroundColor: Colors.redAccent,
+//         ),
+//         body: Container(
+//             padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+//             alignment: Alignment.topCenter,
+//             child: Column(
+//               children: [
+//                 ElevatedButton(
+//                     onPressed: () async {
+//                       String emailFrom = Uri.encodeComponent(
+//                           GoogleUserStaticInfo().email.toString());
+//                       String email =
+//                       Uri.encodeComponent("ucc.venture@gmail.com");
+//                       String subject = Uri.encodeComponent("Hello Flutter");
+//                       String body =
+//                       Uri.encodeComponent("Hi! I'm Flutter Developer");
+//                       print(subject); //output: Hello%20Flutter
+//                       Uri mail = Uri.parse(
+//                           "mailto:$email?subject=$subject&body=$body");
+//                       if (await launchUrl(mail)) {
+//                         //email app opened
+//                       } else {
+//                         //email app is not opened
+//                         print('Could not launch $mail');
+//                       }
+//                     },
+//                     child: Text("Mail Us Now"))
+//               ],
+//             )));
+//   }
+// }
