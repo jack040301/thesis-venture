@@ -60,6 +60,8 @@ class ContentHowToUse extends StatelessWidget {
                 ],
               ),
             ),
+
+            //CREATING AND LOG IN ACCOUNT
             Container(
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(65, 10, 35, 5),
@@ -75,11 +77,11 @@ class ContentHowToUse extends StatelessWidget {
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(20, 2, 40, 7),
               child: const Center(
-                child: Text("Creating and Log-in Account",
+                child: Text("\t\t\t\t\t\tCreating and Log-in Account\n",
                     textAlign: TextAlign.justify,
                     style: TextStyle(
                         color: Color.fromARGB(255, 28, 28, 28),
-                        fontSize: 18.0)), // <-- Text
+                        fontSize: 16.0)), // <-- Text
               ),
             ),
             Container(
@@ -92,7 +94,7 @@ class ContentHowToUse extends StatelessWidget {
                   style: TextStyle(
                     height: 1.5,
                     color: Color.fromARGB(255, 54, 54, 54),
-                    fontSize: 16,
+                    fontSize: 14,
                   ),
                 ),
               ),
@@ -107,7 +109,7 @@ class ContentHowToUse extends StatelessWidget {
                   style: TextStyle(
                     height: 1.5,
                     color: Color.fromARGB(255, 54, 54, 54),
-                    fontSize: 16,
+                    fontSize: 14,
                   ),
                 ),
               ),
@@ -117,28 +119,538 @@ class ContentHowToUse extends StatelessWidget {
               color: Colors.white,
               child: const Center(
                 child: Text(
-                  '3. Now you have an account, proceed to log-in your account so you can go to the landing page.',
+                  '3. If you received an email click the link from the email to verify your google account.',
                   textAlign: TextAlign.justify,
                   style: TextStyle(
                     height: 1.5,
                     color: Color.fromARGB(255, 54, 54, 54),
-                    fontSize: 16,
+                    fontSize: 14,
                   ),
                 ),
               ),
             ),
             Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 7),
               color: Colors.white,
-              padding: const EdgeInsets.fromLTRB(65, 5, 35, 5),
+              child: const Center(
+                child: Text(
+                  '4. Now you have an account, proceed to log-in your account so you can go to the landing page.',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            //Selecting a Pinned Location
+            Container(
+              color: Colors.white,
+              padding: const EdgeInsets.fromLTRB(100, 5, 35, 5),
               child: Row(
                 children: const <Widget>[
                   Image(
-                      image: const AssetImage('assets/images/device2.PNG'),
-                      height: 200)
+                      image: const AssetImage('assets/images/icons/Selecting.png'),
+                      height: 150)
                 ],
               ),
             ),
             Container(
+              padding: const EdgeInsets.fromLTRB(20, 2, 70, 7),
+              color: Colors.white,
+              child: const Center(
+                child: Text("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tSelecting a Pinned Location\n",
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 28, 28, 28),
+                        fontSize: 16.0)), // <-- Text
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 7),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '1. After logging into your account, the map will be shown.',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontFamily: 'Questrial',
+                      fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 7),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '2. Tap the pin icon in the map from your preferred area.',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 15),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '3. Dialog box for selection of preference will be displayed.',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 15),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '4. Choose your preferred business.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 15),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '5. Choose your preferred budget for the business.',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 15),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '6. Enter value for your preferred area (per square meter).',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 15),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '7. Tap the proceed button button.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 15),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '8. Demographic results will be shown.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 15),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '9. Tap the Download button to save the result.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 15),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '10. Tap the Done button.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 15),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '11. The app will show the forecasted results after 3 years of the business.',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 15),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '12. Tap the Download button to save the forecasted result.',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 15),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '13. Tap the Done button to redirect to the Venture map.',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+
+            //	Customize Account (for changing personal information)
+            Container(
+              color: Colors.white,
+              padding: const EdgeInsets.fromLTRB(100, 5, 35, 5),
+              child: Row(
+                children: const <Widget>[
+                  Image(
+                      image: const AssetImage('assets/images/icons/Customize.png'),
+                      height: 150)
+                ],
+              ),
+            ),
+            Container(
+              color: Colors.white,
+              padding: const EdgeInsets.fromLTRB(20, 2, 40, 7),
+              child: const Center(
+                child: Text("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tCustomize Account\n(for changing personal information)\n",
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 28, 28, 28),
+                        fontSize: 16.0)), // <-- Text
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 7),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '1. Select your profile in the upper right corner.\t\t\t\t\t\t\t',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 7),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '2. Tap settings.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 7),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '3. Tap Customize Account.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 7),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '4. Update your information in the text field provided.',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 7),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '5. Tap the save button to save the changes.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            //	Change Password
+            Container(
+              color: Colors.white,
+              padding: const EdgeInsets.fromLTRB(100, 5, 35, 5),
+              child: Row(
+                children: const <Widget>[
+                  Image(
+                      image: const AssetImage('assets/images/icons/ChangePass.png'),
+                      height: 150)
+                ],
+              ),
+            ),
+            Container(
+              color: Colors.white,
+              padding: const EdgeInsets.fromLTRB(20, 2, 40, 7),
+              child: const Center(
+                child: Text("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tChange Password (for changing the venture account’s password)\n",
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 28, 28, 28),
+                        fontSize: 16.0)), // <-- Text
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 7),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '1. Tap your profile in the upper right corner.\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 7),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '2. Tap settings.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 7),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '3. Tap Change Password.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 7),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '4. Change your password from the text field provided.',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 7),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '5. Tap the save button to save the changes.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+
+            //	Sending Request for pinning of location
+            Container(
+              color: Colors.white,
+              padding: const EdgeInsets.fromLTRB(100, 5, 35, 5),
+              child: Row(
+                children: const <Widget>[
+                  Image(
+                      image: const AssetImage('assets/images/icons/Request.png'),
+                      height: 150)
+                ],
+              ),
+            ),
+            Container(
+              color: Colors.white,
+              padding: const EdgeInsets.fromLTRB(20, 2, 40, 7),
+              child: const Center(
+                child: Text("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tSending Request for pinning of location",
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 28, 28, 28),
+                        fontSize: 16.0)), // <-- Text
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 7),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '1. Tap the profile.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 7),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '2. Tap the Request for pinning of location.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 7),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '3. Tap the gmail link of Venture to be redirected to the compose email form.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 2, 35, 7),
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '4. Send the request email and wait for at least 72 hours for the admin to respond.',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 1.5,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+
+
+
+
+
+
+            /* Container(
               padding: const EdgeInsets.fromLTRB(20, 2, 70, 7),
               color: Colors.white,
               child: const Center(
@@ -194,7 +706,7 @@ class ContentHowToUse extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
+            ),*/
           ],
         ),
       ),

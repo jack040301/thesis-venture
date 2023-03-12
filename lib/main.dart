@@ -6,12 +6,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:main_venture/auth_screen.dart';
 import 'package:main_venture/global_objects/ui_class.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'feat_screens/how_to_use_app.dart';
+import 'models/demog_result.dart';
 import 'models/forecasting/Linechartsync.dart';
 import 'models/forecasting/forecasting_linechart.dart';
 import 'screens/home_page.dart';
+//import 'package:intl/intl.dart'
 
 void main() async {
   /// initialize FireBase App

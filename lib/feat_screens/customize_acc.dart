@@ -244,6 +244,8 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
                       RegExp('[a-zA-Z0-9á-úÁ-Ú_.!@#%^&*()/{}:;' '""<>-]')),
                   // FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
                 ],
+                //obscurePass: _toggleObscured,
+               // focusNode: textFieldFocusNode,
                 decoration: InputDecoration(
                   hintText: '************',
                   labelStyle: const TextStyle(
@@ -255,14 +257,14 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
                   border: const OutlineInputBorder(
                     borderSide: BorderSide.none,
                   ),
-                  // suffix: InkWell(
-                  //   onTap: _toggleObscured,
-                  //   child: Icon(
-                  //       _obscured
-                  //           ? Icons.visibility
-                  //           : Icons.visibility_off_rounded,
-                  //       color: const Color.fromARGB(255, 74, 74, 74)),
-                  // ),
+                  suffix: InkWell(
+                    onTap: _toggleObscured,
+                    child: Icon(
+                        _obscured
+                            ? Icons.visibility
+                            : Icons.visibility_off_rounded,
+                        color: const Color.fromARGB(255, 74, 74, 74)),
+                  ),
                 ),
               ),
               const SizedBox(

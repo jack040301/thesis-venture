@@ -29,7 +29,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 
-
+intl:
 dependencies:
   flutter:
     sdk: flutter
@@ -137,6 +137,11 @@ flutter:
     - assets/images/icons/device.png
     - assets/images/icons/close.png
     - assets/images/venture.png
+    - assets/images/icons/Customize.png
+    - assets/images/icons/ChangePass.png
+    - assets/images/icons/Login.png
+    - assets/images/icons/Request.png
+    - assets/images/icons/Selecting.png
 
   # assets:
   #   - images/a_dot_burr.jpeg

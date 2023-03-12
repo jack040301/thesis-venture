@@ -269,6 +269,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                           color: Color.fromARGB(255, 74, 74, 74),
                           fontSize: 14.0,
                         )),
+
                     const SizedBox(
                       height: 4.0,
                     ),
@@ -288,12 +289,16 @@ class _SignupWidgetState extends State<SignupWidget> {
                       },
                       cont: passwordController,
                     ),
+
+
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                       child: FlutterPasswordStrength(
                         password: passwordController.text,
                         strengthCallback: (strength) {
                           debugPrint(strength.toString());
+
+
                         },
                       ),
                     ),
