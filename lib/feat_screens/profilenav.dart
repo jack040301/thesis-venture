@@ -4,6 +4,7 @@ import 'package:main_venture/feat_screens/pinnedlocation_new.dart';
 import 'package:main_venture/feat_screens/upgrade_account.dart';
 
 import '../userInfo.dart';
+import 'ChangePassword.dart';
 import 'customize_acc.dart';
 import 'settings.dart';
 
@@ -141,6 +142,30 @@ class ProfileNav {
                             style:
                                 TextStyle(color: Colors.black, fontSize: 15.0)),
                       ),
+
+                      // Change Password
+                      TextButton.icon(
+                        onPressed: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ChangePasswordScreen(
+                                    //  password: password,
+                                    // confirmpassword: confirmpassword,
+                                    )),
+                          );
+                        },
+                        icon: const ImageIcon(
+                          AssetImage("assets/images/icons/switch.png"),
+                          size: 25.0,
+                        ),
+                        label: const Text('Change Password',
+                            style:
+                                TextStyle(color: Colors.black, fontSize: 15.0)),
+                      ),
+
+                      //Pinning of Location
+
                       TextButton.icon(
                         onPressed: () async {
                           await Navigator.push(
@@ -150,21 +175,16 @@ class ProfileNav {
                           );
                         },
                         icon: const ImageIcon(
-                          AssetImage("assets/images/icons/upgrade.png"),
+                          AssetImage("assets/images/gmail.png"),
                           size: 25.0,
                         ),
-                        label: const Text('Upgrade Account',
+                        label: const Text('Request for Pinning of Location',
                             style:
                                 TextStyle(color: Colors.black, fontSize: 15.0)),
                       ),
                       TextButton.icon(
                         onPressed: () async {
                           singingOut(context);
-                          /*   await singingOut().then((value) =>
-                              Navigator.of(context, rootNavigator: true)
-                                  .pushReplacement(MaterialPageRoute(
-                                      builder: (context) =>
-                                          const AuthScreen()))); */
                         },
                         icon: const ImageIcon(
                           AssetImage("assets/images/icons/logout.png"),

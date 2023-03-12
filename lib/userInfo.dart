@@ -33,8 +33,9 @@ class FunctionAuthentication with GoogleUserStaticInfo {
       // MaterialPageRoute(builder: (context) => const LoginScreen()));
       //  print('Signout initiated');
     } catch (e) {
-      //print("error in sign in $e");
+      print("error in sign in $e");
     }
+
     try {
       FirebaseAuth.instance.authStateChanges().listen((User? user) {
         if (user == null) {
@@ -107,15 +108,24 @@ class PopSnackbar extends FunctionAuthentication {
               child: const Text('Logout'),
               onPressed: () async {
                 // FunctionAuthentication;
-                // await logOut().then((value) =>
-                //     Navigator.of(context, rootNavigator: true)
-                //         .pushAndRemoveUntil(MaterialPageRoute(
-                //             builder: (context) => const LoginScreen())));
-                await logOut().then((value) => Navigator.of(context,
-                        rootNavigator: true)
-                    .pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => LoginScreen()),
-                        (route) => false));
+                await logOut();
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen()),
+                    (Route route) => false);
+                // await logOut().then((value) => Navigator.of(context)
+                //     .pushNamedAndRemoveUntil('/login', (Route route) => false));
+
+                // await logOut().then((value) => Navigator.of(context)
+                //     .pushAndRemoveUntil(
+                //         MaterialPageRoute(builder: (context) => LoginScreen()),
+                //         (Route route) => true));
+
+                // await logOut().then((value) => Navigator.of(context,
+                //         rootNavigator: true)
+                //     .pushAndRemoveUntil(
+                //         MaterialPageRoute(builder: (context) => LoginScreen()),
+                //         (route) => false));
               },
             ),
           ],
@@ -155,8 +165,11 @@ class DialogShowBusiness {
                 //var data = documents.data() as Map;
                 var data = documents.data() as Map;
 
-                datalist = [DropdownData(nameofbusiness: data['name'],
-            )];
+                datalist = [
+                  DropdownData(
+                    nameofbusiness: data['name'],
+                  )
+                ];
               })
             });
   }
@@ -165,13 +178,11 @@ class DialogShowBusiness {
 class DropdownData {
   final String nameofbusiness;
 
-
   DropdownData({required this.nameofbusiness});
 }
 
 class DropdownDataAssumption {
   final String budgetassump;
-
 
   DropdownDataAssumption({required this.budgetassump});
 }
