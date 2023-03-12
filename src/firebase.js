@@ -11,6 +11,7 @@ import {getFirestore,  query, GeoPoint,
   where,
 onSnapshot,
   doc,
+  setDoc,
   getDocs,
   getDoc,
   updateDoc,
@@ -48,10 +49,13 @@ const db = getFirestore(app)
 const registerWithEmailAndPassword = async (email, password) => {
 
 
-  try {
-    const res = await createUserWithEmailAndPassword(auth, email, password);
-    const user = res.user;
-    await addDoc(collection(db, "users"), {
+
+//    const res = await createUserWithEmailAndPassword(auth, email, password);
+
+    return createUserWithEmailAndPassword(auth, email, password);
+
+ /*    const user = res.user;
+    await setDoc(collection(db, "users", res.uid), {
       uid: user.uid,
       authProvider: "local",
       email,
@@ -59,7 +63,7 @@ const registerWithEmailAndPassword = async (email, password) => {
   } catch (err) {
     console.error(err);
     alert(err.message);
-  }
+  } */
 };
 
 
@@ -204,4 +208,4 @@ const credential = promptF
  */
 
 
-export {getDoc, where, signInWithEmailAndPassword,reauthenticateWithCredential,auth,doc,query,getDocs,onSnapshot,updateDoc,deleteDoc,GeoPoint,addDoc,collection, db, registerWithEmailAndPassword,  logout, sendPasswordReset, handleUserProfile, createUserWithEmailAndPassword, updatePassword}
+export {getDoc, setDoc,where, signInWithEmailAndPassword,reauthenticateWithCredential,auth,doc,query,getDocs,onSnapshot,updateDoc,deleteDoc,GeoPoint,addDoc,collection, db, registerWithEmailAndPassword,  logout, sendPasswordReset, handleUserProfile, createUserWithEmailAndPassword, updatePassword}

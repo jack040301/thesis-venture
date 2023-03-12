@@ -2,7 +2,7 @@ import React, { useState,useRef, useEffect } from "react";
 import customMarker from '../Assets/x.png';
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { db, addDoc, collection, GeoPoint, updateDoc, deleteDoc, doc, getDocs, query,onSnapshot, getMarkers } from "../firebase";
-
+import "./Maps.css"
 import {
   MDBModal,
   MDBModalDialog,
@@ -53,7 +53,7 @@ function MapPage() {
     setCoorPopulation("");
   }
 
-  const handleMapClick = (e,name,land,popu_past,popu_present,population,revenue) => {
+  const handleMapClick = (e,name,land,land_size,popu_past,popu_present,population,revenue) => {
 
     
     resetAllFilters();
@@ -62,11 +62,11 @@ function MapPage() {
     setCoorlong(e.latLng.lng())
     setCoorID(name);
     setCoorLand(land);
+    setCoorlandSize(land_size);
     setCoorPastpopu(popu_past);
     setCoorPresentpopu(popu_present);
     setCoorPopulation(population);
     setCoorRevenue(revenue);
-
 
 
 
@@ -161,11 +161,15 @@ function MapPage() {
 
      //alert("")
       }
+      else {
+
+        toastRef.current.showToast("Please do not leave fields blank")
+  
+      }
 
 
       //alert("Please do not leave fields blank")
 
-      toastRef.current.showToast("Please do not leave fields blank")
 
       //success
     } catch (e) {
@@ -221,8 +225,11 @@ function MapPage() {
 
 //        alert("Successful update Marker")
         
-    }   
-    toastRef.current.showToast("Please do not leave fields blank")
+    } else {
+
+      toastRef.current.showToast("Please do not leave fields blank")
+
+    }
 
     
     
@@ -251,9 +258,11 @@ function MapPage() {
 
       toastRef.current.showToast("Successful delete Marker")
 
-    }
+    }else {
 
-    toastRef.current.showToast("Unable to delete Marker")
+      toastRef.current.showToast("Unable to delete Marker")
+
+    }
 
  //   alert("Unable to delete Marker")
 
@@ -284,6 +293,7 @@ function MapPage() {
               ({ lat : doc.data().coords._lat, lng: doc.data().coords._long,
               name:doc.id,
               land:doc.data().land,
+              land_size:doc.data().land_size,
               popu_past:doc.data().popu_past,
               popu_present:doc.data().popu_present,
               population:doc.data().population,
@@ -319,7 +329,13 @@ function MapPage() {
     const collect = collection(db,"testmarkers")
     const unsub = onSnapshot(collect, snapshot =>{
 
-      const markreal = snapshot.docs.map(doc=> ({ lat : doc.data().coords._lat, lng: doc.data().coords._long, name:doc.id}
+      const markreal = snapshot.docs.map(doc=> ({ lat : doc.data().coords._lat, lng: doc.data().coords._long, name:doc.id,
+        land:doc.data().land,
+        land_size:doc.data().land_size,
+        popu_past:doc.data().popu_past,
+        popu_present:doc.data().popu_present,
+        population:doc.data().population,
+        revenue:doc.data().revenue}
       ))
     //  console.log(markreal)
 
@@ -362,7 +378,7 @@ function MapPage() {
               data.map( (mark) => (
                                         
                        <Marker options={{icon:customMarker}}    onClick={(e) => handleMapClick(e,mark.name,
-                        mark.land,mark.popu_past,mark.popu_present,
+                        mark.land,mark.land_size,mark.popu_past,mark.popu_present,
                         mark.popu_present,mark.population,mark.revenue)}
                         key={createKey(mark)} position={mark} />
                     ))}   
@@ -385,9 +401,9 @@ function MapPage() {
             </MDBModalHeader>
             <MDBModalBody>
            
-              
+            <label className="labelLat">Coordinates Latitude</label>
               <MDBInput
-                wrapperClass="mb-4 w-100"
+                wrapperClass=" w-100"
                 placeholder="Coordinates Latitude"
                 id="formControlLg"
                 type="text"
@@ -396,8 +412,9 @@ function MapPage() {
                 required
                 disabled
               />
+              <label className="labelLat">Coordinates Longitude</label>
               <MDBInput
-                wrapperClass="mb-4 w-100"
+                wrapperClass=" w-100"
                 placeholder="Coordinates Longtitude"
                 id="formControlLg"
                 type="text"
@@ -406,8 +423,9 @@ function MapPage() {
                 required
                 disabled
               />
+              <label className="labelLat">Place</label>
               <MDBInput
-                wrapperClass="mb-4 w-100"
+                wrapperClass=" w-100"
                 placeholder="Place"
                 id="formControlLg"
                 type="text"
@@ -416,8 +434,9 @@ function MapPage() {
                 required
                 disabled
               />
+              <label className="labelLat">Land</label>
               <MDBInput
-                wrapperClass="mb-4 w-100"
+                wrapperClass=" w-100"
                 placeholder="Land"
                 id="formControlLg"
                 type="number"
@@ -425,8 +444,9 @@ function MapPage() {
                 onChange={(e) => setCoorLand(e.target.value)}
                 required
               />
+              <label className="labelLat">Land Size</label>
               <MDBInput
-                wrapperClass="mb-4 w-100"
+                wrapperClass=" w-100"
                 placeholder="Land size"
                 id="formControlLg"
                 type="number"
@@ -434,9 +454,9 @@ function MapPage() {
                 onChange={(e) => setCoorlandSize(e.target.value)}
                 required
               />
-
+              <label className="labelLat">Total Population</label>
               <MDBInput
-                wrapperClass="mb-4 w-100"
+                wrapperClass=" w-100"
                 placeholder="Total Population "
                 id="formControlLg"
                 type="number"
@@ -444,9 +464,9 @@ function MapPage() {
                 onChange={(e) => setCoorPopulation(e.target.value)}
                 required
               />
-
+              <label className="labelLat">Past Population</label>
               <MDBInput
-                wrapperClass="mb-4 w-100"
+                wrapperClass=" w-100"
                 placeholder="Past Population "
                 id="formControlLg"
                 type="number"
@@ -454,9 +474,9 @@ function MapPage() {
                 onChange={(e) => setCoorPastpopu(e.target.value)}
                 required
               />
-
+              <label className="labelLat">Present Population</label>
               <MDBInput
-                wrapperClass="mb-4 w-100"
+                wrapperClass=" w-100"
                 placeholder="Present Population "
                 id="formControlLg"
                 type="number"
@@ -464,9 +484,9 @@ function MapPage() {
                 onChange={(e) => setCoorPresentpopu(e.target.value)}
                 required
               />
-
+              <label className="labelLat">Revenue</label>
               <MDBInput
-                wrapperClass="mb-4 w-100"
+                wrapperClass="w-100"
                 placeholder="Revenue"
                 id="formControlLg"
                 type="number"
@@ -505,7 +525,7 @@ function MapPage() {
             </MDBModalHeader>
             <MDBModalBody>
               <MDBInput
-                wrapperClass="mb-4 w-100"
+                wrapperClass=" w-100"
                 placeholder="Coordinates Latitude"
                 id="formControlLg"
                 type="text"
@@ -514,10 +534,11 @@ function MapPage() {
                 hidden
                 required
                 disabled
+                className="inputLat"
               />
-
+              <label className="labelLat">Coordinates Latitude</label>
               <MDBInput
-                wrapperClass="mb-4 w-100"
+                wrapperClass="w-100"
                 placeholder="Coordinates Latitude"
                 id="formControlLg"
                 type="text"
@@ -526,8 +547,9 @@ function MapPage() {
                 required
                 disabled
               />
+              <label className="labelLat">Coordinates Longitude</label>
               <MDBInput
-                wrapperClass="mb-4 w-100"
+                wrapperClass="w-100"
                 placeholder="Coordinates Longtitude"
                 id="formControlLg"
                 type="text"
@@ -536,8 +558,9 @@ function MapPage() {
                 required
                 disabled
               />
+              <label className="labelLat">Place</label>
               <MDBInput
-                wrapperClass="mb-4 w-100"
+                wrapperClass=" w-100"
                 placeholder="Place"
                 id="formControlLg"
                 type="text"
@@ -547,8 +570,9 @@ function MapPage() {
                 disabled
 
               />
+              <label className="labelLat">Land</label>
               <MDBInput
-                wrapperClass="mb-4 w-100"
+                wrapperClass=" w-100"
                 placeholder="Land"
                 id="formControlLg"
                 type="number"
@@ -556,8 +580,9 @@ function MapPage() {
                 onChange={(e) => setCoorLand(e.target.value)}
                 required
               />
+              <label className="labelLat">Land Size</label>
               <MDBInput
-                wrapperClass="mb-4 w-100"
+                wrapperClass="w-100"
                 placeholder="Land size"
                 id="formControlLg"
                 type="number"
@@ -565,9 +590,9 @@ function MapPage() {
                 onChange={(e) => setCoorlandSize(e.target.value)}
                 required
               />
-
+              <label className="labelLat">Total Population</label>
               <MDBInput
-                wrapperClass="mb-4 w-100"
+                wrapperClass="w-100"
                 placeholder="Total Population "
                 id="formControlLg"
                 type="number"
@@ -575,19 +600,19 @@ function MapPage() {
                 onChange={(e) => setCoorPopulation(e.target.value)}
                 required
               />
-              
+              <label className="labelLat">Past Population</label>
               <MDBInput
-                wrapperClass="mb-4 w-100"
-                placeholder="Total Population "
+                wrapperClass="w-100"
+                placeholder="Past Population "
                 id="formControlLg"
                 type="number"
                 value={coorPastpopu}
                 onChange={(e) => setCoorPastpopu(e.target.value)}
                 required
               />
-
+            <label className="labelLat">Present Population</label>
             <MDBInput
-                wrapperClass="mb-4 w-100"
+                wrapperClass=" w-100"
                 placeholder="Present Population "
                 id="formControlLg"
                 type="number"
@@ -595,7 +620,7 @@ function MapPage() {
                 onChange={(e) => setCoorPresentpopu(e.target.value)}
                 required
               />
-
+              <label className="labelLat">Revenue</label>
               <MDBInput
                 wrapperClass="mb-4 w-100"
                 placeholder="Revenue"

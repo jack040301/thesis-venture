@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import { addDoc, auth, collection, db } from "../firebase";
-import { UserAuth, createModAcc } from "../auth/context";
-import { updatePassword, reauthenticateWithCredential } from "../firebase";
+import { addDoc, db, setDoc, createUserWithEmailAndPassword, doc,auth } from "../firebase";
 
-import { MDBRow, MDBCol, MDBInput } from "mdb-react-ui-kit";
-import { EmailAuthProvider } from "firebase/auth";
+import { MDBRow, MDBCol } from "mdb-react-ui-kit";
+
 
 import ReactToast from "../components/Toast/toast"; /* import Component of toast */
 
@@ -19,51 +17,64 @@ function Config() {
   const toastRef = useRef();
 
  
-  const [formMod, setformMod] = useState({
+ /*  const [formMod, setformMod] = useState({
     modEmail: "",
-    modPass: "",
-    modConfirmpass: "",
+    password: "",
+    confirmpass: "",
+  }); */
+
+  const [formValuetwo, setFormValuetwo] = useState({
+  
+    password: "",
+    confirmpass: "",
   });
 
-  const [configemail, setConfigEmail] = useState("");
+
+const [emailtwo, setEmailtwo] = useState("");
+
+
   const [error, setError] = useState("");
 
-  const { createUser, user } = UserAuth();
 
  
   function resetallMod() {
-    setformMod({
-      modEmail: "",
-      modPass: "",
-      modConfirmpass: "",
+    setFormValuetwo({
+      emailtwo: "",
+      password: "",
+      confirmpass: "",
     });
   }
-
-  var emal = user.email;
 
   async function AddModerator(e) {
     e.preventDefault();
     setError("");
     try {
-      if (formMod.modPass === formMod.modConfirmpass) {
-        await createUser(formMod.email, formMod.modPass)
-          .then(() => {
-            addDoc(collection(db, "users"), {
-              uid: user.uid,
+      if (formValuetwo.password === formValuetwo.confirmpass) {
+
+        await createUserWithEmailAndPassword(auth,emailtwo, formValuetwo.password)
+          .then((userCredential) => {
+
+            const usersinfo = userCredential;
+             setDoc(doc(db, "users",usersinfo.user.uid), {
+              uid: usersinfo.user.uid,
               authProvider: "local",
-              email: formMod.modEmail,
+              email: emailtwo,
               role: "admin",
             });
 
           //  alert("Successfull create admin");
 
-          toastRef.current.showToast("Successfully Updated Password");
+          toastRef.current.showToast("Successfully Created Admin");
           resetallMod();
           })
           .catch((err) => {
             setError(err.message);
 
+            
+            console.log(err)
             toastRef.current.showToast(err.message);
+
+          resetallMod();
 
 //            alert(err.message);
           });
@@ -86,11 +97,11 @@ resetallMod();
     }
   }
 
-  
-
-  const onChangeMod = (e) => {
-    setformMod({ ...formMod, [e.target.name]: e.target.value });
+  const onChange = (e) => {
+    setFormValuetwo({ ...formValuetwo, [e.target.name]: e.target.value });
   };
+
+
 
   return (
     <>
@@ -210,45 +221,58 @@ resetallMod();
 
                   <MDBCol md="8">
                     <input
-                      value={formMod.email}
+                      value={emailtwo}
                       name="email"
-                      onChange={onChangeMod}
+                      onChange={(e) => setEmailtwo(e.target.value)}
                       id="validationCustom012"
                       required
                       type="email"
                       /*  label="Password" */
                       placeholder="Email"
-                      class="form-control"
+                      className="form-control"
                       style={{ marginBottom: 10 }}
                     />
                   </MDBCol>
 
                   <MDBCol md="8">
-                    <input
+
+                  <input
+                      value={formValuetwo.password}
+                      name="password"
+                      onChange={onChange}
+                      id="validationCustom02"
+                      required
+                      type="password"
+                      /*  label="Password" */
+                      placeholder="New Password"
+                      className="form-control"
+                      style={{ marginBottom: 10 }}
+                    />
+
+                  {/*   <input
                       value={formMod.modPass}
                       name="password"
                       onChange={onChangeMod}
                       id="validationCustom08"
                       required
                       type="password"
-                      /*  label="Password" */
                       placeholder="Password"
                       class="form-control"
                       style={{ marginBottom: 10 }}
-                    />
+                    /> */}
                   </MDBCol>
 
                   <MDBCol md="8">
                     <input
-                      value={formMod.modConfirmpass}
+                      value={formValuetwo.confirmpass}
                       name="confirmpass"
-                      onChange={onChangeMod}
+                      onChange={onChange}
                       id="validationCustom09"
                       required
                       type="password"
                       /*  label="Confirm Password" */
                       placeholder="Confirm Password"
-                      class="form-control"
+                      className="form-control"
                       style={{ marginBottom: 10 }}
                     />
                   </MDBCol>

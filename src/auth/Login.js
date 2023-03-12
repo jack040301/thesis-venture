@@ -7,6 +7,7 @@ import "./Login.css";
 
 import ReactToast from "../components/Toast/toast"/* import Component of toast */
 
+
 import {
   MDBBtn,
   MDBContainer,
@@ -33,6 +34,7 @@ function Login() {
 
   const [password, setPassword] = useState("");
 
+ // const [loggedemail,setLoggedEmail] = useState("");
 
 
   async function getdata(userid){
@@ -43,7 +45,7 @@ function Login() {
 
     if (docSnap.exists() && docSnap.data().role === "admin") {
       
-      toastRef.current.showToast("Logging in....")
+   //   toastRef.current.showToast("Logging in....")
       
       navigate('/dashboard')
 
@@ -51,8 +53,11 @@ function Login() {
     }else{
 
 //Toast message
+
       //toastRef.current.showToast("Invalid credentials. Please try again.")
+        localStorage.removeItem("email");
       logout()
+
     }
   }
   
@@ -72,8 +77,10 @@ function Login() {
     
     var user = userCredential.user;
   
-
+    localStorage.setItem("email",user.email);
+  //  setLoggedEmail(user.email)
     getdata(user.uid)
+
     
   })
   .catch((error) => {
@@ -209,3 +216,4 @@ function Login() {
 }
 
 export default Login;
+

@@ -3,6 +3,7 @@ import Dashboard from "./pages/Dashboard";
 import MapPage from "./pages/Maps";
 import Users from "./pages/Users";
 import Request from "./pages/Requests";
+import Protect from "./auth/Protected";
 import Configuration from "./pages/Configuration";
 import Header from "./components/Header";
 import Sidenav from "./components/SideNav";
@@ -10,15 +11,30 @@ import AddModerator from "./pages/AddModerator";
 import ManageModerator from "./pages/ManageModerator";
 import Login from "./auth/Login";
 import ProtectedRoute from "./auth/PrivateRoute";
+
 import { AuthContextProvider } from "./auth/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
+
   return (
     <div>
       <AuthContextProvider>
+
         <Routes>
-          <Route path="/" element={<Login />} />
+         {/*  <Route path="/" element={
+          <withCurrentUser><Login /></withCurrentUser>
+          } /> */}
+
+        <Route
+            path="/"
+            element={
+              <Protect>
+           
+              <Login/>
+              </Protect>
+            }
+          />
 
           <Route
             path="/dashboard"
@@ -30,11 +46,11 @@ function App() {
               </ProtectedRoute>
             }
           />
-
-          <Route
+            <Route
             path="/map"
             element={
               <ProtectedRoute>
+                {" "}
                 <Header />
                 <Sidenav />
                 <MapPage />

@@ -31,6 +31,9 @@ function Config() {
   const [configemail, setConfigEmail] = useState("");
   const [error, setError] = useState("");
 
+  const [configureEmail, setconfigureEmail] = useState("");
+
+
   const { createUser, user } = UserAuth();
 
   function resetall() {
@@ -41,9 +44,14 @@ function Config() {
     });
   }
 
-  var emal = user.email;
+  useEffect(()=>{
+    const emails = localStorage.getItem("email");
+
+    setconfigureEmail(emails)
+  },[])
 
  
+
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
@@ -58,7 +66,7 @@ function Config() {
       ) {
         if (formValue.password === formValue.confirmpass) {
           const emailCred = EmailAuthProvider.credential(
-            user.email,
+            configureEmail,
             formValue.oldpassword
           );
 
@@ -95,9 +103,14 @@ function Config() {
           );
         }
 
-        toastRef.current.showToast("Do not leave the fields blank");
+        //toastRef.current.showToast("Do not leave the fields blank");
 
         //  alert('Do not leave the fields blank')
+      }else{
+      
+        toastRef.current.showToast("Do not leave the fields blank");
+
+
       }
     } catch (e) {
       //setError(e.message)
@@ -162,12 +175,14 @@ function Config() {
                 >
                   <MDBCol md="8">
                     <MDBInput
-                      value={emal}
+                      value={configureEmail}
                       name="email"
                       id="validationCustom01"
                       required
                       type="email"
                       disabled
+                      onChange={(e) => setconfigureEmail(e.target.value)}
+
                       /* label="Email" */
                       placeholder="Email"
                       style={{ marginBottom: 10 }}
@@ -184,7 +199,7 @@ function Config() {
                       type="password"
                       /*  label="Password" */
                       placeholder="Current Password"
-                      class="form-control"
+                      className="form-control"
                       style={{ marginBottom: 10 }}
                     />
                   </MDBCol>
@@ -199,7 +214,7 @@ function Config() {
                       type="password"
                       /*  label="Password" */
                       placeholder="New Password"
-                      class="form-control"
+                      className="form-control"
                       style={{ marginBottom: 10 }}
                     />
                   </MDBCol>
@@ -214,7 +229,7 @@ function Config() {
                       type="password"
                       /*  label="Confirm Password" */
                       placeholder="Confirm Password"
-                      class="form-control"
+                      className="form-control"
                       style={{ marginBottom: 10 }}
                     />
                   </MDBCol>
