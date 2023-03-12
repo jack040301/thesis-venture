@@ -85,6 +85,8 @@ function Login() {
         toastRef.current.showToast("Invalid credentials. Please enter valid email address.")
       }else if(errorCode === 'auth/wrong-password'){
         toastRef.current.showToast("Invalid credentials. Please enter a valid password")
+      }else if(errorCode === 'auth/invalid-email'){
+        toastRef.current.showToast("Invalid credentials. Please enter a valid email address")
       }
 
       //toastRef.current.showToast(error.toString())
