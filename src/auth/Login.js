@@ -7,6 +7,7 @@ import "./Login.css";
 
 import ReactToast from "../components/Toast/toast"/* import Component of toast */
 
+
 import {
   MDBBtn,
   MDBContainer,
@@ -43,7 +44,7 @@ function Login() {
 
     if (docSnap.exists() && docSnap.data().role === "admin") {
       
-      toastRef.current.showToast("Logging in....")
+   //   toastRef.current.showToast("Logging in....")
       
       navigate('/dashboard')
 
