@@ -94,9 +94,10 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               ),
               TextField(
                 controller: _firstnameController,
+                textCapitalization: TextCapitalization.words,
                 enableInteractiveSelection: false,
                 inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9_.]')),
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9_. ]')),
                 ],
                 decoration: InputDecoration(
                   labelStyle: const TextStyle(
@@ -127,9 +128,10 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               ),
               TextField(
                 controller: _lastnameController,
+                textCapitalization: TextCapitalization.words,
                 enableInteractiveSelection: false,
                 inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9_.]')),
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9_. ]')),
                 ],
                 decoration: InputDecoration(
                   labelStyle: const TextStyle(
