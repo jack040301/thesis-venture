@@ -27,7 +27,7 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> with Userinformation {
   final Completer<GoogleMapController> _controller = Completer();
   final Future<bool> _mapFuture =
-      Future.delayed(const Duration(milliseconds: 1000), () => true);
+  Future.delayed(const Duration(milliseconds: 1000), () => true);
 
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
 
@@ -109,8 +109,8 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 
     BitmapDescriptor.fromAssetImage(const ImageConfiguration(), assetpicture)
         .then((icon) => setState(() {
-              markerIcon = icon;
-            }));
+      markerIcon = icon;
+    }));
   }
 
   List<DropdownData> dropdownDatas = [];
@@ -121,18 +121,18 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
         .collection("business")
         .get()
         .then((QuerySnapshot snapshot) => {
-              snapshot.docs.forEach((documents) async {
-                var data = documents.data() as Map;
+      snapshot.docs.forEach((documents) async {
+        var data = documents.data() as Map;
 
-                //var data = documents.data() as Map;
+        //var data = documents.data() as Map;
 
-                dropdownDatas.add(DropdownData(nameofbusiness: documents.id));
-                dropdownAssumption.add(
-                    DropdownDataAssumption(budgetassump: data['budgetassump']));
+        dropdownDatas.add(DropdownData(nameofbusiness: documents.id));
+        dropdownAssumption.add(
+            DropdownDataAssumption(budgetassump: data['budgetassump']));
 
-                //  debugPrint(data['budgetassump']);
-              })
-            });
+        //  debugPrint(data['budgetassump']);
+      })
+    });
 
     //  await FirebaseFirestore.instance.collection("assumptions").doc("budgetassump").get();
   }
@@ -154,7 +154,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 
     final docRef = database.collection("users").doc(GoogleUserStaticInfo().uid);
     docRef.get().then(
-      (DocumentSnapshot doc) {
+          (DocumentSnapshot doc) {
         final data = doc.data() as Map<String, dynamic>;
         // ...
         UserInfofirstname = data['firstname'];
@@ -199,27 +199,27 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
         .collection("testmarkers")
         .get()
         .then((QuerySnapshot querySnapshot) => {
-              querySnapshot.docs.forEach((documents) async {
-                var data = documents.data() as Map;
+      querySnapshot.docs.forEach((documents) async {
+        var data = documents.data() as Map;
 
-                /*   print(data["coords"].latitude);
+        /*   print(data["coords"].latitude);
                 print(data["coords"].longitude); */
 
-                allmarkers.add(Marker(
-                    onTap: () async {
-                      await DialogQuestion(
-                              documents.id, dropdownDatas, dropdownAssumption)
-                          .showMyDialog(context);
-                    },
-                    infoWindow: InfoWindow(
-                      title: data["place"],
-                    ),
-                    markerId: MarkerId(documents.id),
-                    icon: markerIcon,
-                    position: LatLng(
-                        data["coords"].latitude, data["coords"].longitude)));
-              })
-            });
+        allmarkers.add(Marker(
+            onTap: () async {
+              await DialogQuestion(
+                  documents.id, dropdownDatas, dropdownAssumption)
+                  .showMyDialog(context);
+            },
+            infoWindow: InfoWindow(
+              title: data["place"],
+            ),
+            markerId: MarkerId(documents.id),
+            icon: markerIcon,
+            position: LatLng(
+                data["coords"].latitude, data["coords"].longitude)));
+      })
+    });
 
     setState(() {
       allmarkers;
@@ -280,7 +280,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     final _mapFuture =
-        Future.delayed(const Duration(milliseconds: 250), () => true);
+    Future.delayed(const Duration(milliseconds: 250), () => true);
 
     //Providers
     final allSearchResults = ref.watch(placeResultsProvider);
@@ -312,86 +312,86 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
                     pressedNear
                         ? builds(context)
                         : searchToggle
-                            ? Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    15.0, 40.0, 15.0, 5.0),
-                                child: Column(children: [
-                                  Container(
-                                    height: 50.0,
-                                    width: 280,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      color: Colors.white,
-                                    ),
-                                    child: TextFormField(
-                                      controller: searchController,
-                                      decoration: InputDecoration(
-                                          contentPadding:
-                                              const EdgeInsets.symmetric(
-                                                  horizontal: 20.0,
-                                                  vertical: 15.0),
-                                          border: InputBorder.none,
-                                          prefixIcon: const Icon(Icons.search),
-                                          hintText: 'Search',
-                                          ),
-                                      onChanged: (value) {
-                                        if (_debounce?.isActive ?? false) {
-                                          _debounce?.cancel();
-                                        }
-                                        _debounce = Timer(
-                                            const Duration(milliseconds: 700),
-                                            () async {
-                                          if (value.length > 2) {
-                                            if (!searchFlag.searchToggle) {
-                                              searchFlag.toggleSearch();
-                                              _markers = {};
-                                            }
-                                            List<AutoCompleteResult>
-                                                searchResults =
-                                                await MapServices()
-                                                    .searchPlaces(value);
+                        ? Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                          15.0, 70.0, 15.0, 5.0),
+                      child: Column(children: [
+                        Container(
+                          height: 50.0,
+                          width: 280,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: Colors.white,
+                          ),
+                          child: TextFormField(
+                            controller: searchController,
+                            decoration: InputDecoration(
+                              contentPadding:
+                              const EdgeInsets.symmetric(
+                                  horizontal: 20.0,
+                                  vertical: 15.0),
+                              border: InputBorder.none,
+                              prefixIcon: const Icon(Icons.search),
+                              hintText: 'Search',
+                            ),
+                            onChanged: (value) {
+                              if (_debounce?.isActive ?? false) {
+                                _debounce?.cancel();
+                              }
+                              _debounce = Timer(
+                                  const Duration(milliseconds: 700),
+                                      () async {
+                                    if (value.length > 2) {
+                                      if (!searchFlag.searchToggle) {
+                                        searchFlag.toggleSearch();
+                                        _markers = {};
+                                      }
+                                      List<AutoCompleteResult>
+                                      searchResults =
+                                      await MapServices()
+                                          .searchPlaces(value);
 
-                                            allSearchResults
-                                                .setResults(searchResults);
-                                          } else {
-                                            List<AutoCompleteResult> emptyList =
-                                                [];
-                                            allSearchResults
-                                                .setResults(emptyList);
-                                          }
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ]),
-                              )
-                            : Container(),
+                                      allSearchResults
+                                          .setResults(searchResults);
+                                    } else {
+                                      List<AutoCompleteResult> emptyList =
+                                      [];
+                                      allSearchResults
+                                          .setResults(emptyList);
+                                    }
+                                  });
+                            },
+                          ),
+                        ),
+                      ]),
+                    )
+                        : Container(),
                     searchFlag.searchToggle
                         ? allSearchResults.allReturnedResults.isNotEmpty
-                            ? Positioned(
-                                top: 100.0,
-                                left: 15.0,
-                                child: Container(
-                                  height: 200.0,
-                                  width: screenWidth - 30.0,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    color: Colors.white.withOpacity(0.7),
-                                  ),
-                                  child: ListView(
-                                    children: [
-                                      ...allSearchResults.allReturnedResults
-                                          .map((e) =>
-                                              buildListItem(e, searchFlag))
-                                    ],
-                                  ),
-                                ))
-                            : Positioned(
-                                top: 100.0,
-                                left: 15.0,
-                                child: HomeNoResultToShow(
-                                    screenWidth: screenWidth,
-                                    searchFlag: searchFlag))
+                        ? Positioned(
+                        top: 100.0,
+                        left: 15.0,
+                        child: Container(
+                          height: 200.0,
+                          width: screenWidth - 30.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: Colors.white.withOpacity(0.7),
+                          ),
+                          child: ListView(
+                            children: [
+                              ...allSearchResults.allReturnedResults
+                                  .map((e) =>
+                                  buildListItem(e, searchFlag))
+                            ],
+                          ),
+                        ))
+                        : Positioned(
+                        top: 100.0,
+                        left: 15.0,
+                        child: HomeNoResultToShow(
+                            screenWidth: screenWidth,
+                            searchFlag: searchFlag))
                         : Container(),
                     //    getmarker(context), //to automatically show marker to map
                   ],
@@ -402,13 +402,13 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
           floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
           floatingActionButton: Column(
             children: [
-              const SizedBox(height: 12),
+              const SizedBox(height: 30),
+
               FloatingButtonUserProfile(
                   UserInfofirstname: UserInfofirstname,
                   UserInfolastname:
-                      UserInfolastname), //breaking the Widget of floating button and passing the data from the stateless widget below
+                  UserInfolastname), //breaking the Widget of floating button and passing the data from the stateless widget below
               // const HomeFloatingDialog(),
-
             ],
           ),
           resizeToAvoidBottomInset: false,
@@ -479,7 +479,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
   }
 
 //
-  /*  int markerIdCounter = 0;
+/*  int markerIdCounter = 0;
   Set<Marker> marksman = Set<Marker>();
 
   Future saveLoc(data) async {
@@ -620,12 +620,14 @@ class FloatingButtonUserProfile extends StatelessWidget {
             return const CircularProgressIndicator.adaptive();
           }
           Map<String, dynamic> data =
-              snapshot.data!.data() as Map<String, dynamic>;
+          snapshot.data!.data() as Map<String, dynamic>;
           return FloatingActionButton(
             disabledElevation: 0,
             elevation: 0.0,
             backgroundColor: Colors.white,
             foregroundColor: Colors.black,
+            shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             heroTag: null,
             mini: true,
             child: Profile().profile == null
@@ -633,7 +635,7 @@ class FloatingButtonUserProfile extends StatelessWidget {
                 : Image.network(Profile().profile ?? ""),
             onPressed: () {
               ProfileNav(
-                      firstname: data['firstname'], lastname: data['lastname'])
+                  firstname: data['firstname'], lastname: data['lastname'])
                   .showProfileNav(context);
               //parameter : data from firestore //pass in the profilenav.dart
             },
@@ -780,7 +782,7 @@ class HomeOriginController extends StatelessWidget {
         controller: _originController,
         decoration: const InputDecoration(
           contentPadding:
-              EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+          EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
           border: InputBorder.none,
           hintText: 'origin',
         ),

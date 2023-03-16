@@ -281,6 +281,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             'email': GoogleUserStaticInfo().email,
                           }).onError((error, stackTrace) => (error.toString()));
                         }
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const HomePage()));
                       },
                       child: Material(
                         color: const Color.fromARGB(255, 0, 110, 195),
@@ -361,24 +363,18 @@ class _LoginScreenState extends State<LoginScreen> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Error Happened'),
+            title: const Text('Invalid Credentials.'),
             content: const SingleChildScrollView(
               child: Text(
-                  "The Email and Password that you Entered is Not valid ,Try Enter a valid Email and Password."),
+                  "Invalid Credentials. Please enter a valid Email Address and Password."),
             ),
             actions: <Widget>[
               TextButton(
                 child: const Text('Got it'),
                 onPressed: () {
-                  // const LoginScreen();
-
-                  // Navigator.of(context).pop();
-
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => const LoginScreen(),
                   ));
-                  // _emailController.clear();
-                  // _passwordController.clear();
                 },
               ),
             ],
@@ -386,5 +382,5 @@ class _LoginScreenState extends State<LoginScreen> {
         },
       );
     }
-  }
-}
+  } //signIn close
+}// class closing

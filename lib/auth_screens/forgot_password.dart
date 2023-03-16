@@ -16,6 +16,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     content: Text('Email Field Must Fill!'),
   );
 
+  var forgotPasswordSnackbar = const SnackBar(
+    content: Text('We Have Sent an Email to your Account!'),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,6 +76,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: _emailForgotController.text)
           .then((value) => Navigator.of(context).pop());
+      ScaffoldMessenger.of(context).showSnackBar(forgotPasswordSnackbar);
     } else if (_emailForgotController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(tSnackBar);
     }

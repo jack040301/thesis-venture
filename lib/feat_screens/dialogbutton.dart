@@ -10,14 +10,14 @@ class DialogQuestion {
 //////////////////////////////////////////////////////////////////////////////
   final String markerid;
 //use this string to get the clicked marker id
-  DialogQuestion(this.markerid, this.dropdownDatas, this.dropdownAssumption); //do not remove this
+  DialogQuestion(this.markerid, this.dropdownDatas,
+      this.dropdownAssumption); //do not remove this
   //CollectionReference mark = FirebaseFirestore.instance.collection("business");
   List<DropdownData> dropdownDatas = [];
   List<DropdownDataAssumption> dropdownAssumption = [];
 
   var selectdropval = "";
   var selectbusinessassump = "";
-  String budget = "";
 
   var Questionall = const SnackBar(
     content: Text(
@@ -46,9 +46,7 @@ class DialogQuestion {
             builder: (context) => DemogResult(
                 marker: markerid,
                 budget: selectbusinessassump,
-                ideal: selectdropval,
-                budgetf : budget
-            )));
+                ideal: selectdropval)));
   }
 
   /* List<DropdownMenuItem> get dropdownItems {
@@ -135,7 +133,8 @@ class DialogQuestion {
                         ),
                     const SizeBoxTwenty(),
 
-                    const Text("What kind of business do you prefer?",
+                    const Text(
+                        "What kind of business do you prefer?\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
                         style: TextStyle(
                           color: Color.fromARGB(255, 74, 74, 74),
                           fontSize: 16.0,
@@ -291,16 +290,6 @@ class DialogQuestion {
                         setState(() {
 // selectedbusinesstype = selecteditem;
                           selectbusinessassump = value!.budgetassump;
-                          if(selectbusinessassump.toString().contains("200k")){
-                            budget = "200328";
-
-                          }
-                         else if(selectbusinessassump.toString().contains("More than 200k")){
-                            budget = "206044";
-                          }
-                          else if(selectbusinessassump.toString().contains("Less than 200k")){
-                            budget = "196225";
-                          }
                         });
                       },
 //value: selectedbusinesstype,
@@ -354,7 +343,8 @@ class DialogQuestion {
 // TEXT BOX 3
 
                     const SizeBoxTwenty(),
-                    const Text("Enter value of area (per square meter)",
+                    const Text(
+                        "Enter value of area (per square meter)\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
                         style: TextStyle(
                           color: Color.fromARGB(255, 74, 74, 74),
                           fontSize: 16.0,
@@ -364,13 +354,12 @@ class DialogQuestion {
                         controller: areaController,
                         enableInteractiveSelection: false,
                         validator: (areaController) {
-                          if (areaController!.isEmpty )  {
+                          if (areaController!.isEmpty) {
                             return "Please fill this field correctly";
-                          }
-                          else if ( !RegExp (r'^[0-9]+$').hasMatch(areaController!))  {
+                          } else if (!RegExp(r'^[0-9]+$')
+                              .hasMatch(areaController!)) {
                             return "No Special characters allowed! Please fill this field correctly";
-                          }
-                          else {
+                          } else {
                             return null;
                           }
                         },
@@ -419,27 +408,14 @@ class DialogQuestion {
                               areaController.text.isEmpty) {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(Questionall);
-                          } else if (
-                              areaController.text == 0.toString()) {
+                          } else if (areaController.text == 0.toString()) {
                           } else if (areaController.text == 0.toString()) {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(Questionall1);
                           } else if (selectbusinessassump.isNotEmpty &&
                               selectbusinessassump.isNotEmpty &&
                               areaController.text.isNotEmpty) {
-                            if(selectbusinessassump.toString().contains("200k")){
-                               budget = "200328";
-                              demogResult(context);
-                            }
-                            else if(selectbusinessassump.toString().contains("More than 200k")){
-                               budget = "206044";
-                              demogResult(context);
-                            }
-                            else if(selectbusinessassump.toString().contains("Less than 200k")){
-                               budget = "196225";
-                              demogResult(context);
-                            }
-
+                            demogResult(context);
                           } else {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(Questionall2);

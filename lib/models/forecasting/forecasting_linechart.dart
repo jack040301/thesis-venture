@@ -5,13 +5,14 @@ import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:main_venture/models/forecasting/forecasting_population.dart';
+import 'package:main_venture/screens/home_page.dart';
 import 'package:main_venture/userInfo.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class SyncLineChart extends StatelessWidget {
-    final String markerid;
+  final String markerid;
 
-  SyncLineChart({super.key,required this.markerid});
+  SyncLineChart({super.key, required this.markerid});
 
   late TooltipBehavior _tooltipBehavior;
   late TooltipBehavior _tooltip;
@@ -66,7 +67,7 @@ class SyncLineChart extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                   FutureBuilder<DocumentSnapshot>(
-                      future: forebusiness.doc("Coffee Shop").get(),
+                      future: forebusiness.doc(markerid).get(),
                       builder: (BuildContext context,
                           AsyncSnapshot<DocumentSnapshot> snapshot) {
                         if (snapshot.hasError) {
@@ -118,6 +119,204 @@ class SyncLineChart extends StatelessWidget {
 
                           oneTimeCostResult = permit + equipment + stall;
 
+                          return Center(
+                              child: Container(
+                                  height: 1110,
+                                  padding: const EdgeInsets.all(5),
+                                  child: Card(
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(0.0),
+                                      ),
+                                      child: Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              5, 20, 5, 10),
+                                          child: Column(children: <Widget>[
+                                            const Text("Line Graph Forecast",
+                                                style:
+                                                    TextStyle(fontSize: 19.0)),
+                                            Expanded(
+                                                child: SfCartesianChart(
+                                                    legend:
+                                                        Legend(isVisible: true),
+                                                    tooltipBehavior:
+                                                        _tooltipBehavior,
+                                                    primaryXAxis:
+                                                        CategoryAxis(),
+                                                    series: getData(context))),
+                                            const Padding(
+                                                padding:
+                                                    const EdgeInsets.all(7.0),
+                                                child: Text(
+                                                  'The graph shows that the timespan in which is the assumption sales would reach and surpass the one time cost that the owner used in starting the business it includes Stall cost, Business permit and equipment.',
+                                                  textAlign: TextAlign.justify,
+                                                  style: TextStyle(
+                                                    height: 1.5,
+                                                    color: Color.fromARGB(
+                                                        255, 54, 54, 54),
+                                                    fontSize: 15,
+                                                  ),
+                                                )),
+                                            //   iuncomment to para sa barchart
+                                            const SizedBox(
+                                              height: 10.0,
+                                            ),
+                                            const Text("Bar Chart Forecast",
+                                                style:
+                                                    TextStyle(fontSize: 19.0)),
+                                            Expanded(
+                                                child: BarchartPop(
+                                              markerid: markerid,
+                                            )),
+                                            const Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  'The graph shows the population data from 2015 to 2020 a slight increase (1.049%) in 5 years utilizing its growth percent we can assume the forecasted population by year 2025',
+                                                  textAlign: TextAlign.justify,
+                                                  style: TextStyle(
+                                                    height: 1.5,
+                                                    color: Color.fromARGB(
+                                                        255, 54, 54, 54),
+                                                    fontSize: 15,
+                                                  ),
+                                                )),
+                                            const Text("Pie Chart Forecast",
+                                                style:
+                                                    TextStyle(fontSize: 19.0)),
+                                            Expanded(
+                                                child: SfCircularChart(
+                                                    tooltipBehavior: _tooltip,
+                                                    series: <CircularSeries>[
+                                                  DoughnutSeries<_ChartData,
+                                                          String>(
+                                                      dataSource: piedata,
+                                                      xValueMapper:
+                                                          (_ChartData data,
+                                                                  _) =>
+                                                              data.x,
+                                                      yValueMapper:
+                                                          (_ChartData data,
+                                                                  _) =>
+                                                              data.y,
+                                                      dataLabelMapper:
+                                                          (_ChartData data,
+                                                                  _) =>
+                                                              data.x,
+                                                      dataLabelSettings:
+                                                          const DataLabelSettings(
+                                                              isVisible: true,
+                                                              labelPosition:
+                                                                  ChartDataLabelPosition
+                                                                      .outside,
+                                                              // Renders background rectangle and fills it with series color
+                                                              useSeriesColor:
+                                                                  true),
+                                                      // Explode the segments on tap
+                                                      explode: true,
+                                                      explodeIndex: 1)
+                                                ])),
+                                            const Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  'The graph shows the allocation of monthly cost into following categories such as Labor Cost, Food Supply, Utility/Lease and Miscellaneous excluding the one time cost',
+                                                  textAlign: TextAlign.justify,
+                                                  style: TextStyle(
+                                                    height: 1.5,
+                                                    color: Color.fromARGB(
+                                                        255, 54, 54, 54),
+                                                    fontSize: 15,
+                                                  ),
+                                                )),
+                                            Container(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        10, 5, 10, 20),
+                                                color: Colors.white,
+                                                child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    children: <Widget>[
+                                                      Expanded(
+                                                          child: ElevatedButton
+                                                              .icon(
+                                                                  style: ElevatedButton
+                                                                      .styleFrom(
+                                                                    elevation:
+                                                                        0.0,
+                                                                    padding: const EdgeInsets
+                                                                            .all(
+                                                                        10.0),
+                                                                    primary: const Color
+                                                                            .fromARGB(
+                                                                        255,
+                                                                        0,
+                                                                        110,
+                                                                        195), // background
+                                                                    shape: RoundedRectangleBorder(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(5.0)),
+                                                                    minimumSize:
+                                                                        const Size(
+                                                                            70,
+                                                                            40), //////// HERE
+                                                                  ),
+                                                                  onPressed:
+                                                                      () {},
+                                                                  icon: Icon(
+                                                                    Icons
+                                                                        .file_download_outlined,
+                                                                    size: 18.0,
+                                                                  ),
+                                                                  label: Text(
+                                                                    "Download",
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white),
+                                                                  ))),
+                                                      //Spacer(),
+                                                      const SizedBox(
+                                                        width: 10.0,
+                                                      ),
+
+                                                      Expanded(
+                                                          child: TextButton(
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pushAndRemoveUntil(
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              const HomePage()),
+                                                                  (Route route) =>
+                                                                      false);
+                                                        },
+                                                        style: TextButton
+                                                            .styleFrom(
+                                                          minimumSize: const Size(
+                                                              70,
+                                                              40), //<-- SEE HERE
+                                                          side:
+                                                              const BorderSide(
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    0,
+                                                                    110,
+                                                                    195),
+                                                            width: 3,
+                                                          ),
+                                                        ),
+                                                        child:
+                                                            const Text('Done'),
+                                                      ))
+                                                    ]))
+                                          ])))));
+
+/*
                           return Center(
                               child: Container(
                             height: 950,
@@ -214,6 +413,7 @@ class SyncLineChart extends StatelessWidget {
                               ),
                             ),
                           ));
+                          */
                         }
                         return const Center(
                             child: CircularProgressIndicator.adaptive());
