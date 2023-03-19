@@ -20,6 +20,8 @@ function MapPage() {
   const center = { lat: 14.774477, lng: 121.04483 };
   const [basicModal, setBasicModal] = useState(false);
   const [basicModal2, setBasicModal2] = useState(false);
+  const [enableInput, setEnableInput] = useState(false);
+
 
   const api = process.env.REACT_APP_GOOGLE_MAPS_API_KEY; //insert the api key of the google map
   const [coorlat, setCoorlat] = useState('');
@@ -51,6 +53,14 @@ function MapPage() {
     setCoorPastpopu("");
     setCoorPresentpopu("");
     setCoorPopulation("");
+  }
+
+  function resetAddshow(){
+    setCoorlat("")
+    setCoorlat("")
+    setCoorlong("")
+    setCoorID("")
+    setCoorname("")
   }
 
   const handleMapClick = (e,name,land,land_size,popu_past,popu_present,population,revenue) => {
@@ -315,13 +325,25 @@ function MapPage() {
 
   function setmodalclose2(){
 
+
+
     return setBasicModal2(!basicModal2); //triggering the modal
     
   }
   function setmodalclose(){
 
+
     return setBasicModal(!basicModal); //triggering the modal
     
+  }
+
+  function setAddshow(){
+    resetAddshow();
+resetAllFilters();
+return setEnableInput(!enableInput); //triggering the modal
+
+
+
   }
    
 
@@ -359,7 +381,12 @@ function MapPage() {
               <div className="card-header">
                 <h3 className="card-title">Map Markers</h3>
                 <div className="card-tools">
-           
+                <button
+                type="button"
+                className="btn btn-secondary"
+                data-mdb-dismiss="modal"
+                onClick={setAddshow}
+              />
                 </div>
               </div>
               <div className="card-body table-responsive p-0">
@@ -391,6 +418,132 @@ function MapPage() {
           </div>
         </div>
       </div>
+
+
+
+      {/*Adding markers */}
+
+
+      <MDBModal show={enableInput} setShow={setEnableInput} tabIndex="-1">
+        <MDBModalDialog>
+          <MDBModalContent>
+            <MDBModalHeader>
+              <MDBModalTitle>Adding Markers Business</MDBModalTitle>
+            </MDBModalHeader>
+            <MDBModalBody>
+           
+            <label className="labelLat">Coordinates Latitude</label>
+              <MDBInput
+                wrapperClass=" w-100"
+                placeholder="Coordinates Latitude"
+                id="formControlLg"
+                type="text"
+                value={coorlat}
+                onChange={(e) => setCoorlat(e.target.value)}
+                required
+              />
+              <label className="labelLat">Coordinates Longitude</label>
+              <MDBInput
+                wrapperClass=" w-100"
+                placeholder="Coordinates Longtitude"
+                id="formControlLg"
+                type="text"
+                value={coorlong}
+                onChange={(e) => setCoorlong(e.target.value)}
+                required
+              />
+              <label className="labelLat">Place</label>
+              <MDBInput
+                wrapperClass=" w-100"
+                placeholder="Place"
+                id="formControlLg"
+                type="text"
+                value={coorname}
+                onChange={(e) => setCoorname(e.target.value)}
+                required
+              />
+              <label className="labelLat">Land</label>
+              <MDBInput
+                wrapperClass=" w-100"
+                placeholder="Land"
+                id="formControlLg"
+                type="number"
+                value={coorland}
+                onChange={(e) => setCoorLand(e.target.value)}
+                required
+              />
+              <label className="labelLat">Land Size</label>
+              <MDBInput
+                wrapperClass=" w-100"
+                placeholder="Land size"
+                id="formControlLg"
+                type="number"
+                value={coorlandSize}
+                onChange={(e) => setCoorlandSize(e.target.value)}
+                required
+              />
+              <label className="labelLat">Total Population</label>
+              <MDBInput
+                wrapperClass=" w-100"
+                placeholder="Total Population "
+                id="formControlLg"
+                type="number"
+                value={coorPopulation}
+                onChange={(e) => setCoorPopulation(e.target.value)}
+                required
+              />
+              <label className="labelLat">Past Population</label>
+              <MDBInput
+                wrapperClass=" w-100"
+                placeholder="Past Population "
+                id="formControlLg"
+                type="number"
+                value={coorPastpopu}
+                onChange={(e) => setCoorPastpopu(e.target.value)}
+                required
+              />
+              <label className="labelLat">Present Population</label>
+              <MDBInput
+                wrapperClass=" w-100"
+                placeholder="Present Population "
+                id="formControlLg"
+                type="number"
+                value={coorPresentpopu}
+                onChange={(e) => setCoorPresentpopu(e.target.value)}
+                required
+              />
+              <label className="labelLat">Revenue</label>
+              <MDBInput
+                wrapperClass="w-100"
+                placeholder="Revenue"
+                id="formControlLg"
+                type="number"
+                value={coorRevenue}
+                onChange={(e) => setCoorRevenue(e.target.value)}
+                required
+                
+              />
+              <div className='invalid-feedback'>Please Revenue</div>
+            </MDBModalBody>
+
+            <MDBModalFooter>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-mdb-dismiss="modal"
+                onClick={setmodalclose2}
+              >
+                Close
+              </button>
+              <button onClick={addMarkers} className="btn btn-primary">
+                Add Place
+              </button>
+            </MDBModalFooter>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
+
+
 
         <form>
         <MDBModal show={basicModal2} setShow={setBasicModal2} tabIndex="-1">
@@ -516,6 +669,9 @@ function MapPage() {
       </MDBModal>
       </form>
 
+
+      {/*Updating markers */}
+
      {/*  <form> */}
       <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
         <MDBModalDialog className="modal-dialog modal-dialog-centered">
@@ -568,7 +724,6 @@ function MapPage() {
                 onChange={(e) => setCoorname(e.target.value)}
                 required
                 disabled
-
               />
               <label className="labelLat">Land</label>
               <MDBInput
