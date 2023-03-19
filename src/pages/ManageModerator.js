@@ -1,5 +1,6 @@
+import { limit, orderBy } from "firebase/firestore";
 import React, {useEffect, useState} from "react";
-import {collection, db,onSnapshot, query,where } from "../firebase";
+import {collection, db,onSnapshot, query,where, startAt} from "../firebase";
 
 
 function ManageModerator() {
@@ -38,7 +39,7 @@ function ManageModerator() {
 
   if(search !== null && search !== ""){
 
-    const collect = query(collection(db,"users"),where("role","==","admin"), where("email","==",search));
+    const collect = query(collection(db,"users"),where("role","==","admin"), where("email",">=",search), orderBy("email"), limit(1));
     const unsub = onSnapshot(collect, snapshot =>{
 
       const admintable = snapshot.docs.map(doc=> ({ email:doc.data().email, adminid:doc.id}
@@ -84,7 +85,7 @@ function ManageModerator() {
                       className="form-control float-right"
                       placeholder="Search"
                       value={search}
-                      onChange={(e) => setSearch(e.target.value)}
+                      onChange={(e) => {searchModerator();setSearch(e.target.value);}}
                     />
                     <div className="input-group-append">
                       <button type="submit" onClick={searchModerator} className="btn btn-default">

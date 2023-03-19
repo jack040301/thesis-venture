@@ -21,7 +21,7 @@ import {
 } from "mdb-react-ui-kit";
 
 function Login() {
-  const toastRef = useRef()
+  const toastRef = useRef('')
 
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
@@ -35,31 +35,6 @@ function Login() {
   const [password, setPassword] = useState("");
 
  // const [loggedemail,setLoggedEmail] = useState("");
-
-
-  async function getdata(userid){
-
-
-    const docRef = doc(db, "users",userid);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists() && docSnap.data().role === "admin") {
-      
-   //   toastRef.current.showToast("Logging in....")
-      
-      navigate('/dashboard')
-
-
-    }else{
-
-//Toast message
-
-      //toastRef.current.showToast("Invalid credentials. Please try again.")
-        localStorage.removeItem("email");
-      logout()
-
-    }
-  }
   
   async function handleSubmit(e) {
 
@@ -80,7 +55,13 @@ function Login() {
     localStorage.setItem("email",user.email);
   //  setLoggedEmail(user.email)
     getdata(user.uid)
-
+    /*if(getdata(user.uid)){
+      //toastRef.current.showToast("Logging in...")
+      //setTimeout(()=>{toastRef.current.showToast('h')}, 2000);      
+      console.log('The function has ticked')
+    }else{
+      console.log('something went wrong')
+    }*/
     
   })
   .catch((error) => {
@@ -111,6 +92,27 @@ function Login() {
     }
   };
 
+  async function getdata(userid){
+
+
+    const docRef = doc(db, "users",userid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists() && docSnap.data().role === "admin") {
+      
+      //toastRef.current.showToast("asd")    
+      //navigate('/dashboard')
+
+    }else{
+
+//Toast message
+
+      //toastRef.current.showToast("Invalid credentials. Please try again.")
+        localStorage.removeItem("email");
+      logout()
+
+    }
+  }
 
 
   /* let navigate = useNavigate();

@@ -16,7 +16,9 @@ onSnapshot,
   getDoc,
   updateDoc,
   deleteDoc,
-  addDoc,} from 'firebase/firestore'
+  addDoc, 
+  startAt, 
+  orderBy,} from 'firebase/firestore'
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -208,4 +210,4 @@ const credential = promptF
  */
 
 
-export {getDoc, setDoc,where, signInWithEmailAndPassword,reauthenticateWithCredential,auth,doc,query,getDocs,onSnapshot,updateDoc,deleteDoc,GeoPoint,addDoc,collection, db, registerWithEmailAndPassword,  logout, sendPasswordReset, handleUserProfile, createUserWithEmailAndPassword, updatePassword}
+export {getDoc, setDoc,where, signInWithEmailAndPassword,reauthenticateWithCredential,auth,doc,query,getDocs,onSnapshot,updateDoc,deleteDoc,GeoPoint,addDoc,collection, db, registerWithEmailAndPassword,  logout, sendPasswordReset, handleUserProfile, createUserWithEmailAndPassword, updatePassword, startAt}
