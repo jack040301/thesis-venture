@@ -381,12 +381,15 @@ return setEnableInput(!enableInput); //triggering the modal
               <div className="card-header">
                 <h3 className="card-title">Map Markers</h3>
                 <div className="card-tools">
-                <button
+                <button 
                 type="button"
                 className="btn btn-secondary"
                 data-mdb-dismiss="modal"
                 onClick={setAddshow}
-              />
+                >
+                Add New Marker
+              </button>
+             
                 </div>
               </div>
               <div className="card-body table-responsive p-0">
@@ -428,7 +431,7 @@ return setEnableInput(!enableInput); //triggering the modal
         <MDBModalDialog>
           <MDBModalContent>
             <MDBModalHeader>
-              <MDBModalTitle>Adding Markers Business</MDBModalTitle>
+              <MDBModalTitle>Addings Markers Business</MDBModalTitle>
             </MDBModalHeader>
             <MDBModalBody>
            
