@@ -158,7 +158,7 @@ function MapPage() {
       const docRef = await addDoc(collection(db, "testmarkers"), {
         coords: new GeoPoint(coorlat, coorlong),
         place: coorname,
-        land: coorland,
+        land: Number(coorland),
         popu_present: coorPresentpopu,
         popu_future: future,
         popu_past: coorPastpopu,
@@ -222,7 +222,7 @@ function MapPage() {
        const updateMarker = await updateDoc(docRef, {
         coords: new GeoPoint(coorlat, coorlong),
         place: coorname,
-        land: coorland,
+        land: Number(coorland),
         popu_present:coorPresentpopu,
         popu_past: coorPastpopu,
         popu_future:future,
@@ -325,16 +325,21 @@ function MapPage() {
 
   function setmodalclose2(){
 
-
+                                          //for adding markers
 
     return setBasicModal2(!basicModal2); //triggering the modal
     
   }
   function setmodalclose(){
 
-
+                                          //for exisitng marker
     return setBasicModal(!basicModal); //triggering the modal
     
+  }
+
+  function setAddShowClose(){
+    return setBasicModal(!enableInput); //triggering the modal
+
   }
 
   function setAddshow(){
@@ -424,14 +429,14 @@ return setEnableInput(!enableInput); //triggering the modal
 
 
 
-      {/*Adding markers */}
+      {/*Adding manual markers */}
 
 
       <MDBModal show={enableInput} setShow={setEnableInput} tabIndex="-1">
         <MDBModalDialog>
           <MDBModalContent>
             <MDBModalHeader>
-              <MDBModalTitle>Addings Markers Business</MDBModalTitle>
+              <MDBModalTitle>Manual Adding Markers Business</MDBModalTitle>
             </MDBModalHeader>
             <MDBModalBody>
            
@@ -534,7 +539,7 @@ return setEnableInput(!enableInput); //triggering the modal
                 type="button"
                 className="btn btn-secondary"
                 data-mdb-dismiss="modal"
-                onClick={setmodalclose2}
+                onClick={setAddShowClose}
               >
                 Close
               </button>
@@ -546,6 +551,7 @@ return setEnableInput(!enableInput); //triggering the modal
         </MDBModalDialog>
       </MDBModal>
 
+      {/*Adding markers in map */}
 
 
         <form>
