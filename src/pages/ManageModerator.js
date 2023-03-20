@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
-import {collection, db,onSnapshot, query,where } from "../firebase";
+import {collection, db,onSnapshot, query,where, startAt,endAt } from "../firebase";
 
 
 function ManageModerator() {
 
-   const [data, setData] = useState([]);
+  const [data, setData] = useState([]);
    const [search,setSearch] = useState([]);
 
 
@@ -38,7 +38,7 @@ function ManageModerator() {
 
   if(search !== null && search !== ""){
 
-    const collect = query(collection(db,"users"),where("role","==","admin"), where("email","==",search));
+    const collect = query(collection(db,"users"),where("role","==","admin"), where("email",">=",search), orderBy("email"), limit(1));
     const unsub = onSnapshot(collect, snapshot =>{
 
       const admintable = snapshot.docs.map(doc=> ({ email:doc.data().email, adminid:doc.id}
@@ -66,6 +66,7 @@ function ManageModerator() {
 
 
   return (
+    
     <>
       <div className="content-wrapper">
         <div className="row">
@@ -104,7 +105,7 @@ function ManageModerator() {
                       <th>Status</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="tbody1">
 
                   { 
               data.map( (mark) => (
