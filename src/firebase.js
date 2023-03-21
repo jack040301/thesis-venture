@@ -16,6 +16,7 @@ onSnapshot,
   getDoc,
   updateDoc,
   deleteDoc,
+  orderBy,limit,
   startAt,endAt,
   addDoc,} from 'firebase/firestore'
 
@@ -209,4 +210,4 @@ const credential = promptF
  */
 
 
-export {getDoc,startAt, endAt, setDoc,where, signInWithEmailAndPassword,reauthenticateWithCredential,auth,doc,query,getDocs,onSnapshot,updateDoc,deleteDoc,GeoPoint,addDoc,collection, db, registerWithEmailAndPassword,  logout, sendPasswordReset, handleUserProfile, createUserWithEmailAndPassword, updatePassword}
+export {orderBy,limit,getDoc,startAt, endAt, setDoc,where, signInWithEmailAndPassword,reauthenticateWithCredential,auth,doc,query,getDocs,onSnapshot,updateDoc,deleteDoc,GeoPoint,addDoc,collection, db, registerWithEmailAndPassword,  logout, sendPasswordReset, handleUserProfile, createUserWithEmailAndPassword, updatePassword}

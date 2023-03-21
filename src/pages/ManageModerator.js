@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {collection, db,onSnapshot, query,where, startAt,endAt } from "../firebase";
+import {collection, db,onSnapshot, query,where, limit,orderBy } from "../firebase";
 
 
 function ManageModerator() {

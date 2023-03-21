@@ -10,6 +10,7 @@ import Sidenav from "./components/SideNav";
 import AddModerator from "./pages/AddModerator";
 import ManageModerator from "./pages/ManageModerator";
 import Login from "./auth/Login";
+import Login2 from "./auth/Login2";
 import ProtectedRoute from "./auth/PrivateRoute";
 
 import { AuthContextProvider } from "./auth/context";
@@ -30,7 +31,7 @@ function App() {
             path="/"
             element={
               <Protect>
-              <Login/>
+              <Login2/>
               </Protect>
             }
           />
