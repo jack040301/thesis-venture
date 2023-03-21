@@ -1,3 +1,74 @@
 body {
-    background-color: hsl(0, 0%, 96%);
-  }
+  background-color: hsl(0, 0%, 96%);
+}
+.text-primary {
+  background-color: red;
+}
+.logo {
+  justify-content: center;
+  width: auto;
+}
+.ventureLabel {
+  font-size: 20pt;
+  font-weight: 100;
+  margin-left: 10px;
+  margin-top: 15px;
+  color: #373e4e;
+}
+.ventureLogo {
+  width: 40px;
+  height: 60px;
+  margin-top: -15px;
+}
+.side {
+  background-image: url(https://img.freepik.com/free-photo/business-people-meeting_53876-15178.jpg);
+  background-repeat: no-repeat;
+  background-size: 900px;
+  height: 500px;
+  align-items: center;
+  justify-content: center;
+}
+.wholeContain {
+  background-color: #f8faff;
+  margin-top: 200px;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+.mb-5 {
+  margin-top: 10px;
+  font-size: 20pt;
+  margin-bottom: -10px;
+}
+.emailLabel {
+  margin-top: -10px;
+}
+.emailLabels {
+  margin-top: 20px;
+}
+.loginForm {
+  background-color: #f8faff;
+  height: 500px;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+
+  padding-top: -50px;
+}
+.contain {
+  background-color: #f8faff;
+  border-color: transparent;
+  border-radius: 50px;
+  box-shadow: none;
+}
+.insideForm {
+  padding-top: -15px;
+  margin-top: -50px;
+  border: none;
+  border-radius: 50px;
+  height: 502px;
+}
+.fw-bold {
+  margin-top: 20px;
+  color: #373e4e;
+  font-size: 20pt;
+}
