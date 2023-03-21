@@ -337,8 +337,8 @@ function MapPage() {
     
   }
 
-  function setAddShowClose(){
-    return setBasicModal(!enableInput); //triggering the modal
+  function setAddShowClose(){  //for custom adding
+    return setEnableInput(!enableInput); //triggering the modal
 
   }
 
