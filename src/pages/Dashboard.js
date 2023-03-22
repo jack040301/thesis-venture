@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { collection, db, onSnapshot } from "../firebase";
+import { collection, db, onSnapshot, query, where} from "../firebase";
 
 export default function Dashboard({ user, setAuthState, setUser }) {
   /*   const signOutHandler = () => {
@@ -13,21 +13,41 @@ export default function Dashboard({ user, setAuthState, setUser }) {
   }; */
 
   const [countUser, setCountUser] = useState("");
+  const [countModerator, setCountModerator] = useState("");
+
 
   useEffect(() => {
     const collect = collection(db, "users");
+    const moderator = query(collect,where("role","==","admin"))
     const unsub = onSnapshot(collect, (snapshot) => {
       const markreal = snapshot.docs.map((doc) => ({
         ...doc.data(),
       }));
+
+    
+
+
       //  console.log(markreal)
       //  alert(markreal.length)
       setCountUser(markreal.length);
       //setData(markreal)
     });
 
+    const unsubscribe = onSnapshot(moderator,(snapshot)=>{
+          const moderator = snapshot.docs.map((doc)=> ({
+
+            ...doc.data(),
+
+          }))
+
+          setCountModerator(moderator.length);
+      });
+
+
+
     return () => {
       unsub();
+      unsubscribe();
     };
 
     //const collectionRef = db.collection('users');
@@ -77,7 +97,7 @@ export default function Dashboard({ user, setAuthState, setUser }) {
                 <div className="small-box bg-success">
                   <div className="inner">
                     <h3>
-                      53<sup style={{ fontSize: 20 }}></sup>
+                    {countModerator}<sup style={{ fontSize: 20 }}></sup>
                     </h3>
                     <p>Total Moderators</p>
                   </div>
