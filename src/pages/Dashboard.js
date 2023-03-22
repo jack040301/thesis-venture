@@ -79,6 +79,20 @@ export default function Dashboard({ user, setAuthState, setUser }) {
                     <h3>
                       53<sup style={{ fontSize: 20 }}></sup>
                     </h3>
+                    <p>Total Moderators</p>
+                  </div>
+                  <div className="icon">
+                    <i className="fas fa-user" />
+                  </div>
+                  <a href="#" className="small-box-footer">
+                    More info <i className="fas fa-arrow-circle-right" />
+                  </a>
+                </div>
+              </div>
+              <div className="col-lg-3 col-6">
+                <div className="small-box bg-warning">
+                  <div className="inner">
+                    <h3>44</h3>
                     <p>Requests</p>
                   </div>
                   <div className="icon">
@@ -89,20 +103,6 @@ export default function Dashboard({ user, setAuthState, setUser }) {
                   </a>
                 </div>
               </div>
-              {/* <div className="col-lg-3 col-6">
-                <div className="small-box bg-warning">
-                  <div className="inner">
-                    <h3>44</h3>
-                    <p>Requests</p>
-                  </div>
-                  <div className="icon">
-                    <i className="fas fa-list" />
-                  </div>
-                  <a href="#" className="small-box-footer">
-                    More info <i className="fas fa-arrow-circle-right" />
-                  </a>
-                </div>
-              </div> */}
             </div>
           </div>
         </section>
