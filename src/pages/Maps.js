@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import customMarker from "../Assets/x.png";
-import Requestmarker from "../Assets/pinBuildingIcon.png"
+import Requestmarker from "../Assets/pinBuildingIcon.png";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import {
   db,
@@ -14,7 +14,7 @@ import {
   query,
   onSnapshot,
   getMarkers,
-  where
+  where,
 } from "../firebase";
 import "./Maps.css";
 import {
@@ -36,7 +36,6 @@ function MapPage() {
   const [enableInput, setEnableInput] = useState(false);
   const [requestModal, setRequestModal] = useState(false);
 
-
   const api = process.env.REACT_APP_GOOGLE_MAPS_API_KEY; //insert the api key of the google map
   const [coorlat, setCoorlat] = useState("");
   const [coorlong, setCoorlong] = useState("");
@@ -48,8 +47,6 @@ function MapPage() {
   const [coorPastpopu, setCoorPastpopu] = useState("");
   const [coorPresentpopu, setCoorPresentpopu] = useState("");
 
-  
-
   const [coorID, setCoorID] = useState("");
   let markers = [];
   let request_markers = [];
@@ -58,18 +55,17 @@ function MapPage() {
   const [datarequest, setDataRequest] = useState(request_markers);
 
   const [requestApprove, setRequestApprove] = useState({
-    id: '',
-    lat:'',
-    long:'',
-    place:'',
-    land: '',
-    land_size: '',
-    popu_past: '',
-    popu_present: '',
-    population: '',
-    revenue: ''
+    id: "",
+    lat: "",
+    long: "",
+    place: "",
+    land: "",
+    land_size: "",
+    popu_past: "",
+    popu_present: "",
+    population: "",
+    revenue: "",
   });
-
 
   const toastRef = useRef();
 
@@ -291,8 +287,10 @@ function MapPage() {
   };
 
   const fetchPost = async () => {
-
-    const ReqTrueQuery =  query(collection(db, "testmarkers"), where("request_status","==",true)); 
+    const ReqTrueQuery = query(
+      collection(db, "testmarkers"),
+      where("request_status", "==", true)
+    );
     await getDocs(ReqTrueQuery).then((querySnapshot) => {
       const newData = querySnapshot.docs.map((doc) => ({
         ...doc.data(),
@@ -310,13 +308,13 @@ function MapPage() {
         revenue: doc.data().revenue,
       }));
 
-
-
       setData(newxx);
     });
 
-
-    const ReqFalseQuery =  query(collection(db, "testmarkers"), where("request_status","==",false)); 
+    const ReqFalseQuery = query(
+      collection(db, "testmarkers"),
+      where("request_status", "==", false)
+    );
 
     await getDocs(ReqFalseQuery).then((querySnapshot) => {
       const datareq = querySnapshot.docs.map((doc) => ({
@@ -335,12 +333,8 @@ function MapPage() {
         revenue: doc.data().revenue,
       }));
 
-
-
       setDataRequest(reqdata);
     });
-
-    
 
     return () => fetchPost();
   };
@@ -370,16 +364,11 @@ function MapPage() {
     return setEnableInput(!enableInput); //triggering the modal
   }
 
-
-
-
-
- //real time in map
+  //real time in map
   useEffect(() => {
     const collect = collection(db, "testmarkers");
 
-    const approveReq = query(collect,where("request_status","==",true))
-
+    const approveReq = query(collect, where("request_status", "==", true));
 
     const unsub = onSnapshot(approveReq, (snapshot) => {
       const markreal = snapshot.docs.map((doc) => ({
@@ -398,9 +387,7 @@ function MapPage() {
       setData(markreal);
     });
 
-
-    const processReq = query(collect,where("request_status","==",false))
-
+    const processReq = query(collect, where("request_status", "==", false));
 
     const unsubReqProcess = onSnapshot(processReq, (snapshot) => {
       const reqproc = snapshot.docs.map((doc) => ({
@@ -419,19 +406,13 @@ function MapPage() {
       setDataRequest(reqproc);
     });
 
-
-
-
-
     return () => {
       unsub();
       unsubReqProcess();
     };
   }, []);
 
-
   function requestClose() {
-   
     return setRequestModal(!requestModal); //triggering the modal
   }
 
@@ -445,47 +426,36 @@ function MapPage() {
     population,
     revenue
   ) => {
-
-
     //let parts = "";
     let url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${e.latLng.lat()},${e.latLng.lng()}&key=${api}`;
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
         // console.log(data);
-    let parts = data.results[0].address_components;
+        let parts = data.results[0].address_components;
 
         //setCoorname(data.results[0].formatted_address);
-        setRequestApprove({place: data.results[0].formatted_address})
+        setRequestApprove({ place: data.results[0].formatted_address });
       })
       .catch((err) => toastRef.current.showToast(err.message));
 
-
-
     setRequestApprove({
-      long:e.latLng.lng(),
-      lat:e.latLng.lat(),
+      long: e.latLng.lng(),
+      lat: e.latLng.lat(),
       id: name,
       land: land,
       land_size: land_size,
       popu_past: popu_past,
       popu_present: popu_present,
       population: population,
-      revenue: revenue
-    })
-
+      revenue: revenue,
+    });
 
     return setRequestModal(!requestModal); //triggering the modal
-
-  }
+  };
 
   const ApprovedButtonClick = async () => {
-
-
-
-
     const future = requestApprove.popu_present * 0.49;
-
 
     try {
       if (
@@ -508,41 +478,30 @@ function MapPage() {
         requestApprove.id !== null &&
         requestApprove.id !== ""
       ) {
+        const docRef = doc(db, "testmarkers", requestApprove.id);
 
+        const updateRequest = await updateDoc(docRef, {
+          coords: new GeoPoint(requestApprove.lat, requestApprove.long),
+          place: requestApprove.place,
+          land: Number(requestApprove.land),
+          popu_present: requestApprove.popu_present,
+          popu_past: requestApprove.popu_past,
+          popu_future: future,
+          land_size: requestApprove.land_size,
+          population: requestApprove.population,
+          revenue: requestApprove.revenue,
+          request_status: true,
+        });
 
-    const docRef = doc(db, "testmarkers", requestApprove.id);
-
-
-    const updateRequest = await updateDoc(docRef, {
-
-      coords: new GeoPoint(requestApprove.lat, requestApprove.long),
-      place: requestApprove.place,
-      land: Number(requestApprove.land),
-      popu_present: requestApprove.popu_present,
-      popu_past: requestApprove.popu_past,
-      popu_future: future,
-      land_size: requestApprove.land_size,
-      population: requestApprove.population,
-      revenue: requestApprove.revenue,
-      request_status:true,
-    });
-
-
-    toastRef.current.showToast("Approved Request ");
-  }else{
-
-    toastRef.current.showToast("Do not leave the fields blank ");
-
-
-  }
-} catch (e) {
-  //error
-  toastRef.current.showToast("Error Approving Request : ", e);
-
-}
-
-
-  }
+        toastRef.current.showToast("Approved Request ");
+      } else {
+        toastRef.current.showToast("Do not leave the fields blank ");
+      }
+    } catch (e) {
+      //error
+      toastRef.current.showToast("Error Approving Request : ", e);
+    }
+  };
 
   return (
     <>
@@ -596,8 +555,7 @@ function MapPage() {
                       />
                     ))}
 
-
-            {datarequest.map((reqmark) => (
+                    {datarequest.map((reqmark) => (
                       <Marker
                         options={{ icon: Requestmarker }}
                         onClick={(e) =>
@@ -627,49 +585,44 @@ function MapPage() {
         </div>
       </div>
 
-
-       {/* Request Modal */}
-       <MDBModal show={requestModal} setShow={setRequestModal} tabIndex="-1">
-          <MDBModalDialog>
-            <MDBModalContent>
-              <MDBModalHeader>
-                <MDBModalTitle>Request Approve</MDBModalTitle>
-              </MDBModalHeader>
-              <MDBModalBody>
-                Are you sure you want to approve this Request?
-
-                <MDBInput
+      {/* Request Modal */}
+      <MDBModal show={requestModal} setShow={setRequestModal} tabIndex="-1">
+        <MDBModalDialog>
+          <MDBModalContent>
+            <MDBModalHeader>
+              <MDBModalTitle>Approve Request</MDBModalTitle>
+            </MDBModalHeader>
+            <MDBModalBody>
+              Are you sure you want to approve this Request?
+              <MDBInput
                 wrapperClass=" w-100"
                 placeholder="Marker ID"
                 id="formControlLg"
                 type="text"
                 value={requestApprove.id}
-                onChange={(e) => setRequestApprove({id: e.target.value})}
+                onChange={(e) => setRequestApprove({ id: e.target.value })}
                 required
                 disabled
                 hidden
               />
-               <label className="labelLat">Coordinates Latitude</label>
+              <label className="labelLat">Coordinates Latitude</label>
               <MDBInput
                 wrapperClass=" w-100"
                 placeholder="Coordinates Latitude"
                 id="formControlLg"
                 type="text"
                 value={requestApprove.lat}
-                onChange={(e) => setRequestApprove({lat: e.target.value})}
-
+                onChange={(e) => setRequestApprove({ lat: e.target.value })}
                 required
               />
-
-          <label className="labelLat">Coordinates Longitude</label>
+              <label className="labelLat">Coordinates Longitude</label>
               <MDBInput
                 wrapperClass=" w-100"
                 placeholder="Coordinates Longtitude"
                 id="formControlLg"
                 type="text"
                 value={requestApprove.long}
-                onChange={(e) => setRequestApprove({long: e.target.value})}
-
+                onChange={(e) => setRequestApprove({ long: e.target.value })}
                 required
               />
               <label className="labelLat">Place</label>
@@ -679,8 +632,7 @@ function MapPage() {
                 id="formControlLg"
                 type="text"
                 value={requestApprove.place}
-                onChange={(e) => setRequestApprove({place: e.target.value})}
-
+                onChange={(e) => setRequestApprove({ place: e.target.value })}
                 required
               />
               <label className="labelLat">Land</label>
@@ -690,8 +642,7 @@ function MapPage() {
                 id="formControlLg"
                 type="number"
                 value={requestApprove.land}
-                onChange={(e) => setRequestApprove({land: e.target.value})}
-
+                onChange={(e) => setRequestApprove({ land: e.target.value })}
                 required
               />
               <label className="labelLat">Land Size</label>
@@ -701,8 +652,9 @@ function MapPage() {
                 id="formControlLg"
                 type="number"
                 value={requestApprove.land_size}
-                onChange={(e) => setRequestApprove({land_size: e.target.value})}
-
+                onChange={(e) =>
+                  setRequestApprove({ land_size: e.target.value })
+                }
                 required
               />
               <label className="labelLat">Total Population</label>
@@ -712,8 +664,9 @@ function MapPage() {
                 id="formControlLg"
                 type="number"
                 value={requestApprove.population}
-                onChange={(e) => setRequestApprove({population: e.target.value})}
-
+                onChange={(e) =>
+                  setRequestApprove({ population: e.target.value })
+                }
                 required
               />
               <label className="labelLat">Past Population</label>
@@ -723,8 +676,9 @@ function MapPage() {
                 id="formControlLg"
                 type="number"
                 value={requestApprove.popu_past}
-                onChange={(e) => setRequestApprove({popu_past: e.target.value})}
-
+                onChange={(e) =>
+                  setRequestApprove({ popu_past: e.target.value })
+                }
                 required
               />
               <label className="labelLat">Present Population</label>
@@ -734,8 +688,9 @@ function MapPage() {
                 id="formControlLg"
                 type="number"
                 value={requestApprove.popu_present}
-                onChange={(e) => setRequestApprove({popu_present: e.target.value})}
-
+                onChange={(e) =>
+                  setRequestApprove({ popu_present: e.target.value })
+                }
                 required
               />
               <label className="labelLat">Revenue</label>
@@ -745,31 +700,27 @@ function MapPage() {
                 id="formControlLg"
                 type="number"
                 value={requestApprove.revenue}
-                onChange={(e) => setRequestApprove({revenue: e.target.value})}
-
+                onChange={(e) => setRequestApprove({ revenue: e.target.value })}
                 required
-              /> 
+              />
+            </MDBModalBody>
 
-              </MDBModalBody>
-
-              <MDBModalFooter>
-                <button
-                  color="secondary"
-                  className="btn btn-secondary"
-                  onClick={requestClose}
-                >
-                  Cancel
-                </button>
-                <button className="btn btn-danger" 
-                onClick={ApprovedButtonClick}>
-                  Approved
-                </button>
-              </MDBModalFooter>
-            </MDBModalContent>
-          </MDBModalDialog>
-        </MDBModal>
-        {/* Request Modal */}
-
+            <MDBModalFooter>
+              <button
+                color="secondary"
+                className="btn btn-secondary"
+                onClick={requestClose}
+              >
+                Cancel
+              </button>
+              <button className="btn btn-danger" onClick={ApprovedButtonClick}>
+                Approve
+              </button>
+            </MDBModalFooter>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
+      {/* Request Modal */}
 
       {/*Adding manual markers */}
 
