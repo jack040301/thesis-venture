@@ -374,10 +374,14 @@ function MapPage() {
 
 
 
-  //query here
+ //real time in map
   useEffect(() => {
     const collect = collection(db, "testmarkers");
-    const unsub = onSnapshot(collect, (snapshot) => {
+
+    const approveReq = query(collect,where("request_status","==",true))
+
+
+    const unsub = onSnapshot(approveReq, (snapshot) => {
       const markreal = snapshot.docs.map((doc) => ({
         lat: doc.data().coords._lat,
         lng: doc.data().coords._long,
@@ -394,8 +398,34 @@ function MapPage() {
       setData(markreal);
     });
 
+
+    const processReq = query(collect,where("request_status","==",false))
+
+
+    const unsubReqProcess = onSnapshot(processReq, (snapshot) => {
+      const reqproc = snapshot.docs.map((doc) => ({
+        lat: doc.data().coords._lat,
+        lng: doc.data().coords._long,
+        name: doc.id,
+        land: doc.data().land,
+        land_size: doc.data().land_size,
+        popu_past: doc.data().popu_past,
+        popu_present: doc.data().popu_present,
+        population: doc.data().population,
+        revenue: doc.data().revenue,
+      }));
+      //  console.log(markreal)
+
+      setDataRequest(reqproc);
+    });
+
+
+
+
+
     return () => {
       unsub();
+      unsubReqProcess();
     };
   }, []);
 
