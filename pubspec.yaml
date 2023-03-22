@@ -78,7 +78,7 @@ dependencies:
   pdf:
   path_provider:
   open_file: ^3.2.1
- # printing:
+  printing:
  # pdf: ^3.8.4
   share_plus:
 
