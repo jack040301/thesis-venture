@@ -14,11 +14,19 @@ export default function Dashboard({ user, setAuthState, setUser }) {
 
   const [countUser, setCountUser] = useState("");
   const [countModerator, setCountModerator] = useState("");
+  const [countReqApprove, setCountReqApprove] = useState("");
+  const [countReqProcess, setCountReqProcess] = useState("");
+
+
 
 
   useEffect(() => {
     const collect = collection(db, "users");
+    const markersRequest = collection(db,"testmarkers")
     const moderator = query(collect,where("role","==","admin"))
+    const approveReq = query(markersRequest,where("request_status","==",true))
+    const Reqprocess = query(markersRequest,where("request_status","==",false))
+
     const unsub = onSnapshot(collect, (snapshot) => {
       const markreal = snapshot.docs.map((doc) => ({
         ...doc.data(),
@@ -44,9 +52,33 @@ export default function Dashboard({ user, setAuthState, setUser }) {
       });
 
 
+      const unsubRequestApprove = onSnapshot(approveReq,(snapshot)=>{
+        const approve = snapshot.docs.map((doc)=> ({
+
+          ...doc.data(),
+
+        }))
+
+        setCountReqApprove(approve.length);
+    });
+
+
+    const unsubRequestProcess = onSnapshot(Reqprocess,(snapshot)=>{
+      const processrequ = snapshot.docs.map((doc)=> ({
+
+        ...doc.data(),
+
+      }))
+
+      setCountReqProcess(processrequ.length);
+  });
+
+
 
     return () => {
       unsub();
+      unsubRequestApprove();
+      unsubRequestProcess();
       unsubscribe();
     };
 
@@ -112,8 +144,8 @@ export default function Dashboard({ user, setAuthState, setUser }) {
               <div className="col-lg-3 col-6">
                 <div className="small-box bg-warning">
                   <div className="inner">
-                    <h3>44</h3>
-                    <p>Requests</p>
+                    <h3>{countReqApprove}</h3>
+                    <p>Approved Requests</p>
                   </div>
                   <div className="icon">
                     <i className="fas fa-building" />
@@ -123,7 +155,24 @@ export default function Dashboard({ user, setAuthState, setUser }) {
                   </a>
                 </div>
               </div>
+
+              <div className="col-lg-3 col-6">
+                <div className="small-box bg-primary">
+                  <div className="inner">
+                    <h3> {countReqProcess}</h3>
+                    <p>On Waiting Requests</p>
+                  </div>
+                  <div className="icon">
+                    <i className="fas fa-building" />
+                  </div>
+                  <a href="#" className="small-box-footer">
+                    More info <i className="fas fa-arrow-circle-right" />
+                  </a>
+                </div>
+              </div>
+
             </div>
+            
           </div>
         </section>
       </div>
