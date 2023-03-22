@@ -498,10 +498,10 @@ function MapPage() {
     });
 
 
-    toastRef.current.showToast("Approved Request ", e);
+    toastRef.current.showToast("Approved Request ");
   }else{
 
-    toastRef.current.showToast("Do not leave the fields blank ", e);
+    toastRef.current.showToast("Do not leave the fields blank ");
 
 
   }
