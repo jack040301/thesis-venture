@@ -83,6 +83,8 @@ class _ZoneScreenState extends State<ZoneScreen> {
                                 child: Column(children: <Widget>[
                                   const Text("You have Pinned This Location",
                                       style: TextStyle(fontSize: 19.0)),
+                                      color: Color.fromARGB(255, 44, 45, 48),
+                            fontSize: 18.0, fontWeight: FontWeight.bold)),
                                   const SizedBox(
                                     height: 10.0,
                                   ),
@@ -92,24 +94,124 @@ class _ZoneScreenState extends State<ZoneScreen> {
                                   const SizedBox(
                                     height: 5.0,
                                   ),
+                                   Container(
+              color: Colors.white,
+              padding: const EdgeInsets.fromLTRB(4, 4, 4, 4),
+            ),
+            //COORDINATES
+           Container(
+              color: Colors.white,
+              padding: const EdgeInsets.fromLTRB(4, 4, 4, 4),
+            ),
+            Container(
+              color: Colors.white,
+              padding: const EdgeInsets.fromLTRB(20, 10, 35, 5),
+              child: Row(
+                children: const <Widget>[
+                  Image(
+                      image: const AssetImage('assets/images/icons/CoordinatesIcon.png'),
+                      height: 70),
+                  SizedBox(
+                    width: 17.0,
+                  ),
                                   Expanded(
                                       child: Text(
                                           "Coordinates:\nLatitude: ${widget.coordinates_latitude} \nLongitude: ${widget.coordinates_longitude}")),
+style: TextStyle(
+                            color: Color.fromARGB(255, 44, 45, 48),
+                            fontSize: 16.0, fontWeight: FontWeight.bold)),
+
+                  )
+                ],
+              ),
+            ),
                                   const SizedBox(
                                     height: 5.0,
                                   ),
+                                  
+                                  //LANDSIZE
+                                  Container(
+              color: Colors.white,
+              padding: const EdgeInsets.fromLTRB(4, 4, 4, 4),
+            ),
+            Container(
+              color: Colors.white,
+              padding: const EdgeInsets.fromLTRB(20, 10, 35, 5),
+              child: Row(
+                children: const <Widget>[
+                  Image(
+                      image: const AssetImage('assets/images/icons/LandSizeIcon.png'),
+                     style: TextStyle(
+                            color: Color.fromARGB(255, 44, 45, 48),
+                            fontSize: 16.0, fontWeight: FontWeight.bold)),
+
+                  )
+                ],
+              ),
+            ),
+                  SizedBox(
+                    width: 15.0,
+                  ),
                                   Expanded(
                                       child: Text(
                                           "Landsize: ${widget.land_size}")),
                                   const SizedBox(
                                     height: 5.0,
                                   ),
+                                  //POPULATION
+                                   Container(
+              color: Colors.white,
+              padding: const EdgeInsets.fromLTRB(4, 4, 4, 4),
+            ),
+            Container(
+              color: Colors.white,
+              padding: const EdgeInsets.fromLTRB(20, 10, 35, 5),
+              child: Row(
+                children: const <Widget>[
+                  Image(
+                      image: const AssetImage('assets/images/icons/PopulationIcon.png'),
+                       style: TextStyle(
+                            color: Color.fromARGB(255, 44, 45, 48),
+                            fontSize: 16.0, fontWeight: FontWeight.bold)),
+
+                  )
+                ],
+              ),
+            ),
+                  SizedBox(
+                    width: 26.0,
+                  ),
+
                                   Expanded(
                                       child: Text(
                                           "Population: ${widget.population}")),
                                   const SizedBox(
                                     height: 5.0,
                                   ),
+
+                                  //REVENUE
+                                  Container(
+              color: Colors.white,
+              padding: const EdgeInsets.fromLTRB(4, 4, 4, 4),
+            ),
+            Container(
+              color: Colors.white,
+              padding: const EdgeInsets.fromLTRB(20, 10, 35, 5),
+              child: Row(
+                children: const <Widget>[
+                  Image(
+                      image: const AssetImage('assets/images/icons/RevenueIcon.png'),
+                       style: TextStyle(
+                            color: Color.fromARGB(255, 44, 45, 48),
+                            fontSize: 16.0, fontWeight: FontWeight.bold)),
+
+                  )
+                ],
+              ),
+            ),
+                  SizedBox(
+                    width: 35.0,
+                  ),
                                   Expanded(
                                       child:
                                           Text("Revenue: ${widget.revenue}")),
