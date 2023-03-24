@@ -1,15 +1,56 @@
+/*  import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:main_venture/feat_screens/dialogbutton.dart';
 
-import 'Dialogbutton.dart';
+import '../userInfo.dart';
 
-class pinnedlocation extends StatefulWidget {
-  const pinnedlocation({super.key});
+class ZoneScreen extends StatefulWidget {
+  ZoneScreen(
+      {super.key,
+      required this.dataID,
+      required this.place,
+      required this.coordinates_latitude,
+      required this.coordinates_longitude,
+      required this.land_size,
+      required this.population,
+      required this.revenue});
+
+ final String dataID, place, land_size, population , revenue;
+
+  final double coordinates_latitude, coordinates_longitude;
 
   @override
-  State<pinnedlocation> createState() => _pinnedlocationState();
+  State<ZoneScreen> createState() => _ZoneScreenState();
 }
 
-class _pinnedlocationState extends State<pinnedlocation> {
+class _ZoneScreenState extends State<ZoneScreen> {
+  @override
+  List<DropdownData> dropdownDatas = [];
+  List<DropdownDataAssumption> dropdownAssumption = [];
+
+  Future getBusiness() async {
+    await FirebaseFirestore.instance
+        .collection("business")
+        .get()
+        .then((QuerySnapshot snapshot) => {
+              snapshot.docs.forEach((documents) async {
+                var data = documents.data() as Map;
+
+                dropdownDatas.add(DropdownData(nameofbusiness: documents.id));
+                dropdownAssumption.add(
+                    DropdownDataAssumption(budgetassump: data['budgetassump']));
+              })
+            });
+  }
+
+  @override
+  void initState() {
+    getBusiness();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -17,26 +58,14 @@ class _pinnedlocationState extends State<pinnedlocation> {
       backgroundColor: const Color.fromARGB(255, 241, 242, 242),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: const Text('Pinned Location'),
+        title: const Text('Pinned Information'),
         foregroundColor: const Color.fromARGB(255, 44, 45, 48),
         elevation: 0.0,
         leading: const BackButton(
           color: Color.fromARGB(255, 44, 45, 48),
         ),
       ),
-      body: const ContentHowToUse(),
-    );
-  }
-}
-
-class ContentHowToUse extends StatelessWidget {
-  const ContentHowToUse({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
+      body: Padding(
       padding: const EdgeInsets.all(20.0),
       child: SingleChildScrollView(
         child: Column(
@@ -65,8 +94,7 @@ class ContentHowToUse extends StatelessWidget {
               child: Row(
                 children: const <Widget>[
                   Image(
-                      image: const AssetImage(
-                          'assets/images/icons/pinBuildingIcon.png'),
+                      image:  AssetImage('assets/images/icons/pinBuildingIcon.png'),
                       height: 30),
                   SizedBox(
                     width: 10.0,
@@ -75,8 +103,7 @@ class ContentHowToUse extends StatelessWidget {
                     child: Text('You have pinned this location',
                         style: TextStyle(
                             color: Color.fromARGB(255, 44, 45, 48),
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold)),
+                            fontSize: 18.0, fontWeight: FontWeight.bold)),
                   )
                 ],
               ),
@@ -90,20 +117,18 @@ class ContentHowToUse extends StatelessWidget {
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(20, 10, 35, 5),
               child: Row(
-                children: const <Widget>[
-                  Image(
-                      image:
-                          const AssetImage('assets/images/icons/PlaceIcon.png'),
+                children:  <Widget>[
+                 const Image(
+                      image:  AssetImage('assets/images/icons/PlaceIcon.png'),
                       height: 100),
-                  SizedBox(
+                  const SizedBox(
                     width: 10.0,
                   ),
                   Expanded(
-                    child: Text('Place:',
-                        style: TextStyle(
+                    child: Text('Place: ${widget.place}',
+                        style: const TextStyle(
                             color: Color.fromARGB(255, 44, 45, 48),
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold)),
+                            fontSize: 16.0, fontWeight: FontWeight.bold)),
                   )
                 ],
               ),
@@ -118,26 +143,25 @@ class ContentHowToUse extends StatelessWidget {
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(20, 10, 35, 5),
               child: Row(
-                children: const <Widget>[
-                  Image(
-                      image: const AssetImage(
-                          'assets/images/icons/CoordinatesIcon.png'),
+                children:  <Widget>[
+                  const Image(
+                      image:  AssetImage('assets/images/icons/CoordinatesIcon.png'),
                       height: 70),
-                  SizedBox(
+                 const SizedBox(
                     width: 17.0,
                   ),
                   Expanded(
-                    child: Text('Coordinates:',
-                        style: TextStyle(
+                    child: Text('Coordinates: \nLatitude: ${widget.coordinates_latitude} \nLongitude: ${widget.coordinates_longitude}',
+                        style: const TextStyle(
                             color: Color.fromARGB(255, 44, 45, 48),
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold)),
+                            fontSize: 16.0, fontWeight: FontWeight.bold)),
+
                   )
                 ],
               ),
             ),
             //ZONE
-            Container(
+     /*        Container(
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(4, 4, 4, 4),
             ),
@@ -147,8 +171,7 @@ class ContentHowToUse extends StatelessWidget {
               child: Row(
                 children: const <Widget>[
                   Image(
-                      image:
-                          const AssetImage('assets/images/icons/ZoneIcon.png'),
+                      image: const AssetImage('assets/images/icons/ZoneIcon.png'),
                       height: 90),
                   SizedBox(
                     width: 25.0,
@@ -157,12 +180,12 @@ class ContentHowToUse extends StatelessWidget {
                     child: Text('Zone:',
                         style: TextStyle(
                             color: Color.fromARGB(255, 44, 45, 48),
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold)),
+                            fontSize: 16.0, fontWeight: FontWeight.bold)),
+
                   )
                 ],
               ),
-            ),
+            ), */
             //LAND SIZE
             Container(
               color: Colors.white,
@@ -172,20 +195,19 @@ class ContentHowToUse extends StatelessWidget {
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(20, 10, 35, 5),
               child: Row(
-                children: const <Widget>[
-                  Image(
-                      image: const AssetImage(
-                          'assets/images/icons/LandSizeIcon.png'),
+                children:  <Widget>[
+              const    Image(
+                      image:  AssetImage('assets/images/icons/LandSizeIcon.png'),
                       height: 80),
-                  SizedBox(
+                 const SizedBox(
                     width: 15.0,
                   ),
                   Expanded(
-                    child: Text('Land Size:',
-                        style: TextStyle(
+                    child: Text('Land Size: ${widget.land_size}',
+                        style: const TextStyle(
                             color: Color.fromARGB(255, 44, 45, 48),
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold)),
+                            fontSize: 16.0, fontWeight: FontWeight.bold)),
+
                   )
                 ],
               ),
@@ -199,20 +221,19 @@ class ContentHowToUse extends StatelessWidget {
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(20, 10, 35, 5),
               child: Row(
-                children: const <Widget>[
-                  Image(
-                      image: const AssetImage(
-                          'assets/images/icons/PopulationIcon.png'),
+                children:  <Widget>[
+                 const Image(
+                      image:  AssetImage('assets/images/icons/PopulationIcon.png'),
                       height: 80),
-                  SizedBox(
+                 const SizedBox(
                     width: 26.0,
                   ),
                   Expanded(
-                    child: Text('Population:',
-                        style: TextStyle(
+                    child: Text('Population:  ${widget.population}',
+                        style: const TextStyle(
                             color: Color.fromARGB(255, 44, 45, 48),
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold)),
+                            fontSize: 16.0, fontWeight: FontWeight.bold)),
+
                   )
                 ],
               ),
@@ -226,20 +247,19 @@ class ContentHowToUse extends StatelessWidget {
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(20, 10, 35, 5),
               child: Row(
-                children: const <Widget>[
-                  Image(
-                      image: const AssetImage(
-                          'assets/images/icons/RevenueIcon.png'),
+                children:  <Widget>[
+                const Image(
+                      image:  AssetImage('assets/images/icons/RevenueIcon.png'),
                       height: 80),
-                  SizedBox(
+               const   SizedBox(
                     width: 35.0,
                   ),
                   Expanded(
-                    child: Text('Revenue:',
-                        style: TextStyle(
+                    child: Text('Revenue: ${widget.revenue}',
+                        style: const TextStyle(
                             color: Color.fromARGB(255, 44, 45, 48),
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold)),
+                            fontSize: 16.0, fontWeight: FontWeight.bold)),
+
                   )
                 ],
               ),
@@ -252,10 +272,11 @@ class ContentHowToUse extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
             ),
             GestureDetector(
-              onTap: () async {
-                //  Navigator.of(context).push(MaterialPageRoute(
-                //        builder: (context) => const DialogQuestion()));
-              },
+              onTap: ()  async {
+                                      await DialogQuestion(widget.dataID,
+                                              dropdownDatas, dropdownAssumption)
+                                          .showMyDialog(context);
+                                                      },
               child: Material(
                 color: const Color.fromARGB(255, 0, 110, 195),
                 borderRadius: BorderRadius.circular(5.0),
@@ -265,7 +286,8 @@ class ContentHowToUse extends StatelessWidget {
                   children: [
                     const SizedBox(width: 10.0, height: 50),
                     const Text('Venture it!\t\t',
-                        style: TextStyle(color: Colors.white, fontSize: 20.0)),
+                        style: TextStyle(
+                            color: Colors.white, fontSize: 20.0)),
                     // Ink.image(
                     //     image: const AssetImage(
                     //         'assets/images/icons/back.png'),
@@ -280,10 +302,25 @@ class ContentHowToUse extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(20, 2, 20, 20),
             ),
 
+
+
+
             //END
           ],
         ),
       ),
+    )
     );
   }
 }
+
+ /* class ContentHowToUse extends StatelessWidget {
+  const ContentHowToUse({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return 
+  }
+} */ */

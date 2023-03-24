@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:main_venture/models/forecasting/forecasting_draft.dart';
 
 import 'dart:typed_data';
 import 'package:screenshot/screenshot.dart';
@@ -71,7 +72,8 @@ class _DemogResultState extends State<DemogResult> {
         MaterialPageRoute(
             builder: (context) => SyncLineChart(
                   markerid: widget.marker,
-                  //         markerid: widget.budget,
+                  suggestedbusiness: businessname,
+                  //  markerid: widget.budget,
                 )));
   }
 
@@ -353,7 +355,15 @@ class _DemogResultState extends State<DemogResult> {
                                 child: GestureDetector(
                                   onTap: () {
                                     // StatisForecasting(context);
-                                    ChartForecasting(context);
+                                    // ChartForecasting(context);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => SyncLineChart(
+                                                  markerid: widget.marker,
+                                                  suggestedbusiness:
+                                                      businessname,
+                                                )));
                                   },
                                   child: Text(businessname,
                                       style: const TextStyle(

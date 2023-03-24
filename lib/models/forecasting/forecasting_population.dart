@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'data_population.dart';
 
 class BarchartPop extends StatelessWidget {
- final String markerid;
-const BarchartPop({super.key, required this.markerid});
- //const BarchartPop({super.key});
+  final String markerid;
+  const BarchartPop({super.key, required this.markerid});
+  //const BarchartPop({super.key});
   @override
   Widget build(BuildContext context) {
- //   String docuid = markerid;
+    //   String docuid = markerid;
     CollectionReference population =
         FirebaseFirestore.instance.collection("testmarkers");
 
@@ -28,9 +28,9 @@ const BarchartPop({super.key, required this.markerid});
           Map<String, dynamic> datafirebase =
               snapshot.data!.data() as Map<String, dynamic>;
 
-          int pastPop = int.parse(datafirebase["popu_past"]);
-          int presentPop = int.parse(datafirebase["popu_present"]);
-          int futurePop = int.parse(datafirebase["popu_future"]);
+          double pastPop = double.parse(datafirebase["popu_past"]);
+          double presentPop = double.parse(datafirebase["popu_present"]);
+          double futurePop = double.parse(datafirebase["popu_future"]);
 
           final List<BarChartModel> data = [
             BarChartModel(
@@ -50,7 +50,7 @@ const BarchartPop({super.key, required this.markerid});
             ),
           ];
 
-           List<charts.Series<BarChartModel, String>> series = [
+          List<charts.Series<BarChartModel, String>> series = [
             charts.Series(
               id: "population",
               data: data,
@@ -63,9 +63,6 @@ const BarchartPop({super.key, required this.markerid});
           ];
 
           return Scaffold(
-
-
-
             body: Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
               child: charts.BarChart(
@@ -75,10 +72,6 @@ const BarchartPop({super.key, required this.markerid});
                 domainAxis: const charts.OrdinalAxisSpec(),
               ),
             ),
-
-
-
-
           );
         }
         return const Center(child: CircularProgressIndicator.adaptive());

@@ -10,9 +10,10 @@ import 'package:main_venture/userInfo.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class SyncLineChart extends StatelessWidget {
-  final String markerid;
+  final String markerid, suggestedbusiness;
 
-  SyncLineChart({super.key, required this.markerid});
+  SyncLineChart(
+      {super.key, required this.markerid, required this.suggestedbusiness});
 
   late TooltipBehavior _tooltipBehavior;
   late TooltipBehavior _tooltip;
@@ -67,7 +68,7 @@ class SyncLineChart extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                   FutureBuilder<DocumentSnapshot>(
-                      future: forebusiness.doc(markerid).get(),
+                      future: forebusiness.doc("Coffee Shop").get(),
                       builder: (BuildContext context,
                           AsyncSnapshot<DocumentSnapshot> snapshot) {
                         if (snapshot.hasError) {
@@ -76,6 +77,7 @@ class SyncLineChart extends StatelessWidget {
                         if (snapshot.hasData) {
                           Map<String, dynamic> dataDoc =
                               snapshot.data!.data() as Map<String, dynamic>;
+
                           //monthly cost
                           marketcost = double.parse(dataDoc['marketing_cost']);
                           laborcost = double.parse(dataDoc['labor_cost']);
@@ -133,7 +135,7 @@ class SyncLineChart extends StatelessWidget {
                                           padding: const EdgeInsets.fromLTRB(
                                               5, 20, 5, 10),
                                           child: Column(children: <Widget>[
-                                            const Text("Line Graph Forecast",
+                                            Text(markerid,
                                                 style:
                                                     TextStyle(fontSize: 19.0)),
                                             Expanded(

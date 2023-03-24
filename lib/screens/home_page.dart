@@ -272,20 +272,20 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
   Future gettingZoneMarkers(latitude, longitude) async {
     var greatercoordinates = GeoPoint(latitude, longitude);
     //east
-    if (greatercoordinates.longitude > 126.60) {
+    if (greatercoordinates.longitude > 121.09) {
       ScaffoldMessenger.of(context).showSnackBar(warning);
     }
     // west
-    else if (greatercoordinates.longitude < 116.92) {
+    else if (greatercoordinates.longitude < 120.96) {
       ScaffoldMessenger.of(context).showSnackBar(warning);
     }
     // north
-    else if (greatercoordinates.latitude > 21.11) {
+    else if (greatercoordinates.latitude > 14.78) {
       ScaffoldMessenger.of(context).showSnackBar(warning);
     }
 
     // south
-    else if (greatercoordinates.latitude < 4.61) {
+    else if (greatercoordinates.latitude < 14.62) {
       ScaffoldMessenger.of(context).showSnackBar(warning);
     } else {
       // debugPrint(greatercoordinates.toString());

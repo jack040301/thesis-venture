@@ -2,7 +2,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 
 class BarChartModel {
   String year;
-  int financial;
+  double financial;
   final charts.Color color;
 
   BarChartModel({
