@@ -56,12 +56,22 @@ class _DemogResultState extends State<DemogResult> {
     );
   } */
 
+  Future saveDatePinned(pinnedData) async {
+    var db = FirebaseFirestore.instance;
+
+    db.collection("pinnedlocation").add(pinnedData).then((documentSnapshot) => {
+          debugPrint("savedData")
+          //showing if data is saved
+        });
+  }
+
   Future<void> ChartForecasting(BuildContext context) async {
     await Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => SyncLineChart(
                   markerid: widget.marker,
+                  businessname: businessname,
                   //         markerid: widget.budget,
                 )));
   }
@@ -182,6 +192,13 @@ class _DemogResultState extends State<DemogResult> {
 
           String resultA = result.toStringAsFixed(2);
           String resultfinal = '${resultA}%';
+
+          final pinnedData = {
+            "place_name": placename,
+            "percentage": resultfinal,
+            "ideal_shop": businessname,
+            "user_id": GoogleUserStaticInfo().uid,
+          };
 
           return Scaffold(
               backgroundColor: const Color.fromARGB(255, 241, 242, 242),
@@ -408,14 +425,16 @@ class _DemogResultState extends State<DemogResult> {
 
                                       Expanded(
                                           child: TextButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      SyncLineChart(
-                                                        markerid: widget.marker,
-                                                      )));
+                                        onPressed: () async {
+                                          await saveDatePinned(pinnedData);
+                                          /*     Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              SyncLineChart(
+                                                                markerid: widget.marker,
+                                                              ))); */
+
                                           //getMarkerData();
                                           //   getBusinessData();
                                         },
@@ -691,7 +710,7 @@ Future<Uint8List> buildPdf(
     ideal,
     placename) async {
   // Create the Pdf document
-  const baseColor = PdfColors.cyan;
+  const baseColor = PdfColors.blue;
 
   // Create a PDF document.
   final document = pw.Document();
@@ -748,9 +767,9 @@ Future<Uint8List> buildPdf(
             pw.Text('Demographical Report',
                 style: const pw.TextStyle(
                   color: baseColor,
-                  fontSize: 40,
+                  fontSize: 35,
                 )),
-            pw.Divider(thickness: 4),
+            pw.Divider(thickness: 0.5),
             table,
           ],
         );
@@ -884,4 +903,3 @@ class DemogPlace extends StatelessWidget {
     );
   }
 }
-

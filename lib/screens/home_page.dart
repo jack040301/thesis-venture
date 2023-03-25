@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 //import 'package:firebase_core/firebase_core.dart';
 
+import 'package:dartz/dartz_unsafe.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
@@ -10,6 +11,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:main_venture/feat_screens/Dialogbutton.dart';
 // import 'package:main_venture/feat_screens/layer_simulation.dart';
 import 'package:main_venture/feat_screens/profilenav.dart';
+import 'package:main_venture/feat_screens/zonecreen.dart';
 import 'package:main_venture/models/auto_complete_results.dart';
 import 'package:main_venture/providers/search_places.dart';
 import 'package:main_venture/services/maps_services.dart';
@@ -30,6 +32,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
       Future.delayed(const Duration(milliseconds: 1000), () => true);
 
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
+  BitmapDescriptor primaryMarker = BitmapDescriptor.defaultMarker;
 
 //Debounce to throttle async calls during search
   Timer? _debounce;
@@ -43,6 +46,12 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
   bool pressedNear = false;
   bool getDirections = false;
   // bool getmarker = true;
+
+  // for boundary error
+  var warning = const SnackBar(
+    content: Text(
+        'No marker data is available for this area! please submit a request'),
+  );
 
 // Markers set
   Set<Marker> allmarkers = <Marker>{};
@@ -66,14 +75,14 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 // initial map position on load
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(14.774477, 121.04483),
-    zoom: 14.4746,
+    zoom: 18,
   );
 
   @override
   void initState() {
     userinfoFirestore();
     addCustomIconMarker();
-    getBusiness();
+    // getBusiness();
     //run the function before the map loads
     super.initState();
   }
@@ -106,10 +115,16 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
   //converting custom icon marker to bytes
   void addCustomIconMarker() {
     String assetpicture = "assets/images/icons/venture.png";
+    String assetspin = "assets/images/icons/pinBuildingIcon.png";
 
     BitmapDescriptor.fromAssetImage(const ImageConfiguration(), assetpicture)
         .then((icon) => setState(() {
               markerIcon = icon;
+            }));
+
+    BitmapDescriptor.fromAssetImage(const ImageConfiguration(), assetspin)
+        .then((primaryicon) => setState(() {
+              primaryMarker = primaryicon;
             }));
   }
 
@@ -207,9 +222,9 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 
                 allmarkers.add(Marker(
                     onTap: () async {
-                      await DialogQuestion(
+                      /*  await DialogQuestion(
                               documents.id, dropdownDatas, dropdownAssumption)
-                          .showMyDialog(context);
+                          .showMyDialog(context); */
                     },
                     infoWindow: InfoWindow(
                       title: data["place"],
@@ -253,6 +268,132 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
     }); */
   }
 
+
+  Future gettingZoneMarkers(latitude, longitude) async {
+    var greatercoordinates = GeoPoint(latitude, longitude);
+    //east
+    if (greatercoordinates.longitude > 126.60) {
+      ScaffoldMessenger.of(context).showSnackBar(warning);
+    }
+    // west
+    else if (greatercoordinates.longitude < 116.92) {
+      ScaffoldMessenger.of(context).showSnackBar(warning);
+    }
+    // north
+    else if (greatercoordinates.latitude > 21.11) {
+      ScaffoldMessenger.of(context).showSnackBar(warning);
+    }
+
+    // south
+    else if (greatercoordinates.latitude < 4.61) {
+      ScaffoldMessenger.of(context).showSnackBar(warning);
+    } else {
+      // debugPrint(greatercoordinates.toString());
+
+      await FirebaseFirestore.instance
+          .collection("testmarkers")
+          .where("coords", isLessThanOrEqualTo: greatercoordinates)
+          .orderBy("coords", descending: true)
+          .limit(1)
+          .get()
+          .then((QuerySnapshot querySnapshot) => {
+                querySnapshot.docs.forEach((documents) async {
+                  var data = documents.data() as Map;
+
+                  allmarkers.add(Marker(
+                      onTap: () async {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ZoneScreen(
+                                      dataID: documents.id,
+                                      coordinates_latitude:
+                                          data["coords"].latitude,
+                                      coordinates_longitude:
+                                          data["coords"].longitude,
+                                      place: data["place"],
+                                      population: data["population"],
+                                      revenue: data["revenue"],
+                                      land_size: data["land_size"],
+                                    )));
+                      },
+                      infoWindow: InfoWindow(
+                        title: data["place"],
+                      ),
+                      markerId: MarkerId(documents.id),
+                      icon: markerIcon,
+                      position: LatLng(
+                          data["coords"].latitude, data["coords"].longitude)));
+                })
+              });
+
+      await FirebaseFirestore.instance
+          .collection("testmarkers")
+          .where("coords", isGreaterThanOrEqualTo: greatercoordinates)
+          .orderBy("coords")
+          .limit(2)
+          .get()
+          .then((QuerySnapshot querySnapshot) => {
+                querySnapshot.docs.forEach((documents) async {
+                  var data = documents.data() as Map;
+
+                  allmarkers.add(Marker(
+                      onTap: () async {
+                        /* await DialogQuestion(
+                              documents.id, dropdownDatas, dropdownAssumption)
+                          .showMyDialog(context); */
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ZoneScreen(
+                                      dataID: documents.id,
+                                      coordinates_latitude:
+                                          data["coords"].latitude,
+                                      coordinates_longitude:
+                                          data["coords"].longitude,
+                                      place: data["place"],
+                                      population: data["population"],
+                                      revenue: data["revenue"],
+                                      land_size: data["land_size"],
+                                    )));
+                      },
+                      infoWindow: InfoWindow(
+                        title: data["place"],
+                      ),
+                      markerId: MarkerId(documents.id),
+                      icon: markerIcon,
+                      position: LatLng(
+                          data["coords"].latitude, data["coords"].longitude)));
+                })
+              });
+
+      setState(() {
+        allmarkers;
+      });
+
+      return allmarkers;
+    }
+  }
+
+  void markerOnClick(double lat, double lng) {
+    var counter = markerIdCounter++;
+
+    final Marker markerparams = Marker(
+        markerId: MarkerId('marker_$counter'),
+        position: LatLng(lat, lng),
+        onTap: () async {
+          //  await gettingZoneMarkers(lat, lng);
+        },
+        icon: primaryMarker);
+    gettingZoneMarkers(lat, lng);
+
+    setState(() {
+      allmarkers.clear();
+      allmarkers.add(markerparams);
+      //  _markers.add(marker);
+    });
+  }
+
   Widget builds(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(15.0, 150.0, 15.0, 5.0),
@@ -285,7 +426,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
     //Providers
     final allSearchResults = ref.watch(placeResultsProvider);
     final searchFlag = ref.watch(searchToggleProvider);
-    return FutureBuilder(
+    /* return FutureBuilder(
       future: testMarker(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasError) {
@@ -294,127 +435,131 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 
         if (snapshot.hasData == false) {
           return const Center(child: CircularProgressIndicator.adaptive());
-        }
+        } */
 
-        return Scaffold(
-          body: SingleChildScrollView(
-            child: Column(
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Stack(
               children: [
-                Stack(
-                  children: [
-                    HomeGoogleMap(
-                        screenHeight: screenHeight,
-                        screenWidth: screenWidth,
-                        allmarkers: allmarkers,
-                        polylines: _polylines,
-                        kGooglePlex: _kGooglePlex,
-                        controller: _controller),
-                    pressedNear
-                        ? builds(context)
-                        : searchToggle
-                            ? Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    15.0, 70.0, 15.0, 5.0),
-                                child: Column(children: [
-                                  Container(
-                                    height: 50.0,
-                                    width: 280,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      color: Colors.white,
-                                    ),
-                                    child: TextFormField(
-                                      controller: searchController,
-                                      decoration: InputDecoration(
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                                horizontal: 20.0,
-                                                vertical: 15.0),
-                                        border: InputBorder.none,
-                                        prefixIcon: const Icon(Icons.search),
-                                        hintText: 'Search',
-                                      ),
-                                      onChanged: (value) {
-                                        if (_debounce?.isActive ?? false) {
-                                          _debounce?.cancel();
-                                        }
-                                        _debounce = Timer(
-                                            const Duration(milliseconds: 700),
+                Container(
+                  height: screenHeight,
+                  width: screenWidth,
+                  child: GoogleMap(
+                    mapType: MapType.normal,
+                    // markers: _markerss,
+                    onTap: (latLng) {
+                      markerOnClick(latLng.latitude, latLng.longitude);
+                    },
+                    markers: allmarkers,
+                    polylines: _polylines,
+                    initialCameraPosition: _kGooglePlex,
+                    onMapCreated: (GoogleMapController controller) {
+                      _controller.complete(controller);
+                    },
+                  ),
+                ),
+                pressedNear
+                    ? builds(context)
+                    : searchToggle
+                        ? Padding(
+                            padding: const EdgeInsets.fromLTRB(
+                                15.0, 70.0, 15.0, 5.0),
+                            child: Column(children: [
+                              Container(
+                                height: 50.0,
+                                width: 280,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  color: Colors.white,
+                                ),
+                                child: TextFormField(
+                                  controller: searchController,
+                                  decoration: const InputDecoration(
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 20.0, vertical: 15.0),
+                                    border: InputBorder.none,
+                                    prefixIcon: const Icon(Icons.search),
+                                    hintText: 'Search',
+                                  ),
+                                  onChanged: (value) {
+                                    if (_debounce?.isActive ?? false) {
+                                      _debounce?.cancel();
+                                    }
+                                    _debounce =
+                                        Timer(const Duration(milliseconds: 700),
                                             () async {
-                                          if (value.length > 2) {
-                                            if (!searchFlag.searchToggle) {
-                                              searchFlag.toggleSearch();
-                                              _markers = {};
-                                            }
-                                            List<AutoCompleteResult>
-                                                searchResults =
-                                                await MapServices()
-                                                    .searchPlaces(value);
+                                      if (value.length > 2) {
+                                        if (!searchFlag.searchToggle) {
+                                          searchFlag.toggleSearch();
+                                          _markers = {};
+                                        }
+                                        List<AutoCompleteResult> searchResults =
+                                            await MapServices()
+                                                .searchPlaces(value);
 
-                                            allSearchResults
-                                                .setResults(searchResults);
-                                          } else {
-                                            List<AutoCompleteResult> emptyList =
-                                                [];
-                                            allSearchResults
-                                                .setResults(emptyList);
-                                          }
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ]),
-                              )
-                            : Container(),
-                    searchFlag.searchToggle
-                        ? allSearchResults.allReturnedResults.isNotEmpty
-                            ? Positioned(
-                                top: 100.0,
-                                left: 15.0,
-                                child: Container(
-                                  height: 200.0,
-                                  width: screenWidth - 30.0,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    color: Colors.white.withOpacity(0.7),
-                                  ),
-                                  child: ListView(
-                                    children: [
-                                      ...allSearchResults.allReturnedResults
-                                          .map((e) =>
-                                              buildListItem(e, searchFlag))
-                                    ],
-                                  ),
-                                ))
-                            : Positioned(
-                                top: 100.0,
-                                left: 15.0,
-                                child: HomeNoResultToShow(
-                                    screenWidth: screenWidth,
-                                    searchFlag: searchFlag))
+                                        allSearchResults
+                                            .setResults(searchResults);
+                                      } else {
+                                        List<AutoCompleteResult> emptyList = [];
+                                        allSearchResults.setResults(emptyList);
+                                      }
+                                    });
+                                  },
+                                ),
+                              ),
+                            ]),
+                          )
                         : Container(),
-                    //    getmarker(context), //to automatically show marker to map
-                  ],
-                )
+                searchFlag.searchToggle
+                    ? allSearchResults.allReturnedResults.isNotEmpty
+                        ? Positioned(
+                            top: 100.0,
+                            left: 15.0,
+                            child: Container(
+                              height: 200.0,
+                              width: screenWidth - 30.0,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                color: Colors.white.withOpacity(0.7),
+                              ),
+                              child: ListView(
+                                children: [
+                                  ...allSearchResults.allReturnedResults
+                                      .map((e) => buildListItem(e, searchFlag))
+                                ],
+                              ),
+                            ))
+                        : Positioned(
+                            top: 100.0,
+                            left: 15.0,
+                            child: HomeNoResultToShow(
+                                screenWidth: screenWidth,
+                                searchFlag: searchFlag))
+                    : Container(),
+                //    getmarker(context), //to automatically show marker to map
               ],
-            ),
-          ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
-          floatingActionButton: Column(
-            children: [
-              const SizedBox(height: 30),
+            )
+          ],
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
+      floatingActionButton: Column(
+        children: [
+          const SizedBox(height: 30),
 
-              FloatingButtonUserProfile(
-                  UserInfofirstname: UserInfofirstname,
-                  UserInfolastname:
-                      UserInfolastname), //breaking the Widget of floating button and passing the data from the stateless widget below
-              // const HomeFloatingDialog(),
-            ],
-          ),
-          resizeToAvoidBottomInset: false,
-        );
-      },
+          FloatingButtonUserProfile(
+              UserInfofirstname: UserInfofirstname,
+              UserInfolastname:
+                  UserInfolastname), //breaking the Widget of floating button and passing the data from the stateless widget below
+          // const HomeFloatingDialog(),
+        ],
+      ),
+      resizeToAvoidBottomInset: false,
     );
+    // },
+    // );
   }
 
   /* void _showAction(BuildContext context) {
@@ -479,7 +624,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
   }
 
 //
-  /*  int markerIdCounter = 0;
+/*  int markerIdCounter = 0;
   Set<Marker> marksman = Set<Marker>();
 
   Future saveLoc(data) async {

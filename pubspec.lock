@@ -232,7 +232,7 @@ packages:
       sha256: a38574032c5f1dd06c4aee541789906c12ccaab8ba01446e800d9c5b79c4a978
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.1"
+    version: "1.2.1"
   file:
     dependency: transitive
     description:
@@ -373,7 +373,11 @@ packages:
       sha256: "3ea325c2de7ef2589023413c489875467730b2c1d822759efedd3e0e28a906c9"
       url: "https://pub.dev"
     source: hosted
+<<<<<<< HEAD
     version: "2.3.1"
+=======
+    version: "2.3.2"
+>>>>>>> acc80fd0960bb9be83abae86b43e2f337afdb413
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -396,16 +400,24 @@ packages:
     dependency: transitive
     description:
       name: geocoding_android
+<<<<<<< HEAD
       sha256: "5a1fc0cec9b0497b44ca31c1fa8d1c891f3aded1053e6bb2eac075d3bd1bf046"
       url: "https://pub.dev"
+=======
+      url: "https://pub.dartlang.org"
+>>>>>>> acc80fd0960bb9be83abae86b43e2f337afdb413
     source: hosted
     version: "2.1.0"
   geocoding_ios:
     dependency: transitive
     description:
       name: geocoding_ios
+<<<<<<< HEAD
       sha256: c85495ce8fb34e4fbd2dd8fc5f79263d622d9f88c4af948c965daf6b27a7f3a1
       url: "https://pub.dev"
+=======
+      url: "https://pub.dartlang.org"
+>>>>>>> acc80fd0960bb9be83abae86b43e2f337afdb413
     source: hosted
     version: "2.1.0"
   geocoding_platform_interface:
@@ -575,7 +587,7 @@ packages:
       sha256: "49bbc544e44bf0c734ccda29b182e3516a12f5021ea98b206cf31a168b0f97da"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.0"
+    version: "2.3.0"
   matcher:
     dependency: transitive
     description:
@@ -616,6 +628,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  open_file:
+    dependency: "direct main"
+    description:
+      name: open_file
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.2.1"
   page_transition:
     dependency: transitive
     description:
@@ -641,7 +660,7 @@ packages:
     source: hosted
     version: "1.0.1"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       sha256: "04890b994ee89bfa80bf3080bfec40d5a92c5c7a785ebb02c13084a099d2b6f9"
@@ -687,7 +706,7 @@ packages:
       sha256: f53720498d5a543f9607db4b0e997c4b5438884de25b0f73098cc2671a51b130
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.5"
+    version: "2.0.7"
   pdf:
     dependency: "direct main"
     description:
@@ -772,8 +791,12 @@ packages:
     dependency: "direct main"
     description:
       name: printing
+<<<<<<< HEAD
       sha256: "4df9e22bd4cb2ecea67183e5b328711b10276127b8878d9d5cb60ccd4c24a77c"
       url: "https://pub.dev"
+=======
+      url: "https://pub.dartlang.org"
+>>>>>>> acc80fd0960bb9be83abae86b43e2f337afdb413
     source: hosted
     version: "5.9.3"
   process:
@@ -815,7 +838,11 @@ packages:
       sha256: "7da5a0febdb7fd0e4340f7b7023cb8f17cf7acd405b1e67a0e98bf574085bfa5"
       url: "https://pub.dev"
     source: hosted
+<<<<<<< HEAD
     version: "2.3.1"
+=======
+    version: "2.3.2"
+>>>>>>> acc80fd0960bb9be83abae86b43e2f337afdb413
   screenshot:
     dependency: "direct main"
     description:
@@ -831,7 +858,21 @@ packages:
       sha256: "8c6892037b1824e2d7e8f59d54b3105932899008642e6372e5079c6939b4b625"
       url: "https://pub.dev"
     source: hosted
-    version: "6.3.1"
+    version: "4.5.3"
+  share_plus_linux:
+    dependency: transitive
+    description:
+      name: share_plus_linux
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.1"
+  share_plus_macos:
+    dependency: transitive
+    description:
+      name: share_plus_macos
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.1"
   share_plus_platform_interface:
     dependency: transitive
     description:
@@ -840,6 +881,20 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.0"
+  share_plus_web:
+    dependency: transitive
+    description:
+      name: share_plus_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.0"
+  share_plus_windows:
+    dependency: transitive
+    description:
+      name: share_plus_windows
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -908,7 +963,11 @@ packages:
       sha256: "51c8ed241312bd01bfd242979249d3a69ea0a46486509275dc10b1c9d288f027"
       url: "https://pub.dev"
     source: hosted
+<<<<<<< HEAD
     version: "20.4.53"
+=======
+    version: "20.4.54"
+>>>>>>> acc80fd0960bb9be83abae86b43e2f337afdb413
   syncfusion_flutter_core:
     dependency: transitive
     description:
@@ -916,7 +975,11 @@ packages:
       sha256: ab3eac31638e80663eae19c71e362012e1e2f67dfd527dc5c07d9397cd4238f2
       url: "https://pub.dev"
     source: hosted
+<<<<<<< HEAD
     version: "20.4.53"
+=======
+    version: "20.4.54"
+>>>>>>> acc80fd0960bb9be83abae86b43e2f337afdb413
   term_glyph:
     dependency: transitive
     description:
@@ -1028,7 +1091,7 @@ packages:
       sha256: c9ebe7ee4ab0c2194e65d3a07d8c54c5d00bb001b76081c4a04cdb8448b59e46
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.3"
+    version: "2.6.1"
   xdg_directories:
     dependency: transitive
     description:

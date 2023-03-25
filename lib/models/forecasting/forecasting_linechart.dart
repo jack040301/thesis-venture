@@ -14,9 +14,10 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
 class SyncLineChart extends StatelessWidget {
-  final String markerid;
+  final String markerid, businessname;
 
-  SyncLineChart({super.key, required this.markerid});
+  SyncLineChart(
+      {super.key, required this.markerid, required this.businessname});
   final GlobalKey<State<StatefulWidget>> _printKey = GlobalKey();
   late TooltipBehavior _tooltipBehavior;
   late TooltipBehavior _tooltip;
@@ -94,7 +95,7 @@ class SyncLineChart extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                   FutureBuilder<DocumentSnapshot>(
-                      future: forebusiness.doc(markerid).get(),
+                      future: forebusiness.doc(businessname).get(),
                       builder: (BuildContext context,
                           AsyncSnapshot<DocumentSnapshot> snapshot) {
                         if (snapshot.hasError) {

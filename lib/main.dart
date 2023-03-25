@@ -8,6 +8,7 @@ import 'package:main_venture/auth_screen.dart';
 import 'package:main_venture/global_objects/ui_class.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:main_venture/screens/home_page.dart';
 
 // import 'models/forecasting/Linechartsync.dart';
 // import 'models/forecasting/forecasting_linechart.dart';
