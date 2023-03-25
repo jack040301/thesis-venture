@@ -36,7 +36,7 @@ class DialogQuestion {
   final TextEditingController areaBudgetController = TextEditingController();
   final areaController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
+  double _currentSliderValue = 10000;
   static const colortext = Color.fromARGB(255, 74, 74, 74);
 
   Future demogResult(BuildContext context) async {
@@ -147,7 +147,7 @@ class DialogQuestion {
                       icon: const Icon(Icons.keyboard_arrow_down_rounded),
                       isExpanded: true,
                       validator: (value) {
-                        return selectdropval!.isNotEmpty
+                        return selectdropval.isNotEmpty
                             ? null
                             : 'Invalid Input';
                       },
@@ -233,7 +233,7 @@ class DialogQuestion {
                       icon: const Icon(Icons.keyboard_arrow_down_rounded),
                       isExpanded: true,
                       validator: (value) {
-                        return selectbusinessassump!.isNotEmpty
+                        return selectbusinessassump.isNotEmpty
                             ? null
                             : 'Invalid Input';
                       },
@@ -350,7 +350,21 @@ class DialogQuestion {
                           fontSize: 16.0,
                         )),
                     const SizeBoxTen(),
-                    TextFormField(
+
+                    Slider(
+                      value: _currentSliderValue,
+                      min: 10000,
+                      max: 50000,
+                      divisions: 20,
+                      label:
+                          " Area : ${_currentSliderValue.round().toString()}",
+                      onChanged: (double value) {
+                        setState(() {
+                          _currentSliderValue = value;
+                        });
+                      },
+                    ),
+                    /*   TextFormField(
                         controller: areaController,
                         enableInteractiveSelection: false,
                         validator: (areaController) {
@@ -392,7 +406,7 @@ class DialogQuestion {
                             borderSide: BorderSide(
                                 color: Colors.redAccent.withOpacity(0.5)),
                           ),
-                        )),
+                        )), */
                     const SizeBoxTwenty(),
                     SizedBox(
                       width: 200.0,
@@ -408,13 +422,8 @@ class DialogQuestion {
                               areaController.text.isEmpty) {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(Questionall);
-                          } else if (areaController.text == 0.toString()) {
-                          } else if (areaController.text == 0.toString()) {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(Questionall1);
                           } else if (selectbusinessassump.isNotEmpty &&
-                              selectbusinessassump.isNotEmpty &&
-                              areaController.text.isNotEmpty) {
+                              selectbusinessassump.isNotEmpty) {
                             demogResult(context);
                           } else {
                             ScaffoldMessenger.of(context)

@@ -75,7 +75,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 // initial map position on load
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(14.774477, 121.04483),
-    zoom: 14.4746,
+    zoom: 18,
   );
 
   @override

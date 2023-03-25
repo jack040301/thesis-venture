@@ -77,7 +77,7 @@ dependencies:
  # flutter_pdf:
   pdf:
   path_provider:
-  open_file: ^3.2.1
+  open_file:
   printing:
  # pdf: ^3.8.4
   share_plus:
