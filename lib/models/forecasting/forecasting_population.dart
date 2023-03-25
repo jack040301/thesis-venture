@@ -1,6 +1,11 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
+import 'dart:typed_data';
+import 'dart:math';
 
 import 'data_population.dart';
 
@@ -8,6 +13,8 @@ class BarchartPop extends StatelessWidget {
  final String markerid;
 const BarchartPop({super.key, required this.markerid});
  //const BarchartPop({super.key});
+
+
   @override
   Widget build(BuildContext context) {
  //   String docuid = markerid;
@@ -86,3 +93,5 @@ const BarchartPop({super.key, required this.markerid});
     );
   }
 }
+
+

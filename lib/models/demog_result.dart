@@ -9,6 +9,9 @@ import 'forecasting/forecasting_linechart.dart';
 import 'package:main_venture/models/forecasting/forecasting_linechart.dart';
 import 'forecasting/forecasting_population.dart';
 import 'package:main_venture/userInfo.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 
 class DemogResult extends StatefulWidget {
   const DemogResult(
@@ -132,6 +135,7 @@ class _DemogResultState extends State<DemogResult> {
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
+          String placename = data['place'];
 
           //for land size
           String landstr = data['land_size'].toString();
@@ -370,20 +374,23 @@ class _DemogResultState extends State<DemogResult> {
                                                     70, 40), //////// HERE
                                               ),
                                               onPressed: () async {
-                                                final image =
-                                                    await screenshotController
-                                                        .capture(
-                                                            delay:
-                                                                const Duration(
-                                                                    milliseconds:
-                                                                        10),
-                                                            pixelRatio: 1.5);
-
-                                                if (image == null) return;
-                                                await savingImage(image);
-                                                int count = 0;
-                                                Navigator.of(context).popUntil(
-                                                    (_) => count++ >= 2);
+                                                Printing.layoutPdf(
+                                                  onLayout:
+                                                      (PdfPageFormat format) {
+                                                    // Any valid Pdf document can be returned here as a list of int
+                                                    return buildPdf(
+                                                        format,
+                                                        businessbudget,
+                                                        businessname,
+                                                        popstrB,
+                                                        revstrB,
+                                                        landstr,
+                                                        landbudgetstrB,
+                                                        resultfinal,
+                                                        widget.ideal,
+                                                        placename);
+                                                  },
+                                                );
                                               },
                                               icon: const Icon(
                                                 Icons.file_download_outlined,
@@ -672,6 +679,89 @@ class _DemogResultState extends State<DemogResult> {
   }
 }
 
+Future<Uint8List> buildPdf(
+    PdfPageFormat format,
+    String businessbudget,
+    businessname,
+    popstrB,
+    revstrB,
+    landstr,
+    landbudgetstrB,
+    resultfinal,
+    ideal,
+    placename) async {
+  // Create the Pdf document
+  const baseColor = PdfColors.cyan;
+
+  // Create a PDF document.
+  final document = pw.Document();
+
+  final theme = pw.ThemeData.withFont(
+    base: await PdfGoogleFonts.openSansRegular(),
+    bold: await PdfGoogleFonts.openSansBold(),
+  );
+
+  const tableHeaders = ['Label', 'Results'];
+
+  var dataTable = [
+    ['Place', placename],
+    ['Population', popstrB],
+    ['Revenue Per Year', revstrB],
+    ['Land per Sqm', landstr],
+    ['Budget Required for the Area', landbudgetstrB],
+    ['Feasibility Percent', resultfinal],
+    ['User Preferred Business', ideal],
+    ['Venture Suggested Business', businessname],
+  ];
+
+  final table = pw.Table.fromTextArray(
+    border: null,
+    headers: tableHeaders,
+    data: dataTable,
+    headerStyle: pw.TextStyle(
+      color: PdfColors.white,
+      fontWeight: pw.FontWeight.bold,
+    ),
+    headerDecoration: const pw.BoxDecoration(
+      color: baseColor,
+    ),
+    rowDecoration: const pw.BoxDecoration(
+      border: pw.Border(
+        bottom: pw.BorderSide(
+          color: baseColor,
+          width: .5,
+        ),
+      ),
+    ),
+    cellAlignment: pw.Alignment.centerRight,
+    cellAlignments: {0: pw.Alignment.centerLeft},
+  );
+
+  // Add one page with centered text "Hello World"
+  document.addPage(
+    pw.Page(
+      pageFormat: format,
+      theme: theme,
+      build: (context) {
+        return pw.Column(
+          children: [
+            pw.Text('Demographical Report',
+                style: const pw.TextStyle(
+                  color: baseColor,
+                  fontSize: 40,
+                )),
+            pw.Divider(thickness: 4),
+            table,
+          ],
+        );
+      },
+    ),
+  );
+
+  // Build and return the final Pdf file data
+  return await document.save();
+}
+
 class IdealBusinessResult extends StatelessWidget {
   const IdealBusinessResult({
     super.key,
@@ -794,3 +884,4 @@ class DemogPlace extends StatelessWidget {
     );
   }
 }
+
