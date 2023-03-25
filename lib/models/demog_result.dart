@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:screenshot/screenshot.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'forecasting/forecast_bottomnav.dart';
 import 'forecasting/forecasting_linechart.dart';
 import 'package:main_venture/models/forecasting/forecasting_linechart.dart';
 import 'forecasting/forecasting_population.dart';
@@ -45,16 +46,17 @@ class _DemogResultState extends State<DemogResult> {
   }
 
   // ignore: non_constant_identifier_names
-  /*  Future<void> StatisForecasting(BuildContext context) async {
+  Future<void> StatisForecastingNavBar(BuildContext context) async {
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => BarchartPop(
+        builder: (context) => ForecastingNavBar(
           markerid: widget.marker,
+          businessname: businessname,
         ),
       ),
     );
-  } */
+  }
 
   Future saveDatePinned(pinnedData) async {
     var db = FirebaseFirestore.instance;
@@ -353,8 +355,8 @@ class _DemogResultState extends State<DemogResult> {
                               child: Center(
                                 child: GestureDetector(
                                   onTap: () {
-                                    // StatisForecasting(context);
-                                    ChartForecasting(context);
+                                    StatisForecastingNavBar(context);
+                                    // ChartForecasting(context);
                                   },
                                   child: Text(businessname,
                                       style: const TextStyle(
@@ -426,7 +428,10 @@ class _DemogResultState extends State<DemogResult> {
                                       Expanded(
                                           child: TextButton(
                                         onPressed: () async {
-                                          await saveDatePinned(pinnedData);
+                                          await StatisForecastingNavBar(
+                                              context);
+
+                                          //    await saveDatePinned(pinnedData);
                                           /*     Navigator.push(
                                                       context,
                                                       MaterialPageRoute(

@@ -35,7 +35,7 @@ class SyncLineChart extends StatelessWidget {
       permit = 0,
       oneTimeCostResult = 0,
       assumptItems = 3500;
-  @override
+
   void initState() {
     _tooltipBehavior = TooltipBehavior(enable: true);
     _tooltip = TooltipBehavior(enable: true);
@@ -199,10 +199,10 @@ class SyncLineChart extends StatelessWidget {
                                                 const Text("Bar Chart Forecast",
                                                     style: TextStyle(
                                                         fontSize: 19.0)),
-                                                Expanded(
+                                                /*  Expanded(
                                                     child: BarchartPop(
                                                   markerid: markerid,
-                                                )),
+                                                )), */
                                                 const Padding(
                                                     padding:
                                                         EdgeInsets.all(8.0),
