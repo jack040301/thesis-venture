@@ -198,8 +198,8 @@ class ContentHowToUse extends StatelessWidget {
             Container(
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(20, 10, 35, 5),
-              child: Row(
-                children: const <Widget>[
+              child: const Row(
+                children:  <Widget>[
                   Image(
                       image: const AssetImage(
                           'assets/images/icons/PopulationIcon.png'),
@@ -225,8 +225,8 @@ class ContentHowToUse extends StatelessWidget {
             Container(
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(20, 10, 35, 5),
-              child: Row(
-                children: const <Widget>[
+              child: const Row(
+                children:  <Widget>[
                   Image(
                       image: const AssetImage(
                           'assets/images/icons/RevenueIcon.png'),

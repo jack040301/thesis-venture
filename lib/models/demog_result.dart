@@ -12,16 +12,18 @@ import 'package:main_venture/userInfo.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
+
 class DemogResult extends StatefulWidget {
   const DemogResult(
       {super.key,
-        required this.marker,
-        required this.budget,
-        required this.ideal});
+      required this.marker,
+      required this.budget,
+      required this.ideal});
   final String marker, ideal, budget;
   @override
   State<DemogResult> createState() => _DemogResultState();
 }
+
 class _DemogResultState extends State<DemogResult> {
   //Create an instance of ScreenshotController
   ScreenshotController screenshotController = ScreenshotController();
@@ -37,6 +39,7 @@ class _DemogResultState extends State<DemogResult> {
     getBusinessData();
     super.initState();
   }
+
   // ignore: non_constant_identifier_names
   Future<void> StatisForecastingNavBar(BuildContext context) async {
     await Navigator.push(
@@ -49,51 +52,55 @@ class _DemogResultState extends State<DemogResult> {
       ),
     );
   }
+
   Future saveDatePinned(pinnedData) async {
     var db = FirebaseFirestore.instance;
     db.collection("pinnedlocation").add(pinnedData).then((documentSnapshot) => {
-      debugPrint("savedData")
-      //showing if data is saved
-    });
+          debugPrint("savedData")
+          //showing if data is saved
+        });
   }
+
   Future<void> ChartForecasting(BuildContext context) async {
     await Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => SyncLineChart(
-              markerid: widget.marker,
-            //  businessname: businessname,
-              //         markerid: widget.budget,
-            )));
+                  markerid: widget.marker,
+                  suggestedbusiness: businessname,
+                  //         markerid: widget.budget,
+                )));
   }
+
   Future getBusinessData() async {
     CollectionReference business =
-    FirebaseFirestore.instance.collection("business");
+        FirebaseFirestore.instance.collection("business");
     // var bud = widget.budget.trim();
     String budgetf = widget.budget.toString();
     final docRef = business.where("budgetassump", isEqualTo: budgetf);
     await docRef.get().then(
-            (QuerySnapshot doc) {
-          doc.docs.forEach((documents) async {
-            var data = documents.data() as Map;
-            //  debugPrint(data);
-            businessname = data['name'];
-            businessbudget = data['budget'];
-            landbudget = data['land value'];
-            landrevenue = data['revenue'];
-            landpop = data['population'];
-            //landbudget = data['land value'];
-            //    landrevenue = data['revenue'];
-            //landpop = data['population'];
+      (QuerySnapshot doc) {
+        doc.docs.forEach((documents) async {
+          var data = documents.data() as Map;
+          //  debugPrint(data);
+          businessname = data['name'];
+          businessbudget = data['budget'];
+          landbudget = data['land value'];
+          landrevenue = data['revenue'];
+          landpop = data['population'];
+          //landbudget = data['land value'];
+          //    landrevenue = data['revenue'];
+          //landpop = data['population'];
 // for coversion of var to String
-            // landbudgetstrA = data['land value'].toString();
-            revstrA = data['revenue_standard'].toString();
-            popstrA = data['population'].toString();
-          });
-            },
+          // landbudgetstrA = data['land value'].toString();
+          revstrA = data['revenue_standard'].toString();
+          popstrA = data['population'].toString();
+        });
+      },
       onError: (e) => ("Error getting document: $e"),
     );
   }
+
   Future<String> savingImage(Uint8List bytes) async {
     PopSnackbar popSnackbar = PopSnackbar();
     await [Permission.storage].request();
@@ -108,319 +115,320 @@ class _DemogResultState extends State<DemogResult> {
         .showSnackBar(popSnackbar.popsnackbar("Sucessfully Downloaded Result"));
     return result['filepath'];
   }
+
   @override
   Widget build(BuildContext context) {
     CollectionReference mark =
-    FirebaseFirestore.instance.collection("testmarkers");
+        FirebaseFirestore.instance.collection("testmarkers");
     final String con = widget.marker.trim(); //this still has problem
     return FutureBuilder<DocumentSnapshot>(
-        future: mark.doc(con).get(),
-    builder:
-    (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-    if (snapshot.hasError) {
-    return const Text("Something went wrong"); //error in getting the data
-    }
-    if (snapshot.hasData && !snapshot.data!.exists) {
-    return const Text("Retry loading the application"); //put here
-    }
-    if (snapshot.connectionState == ConnectionState.done) {
-    Map<String, dynamic> data =
-    snapshot.data!.data() as Map<String, dynamic>;
-    String placename = data['place'];
-    //for land size
-    String landstr = data['land_size'].toString();
-    //  String landstrfinal = '${landstr}sqm';
-    // for population
-    String popstrB = data['population'].toString();
-    double popdblB = double.parse(popstrB);
-    double popdblA = double.parse(popstrA);
-    double popdblfinal = (popdblB / popdblA) * 10;
-    if (popdblfinal > 100) {
-    popdblfinal = 100.0;
-    }
-    // for revenue
-    String revstrB = data['revenue'].toString();
-    double revdblB = double.parse(revstrB);
-    double revdblA = double.parse(revstrA);
-    double revdblfinal = (revdblB / revdblA) * 100;
-    if (revdblfinal > 100) {
-    revdblfinal = 100.0;
-    }
-    // for budget
-    String landbudgetstrB = data['land'].toString();
-    double landbudgetdblB = double.parse(landbudgetstrB);
-    double landbudgetdblA = double.parse(landbudget);
-    /*  double landbudgetdblfinalA = landbudgetdblB - landbudgetdblB;
+      future: mark.doc(con).get(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return const Text("Something went wrong"); //error in getting the data
+        }
+        if (snapshot.hasData && !snapshot.data!.exists) {
+          return const Text("Retry loading the application"); //put here
+        }
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          String placename = data['place'];
+          //for land size
+          String landstr = data['land_size'].toString();
+          //  String landstrfinal = '${landstr}sqm';
+          // for population
+          String popstrB = data['population'].toString();
+          double popdblB = double.parse(popstrB);
+          double popdblA = double.parse(popstrA);
+          double popdblfinal = (popdblB / popdblA) * 10;
+          if (popdblfinal > 100) {
+            popdblfinal = 100.0;
+          }
+          // for revenue
+          String revstrB = data['revenue'].toString();
+          double revdblB = double.parse(revstrB);
+          double revdblA = double.parse(revstrA);
+          double revdblfinal = (revdblB / revdblA) * 100;
+          if (revdblfinal > 100) {
+            revdblfinal = 100.0;
+          }
+          // for budget
+          String landbudgetstrB = data['land'].toString();
+          double landbudgetdblB = double.parse(landbudgetstrB);
+          double landbudgetdblA = double.parse(landbudget);
+          /*  double landbudgetdblfinalA = landbudgetdblB - landbudgetdblB;
           double landbudgetdblfinalB = landbudgetdblB - landbudgetdblfinalA;
           double landbudgetdblfinalC =
               (landbudgetdblfinalB / landbudgetdblB) * 100; */
-    double landbudgetdblfinalA = landbudgetdblB - landbudgetdblA; //2600
-    double landbudgetdblfinalB =
-    landbudgetdblA - landbudgetdblfinalA; // 2800
-    double landbudgetdblfinalC =
-    (landbudgetdblfinalB / landbudgetdblA) * 100;
-    if (landbudgetdblfinalC > 100) {
-    landbudgetdblfinalC = 100.0;
-    }
-    double result = (popdblfinal + revdblfinal + landbudgetdblfinalC) / 3;
-    String resultA = result.toStringAsFixed(2);
-    String resultfinal = '${resultA}%';
-    final pinnedData = {
-    "place_name": placename,
-    "percentage": resultfinal,
-    "ideal_shop": businessname,
-    "user_id": GoogleUserStaticInfo().uid,
-    };
-    return Scaffold(
-    backgroundColor: const Color.fromARGB(255, 241, 242, 242),
-    appBar: AppBar(
-    backgroundColor: Colors.transparent,
-    title: const Text("Demographical Result"),
-    //  title: Text(widget.ideal),
-    foregroundColor: const Color.fromARGB(255, 44, 45, 48),
-    elevation: 0.0,
-    leading: const BackButton(
-    color: Color.fromARGB(255, 44, 45, 48),
-    ),
-    ),
-    body: Screenshot(
-    controller: screenshotController,
-    child: Padding(
-    padding: const EdgeInsets.all(10.0),
-    child: SingleChildScrollView(
-    child: Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-    const SizedBox(
-    height: 10.0,
-    ),
-    DemogPlace(data: data),
-    Container(
-    padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
-    color: Colors.white,
-    child: const Center(
-    child: Text("Population", //POPULATION
-    style: TextStyle(
-    color: Color.fromARGB(255, 44, 45, 48),
-    fontSize: 15.0)), // <-- Text
-    ),
-    ),
-    DemogPopulation(
-    popstrB: popstrB
-        .replaceAllMapped(reg, mathFunc)
-        .toString()),
-    Container(
-    padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
-    color: Colors.white,
-    child: const Center(
-    child: Text(
-    "Revenue per year", //REVENUE PER YEAR
-    style: TextStyle(
-    color: Color.fromARGB(255, 44, 45, 48),
-    fontSize: 15.0)), // <-- Text
-    ),
-    ),
-    Container(
-    padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
-    color: Colors.white,
-    child: Center(
-    child: Text(
-    '₱' +
-    revstrB
-        .replaceAllMapped(reg, mathFunc)
-        .toString(), //REVENUE PER YEAR
-    style: const TextStyle(
-    color: Color.fromARGB(255, 44, 45, 48),
-    fontSize: 20.0)), // <-- Text
-    ),
-    ),
-    Container(
-    padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
-    color: Colors.white,
-    child: const Center(
-    child: Text("Land per SqM", //LAND PER SQ
-    style: TextStyle(
-    color: Color.fromARGB(255, 44, 45, 48),
-    fontSize: 15.0)), // <-- Text
-    ),
-    ),
-    LandPerSQM(landstr: landstr),
-    Container(
-    padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
-    color: Colors.white,
-    child: const Center(
-    child: Text("Budget required for the area",
-    //BUDGET REQUIRED FOR THE AREA
-    style: TextStyle(
-    color: Color.fromARGB(255, 44, 45, 48),
-    fontSize: 15.0)), // <-- Text
-    ),
-    ),
-    BudgetRequiredArea(
-    landbudgetstrB: '₱' +
-    landbudgetstrB
-        .replaceAllMapped(reg, mathFunc)
-        .toString()),
-    Container(
-    padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
-    color: Colors.white,
-    child: const Center(
-    child: Text(
-    textAlign: TextAlign.justify,
-    "The Feasibilty (%) of your ideal \n business is",
-    style: TextStyle(
-    color: Color.fromARGB(255, 65, 99, 200),
-    fontSize: 16.0)), // <-- Text
-    ),
-    ),
-    IdealBusinessResult(resultfinal: resultfinal),
-    Container(
-    padding: const EdgeInsets.fromLTRB(35, 5, 35, 10),
-    color: Colors.white,
-    child: const Center(
-    child: Text("ideal",
-    // ideal ni user
-    style: TextStyle(
-    color: Color.fromARGB(255, 65, 99, 200),
-    fontSize: 21.0)), // <-- Text
-    ),
-    ),
-    Container(
-    padding: const EdgeInsets.fromLTRB(35, 2, 35, 5),
-    color: Colors.white,
-    child: const Center(
-    child: Text("Business Type Selected",
-    style: TextStyle(
-    color: Color.fromARGB(255, 44, 45, 48),
-    fontSize: 15.0)), // <-- Text
-    ),
-    ),
-    Container(
-    padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
-    color: Colors.white,
-    child: Center(
-    child: Text(widget.ideal,
-    //BUDGET REQUIRED FOR THE AREA
-    style: const TextStyle(
-    color: Color.fromARGB(255, 44, 45, 48),
-    fontSize: 20.0)), // <-- Text
-    ),
-    ),
-    Container(
-    padding: const EdgeInsets.fromLTRB(35, 2, 35, 5),
-    color: Colors.white,
-    child: const Center(
-    child: Text("Suggested business for you",
-    style: TextStyle(
-    color: Color.fromARGB(255, 44, 45, 48),
-    fontSize: 15.0)), // <-- Text
-    ),
-    ),
-    Container(
-    padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
-    color: Colors.white,
-    child: Center(
-    child: GestureDetector(
-    onTap: () {
-    StatisForecastingNavBar(context);
-    // ChartForecasting(context);
-    },
-    child: Text(businessname,
-    style: const TextStyle(
-    color:
-    Color.fromARGB(255, 65, 99, 200),
-    fontSize: 20.0)),
-    ), // <-- Text
-    ),
-    ),
-    Container(
-    padding:
-    const EdgeInsets.fromLTRB(10, 5, 10, 20),
-    color: Colors.white,
-    child: Row(
-    mainAxisAlignment:
-    MainAxisAlignment.spaceEvenly,
-    children: <Widget>[
-    Expanded(
-    child: ElevatedButton.icon(
-    style: ElevatedButton.styleFrom(
-    elevation: 0.0,
-    padding:
-    const EdgeInsets.all(10.0),
-    primary: const Color.fromARGB(
-    255,
-    0,
-    110,
-    195), // background
-    shape: RoundedRectangleBorder(
-    borderRadius:
-    BorderRadius.circular(
-    5.0)),
-    minimumSize: const Size(
-    70, 40), //////// HERE
-    ),
-    onPressed: () async {
-    Printing.layoutPdf(
-    onLayout:
-    (PdfPageFormat format) {
-    // Any valid Pdf document can be returned here as a list of int
-    return buildPdf(
-    format,
-    businessbudget,
-    businessname,
-    popstrB,
-    revstrB,
-    landstr,
-    landbudgetstrB,
-    resultfinal,
-    widget.ideal,
-    placename);
-    },
-    );
-    },
-    icon: const Icon(
-    Icons.file_download_outlined,
-    size: 18.0,
-    ),
-    label: const Text(
-    "Download",
-    style: TextStyle(
-    color: Colors.white),
-    ))),
-    //Spacer(),
-    const SizedBox(
-    width: 10.0,
-    ),
-    Expanded(
-    child: TextButton(
-    onPressed: () async {
-    await StatisForecastingNavBar(
-    context);
-    //    await saveDatePinned(pinnedData);
-    /*     Navigator.push(
+          double landbudgetdblfinalA = landbudgetdblB - landbudgetdblA; //2600
+          double landbudgetdblfinalB =
+              landbudgetdblA - landbudgetdblfinalA; // 2800
+          double landbudgetdblfinalC =
+              (landbudgetdblfinalB / landbudgetdblA) * 100;
+          if (landbudgetdblfinalC > 100) {
+            landbudgetdblfinalC = 100.0;
+          }
+          double result = (popdblfinal + revdblfinal + landbudgetdblfinalC) / 3;
+          String resultA = result.toStringAsFixed(2);
+          String resultfinal = '${resultA}%';
+          final pinnedData = {
+            "place_name": placename,
+            "percentage": resultfinal,
+            "ideal_shop": businessname,
+            "user_id": GoogleUserStaticInfo().uid,
+          };
+          return Scaffold(
+              backgroundColor: const Color.fromARGB(255, 241, 242, 242),
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                title: const Text("Demographical Result"),
+                //  title: Text(widget.ideal),
+                foregroundColor: const Color.fromARGB(255, 44, 45, 48),
+                elevation: 0.0,
+                leading: const BackButton(
+                  color: Color.fromARGB(255, 44, 45, 48),
+                ),
+              ),
+              body: Screenshot(
+                  controller: screenshotController,
+                  child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: SingleChildScrollView(
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            DemogPlace(data: data),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
+                              color: Colors.white,
+                              child: const Center(
+                                child: Text("Population", //POPULATION
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 15.0)), // <-- Text
+                              ),
+                            ),
+                            DemogPopulation(
+                                popstrB: popstrB
+                                    .replaceAllMapped(reg, mathFunc)
+                                    .toString()),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
+                              color: Colors.white,
+                              child: const Center(
+                                child: Text(
+                                    "Revenue per year", //REVENUE PER YEAR
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 15.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
+                              color: Colors.white,
+                              child: Center(
+                                child: Text(
+                                    '₱' +
+                                        revstrB
+                                            .replaceAllMapped(reg, mathFunc)
+                                            .toString(), //REVENUE PER YEAR
+                                    style: const TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 20.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
+                              color: Colors.white,
+                              child: const Center(
+                                child: Text("Land per SqM", //LAND PER SQ
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 15.0)), // <-- Text
+                              ),
+                            ),
+                            LandPerSQM(landstr: landstr),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
+                              color: Colors.white,
+                              child: const Center(
+                                child: Text("Budget required for the area",
+                                    //BUDGET REQUIRED FOR THE AREA
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 15.0)), // <-- Text
+                              ),
+                            ),
+                            BudgetRequiredArea(
+                                landbudgetstrB: '₱' +
+                                    landbudgetstrB
+                                        .replaceAllMapped(reg, mathFunc)
+                                        .toString()),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
+                              color: Colors.white,
+                              child: const Center(
+                                child: Text(
+                                    textAlign: TextAlign.justify,
+                                    "The Feasibilty (%) of your ideal \n business is",
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 65, 99, 200),
+                                        fontSize: 16.0)), // <-- Text
+                              ),
+                            ),
+                            IdealBusinessResult(resultfinal: resultfinal),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(35, 5, 35, 10),
+                              color: Colors.white,
+                              child: const Center(
+                                child: Text("ideal",
+                                    // ideal ni user
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 65, 99, 200),
+                                        fontSize: 21.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 5),
+                              color: Colors.white,
+                              child: const Center(
+                                child: Text("Business Type Selected",
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 15.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
+                              color: Colors.white,
+                              child: Center(
+                                child: Text(widget.ideal,
+                                    //BUDGET REQUIRED FOR THE AREA
+                                    style: const TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 20.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 5),
+                              color: Colors.white,
+                              child: const Center(
+                                child: Text("Suggested business for you",
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 15.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
+                              color: Colors.white,
+                              child: Center(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    StatisForecastingNavBar(context);
+                                    // ChartForecasting(context);
+                                  },
+                                  child: Text(businessname,
+                                      style: const TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 65, 99, 200),
+                                          fontSize: 20.0)),
+                                ), // <-- Text
+                              ),
+                            ),
+                            Container(
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 5, 10, 20),
+                                color: Colors.white,
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      Expanded(
+                                          child: ElevatedButton.icon(
+                                              style: ElevatedButton.styleFrom(
+                                                elevation: 0.0,
+                                                padding:
+                                                    const EdgeInsets.all(10.0),
+                                                primary: const Color.fromARGB(
+                                                    255,
+                                                    0,
+                                                    110,
+                                                    195), // background
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5.0)),
+                                                minimumSize: const Size(
+                                                    70, 40), //////// HERE
+                                              ),
+                                              onPressed: () async {
+                                                Printing.layoutPdf(
+                                                  onLayout:
+                                                      (PdfPageFormat format) {
+                                                    // Any valid Pdf document can be returned here as a list of int
+                                                    return buildPdf(
+                                                        format,
+                                                        businessbudget,
+                                                        businessname,
+                                                        popstrB,
+                                                        revstrB,
+                                                        landstr,
+                                                        landbudgetstrB,
+                                                        resultfinal,
+                                                        widget.ideal,
+                                                        placename);
+                                                  },
+                                                );
+                                              },
+                                              icon: const Icon(
+                                                Icons.file_download_outlined,
+                                                size: 18.0,
+                                              ),
+                                              label: const Text(
+                                                "Download",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ))),
+                                      //Spacer(),
+                                      const SizedBox(
+                                        width: 10.0,
+                                      ),
+                                      Expanded(
+                                          child: TextButton(
+                                        onPressed: () async {
+                                          await StatisForecastingNavBar(
+                                              context);
+                                          //    await saveDatePinned(pinnedData);
+                                          /*     Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) =>
                                                               SyncLineChart(
                                                                 markerid: widget.marker,
                                                               ))); */
-    //getMarkerData();
-    //   getBusinessData();
-    },
-    style: TextButton.styleFrom(
-    minimumSize:
-    const Size(70, 40), //<-- SEE HERE
-    side: const BorderSide(
-    color: Color.fromARGB(
-    255, 0, 110, 195),
-    width: 3,
-    ),
-    ),
-    child: const Text('Done'),
-    ))
-    ]))
-    ])))));
+                                          //getMarkerData();
+                                          //   getBusinessData();
+                                        },
+                                        style: TextButton.styleFrom(
+                                          minimumSize:
+                                              const Size(70, 40), //<-- SEE HERE
+                                          side: const BorderSide(
+                                            color: Color.fromARGB(
+                                                255, 0, 110, 195),
+                                            width: 3,
+                                          ),
+                                        ),
+                                        child: const Text('Done'),
+                                      ))
+                                    ]))
+                          ])))));
 /*
           return Scaffold(
               backgroundColor: const Color.fromARGB(255, 241, 242, 242),
@@ -655,15 +663,15 @@ class _DemogResultState extends State<DemogResult> {
                                         ]))
                               ])))));
       */
-    }
-    return const Center(
-    child:
-    CircularProgressIndicator.adaptive()); //while loading the data
-
-    },
+        }
+        return const Center(
+            child:
+                CircularProgressIndicator.adaptive()); //while loading the data
+      },
     );
   }
 }
+
 Future<Uint8List> buildPdf(
     PdfPageFormat format,
     String businessbudget,
@@ -739,6 +747,7 @@ Future<Uint8List> buildPdf(
   // Build and return the final Pdf file data
   return await document.save();
 }
+
 class IdealBusinessResult extends StatelessWidget {
   const IdealBusinessResult({
     super.key,
@@ -759,6 +768,7 @@ class IdealBusinessResult extends StatelessWidget {
     );
   }
 }
+
 class BudgetRequiredArea extends StatelessWidget {
   const BudgetRequiredArea({
     super.key,
@@ -780,6 +790,7 @@ class BudgetRequiredArea extends StatelessWidget {
     );
   }
 }
+
 class LandPerSQM extends StatelessWidget {
   const LandPerSQM({
     super.key,
@@ -800,6 +811,7 @@ class LandPerSQM extends StatelessWidget {
     );
   }
 }
+
 class DemogPopulation extends StatelessWidget {
   const DemogPopulation({
     super.key,
@@ -820,6 +832,7 @@ class DemogPopulation extends StatelessWidget {
     );
   }
 }
+
 class DemogPlace extends StatelessWidget {
   const DemogPlace({
     super.key,

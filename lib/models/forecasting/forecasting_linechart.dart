@@ -11,10 +11,12 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
-class SyncLineChart extends StatelessWidget {
-  final String markerid;
 
-  SyncLineChart({super.key, required this.markerid});
+class SyncLineChart extends StatelessWidget {
+  final String markerid, suggestedbusiness;
+
+  SyncLineChart(
+      {super.key, required this.markerid, required this.suggestedbusiness});
 
   final GlobalKey<State<StatefulWidget>> _printKey = GlobalKey();
   late TooltipBehavior _tooltipBehavior;
@@ -38,11 +40,12 @@ class SyncLineChart extends StatelessWidget {
     _tooltipBehavior = TooltipBehavior(enable: true);
     _tooltip = TooltipBehavior(enable: true);
   }
+
   FirebaseFirestore database = FirebaseFirestore.instance;
   List<ChartData> dummyData1 = [];
   List<ChartData> dummyData2 = [];
   CollectionReference forebusiness =
-  FirebaseFirestore.instance.collection("business");
+      FirebaseFirestore.instance.collection("business");
   void _printScreen() {
     Printing.layoutPdf(onLayout: (PdfPageFormat format) async {
       final doc = pw.Document();
@@ -62,285 +65,287 @@ class SyncLineChart extends StatelessWidget {
       return doc.save();
     });
   }
+
   @override
   Widget build(BuildContext context) {
     initState();
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 241, 242, 242),
-    appBar: AppBar(
-    backgroundColor: Colors.transparent,
-    title: const Text("Forecasting Graphs"),
-    //  title: Text(widget.ideal),
-    foregroundColor: const Color.fromARGB(255, 44, 45, 48),
-    elevation: 0.0,
-    leading: const BackButton(
-    color: Color.fromARGB(255, 44, 45, 48),
-    ),
-    ),
-    body: Padding(
-    padding: const EdgeInsets.all(10.0),
-    child: SingleChildScrollView(
-    child: Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-    FutureBuilder<DocumentSnapshot>(
-    future: forebusiness.doc(markerid).get(),
-    builder: (BuildContext context,
-    AsyncSnapshot<DocumentSnapshot> snapshot) {
-    if (snapshot.hasError) {
-    return const Text("Error");
-    }
-    if (snapshot.hasData) {
-    Map<String, dynamic> dataDoc =
-    snapshot.data!.data() as Map<String, dynamic>;
-    //monthly cost
-    marketcost = double.parse(dataDoc['marketing_cost']);
-    laborcost = double.parse(dataDoc['labor_cost']);
-    foodsup = double.parse(dataDoc['food_supply']);
-    utilLease = double.parse(dataDoc['lease_utilities']);
-    misc = double.parse(dataDoc['misc']);
-    monthlyResultCost = marketcost +
-    laborcost +
-    foodsup +
-    utilLease +
-    misc;
-    dailyyResultCost = (marketcost +
-    laborcost +
-    foodsup +
-    utilLease +
-    misc) /
-    30;
-    double pieLabor =
-    (laborcost / monthlyResultCost) * 100;
-    double pieFoodSup =
-    (foodsup / monthlyResultCost) * 100;
-    double pieUtilLease =
-    (utilLease / monthlyResultCost) * 100;
-    double pieMisc = (misc / monthlyResultCost) * 100;
-    piedata = [
-    _ChartData('Labor Cost', pieLabor),
-    _ChartData('Food Supply', pieFoodSup),
-    _ChartData('Utility Lease', pieUtilLease),
-    _ChartData('Miscellaneous', pieMisc)
-    ];
-    //one time cost
-    permit = double.parse(dataDoc['permit']);
-    equipment = double.parse(dataDoc['equipment']);
-    stall = double.parse(dataDoc["stall"]);
-    oneTimeCostResult = permit + equipment + stall;
-    return RepaintBoundary(
-    key: _printKey,
-    child: Center(
-    child: Container(
-    height: 1110,
-    padding: const EdgeInsets.all(5),
-    child: Card(
-    elevation: 0,
-    shape: RoundedRectangleBorder(
-    borderRadius:
-    BorderRadius.circular(0.0),
-    ),
-    child: Padding(
-    padding:
-    const EdgeInsets.fromLTRB(
-    5, 20, 5, 10),
-    child: Column(children: <Widget>[
-    const Text(
-    "Line Graph Forecast",
-    style: TextStyle(
-    fontSize: 19.0)),
-    Expanded(
-    child: SfCartesianChart(
-    legend: Legend(
-    isVisible: true),
-    tooltipBehavior:
-    _tooltipBehavior,
-    primaryXAxis:
-    CategoryAxis(),
-    series:
-    getData(context))),
-    const Padding(
-    padding:
-    EdgeInsets.all(7.0),
-    child: Text(
-    'The graph shows that the timespan in which is the assumption sales would reach and surpass the one time cost that the owner used in starting the business it includes Stall cost, Business permit and equipment.',
-    textAlign:
-    TextAlign.justify,
-    style: TextStyle(
-    height: 1.5,
-    color: Color.fromARGB(
-    255, 54, 54, 54),
-    fontSize: 15,
-    ),
-    )),
-    //   iuncomment to para sa barchart
-    const SizedBox(
-    height: 10.0,
-    ),
-    const Text("Bar Chart Forecast",
-    style: TextStyle(
-    fontSize: 19.0)),
-    Expanded(
-    child: BarchartPop(
-    markerid: markerid,
-    )),
-    const Padding(
-    padding:
-    EdgeInsets.all(8.0),
-    child: Text(
-    'The graph shows the population data from 2015 to 2020 a slight increase (1.049%) in 5 years utilizing its growth percent we can assume the forecasted population by year 2025',
-    textAlign:
-    TextAlign.justify,
-    style: TextStyle(
-    height: 1.5,
-    color: Color.fromARGB(
-    255, 54, 54, 54),
-    fontSize: 15,
-    ),
-    )),
-    const Text("Pie Chart Forecast",
-    style: TextStyle(
-    fontSize: 19.0)),
-    Expanded(
-    child: SfCircularChart(
-    tooltipBehavior:
-    _tooltip,
-    series: <CircularSeries>[
-    DoughnutSeries<_ChartData,
-    String>(
-    dataSource: piedata,
-    xValueMapper:
-    (_ChartData data,
-    _) =>
-    data.x,
-    yValueMapper:
-    (_ChartData data,
-    _) =>
-    data.y,
-    dataLabelMapper:
-    (_ChartData data,
-    _) =>
-    data.x,
-    dataLabelSettings:
-    const DataLabelSettings(
-    isVisible:
-    true,
-    labelPosition:
-    ChartDataLabelPosition
-        .outside,
-    // Renders background rectangle and fills it with series color
-    useSeriesColor:
-    true),
-    // Explode the segments on tap
-    explode: true,
-    explodeIndex: 1)
-    ])),
-    const Padding(
-    padding:
-    EdgeInsets.all(8.0),
-    child: Text(
-    'The graph shows the allocation of monthly cost into following categories such as Labor Cost, Food Supply, Utility/Lease and Miscellaneous excluding the one time cost',
-    textAlign:
-    TextAlign.justify,
-    style: TextStyle(
-    height: 1.5,
-    color: Color.fromARGB(
-    255, 54, 54, 54),
-    fontSize: 15,
-    ),
-    )),
-    Container(
-    padding: const EdgeInsets
-        .fromLTRB(
-    10, 5, 10, 20),
-    color: Colors.white,
-    child: Row(
-    mainAxisAlignment:
-    MainAxisAlignment
-        .spaceEvenly,
-    children: <Widget>[
-    Expanded(
-    child: ElevatedButton
-        .icon(
-    style: ElevatedButton
-        .styleFrom(
-    elevation:
-    0.0,
-    padding:
-    const EdgeInsets.all(10.0),
-    primary: const Color.fromARGB(
-    255,
-    0,
-    110,
-    195), // background
-    shape: RoundedRectangleBorder(
-    borderRadius:
-    BorderRadius.circular(5.0)),
-    minimumSize: const Size(
-    70,
-    40), //////// HERE
-    ),
-    onPressed:
-    () {
-    _printScreen();
-    },
-    icon:
-    const Icon(
-    Icons
-        .file_download_outlined,
-    size:
-    18.0,
-    ),
-    label:
-    const Text(
-    "Download",
-    style: TextStyle(
-    color:
-    Colors.white),
-    ))),
-    //Spacer(),
-    const SizedBox(
-    width: 10.0,
-    ),
-    Expanded(
-    child: TextButton(
-    onPressed: () {
-    Navigator.of(context).pushAndRemoveUntil(
-    MaterialPageRoute(
-    builder:
-    (context) =>
-    const HomePage()),
-    (Route route) =>
-    false);
-    },
-    style: TextButton
-        .styleFrom(
-    minimumSize:
-    const Size(70,
-    40), //<-- SEE HERE
-    side:
-    const BorderSide(
-    color: Color
-        .fromARGB(
-    255,
-    0,
-    110,
-    195),
-    width: 3,
-    ),
-    ),
-    child: const Text(
-    'Done'),
-    ))
-    ]))
-    ]))))));
-    }
-    return const Center(
-        child: CircularProgressIndicator.adaptive());
-    })
-    ]))));
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          title: const Text("Forecasting Graphs"),
+          //  title: Text(widget.ideal),
+          foregroundColor: const Color.fromARGB(255, 44, 45, 48),
+          elevation: 0.0,
+          leading: const BackButton(
+            color: Color.fromARGB(255, 44, 45, 48),
+          ),
+        ),
+        body: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: SingleChildScrollView(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                  FutureBuilder<DocumentSnapshot>(
+                      future: forebusiness.doc(suggestedbusiness).get(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<DocumentSnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return const Text("Error");
+                        }
+                        if (snapshot.hasData) {
+                          Map<String, dynamic> dataDoc =
+                              snapshot.data!.data() as Map<String, dynamic>;
+                          //monthly cost
+                          marketcost = double.parse(dataDoc['marketing_cost']);
+                          laborcost = double.parse(dataDoc['labor_cost']);
+                          foodsup = double.parse(dataDoc['food_supply']);
+                          utilLease = double.parse(dataDoc['lease_utilities']);
+                          misc = double.parse(dataDoc['misc']);
+                          monthlyResultCost = marketcost +
+                              laborcost +
+                              foodsup +
+                              utilLease +
+                              misc;
+                          dailyyResultCost = (marketcost +
+                                  laborcost +
+                                  foodsup +
+                                  utilLease +
+                                  misc) /
+                              30;
+                          double pieLabor =
+                              (laborcost / monthlyResultCost) * 100;
+                          double pieFoodSup =
+                              (foodsup / monthlyResultCost) * 100;
+                          double pieUtilLease =
+                              (utilLease / monthlyResultCost) * 100;
+                          double pieMisc = (misc / monthlyResultCost) * 100;
+                          piedata = [
+                            _ChartData('Labor Cost', pieLabor),
+                            _ChartData('Food Supply', pieFoodSup),
+                            _ChartData('Utility Lease', pieUtilLease),
+                            _ChartData('Miscellaneous', pieMisc)
+                          ];
+                          //one time cost
+                          permit = double.parse(dataDoc['permit']);
+                          equipment = double.parse(dataDoc['equipment']);
+                          stall = double.parse(dataDoc["stall"]);
+                          oneTimeCostResult = permit + equipment + stall;
+                          return RepaintBoundary(
+                              key: _printKey,
+                              child: Center(
+                                  child: Container(
+                                      height: 1110,
+                                      padding: const EdgeInsets.all(5),
+                                      child: Card(
+                                          elevation: 0,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(0.0),
+                                          ),
+                                          child: Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      5, 20, 5, 10),
+                                              child: Column(children: <Widget>[
+                                                const Text(
+                                                    "Line Graph Forecast",
+                                                    style: TextStyle(
+                                                        fontSize: 19.0)),
+                                                Expanded(
+                                                    child: SfCartesianChart(
+                                                        legend: Legend(
+                                                            isVisible: true),
+                                                        tooltipBehavior:
+                                                            _tooltipBehavior,
+                                                        primaryXAxis:
+                                                            CategoryAxis(),
+                                                        series:
+                                                            getData(context))),
+                                                const Padding(
+                                                    padding:
+                                                        EdgeInsets.all(7.0),
+                                                    child: Text(
+                                                      'The graph shows that the timespan in which is the assumption sales would reach and surpass the one time cost that the owner used in starting the business it includes Stall cost, Business permit and equipment.',
+                                                      textAlign:
+                                                          TextAlign.justify,
+                                                      style: TextStyle(
+                                                        height: 1.5,
+                                                        color: Color.fromARGB(
+                                                            255, 54, 54, 54),
+                                                        fontSize: 15,
+                                                      ),
+                                                    )),
+                                                //   iuncomment to para sa barchart
+                                                const SizedBox(
+                                                  height: 10.0,
+                                                ),
+                                                const Text("Bar Chart Forecast",
+                                                    style: TextStyle(
+                                                        fontSize: 19.0)),
+                                                /*  Expanded(
+                                                    child: BarchartPop(
+                                                  markerid: markerid,
+                                                )), */
+                                                const Padding(
+                                                    padding:
+                                                        EdgeInsets.all(8.0),
+                                                    child: Text(
+                                                      'The graph shows the population data from 2015 to 2020 a slight increase (1.049%) in 5 years utilizing its growth percent we can assume the forecasted population by year 2025',
+                                                      textAlign:
+                                                          TextAlign.justify,
+                                                      style: TextStyle(
+                                                        height: 1.5,
+                                                        color: Color.fromARGB(
+                                                            255, 54, 54, 54),
+                                                        fontSize: 15,
+                                                      ),
+                                                    )),
+                                                const Text("Pie Chart Forecast",
+                                                    style: TextStyle(
+                                                        fontSize: 19.0)),
+                                                Expanded(
+                                                    child: SfCircularChart(
+                                                        tooltipBehavior:
+                                                            _tooltip,
+                                                        series: <CircularSeries>[
+                                                      DoughnutSeries<_ChartData,
+                                                              String>(
+                                                          dataSource: piedata,
+                                                          xValueMapper:
+                                                              (_ChartData data,
+                                                                      _) =>
+                                                                  data.x,
+                                                          yValueMapper:
+                                                              (_ChartData data,
+                                                                      _) =>
+                                                                  data.y,
+                                                          dataLabelMapper:
+                                                              (_ChartData data,
+                                                                      _) =>
+                                                                  data.x,
+                                                          dataLabelSettings:
+                                                              const DataLabelSettings(
+                                                                  isVisible:
+                                                                      true,
+                                                                  labelPosition:
+                                                                      ChartDataLabelPosition
+                                                                          .outside,
+                                                                  // Renders background rectangle and fills it with series color
+                                                                  useSeriesColor:
+                                                                      true),
+                                                          // Explode the segments on tap
+                                                          explode: true,
+                                                          explodeIndex: 1)
+                                                    ])),
+                                                const Padding(
+                                                    padding:
+                                                        EdgeInsets.all(8.0),
+                                                    child: Text(
+                                                      'The graph shows the allocation of monthly cost into following categories such as Labor Cost, Food Supply, Utility/Lease and Miscellaneous excluding the one time cost',
+                                                      textAlign:
+                                                          TextAlign.justify,
+                                                      style: TextStyle(
+                                                        height: 1.5,
+                                                        color: Color.fromARGB(
+                                                            255, 54, 54, 54),
+                                                        fontSize: 15,
+                                                      ),
+                                                    )),
+                                                Container(
+                                                    padding: const EdgeInsets
+                                                            .fromLTRB(
+                                                        10, 5, 10, 20),
+                                                    color: Colors.white,
+                                                    child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceEvenly,
+                                                        children: <Widget>[
+                                                          Expanded(
+                                                              child: ElevatedButton
+                                                                  .icon(
+                                                                      style: ElevatedButton
+                                                                          .styleFrom(
+                                                                        elevation:
+                                                                            0.0,
+                                                                        padding:
+                                                                            const EdgeInsets.all(10.0),
+                                                                        primary: const Color.fromARGB(
+                                                                            255,
+                                                                            0,
+                                                                            110,
+                                                                            195), // background
+                                                                        shape: RoundedRectangleBorder(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(5.0)),
+                                                                        minimumSize: const Size(
+                                                                            70,
+                                                                            40), //////// HERE
+                                                                      ),
+                                                                      onPressed:
+                                                                          () {
+                                                                        _printScreen();
+                                                                      },
+                                                                      icon:
+                                                                          const Icon(
+                                                                        Icons
+                                                                            .file_download_outlined,
+                                                                        size:
+                                                                            18.0,
+                                                                      ),
+                                                                      label:
+                                                                          const Text(
+                                                                        "Download",
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.white),
+                                                                      ))),
+                                                          //Spacer(),
+                                                          const SizedBox(
+                                                            width: 10.0,
+                                                          ),
+                                                          Expanded(
+                                                              child: TextButton(
+                                                            onPressed: () {
+                                                              Navigator.of(context).pushAndRemoveUntil(
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              const HomePage()),
+                                                                  (Route route) =>
+                                                                      false);
+                                                            },
+                                                            style: TextButton
+                                                                .styleFrom(
+                                                              minimumSize:
+                                                                  const Size(70,
+                                                                      40), //<-- SEE HERE
+                                                              side:
+                                                                  const BorderSide(
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        0,
+                                                                        110,
+                                                                        195),
+                                                                width: 3,
+                                                              ),
+                                                            ),
+                                                            child: const Text(
+                                                                'Done'),
+                                                          ))
+                                                        ]))
+                                              ]))))));
+                        }
+                        return const Center(
+                            child: CircularProgressIndicator.adaptive());
+                      })
+                ]))));
   }
+
   List<ChartSeries<dynamic, dynamic>> getData(context) {
     Future.delayed(const Duration(seconds: 2));
     double firstmonth =
@@ -350,12 +355,12 @@ class SyncLineChart extends StatelessWidget {
     double secondfinal = firstmonth + secondmonth;
     dummyData1 = List.generate(
         12,
-            (index) => ChartData(
+        (index) => ChartData(
             months: DateFormat('MMM').format(DateTime(0, index + 1)).toString(),
             cost: oneTimeCostResult));
     dummyData2 = List.generate(
         12,
-            (index) => ChartData(
+        (index) => ChartData(
             months: DateFormat('MMM').format(DateTime(1, index + 1)).toString(),
             cost: (sec * index) + firstmonth));
     dummyData2[0] = ChartData(months: "Jan", cost: firstmonth);
@@ -391,6 +396,7 @@ class SyncLineChart extends StatelessWidget {
     ];
   }
 }
+
 class ChartData {
   ChartData({
     required this.months,
@@ -399,11 +405,13 @@ class ChartData {
   String months;
   double cost;
 }
+
 class _ChartData {
   _ChartData(this.x, this.y);
   final String x;
   final double y;
 }
+
 Future showSnack(context, ChartPointDetails details) async {
   //PopSnackbar popSnackbar = PopSnackbar();
   // var a = details.dataPoints?.toList();

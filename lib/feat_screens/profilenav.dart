@@ -9,6 +9,7 @@ import '../userInfo.dart';
 import 'ChangePassword.dart';
 import 'about_us.dart';
 import 'customize_acc.dart';
+import 'history.dart';
 import 'how_to_use_app.dart';
 import 'settings.dart';
 
@@ -131,7 +132,7 @@ class ProfileNav {
                             style:
                                 TextStyle(color: Colors.black, fontSize: 15.0)),
                       ),
-                      Row(children: const <Widget>[
+                      const Row(children: <Widget>[
                         Expanded(
                           child: Divider(
                               color: Color.fromARGB(255, 105, 105, 105),
@@ -144,7 +145,8 @@ class ProfileNav {
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const pinnedlocation()),
+                                builder: (context) =>
+                                    const PinnedLocationHistory()),
                           );
                         },
                         icon: const ImageIcon(

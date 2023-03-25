@@ -42,9 +42,10 @@ class _BottomNavState extends State<BottomNav> {
   int _selectedIndex = 0;
 
   TextStyle optionStyle =
-  const TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+      const TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   late final List<Widget> _widgetOptions = <Widget>[
-    SyncLineChart(markerid: widget.markerid),
+    SyncLineChart(
+        markerid: widget.markerid, suggestedbusiness: widget.businessname),
     BarchartPop(markerid: widget.markerid),
     const Text(
       'Pie Chart',
