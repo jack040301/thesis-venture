@@ -418,8 +418,7 @@ class DialogQuestion {
                         onPressed: () async {
                           // ito yun sana kapag initinallize dapat
                           if (selectdropval.isEmpty ||
-                              selectbusinessassump.isEmpty ||
-                              areaController.text.isEmpty) {
+                              selectbusinessassump.isEmpty) {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(Questionall);
                           } else if (selectbusinessassump.isNotEmpty &&

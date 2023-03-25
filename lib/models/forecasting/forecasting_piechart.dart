@@ -12,10 +12,10 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart'; */
 
-class SyncLineChart extends StatelessWidget {
+class PieChartForecasting extends StatelessWidget {
   final String markerid, suggestedbusiness;
 
-  SyncLineChart(
+  PieChartForecasting(
       {super.key, required this.markerid, required this.suggestedbusiness});
 
   final GlobalKey<State<StatefulWidget>> _printKey = GlobalKey();
@@ -71,7 +71,7 @@ class SyncLineChart extends StatelessWidget {
     initState();
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 241, 242, 242),
-        /* appBar: AppBar(
+        /*  appBar: AppBar(
           backgroundColor: Colors.transparent,
           title: const Text("Forecasting Graphs"),
           //  title: Text(widget.ideal),
@@ -150,11 +150,11 @@ class SyncLineChart extends StatelessWidget {
                                                   const EdgeInsets.fromLTRB(
                                                       5, 20, 5, 10),
                                               child: Column(children: <Widget>[
-                                                const Text(
+                                                /*   const Text(
                                                     "Line Graph Forecast",
                                                     style: TextStyle(
-                                                        fontSize: 19.0)),
-                                                Expanded(
+                                                        fontSize: 19.0)), */
+                                                /*   Expanded(
                                                     child: SfCartesianChart(
                                                         legend: Legend(
                                                             isVisible: true),
@@ -163,8 +163,8 @@ class SyncLineChart extends StatelessWidget {
                                                         primaryXAxis:
                                                             CategoryAxis(),
                                                         series:
-                                                            getData(context))),
-                                                const Padding(
+                                                            getData(context))), */
+                                                /*     const Padding(
                                                     padding:
                                                         EdgeInsets.all(7.0),
                                                     child: Text(
@@ -179,17 +179,17 @@ class SyncLineChart extends StatelessWidget {
                                                       ),
                                                     )),
                                                 //   iuncomment to para sa barchart
-                                                /* const SizedBox(
+                                                const SizedBox(
                                                   height: 10.0,
                                                 ),
                                                 const Text("Bar Chart Forecast",
                                                     style: TextStyle(
-                                                        fontSize: 19.0)), */
+                                                        fontSize: 19.0)),
                                                 /*  Expanded(
                                                     child: BarchartPop(
                                                   markerid: markerid,
                                                 )), */
-                                                /* const Padding(
+                                                const Padding(
                                                     padding:
                                                         EdgeInsets.all(8.0),
                                                     child: Text(
@@ -202,7 +202,7 @@ class SyncLineChart extends StatelessWidget {
                                                             255, 54, 54, 54),
                                                         fontSize: 15,
                                                       ),
-                                                    )),
+                                                    )), */
                                                 const Text("Pie Chart Forecast",
                                                     style: TextStyle(
                                                         fontSize: 19.0)),
@@ -239,7 +239,7 @@ class SyncLineChart extends StatelessWidget {
                                                           // Explode the segments on tap
                                                           explode: true,
                                                           explodeIndex: 1)
-                                                    ])), 
+                                                    ])),
                                                 const Padding(
                                                     padding:
                                                         EdgeInsets.all(8.0),
@@ -253,7 +253,7 @@ class SyncLineChart extends StatelessWidget {
                                                             255, 54, 54, 54),
                                                         fontSize: 15,
                                                       ),
-                                                    )),*/
+                                                    )),
                                                 Container(
                                                     padding: const EdgeInsets
                                                             .fromLTRB(

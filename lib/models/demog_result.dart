@@ -403,8 +403,20 @@ class _DemogResultState extends State<DemogResult> {
                                       Expanded(
                                           child: TextButton(
                                         onPressed: () async {
-                                          await StatisForecastingNavBar(
-                                              context);
+                                          /*  await StatisForecastingNavBar(
+                                              context); */
+
+                                          await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ForecastingNavBar(
+                                                        markerid: widget.marker,
+                                                        businessname:
+                                                            businessname,
+                                                        //         markerid: widget.budget,
+                                                      )));
+
                                           //    await saveDatePinned(pinnedData);
                                           /*     Navigator.push(
                                                       context,

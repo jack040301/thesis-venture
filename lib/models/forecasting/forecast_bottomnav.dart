@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:main_venture/models/forecasting/forecasting_linechart.dart';
 import 'package:main_venture/models/forecasting/forecasting_population.dart';
 
+import 'forecasting_piechart.dart';
+
 /* void main() => runApp(const forecasting()); */
 
 class ForecastingNavBar extends StatelessWidget {
@@ -47,9 +49,9 @@ class _BottomNavState extends State<BottomNav> {
     SyncLineChart(
         markerid: widget.markerid, suggestedbusiness: widget.businessname),
     BarchartPop(markerid: widget.markerid),
-    const Text(
-      'Pie Chart',
-      //   style: optionStyle,
+    PieChartForecasting(
+      markerid: widget.markerid,
+      suggestedbusiness: widget.businessname,
     ),
   ];
 
