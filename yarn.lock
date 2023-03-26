@@ -8077,7 +8077,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hoist-non-react-statics@npm:^3.0.0, hoist-non-react-statics@npm:^3.3.0":
+"hoist-non-react-statics@npm:^3.0.0, hoist-non-react-statics@npm:^3.3.0, hoist-non-react-statics@npm:^3.3.2":
   version: 3.3.2
   resolution: "hoist-non-react-statics@npm:3.3.2"
   dependencies:
@@ -13273,6 +13273,7 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     react-google-recaptcha: ^2.1.0
+    react-google-recaptcha-v3: ^1.10.1
     react-router-dom: ^6.4.3
     react-scripts: ^2.1.8
     styled-components: ^5.3.6
@@ -13336,6 +13337,18 @@ __metadata:
   version: 3.2.1
   resolution: "react-fast-compare@npm:3.2.1"
   checksum: 209b4dc3a9cc79c074a26ec020459efd8be279accaca612db2edb8ada2a28849ea51cf3d246fc0fafb344949b93a63a43798b6c1787559b0a128571883fe6859
+  languageName: node
+  linkType: hard
+
+"react-google-recaptcha-v3@npm:^1.10.1":
+  version: 1.10.1
+  resolution: "react-google-recaptcha-v3@npm:1.10.1"
+  dependencies:
+    hoist-non-react-statics: ^3.3.2
+  peerDependencies:
+    react: ^16.3 || ^17.0 || ^18.0
+    react-dom: ^17.0 || ^18.0
+  checksum: b5ffe0bc0b13ad9ab2fa7b7acd979c7ff9d4f9d698412eaf8721167883a2ace2b4f3f5386c4b70f59f1cab9f062c368c360dbaa1b2cad4f1645795f3dbdf9355
   languageName: node
   linkType: hard
 

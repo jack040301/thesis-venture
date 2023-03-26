@@ -7,7 +7,7 @@ import "./Login.css";
 
 import ReactToast from "../components/Toast/toast"/* import Component of toast */
 
-import ReCAPTCHA from "react-google-recaptcha";
+import { ReCapt } from "../components/reCaptcha";
 
 
 import {
@@ -21,6 +21,8 @@ import {
   MDBIcon,
   MDBCheckbox,
 } from "mdb-react-ui-kit";
+
+
 
 function Login() {
   const toastRef = useRef('')
@@ -173,12 +175,14 @@ function Login() {
                 onClick={handleSubmit}
                 size="lg"
                 className="btn btn-primary btnlogin"
+                id="submit01"
               >
                 Login
               </button>
 
               <MDBCheckbox name="flexCheck" value='' id='flexCheckDefault' label='terms and conditions' />
-              <ReCAPTCHA sitekey={process.env.REACT_APP_SITE_KEY} />
+              <ReCapt />
+              {/*<ReCAPTCHA sitekey={process.env.REACT_APP_SITE_KEY} />*/}
               {/* <button
               onClick={() => {
                   navigate("/dashboard");
