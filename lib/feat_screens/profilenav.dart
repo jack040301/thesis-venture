@@ -12,6 +12,7 @@ import 'customize_acc.dart';
 import 'history.dart';
 import 'how_to_use_app.dart';
 import 'settings.dart';
+import 'listhistorycard.dart';
 
 //THIS IS THE DIALOG OF PROFILE
 
@@ -146,7 +147,7 @@ class ProfileNav {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    const PinnedLocationHistory()),
+                                    const ListViewHomeLayout()),
                           );
                         },
                         icon: const ImageIcon(

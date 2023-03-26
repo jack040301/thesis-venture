@@ -1,5 +1,7 @@
+/* import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:main_venture/userInfo.dart';
+//FILE NI NIKKI
 import 'Dialogbutton.dart';
 
 class PinnedLocationHistory extends StatefulWidget {
@@ -10,6 +12,14 @@ class PinnedLocationHistory extends StatefulWidget {
 }
 
 class _PinnedLocationHistoryState extends State<PinnedLocationHistory> {
+  Future getHistory() async {
+    var userid = GoogleUserStaticInfo().uid;
+    var firestore = FirebaseFirestore.instance;
+    QuerySnapshot qn =
+        await firestore.collection("pinnedhistory").where(userid).get();
+    return qn.docs;
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -24,7 +34,7 @@ class _PinnedLocationHistoryState extends State<PinnedLocationHistory> {
           color: Color.fromARGB(255, 44, 45, 48),
         ),
       ),
-      body: const ContentHowToUse(),
+      body: ContentHowToUse(),
     );
   }
 }
@@ -911,3 +921,4 @@ class ContentHowToUse extends StatelessWidget {
             ])));
   }
 }
+ */
