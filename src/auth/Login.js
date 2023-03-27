@@ -6,7 +6,7 @@ import { UserAuth } from "./context";
 import "./Login.css";
 
 import ReactToast from "../components/Toast/toast"/* import Component of toast */
-
+import { ReCapt } from "./recatpcha";
 
 import {
   MDBContainer,
@@ -160,7 +160,8 @@ function Login() {
                 label="Remember password"
               /> */}
               <br></br>
-           {/*    <MDBBtn onClick={Login} size="lg">handle user profile</MDBBtn> */}
+           {/*    <MDBBtn onClick={Login} size="lg">handle user profile</MDBBtn> */}           
+           
            <button
                 disabled={loading}
                 onClick={handleSubmit}
@@ -168,7 +169,8 @@ function Login() {
                 className="btn btn-primary btnlogin"
               >
                 Login
-              </button>
+              </button>              
+              <ReCapt />
               {/* <button
               onClick={() => {
                   navigate("/dashboard");

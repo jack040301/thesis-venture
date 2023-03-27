@@ -6,11 +6,29 @@ import App from "./App";
 import Dashboard from "./pages/Dashboard";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from 'react-router-dom';
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
-    <App />
+    <GoogleReCaptchaProvider 
+      reCaptchaKey={process.env.REACT_APP_SITE_KEY_V3}
+      scriptProps={{
+        async: false,
+        defer: false,
+        appendTo: 'head',
+      }}
+      container={{
+        element: "submit01",
+        parameters: {
+          badge: 'inline',
+          theme: 'dark',
+        }
+      }}
+    >
+      <App />
+    </GoogleReCaptchaProvider>
+    {/*<App />*/}
   </BrowserRouter>
 );
 

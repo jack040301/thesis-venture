@@ -5,6 +5,9 @@ import { auth, signInWithEmailAndPassword, doc, getDoc, db } from "../firebase";
 import { UserAuth } from "./context";
 import "./Login.css";
 import ReactToast from "../components/Toast/toast"; /* import Component of toast */
+import { ReCapt } from "./recatpcha";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
+import ReCAPTCHA from "react-google-recaptcha";
 
 import {
   MDBBtn,
@@ -18,12 +21,13 @@ import {
   MDBIcon,
 } from "mdb-react-ui-kit";
 import "./Login2.css";
+import { async } from "@firebase/util";
 
 function App() {
   const toastRef = useRef();
 
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const { logout } = UserAuth();
@@ -31,6 +35,8 @@ function App() {
   const [email, setEmail] = useState("");
 
   const [password, setPassword] = useState("");
+  const [check, setCheckBox] = useState(false);
+  const [check2, setCheckBox2] = useState(false);
 
   // const [loggedemail,setLoggedEmail] = useState("");
 
@@ -49,6 +55,20 @@ function App() {
       localStorage.removeItem("email");
       logout();
     }
+  }
+
+  async function handleTick(e){
+    //e.preventDefault();
+    setError("");
+
+    if(!check){
+      setCheckBox(true);
+      setLoading(false);
+    }else{
+      setCheckBox(false);
+      setLoading(true);
+    }
+
   }
 
   async function handleSubmit(e) {
@@ -161,6 +181,11 @@ function App() {
                 >
                   Login
                 </button>
+                {/*<ReCapt id={"submit01"} />*/}
+                {/*<MDBCheckbox label="SampleCheckBox" checked={check} onClick={(e)=>{handleTick()}} />*/}
+                
+                <ReCAPTCHA sitekey={process.env.REACT_APP_SITE_KEY}  theme="dark" onChange={(e)=>{handleTick()}} />
+                <ReCapt check={check2} />
               </MDBCardBody>
             </MDBCard>
           </MDBCol>
