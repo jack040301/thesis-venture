@@ -9,9 +9,9 @@ import 'forecasting/forecasting_linechart.dart';
 import 'package:main_venture/models/forecasting/forecasting_linechart.dart';
 import 'forecasting/forecasting_population.dart';
 import 'package:main_venture/userInfo.dart';
-import 'package:pdf/pdf.dart';
+/* import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
+import 'package:printing/printing.dart'; */
 
 class DemogResult extends StatefulWidget {
   const DemogResult(
@@ -55,10 +55,16 @@ class _DemogResultState extends State<DemogResult> {
 
   Future saveDatePinned(pinnedData) async {
     var db = FirebaseFirestore.instance;
-    db.collection("pinnedlocation").add(pinnedData).then((documentSnapshot) => {
-          debugPrint("savedData")
-          //showing if data is saved
-        });
+    db
+        .collection("pinnedlocation")
+        .add(pinnedData)
+        .then((documentSnapshot) => {
+              debugPrint("savedData")
+              //showing if data is saved
+            })
+        .catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(error);
+    });
   }
 
   Future<void> ChartForecasting(BuildContext context) async {
@@ -177,7 +183,12 @@ class _DemogResultState extends State<DemogResult> {
             "place_name": placename,
             "percentage": resultfinal,
             "ideal_shop": businessname,
+            "population": popstrB,
+            "revenue": revstrB,
+            "land_area": landstr,
+            "budget_required": landbudgetstrB,
             "user_id": GoogleUserStaticInfo().uid,
+            "marker_id": widget.marker,
           };
           return Scaffold(
               backgroundColor: const Color.fromARGB(255, 241, 242, 242),
@@ -369,7 +380,7 @@ class _DemogResultState extends State<DemogResult> {
                                                     70, 40), //////// HERE
                                               ),
                                               onPressed: () async {
-                                                Printing.layoutPdf(
+                                                /*    Printing.layoutPdf(
                                                   onLayout:
                                                       (PdfPageFormat format) {
                                                     // Any valid Pdf document can be returned here as a list of int
@@ -385,7 +396,7 @@ class _DemogResultState extends State<DemogResult> {
                                                         widget.ideal,
                                                         placename);
                                                   },
-                                                );
+                                                ); */
                                               },
                                               icon: const Icon(
                                                 Icons.file_download_outlined,
@@ -417,7 +428,7 @@ class _DemogResultState extends State<DemogResult> {
                                                         //         markerid: widget.budget,
                                                       )));
 
-                                          //    await saveDatePinned(pinnedData);
+                                          await saveDatePinned(pinnedData);
                                           /*     Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
@@ -684,7 +695,7 @@ class _DemogResultState extends State<DemogResult> {
   }
 }
 
-Future<Uint8List> buildPdf(
+/* Future<Uint8List> buildPdf(
     PdfPageFormat format,
     String businessbudget,
     businessname,
@@ -758,7 +769,7 @@ Future<Uint8List> buildPdf(
   );
   // Build and return the final Pdf file data
   return await document.save();
-}
+} */
 
 class IdealBusinessResult extends StatelessWidget {
   const IdealBusinessResult({

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../userInfo.dart';
-import 'history2.dart';
+import 'history.dart';
 
 //THE LIST VIEW CARD IN HISTORY
 class ListViewHomeLayout extends StatefulWidget {
@@ -48,6 +48,7 @@ class ListViewHome extends State<ListViewHomeLayout> {
             );
           } else if (snapshot.hasData) {
             final datadocs = snapshot.data!.docs;
+
             return ListView.builder(
                 itemCount: datadocs.length,
                 shrinkWrap: true,
@@ -55,7 +56,14 @@ class ListViewHome extends State<ListViewHomeLayout> {
                   return Card(
                       child: ListTile(
                     onTap: () async {
-                      HistoryDialog().showHistoryDialog(context);
+                      await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HistoryDialogLayout(
+                                    historyid: datadocs[index].id,
+                                  )));
+
+                      //      HistoryDialog().showHistoryDialog(context);
                     },
                     title: Text(datadocs[index]['place_name']),
                     // ignore: prefer_interpolation_to_compose_strings

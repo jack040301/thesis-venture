@@ -11,6 +11,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:main_venture/feat_screens/Dialogbutton.dart';
 // import 'package:main_venture/feat_screens/layer_simulation.dart';
 import 'package:main_venture/feat_screens/profilenav.dart';
+import 'package:main_venture/feat_screens/requesting.dialog.dart';
 import 'package:main_venture/feat_screens/zonecreen.dart';
 import 'package:main_venture/models/auto_complete_results.dart';
 import 'package:main_venture/providers/search_places.dart';
@@ -268,7 +269,6 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
     }); */
   }
 
-
   Future gettingZoneMarkers(latitude, longitude) async {
     var greatercoordinates = GeoPoint(latitude, longitude);
     //east
@@ -293,6 +293,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
       await FirebaseFirestore.instance
           .collection("testmarkers")
           .where("coords", isLessThanOrEqualTo: greatercoordinates)
+          .where('request_status', isEqualTo: true)
           .orderBy("coords", descending: true)
           .limit(1)
           .get()
@@ -330,6 +331,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
       await FirebaseFirestore.instance
           .collection("testmarkers")
           .where("coords", isGreaterThanOrEqualTo: greatercoordinates)
+          .where('request_status', isEqualTo: true)
           .orderBy("coords")
           .limit(2)
           .get()
@@ -382,7 +384,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
         markerId: MarkerId('marker_$counter'),
         position: LatLng(lat, lng),
         onTap: () async {
-          //  await gettingZoneMarkers(lat, lng);
+          await RequestedDialog(lat, lng).showMyDialog(context);
         },
         icon: primaryMarker);
     gettingZoneMarkers(lat, lng);
