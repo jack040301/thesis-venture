@@ -8,6 +8,7 @@ import "./Login.css";
 import ReactToast from "../components/Toast/toast"/* import Component of toast */
 
 import { ReCapt } from "../components/reCaptcha";
+import ReCAPTCHA from "react-google-recaptcha";
 
 
 import {
@@ -183,6 +184,7 @@ function Login() {
               <MDBCheckbox name="flexCheck" value='' id='flexCheckDefault' label='terms and conditions' />
               <ReCapt />
               {/*<ReCAPTCHA sitekey={process.env.REACT_APP_SITE_KEY} />*/}
+              <ReCAPTCHA sitekey={process.env.REACT_APP_SITE_KEY} />
               {/* <button
               onClick={() => {
                   navigate("/dashboard");
