@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { auth, signInWithEmailAndPassword, doc,getDoc, db } from "../firebase";
 import { UserAuth } from "./context";
@@ -11,15 +11,13 @@ import { ReCapt } from "../components/reCaptcha";
 
 
 import {
-  MDBBtn,
   MDBContainer,
   MDBRow,
   MDBCol,
   MDBCard,
+  MDBCheckbox,
   MDBCardBody,
   MDBInput,
-  MDBIcon,
-  MDBCheckbox,
 } from "mdb-react-ui-kit";
 
 
@@ -71,7 +69,7 @@ function Login() {
   .catch((error) => {
       //console.log(error)
       var errorCode = error.code;
-      var errorMessage = error.message;
+    //  var errorMessage = error.message;
 
       if(errorCode === 'auth/user-not-found'){
         toastRef.current.showToast("Invalid credentials. Please enter valid email address.")
@@ -169,7 +167,8 @@ function Login() {
                 label="Remember password"
               /> */}
               <br></br>
-           {/*    <MDBBtn onClick={Login} size="lg">handle user profile</MDBBtn> */}
+           {/*    <MDBBtn onClick={Login} size="lg">handle user profile</MDBBtn> */}           
+           
            <button
                 disabled={loading}
                 onClick={handleSubmit}

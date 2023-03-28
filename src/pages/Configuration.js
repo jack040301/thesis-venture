@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { addDoc, auth, collection, db } from "../firebase";
-import { UserAuth, createModAcc } from "../auth/context";
+import { UserAuth } from "../auth/context";
 import { updatePassword, reauthenticateWithCredential } from "../firebase";
 import ReactToast from "../components/Toast/toast"; /* import Component of toast */
 

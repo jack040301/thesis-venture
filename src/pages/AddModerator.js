@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { addDoc, db, setDoc, createUserWithEmailAndPassword, doc,auth } from "../firebase";
+import React, { useRef, useState } from "react";
+import { db, setDoc, createUserWithEmailAndPassword, doc,auth } from "../firebase";
 
 import { MDBRow, MDBCol } from "mdb-react-ui-kit";
 

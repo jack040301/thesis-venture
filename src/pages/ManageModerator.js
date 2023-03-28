@@ -1,11 +1,11 @@
 import { limit, orderBy } from "firebase/firestore";
 import React, {useEffect, useState} from "react";
-import {collection, db,onSnapshot, query,where, startAt} from "../firebase";
+import {collection, db,onSnapshot, query,where } from "../firebase";
 
 
 function ManageModerator() {
 
-   const [data, setData] = useState([]);
+  const [data, setData] = useState([]);
    const [search,setSearch] = useState([]);
 
 
@@ -67,6 +67,7 @@ function ManageModerator() {
 
 
   return (
+    
     <>
       <div className="content-wrapper">
         <div className="row">
@@ -105,7 +106,7 @@ function ManageModerator() {
                       <th>Status</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="tbody1">
 
                   { 
               data.map( (mark) => (
