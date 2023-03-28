@@ -293,7 +293,6 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
       await FirebaseFirestore.instance
           .collection("testmarkers")
           .where("coords", isLessThanOrEqualTo: greatercoordinates)
-          .where('request_status', isEqualTo: true)
           .orderBy("coords", descending: true)
           .limit(1)
           .get()
@@ -301,71 +300,73 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
                 querySnapshot.docs.forEach((documents) async {
                   var data = documents.data() as Map;
 
-                  allmarkers.add(Marker(
-                      onTap: () async {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ZoneScreen(
-                                      dataID: documents.id,
-                                      coordinates_latitude:
-                                          data["coords"].latitude,
-                                      coordinates_longitude:
-                                          data["coords"].longitude,
-                                      place: data["place"],
-                                      population: data["population"],
-                                      revenue: data["revenue"],
-                                      land_size: data["land_size"],
-                                    )));
-                      },
-                      infoWindow: InfoWindow(
-                        title: data["place"],
-                      ),
-                      markerId: MarkerId(documents.id),
-                      icon: markerIcon,
-                      position: LatLng(
-                          data["coords"].latitude, data["coords"].longitude)));
+                  if (data["request_status"] == true) {
+                    allmarkers.add(Marker(
+                        onTap: () async {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ZoneScreen(
+                                        dataID: documents.id,
+                                        coordinates_latitude:
+                                            data["coords"].latitude,
+                                        coordinates_longitude:
+                                            data["coords"].longitude,
+                                        place: data["place"],
+                                        population: data["population"],
+                                        revenue: data["revenue"],
+                                        land_size: data["land_size"],
+                                      )));
+                        },
+                        infoWindow: InfoWindow(
+                          title: data["place"],
+                        ),
+                        markerId: MarkerId(documents.id),
+                        icon: markerIcon,
+                        position: LatLng(data["coords"].latitude,
+                            data["coords"].longitude)));
+                  }
                 })
               });
 
       await FirebaseFirestore.instance
           .collection("testmarkers")
           .where("coords", isGreaterThanOrEqualTo: greatercoordinates)
-          .where('request_status', isEqualTo: true)
           .orderBy("coords")
-          .limit(2)
+          .limit(1)
           .get()
           .then((QuerySnapshot querySnapshot) => {
                 querySnapshot.docs.forEach((documents) async {
                   var data = documents.data() as Map;
-
-                  allmarkers.add(Marker(
-                      onTap: () async {
-                        /* await DialogQuestion(
+                  if (data["request_status"] == true) {
+                    allmarkers.add(Marker(
+                        onTap: () async {
+                          /* await DialogQuestion(
                               documents.id, dropdownDatas, dropdownAssumption)
                           .showMyDialog(context); */
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ZoneScreen(
-                                      dataID: documents.id,
-                                      coordinates_latitude:
-                                          data["coords"].latitude,
-                                      coordinates_longitude:
-                                          data["coords"].longitude,
-                                      place: data["place"],
-                                      population: data["population"],
-                                      revenue: data["revenue"],
-                                      land_size: data["land_size"],
-                                    )));
-                      },
-                      infoWindow: InfoWindow(
-                        title: data["place"],
-                      ),
-                      markerId: MarkerId(documents.id),
-                      icon: markerIcon,
-                      position: LatLng(
-                          data["coords"].latitude, data["coords"].longitude)));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ZoneScreen(
+                                        dataID: documents.id,
+                                        coordinates_latitude:
+                                            data["coords"].latitude,
+                                        coordinates_longitude:
+                                            data["coords"].longitude,
+                                        place: data["place"],
+                                        population: data["population"],
+                                        revenue: data["revenue"],
+                                        land_size: data["land_size"],
+                                      )));
+                        },
+                        infoWindow: InfoWindow(
+                          title: data["place"],
+                        ),
+                        markerId: MarkerId(documents.id),
+                        icon: markerIcon,
+                        position: LatLng(data["coords"].latitude,
+                            data["coords"].longitude)));
+                  }
                 })
               });
 
