@@ -49,6 +49,31 @@ class ListViewHome extends State<ListViewHomeLayout> {
           } else if (snapshot.hasData) {
             final datadocs = snapshot.data!.docs;
 
+            if (datadocs.isEmpty) {
+              return Card(
+                  child: ListTile(
+                onTap: () async {
+                  /*   await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HistoryDialogLayout(
+                                    historyid: datadocs[index].id,
+                                  ))); */
+                },
+                title: const Text("No History"),
+                subtitle: const Text(
+                    'You dont have any history data, venture place first'),
+                leading: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 22),
+                  child: Image.asset(
+                    'assets/images/icons/pin.png',
+                    height: 25,
+                    width: 18.6,
+                  ),
+                ),
+              ));
+            }
+
             return ListView.builder(
                 itemCount: datadocs.length,
                 shrinkWrap: true,
