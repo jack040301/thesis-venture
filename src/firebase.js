@@ -16,9 +16,9 @@ onSnapshot,
   getDoc,
   updateDoc,
   deleteDoc,
-  addDoc, 
-  startAt, 
-  orderBy,} from 'firebase/firestore'
+  orderBy,limit,
+  startAt,endAt,
+  addDoc,} from 'firebase/firestore'
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -90,7 +90,7 @@ const registerWithEmailAndPassword = async (email, password) => {
   }
 }; */
 
-const logInWithEmailAndPassword = async (email, password) => {
+/* const logInWithEmailAndPassword = async (email, password) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
 
@@ -100,7 +100,7 @@ const logInWithEmailAndPassword = async (email, password) => {
     alert(err.message);
   }
 
-}; 
+};  */
 
 
 const sendPasswordReset = async (email) => {
@@ -210,4 +210,4 @@ const credential = promptF
  */
 
 
-export {getDoc, setDoc,where, signInWithEmailAndPassword,reauthenticateWithCredential,auth,doc,query,getDocs,onSnapshot,updateDoc,deleteDoc,GeoPoint,addDoc,collection, db, registerWithEmailAndPassword,  logout, sendPasswordReset, handleUserProfile, createUserWithEmailAndPassword, updatePassword, startAt}
+export {orderBy,limit,getDoc,startAt, endAt, setDoc,where, signInWithEmailAndPassword,reauthenticateWithCredential,auth,doc,query,getDocs,onSnapshot,updateDoc,deleteDoc,GeoPoint,addDoc,collection, db, registerWithEmailAndPassword,  logout, sendPasswordReset, handleUserProfile, createUserWithEmailAndPassword, updatePassword}
