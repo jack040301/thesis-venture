@@ -48,7 +48,7 @@ dependencies:
   #Sliding Panel
   sliding_up_panel: ^2.0.0+1
   screenshot:
-
+  syncfusion_flutter_pdf:
 
   #Carousel
   carousel_slider: ^4.1.1

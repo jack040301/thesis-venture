@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:typed_data';
@@ -9,6 +11,11 @@ import 'forecasting/forecasting_linechart.dart';
 import 'package:main_venture/models/forecasting/forecasting_linechart.dart';
 import 'forecasting/forecasting_population.dart';
 import 'package:main_venture/userInfo.dart';
+import 'dart:typed_data';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'dart:ui' as ui;
+import 'package:syncfusion_flutter_pdf/pdf.dart';
 /* import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart'; */
@@ -38,6 +45,43 @@ class _DemogResultState extends State<DemogResult> {
   void initState() {
     getBusinessData();
     super.initState();
+  }
+
+  GlobalKey _globalKey = new GlobalKey();
+
+  Future<void> _captureScreenshot(_globalKey) async {
+    try {
+      RenderRepaintBoundary boundary =
+          _globalKey.currentContext.findRenderObject();
+      ui.Image image = await boundary.toImage();
+      ByteData? byteData =
+          await image.toByteData(format: ui.ImageByteFormat.png);
+      var png = byteData?.buffer.asUint8List();
+
+      /*   Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => new PreviewScreenshot(photo: png),
+        ),
+      ); */
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> _createPDF(bitmapimage) async {
+    //Create a new PDF document
+    PdfDocument document = PdfDocument();
+
+//Draw the image
+    document.pages.add().graphics.drawImage(
+        PdfBitmap(File(bitmapimage).readAsBytesSync()),
+        Rect.fromLTWH(0, 0, 100, 100));
+
+//Saves the document
+    File('Output.pdf').writeAsBytes(await document.save());
+
+//Dispose the document
+    document.dispose();
   }
 
   // ignore: non_constant_identifier_names
@@ -115,6 +159,8 @@ class _DemogResultState extends State<DemogResult> {
         .replaceAll('.', '-')
         .replaceAll(':', '-');
     final filename = 'screenshot_$time';
+
+    _createPDF(bytes);
     final result = await ImageGallerySaver.saveImage(bytes, name: filename);
     // ignore: use_build_context_synchronously
     ScaffoldMessenger.of(context)
@@ -380,6 +426,23 @@ class _DemogResultState extends State<DemogResult> {
                                                     70, 40), //////// HERE
                                               ),
                                               onPressed: () async {
+                                                int count = 0;
+
+                                                final image =
+                                                    await screenshotController
+                                                        .capture(
+                                                            delay:
+                                                                const Duration(
+                                                                    milliseconds:
+                                                                        10),
+                                                            pixelRatio: 1.5);
+                                                if (image == null) return;
+                                                await savingImage(image);
+
+                                                // ignore: use_build_context_synchronously
+                                                Navigator.of(context).popUntil(
+                                                    (_) => count++ >= 2);
+
                                                 /*    Printing.layoutPdf(
                                                   onLayout:
                                                       (PdfPageFormat format) {
