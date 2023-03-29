@@ -364,6 +364,11 @@ class DialogQuestion {
                         });
                       },
                     ),
+                    Text('Area: $_currentSliderValue',
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 65, 99, 200),
+                        )),
+
                     /*   TextFormField(
                         controller: areaController,
                         enableInteractiveSelection: false,

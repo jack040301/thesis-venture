@@ -299,8 +299,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
           .then((QuerySnapshot querySnapshot) => {
                 querySnapshot.docs.forEach((documents) async {
                   var data = documents.data() as Map;
-
-                  if (data["request_status"] == true) {
+                  if (data['request_status'] == true) {
                     allmarkers.add(Marker(
                         onTap: () async {
                           Navigator.push(
@@ -338,7 +337,8 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
           .then((QuerySnapshot querySnapshot) => {
                 querySnapshot.docs.forEach((documents) async {
                   var data = documents.data() as Map;
-                  if (data["request_status"] == true) {
+
+                  if (data['request_status'] == true) {
                     allmarkers.add(Marker(
                         onTap: () async {
                           /* await DialogQuestion(

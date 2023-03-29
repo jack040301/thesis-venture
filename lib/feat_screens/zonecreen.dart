@@ -30,6 +30,7 @@ class _ZoneScreenState extends State<ZoneScreen> {
   Future getBusiness() async {
     await FirebaseFirestore.instance
         .collection("business")
+        .orderBy("budgetassump", descending: false)
         .get()
         .then((QuerySnapshot snapshot) => {
               snapshot.docs.forEach((documents) async {
@@ -262,7 +263,7 @@ class _ZoneScreenState extends State<ZoneScreen> {
                       width: 35.0,
                     ),
                     Expanded(
-                      child: Text('Revenue: ${widget.revenue}',
+                      child: Text('Revenue: ₱${widget.revenue}',
                           style: const TextStyle(
                             color: Color.fromARGB(255, 44, 45, 48),
                             fontSize: 16.0,

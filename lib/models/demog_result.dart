@@ -23,9 +23,9 @@ import 'package:printing/printing.dart'; */
 class DemogResult extends StatefulWidget {
   const DemogResult(
       {super.key,
-        required this.marker,
-        required this.budget,
-        required this.ideal});
+      required this.marker,
+      required this.budget,
+      required this.ideal});
   final String marker, ideal, budget;
   @override
   State<DemogResult> createState() => _DemogResultState();
@@ -103,9 +103,9 @@ class _DemogResultState extends State<DemogResult> {
         .collection("pinnedlocation")
         .add(pinnedData)
         .then((documentSnapshot) => {
-      debugPrint("savedData")
-      //showing if data is saved
-    })
+              debugPrint("savedData")
+              //showing if data is saved
+            })
         .catchError((error) {
       ScaffoldMessenger.of(context).showSnackBar(error);
     });
@@ -116,20 +116,20 @@ class _DemogResultState extends State<DemogResult> {
         context,
         MaterialPageRoute(
             builder: (context) => SyncLineChart(
-              markerid: widget.marker,
-              suggestedbusiness: businessname,
-              //         markerid: widget.budget,
-            )));
+                  markerid: widget.marker,
+                  suggestedbusiness: businessname,
+                  //         markerid: widget.budget,
+                )));
   }
 
   Future getBusinessData() async {
     CollectionReference business =
-    FirebaseFirestore.instance.collection("business");
+        FirebaseFirestore.instance.collection("business");
     // var bud = widget.budget.trim();
     String budgetf = widget.budget.toString();
     final docRef = business.where("budgetassump", isEqualTo: budgetf);
     await docRef.get().then(
-          (QuerySnapshot doc) {
+      (QuerySnapshot doc) {
         doc.docs.forEach((documents) async {
           var data = documents.data() as Map;
           //  debugPrint(data);
@@ -171,7 +171,7 @@ class _DemogResultState extends State<DemogResult> {
   @override
   Widget build(BuildContext context) {
     CollectionReference mark =
-    FirebaseFirestore.instance.collection("testmarkers");
+        FirebaseFirestore.instance.collection("testmarkers");
     final String con = widget.marker.trim(); //this still has problem
     return FutureBuilder<DocumentSnapshot>(
       future: mark.doc(con).get(),
@@ -185,7 +185,7 @@ class _DemogResultState extends State<DemogResult> {
         }
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
-          snapshot.data!.data() as Map<String, dynamic>;
+              snapshot.data!.data() as Map<String, dynamic>;
           String placename = data['place'];
           //for land size
           String landstr = data['land_size'].toString();
@@ -257,287 +257,361 @@ class _DemogResultState extends State<DemogResult> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const SizedBox(
-                                  height: 10.0,
-                                ),
-                                DemogPlace(data: data),
-                                Container(
-                                  padding: const EdgeInsets.fromLTRB(35, 15, 35, 5),
-                                  color: Colors.white,
-                                  child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: const <Widget>[
-                                  const Center(
-                                    child: Text("Population\t\t", //POPULATION
-                                        style: TextStyle(
-                                            color: Color.fromARGB(255, 44, 45, 48),
-                                            fontSize: 15.0)),
-                                  ),
-                                       const Center(
-                                      child: const Tooltip(
-                                        textStyle: TextStyle(color: Colors.black),
-                                        decoration: BoxDecoration(
-                                            color: Colors.white),
-                                      message: 'Population of the pinned zone',
-                                      triggerMode: TooltipTriggerMode.tap, // ensures the label appears when tapped
-                                      preferBelow: false, // use this if you want the label above the widget
-                                      child: Icon(Icons.info_outline, size: 15,
-                                        color: Color.fromARGB(255, 65, 99, 200),),
-                                    ),// <-- Text
-                                  ),
-                                ])),
-
-                                DemogPopulation(
-                                    popstrB: popstrB
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            DemogPlace(data: data),
+                            Container(
+                                padding:
+                                    const EdgeInsets.fromLTRB(35, 15, 35, 5),
+                                color: Colors.white,
+                                child: const Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      const Center(
+                                        child: Text(
+                                            "Population\t\t", //POPULATION
+                                            style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 44, 45, 48),
+                                                fontSize: 15.0)),
+                                      ),
+                                      const Center(
+                                        child: const Tooltip(
+                                          textStyle:
+                                              TextStyle(color: Colors.black),
+                                          decoration: BoxDecoration(
+                                              color: Colors.white),
+                                          message:
+                                              'Population of the pinned zone',
+                                          triggerMode: TooltipTriggerMode
+                                              .tap, // ensures the label appears when tapped
+                                          preferBelow:
+                                              false, // use this if you want the label above the widget
+                                          child: Icon(
+                                            Icons.info_outline,
+                                            size: 15,
+                                            color: Color.fromARGB(
+                                                255, 65, 99, 200),
+                                          ),
+                                        ), // <-- Text
+                                      ),
+                                    ])),
+                            DemogPopulation(
+                                popstrB: popstrB
+                                    .replaceAllMapped(reg, mathFunc)
+                                    .toString()),
+                            Container(
+                                padding:
+                                    const EdgeInsets.fromLTRB(35, 10, 35, 5),
+                                color: Colors.white,
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const <Widget>[
+                                      const Center(
+                                        child: Text(
+                                            "Revenue per year\t\t", //REVENUE PER YEAR
+                                            style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 44, 45, 48),
+                                                fontSize: 15.0)), // <-- Text
+                                      ),
+                                      const Center(
+                                        child: const Tooltip(
+                                          textStyle:
+                                              TextStyle(color: Colors.black),
+                                          decoration: BoxDecoration(
+                                              color: Colors.white),
+                                          message:
+                                              'Revenue per year of the pinned zone',
+                                          triggerMode: TooltipTriggerMode
+                                              .tap, // ensures the label appears when tapped
+                                          preferBelow:
+                                              false, // use this if you want the label above the widget
+                                          child: Icon(
+                                            Icons.info_outline,
+                                            size: 15,
+                                            color: Color.fromARGB(
+                                                255, 65, 99, 200),
+                                          ),
+                                        ), // <-- Text
+                                      ),
+                                    ])),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
+                              color: Colors.white,
+                              child: Center(
+                                child: Text(
+                                    '₱' +
+                                        revstrB
+                                            .replaceAllMapped(reg, mathFunc)
+                                            .toString(), //REVENUE PER YEAR
+                                    style: const TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 20.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                                padding:
+                                    const EdgeInsets.fromLTRB(35, 10, 35, 5),
+                                color: Colors.white,
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const <Widget>[
+                                      const Center(
+                                        child: Text(
+                                            "Land per SqM\t\t", //LAND PER SQ
+                                            style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 44, 45, 48),
+                                                fontSize: 15.0)), // <-- Text
+                                      ),
+                                      const Center(
+                                        child: const Tooltip(
+                                          textStyle:
+                                              TextStyle(color: Colors.black),
+                                          decoration: BoxDecoration(
+                                              color: Colors.white),
+                                          message:
+                                              'Land value per square meter in peso',
+                                          triggerMode: TooltipTriggerMode
+                                              .tap, // ensures the label appears when tapped
+                                          preferBelow:
+                                              false, // use this if you want the label above the widget
+                                          child: Icon(
+                                            Icons.info_outline,
+                                            size: 15,
+                                            color: Color.fromARGB(
+                                                255, 65, 99, 200),
+                                          ),
+                                        ), // <-- Text
+                                      ),
+                                    ])),
+                            LandPerSQM(landstr: landstr),
+                            Container(
+                                padding:
+                                    const EdgeInsets.fromLTRB(35, 10, 35, 5),
+                                color: Colors.white,
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const <Widget>[
+                                      const Center(
+                                        child: Text(
+                                            "Budget required for the area\t\t",
+                                            //BUDGET REQUIRED FOR THE AREA
+                                            style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 44, 45, 48),
+                                                fontSize: 15.0)), // <-- Text
+                                      ),
+                                      const Center(
+                                        child: const Tooltip(
+                                          textStyle:
+                                              TextStyle(color: Colors.black),
+                                          decoration: BoxDecoration(
+                                              color: Colors.white),
+                                          message:
+                                              'Budget required for the area (per sqm) in peso',
+                                          triggerMode: TooltipTriggerMode
+                                              .tap, // ensures the label appears when tapped
+                                          preferBelow:
+                                              false, // use this if you want the label above the widget
+                                          child: Icon(
+                                            Icons.info_outline,
+                                            size: 15,
+                                            color: Color.fromARGB(
+                                                255, 65, 99, 200),
+                                          ),
+                                        ), // <-- Text
+                                      ),
+                                    ])),
+                            BudgetRequiredArea(
+                                landbudgetstrB: '₱' +
+                                    landbudgetstrB
                                         .replaceAllMapped(reg, mathFunc)
                                         .toString()),
-                                Container(
-                                  padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
-                                  color: Colors.white,
-                                  child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: const <Widget>[
-                                 const Center(
-                                    child: Text(
-                                        "Revenue per year\t\t", //REVENUE PER YEAR
-                                        style: TextStyle(
-                                            color: Color.fromARGB(255, 44, 45, 48),
-                                            fontSize: 15.0)), // <-- Text
-                                  ),
-                                        const Center(
-                                          child: const Tooltip(
-                                            textStyle: TextStyle(color: Colors.black),
-                                            decoration: BoxDecoration(
-                                                color: Colors.white),
-                                            message: 'Revenue per year of the pinned zone',
-                                            triggerMode: TooltipTriggerMode.tap, // ensures the label appears when tapped
-                                            preferBelow: false, // use this if you want the label above the widget
-                                            child: Icon(Icons.info_outline, size: 15,
-                                              color: Color.fromARGB(255, 65, 99, 200),),
-                                          ),// <-- Text
-                                        ),
-                                      ])),
-                                Container(
-                                  padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
-                                  color: Colors.white,
-                                  child: Center(
-                                    child: Text(
-                                        '₱' +
-                                            revstrB
-                                                .replaceAllMapped(reg, mathFunc)
-                                                .toString(), //REVENUE PER YEAR
-                                        style: const TextStyle(
-                                            color: Color.fromARGB(255, 44, 45, 48),
-                                            fontSize: 20.0)), // <-- Text
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
-                                  color: Colors.white,
-                                  child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: const <Widget>[
-                                 const Center(
-                                    child: Text("Land per SqM\t\t", //LAND PER SQ
-                                        style: TextStyle(
-                                            color: Color.fromARGB(255, 44, 45, 48),
-                                            fontSize: 15.0)), // <-- Text
-                                  ),
-                                        const Center(
-                                          child: const Tooltip(
-                                            textStyle: TextStyle(color: Colors.black),
-                                            decoration: BoxDecoration(
-                                                color: Colors.white),
-                                            message: 'Land value per square meter in peso',
-                                            triggerMode: TooltipTriggerMode.tap, // ensures the label appears when tapped
-                                            preferBelow: false, // use this if you want the label above the widget
-                                            child: Icon(Icons.info_outline, size: 15,
-                                              color: Color.fromARGB(255, 65, 99, 200),),
-                                          ),// <-- Text
-                                        ),
-                                      ])),
-
-                                LandPerSQM(landstr: landstr),
-                                Container(
-                                  padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
-                                  color: Colors.white,
-                                  child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: const <Widget>[
-                                const Center(
-                                    child: Text("Budget required for the area\t\t",
-                                        //BUDGET REQUIRED FOR THE AREA
-                                        style: TextStyle(
-                                            color: Color.fromARGB(255, 44, 45, 48),
-                                            fontSize: 15.0)), // <-- Text
-                                  ),
-                                        const Center(
-                                          child: const Tooltip(
-                                            textStyle: TextStyle(color: Colors.black),
-                                            decoration: BoxDecoration(
-                                                color: Colors.white),
-                                            message: 'Budget required for the area (per sqm) in peso',
-                                            triggerMode: TooltipTriggerMode.tap, // ensures the label appears when tapped
-                                            preferBelow: false, // use this if you want the label above the widget
-                                            child: Icon(Icons.info_outline, size: 15,
-                                              color: Color.fromARGB(255, 65, 99, 200),),
-                                          ),// <-- Text
-                                        ),
-                                      ])),
-                                BudgetRequiredArea(
-                                    landbudgetstrB: '₱' +
-                                        landbudgetstrB
-                                            .replaceAllMapped(reg, mathFunc)
-                                            .toString()),
-                                Container(
-                                  padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
-                                  color: Colors.white,
-                                  child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: const <Widget>[
-                                  const Center(
-                                    child: Text(
-                                        textAlign: TextAlign.justify,
-                                        "The Feasibilty (%) of your ideal \n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tbusiness is\t\t",
-                                        style: TextStyle(
-                                            color: Color.fromARGB(255, 65, 99, 200),
-                                            fontSize: 16.0)), // <-- Text
-                                  ),
-                                        const Center(
-                                          child: const Tooltip(
-                                            textStyle: TextStyle(color: Colors.black),
-                                            decoration: BoxDecoration(
-                                                color: Colors.white),
-                                            message: 'Percentage of how feasible your business is',
-                                            triggerMode: TooltipTriggerMode.tap, // ensures the label appears when tapped
-                                            preferBelow: false, // use this if you want the label above the widget
-                                            child: Icon(Icons.info_outline, size: 15,
-                                              color: Color.fromARGB(255, 65, 99, 200),),
-                                          ),// <-- Text
-                                        ),
-                                      ])),
-
-                                IdealBusinessResult(resultfinal: resultfinal),
-                                Container(
-                                  padding: const EdgeInsets.fromLTRB(35, 5, 35, 10),
-                                  color: Colors.white,
-                                  child: const Center(
-                                    child: Text("ideal",
-                                        // ideal ni user
-                                        style: TextStyle(
-                                            color: Color.fromARGB(255, 65, 99, 200),
-                                            fontSize: 21.0)), // <-- Text
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.fromLTRB(35, 2, 35, 5),
-                                  color: Colors.white,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: const <Widget>[
-                                  const Center(
-                                    child: Text("Business Type Selected\t\t",
-                                        style: TextStyle(
-                                            color: Color.fromARGB(255, 44, 45, 48),
-                                            fontSize: 15.0)), // <-- Text
-                                  ),
-                                        const Center(
-                                          child: const Tooltip(
-                                            textStyle: TextStyle(color: Colors.black),
-                                            decoration: BoxDecoration(
-                                                color: Colors.white),
-                                            message: 'Business type you selected',
-                                            triggerMode: TooltipTriggerMode.tap, // ensures the label appears when tapped
-                                            preferBelow: false, // use this if you want the label above the widget
-                                            child: Icon(Icons.info_outline, size: 15,
-                                              color: Color.fromARGB(255, 65, 99, 200),),
-                                          ),// <-- Text
-                                        ),
-                                      ])),
-
-                                Container(
-                                  padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
-                                  color: Colors.white,
-                                  child: Center(
-                                    child: Text(widget.ideal,
-                                        //BUDGET REQUIRED FOR THE AREA
-                                        style: const TextStyle(
-                                            color: Color.fromARGB(255, 44, 45, 48),
-                                            fontSize: 20.0)), // <-- Text
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.fromLTRB(35, 2, 35, 5),
-                                  color: Colors.white,
-                                  child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: const <Widget>[
-                                 const Center(
-                                    child: Text("Suggested business for you\t\t",
-                                        style: TextStyle(
-                                            color: Color.fromARGB(255, 44, 45, 48),
-                                            fontSize: 15.0)), // <-- Text
-                                  ),
-                                        const Center(
-                                          child: const Tooltip(
-                                            textStyle: TextStyle(color: Colors.black),
-                                            decoration: BoxDecoration(
-                                                color: Colors.white),
-                                            message: 'Business type suggested for you',
-                                            triggerMode: TooltipTriggerMode.tap, // ensures the label appears when tapped
-                                            preferBelow: false, // use this if you want the label above the widget
-                                            child: Icon(Icons.info_outline, size: 15,
-                                              color: Color.fromARGB(255, 65, 99, 200),
-                                          ),// <-- Text
-                                        ),
-                                        )])),
-
-                                Container(
-                                  padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
-                                  color: Colors.white,
-                                    child: TextButton(
-                                      onPressed: () async {
-                                        StatisForecastingNavBar(context);
-                                      },
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Text(businessname, style: const TextStyle(
-                                              color: Color.fromARGB(255, 65, 99, 200),
-                                              fontSize: 20.0)),
-                                          Icon(Icons.arrow_forward_ios_rounded,
-                                            size: 20.0,
-                                            color: Color.fromARGB(255, 65, 99, 200),
+                            Container(
+                                padding:
+                                    const EdgeInsets.fromLTRB(35, 10, 35, 5),
+                                color: Colors.white,
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const <Widget>[
+                                      const Center(
+                                        child: Text(
+                                            textAlign: TextAlign.justify,
+                                            "The Feasibilty (%) of your ideal \n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tbusiness is\t\t",
+                                            style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 65, 99, 200),
+                                                fontSize: 16.0)), // <-- Text
+                                      ),
+                                      const Center(
+                                        child: const Tooltip(
+                                          textStyle:
+                                              TextStyle(color: Colors.black),
+                                          decoration: BoxDecoration(
+                                              color: Colors.white),
+                                          message:
+                                              'Percentage of how feasible your business is',
+                                          triggerMode: TooltipTriggerMode
+                                              .tap, // ensures the label appears when tapped
+                                          preferBelow:
+                                              false, // use this if you want the label above the widget
+                                          child: Icon(
+                                            Icons.info_outline,
+                                            size: 15,
+                                            color: Color.fromARGB(
+                                                255, 65, 99, 200),
                                           ),
-                                        ],),)),
-
-                                Container(
-                                    padding:
+                                        ), // <-- Text
+                                      ),
+                                    ])),
+                            IdealBusinessResult(resultfinal: resultfinal),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(35, 5, 35, 10),
+                              color: Colors.white,
+                              child: const Center(
+                                child: Text("ideal",
+                                    // ideal ni user
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 65, 99, 200),
+                                        fontSize: 21.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                                padding:
+                                    const EdgeInsets.fromLTRB(35, 2, 35, 5),
+                                color: Colors.white,
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const <Widget>[
+                                      const Center(
+                                        child: Text(
+                                            "Business Type Selected\t\t",
+                                            style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 44, 45, 48),
+                                                fontSize: 15.0)), // <-- Text
+                                      ),
+                                      const Center(
+                                        child: const Tooltip(
+                                          textStyle:
+                                              TextStyle(color: Colors.black),
+                                          decoration: BoxDecoration(
+                                              color: Colors.white),
+                                          message: 'Business type you selected',
+                                          triggerMode: TooltipTriggerMode
+                                              .tap, // ensures the label appears when tapped
+                                          preferBelow:
+                                              false, // use this if you want the label above the widget
+                                          child: Icon(
+                                            Icons.info_outline,
+                                            size: 15,
+                                            color: Color.fromARGB(
+                                                255, 65, 99, 200),
+                                          ),
+                                        ), // <-- Text
+                                      ),
+                                    ])),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
+                              color: Colors.white,
+                              child: Center(
+                                child: Text(widget.ideal,
+                                    //BUDGET REQUIRED FOR THE AREA
+                                    style: const TextStyle(
+                                        color: Color.fromARGB(255, 44, 45, 48),
+                                        fontSize: 20.0)), // <-- Text
+                              ),
+                            ),
+                            Container(
+                                padding:
+                                    const EdgeInsets.fromLTRB(35, 2, 35, 5),
+                                color: Colors.white,
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const <Widget>[
+                                      const Center(
+                                        child: Text(
+                                            "Suggested business for you\t\t",
+                                            style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 44, 45, 48),
+                                                fontSize: 15.0)), // <-- Text
+                                      ),
+                                      const Center(
+                                        child: const Tooltip(
+                                          textStyle:
+                                              TextStyle(color: Colors.black),
+                                          decoration: BoxDecoration(
+                                              color: Colors.white),
+                                          message:
+                                              'Business type suggested for you',
+                                          triggerMode: TooltipTriggerMode
+                                              .tap, // ensures the label appears when tapped
+                                          preferBelow:
+                                              false, // use this if you want the label above the widget
+                                          child: Icon(
+                                            Icons.info_outline,
+                                            size: 15,
+                                            color: Color.fromARGB(
+                                                255, 65, 99, 200),
+                                          ), // <-- Text
+                                        ),
+                                      )
+                                    ])),
+                            Container(
+                                padding:
+                                    const EdgeInsets.fromLTRB(35, 0, 35, 10),
+                                color: Colors.white,
+                                child: TextButton(
+                                  onPressed: () async {
+                                    StatisForecastingNavBar(context);
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(businessname,
+                                          style: const TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 65, 99, 200),
+                                              fontSize: 20.0)),
+                                      Icon(
+                                        Icons.arrow_forward_ios_rounded,
+                                        size: 20.0,
+                                        color: Color.fromARGB(255, 65, 99, 200),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                            Container(
+                                padding:
                                     const EdgeInsets.fromLTRB(10, 5, 10, 20),
-                                    color: Colors.white,
-                                    child: Row(
-                                        mainAxisAlignment:
+                                color: Colors.white,
+                                child: Row(
+                                    mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
-                                        children: <Widget>[
-                                          Expanded(
-                                              child: ElevatedButton.icon(
-                                                  style: ElevatedButton.styleFrom(
-                                                    elevation: 0.0,
-                                                    padding:
+                                    children: <Widget>[
+                                      Expanded(
+                                          child: ElevatedButton.icon(
+                                              style: ElevatedButton.styleFrom(
+                                                elevation: 0.0,
+                                                padding:
                                                     const EdgeInsets.all(10.0),
-                                                    primary: const Color.fromARGB(
-                                                        255,
-                                                        0,
-                                                        110,
-                                                        195), // background
-                                                    shape: RoundedRectangleBorder(
-                                                        borderRadius:
+                                                primary: const Color.fromARGB(
+                                                    255,
+                                                    0,
+                                                    110,
+                                                    195), // background
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
                                                         BorderRadius.circular(
                                                             5.0)),
-                                                    minimumSize: const Size(
-                                                        70, 40), //////// HERE
-                                                  ),
-                                                  onPressed: () async {
+                                                minimumSize: const Size(
+                                                    70, 40), //////// HERE
+                                              ),
+                                              onPressed: () async {
                                                 int count = 0;
 
                                                 final image =
@@ -555,7 +629,7 @@ class _DemogResultState extends State<DemogResult> {
                                                 Navigator.of(context).popUntil(
                                                     (_) => count++ >= 2);
 
-                                                    /*    Printing.layoutPdf(
+                                                /*    Printing.layoutPdf(
                                                   onLayout:
                                                       (PdfPageFormat format) {
                                                     // Any valid Pdf document can be returned here as a list of int
@@ -572,61 +646,61 @@ class _DemogResultState extends State<DemogResult> {
                                                         placename);
                                                   },
                                                 ); */
-                                                  },
-                                                  icon: const Icon(
-                                                    Icons.file_download_outlined,
-                                                    size: 18.0,
-                                                  ),
-                                                  label: const Text(
-                                                    "Download",
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  ))),
-                                          //Spacer(),
-                                          const SizedBox(
-                                            width: 10.0,
-                                          ),
-                                          Expanded(
-                                              child: TextButton(
-                                                onPressed: () async {
-                                                  /*  await StatisForecastingNavBar(
+                                              },
+                                              icon: const Icon(
+                                                Icons.file_download_outlined,
+                                                size: 18.0,
+                                              ),
+                                              label: const Text(
+                                                "Download",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ))),
+                                      //Spacer(),
+                                      const SizedBox(
+                                        width: 10.0,
+                                      ),
+                                      Expanded(
+                                          child: TextButton(
+                                        onPressed: () async {
+                                          /*  await StatisForecastingNavBar(
                                               context); */
 
-                                                  await Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              ForecastingNavBar(
-                                                                markerid: widget.marker,
-                                                                businessname:
-                                                                businessname,
-                                                                //         markerid: widget.budget,
-                                                              )));
+                                          await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ForecastingNavBar(
+                                                        markerid: widget.marker,
+                                                        businessname:
+                                                            businessname,
+                                                        //         markerid: widget.budget,
+                                                      )));
 
-                                                  await saveDatePinned(pinnedData);
-                                                  /*     Navigator.push(
+                                          await saveDatePinned(pinnedData);
+                                          /*     Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) =>
                                                               SyncLineChart(
                                                                 markerid: widget.marker,
                                                               ))); */
-                                                  //getMarkerData();
-                                                  //   getBusinessData();
-                                                },
-                                                style: TextButton.styleFrom(
-                                                  minimumSize:
-                                                  const Size(70, 40), //<-- SEE HERE
-                                                  side: const BorderSide(
-                                                    color: Color.fromARGB(
-                                                        255, 0, 110, 195),
-                                                    width: 3,
-                                                  ),
-                                                ),
-                                                child: const Text('Done'),
-                                              ))
-                                        ]))
-                              ])))));
+                                          //getMarkerData();
+                                          //   getBusinessData();
+                                        },
+                                        style: TextButton.styleFrom(
+                                          minimumSize:
+                                              const Size(70, 40), //<-- SEE HERE
+                                          side: const BorderSide(
+                                            color: Color.fromARGB(
+                                                255, 0, 110, 195),
+                                            width: 3,
+                                          ),
+                                        ),
+                                        child: const Text('Done'),
+                                      ))
+                                    ]))
+                          ])))));
 /*
           return Scaffold(
               backgroundColor: const Color.fromARGB(255, 241, 242, 242),
@@ -864,7 +938,7 @@ class _DemogResultState extends State<DemogResult> {
         }
         return const Center(
             child:
-            CircularProgressIndicator.adaptive()); //while loading the data
+                CircularProgressIndicator.adaptive()); //while loading the data
       },
     );
   }

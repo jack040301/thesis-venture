@@ -74,15 +74,16 @@ class _BottomNavState extends State<BottomNav> {
         unselectedFontSize: 18,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon:ImageIcon(AssetImage("assets/images/icons/lineChartIcon.png")),
+            icon:
+                ImageIcon(AssetImage("assets/images/icons/lineChartIcon.png")),
             label: 'Line Chart',
           ),
           BottomNavigationBarItem(
-            icon:ImageIcon(AssetImage("assets/images/icons/barChartIcon.png")),
+            icon: ImageIcon(AssetImage("assets/images/icons/barChartIcon.png")),
             label: 'Bar Chart',
           ),
           BottomNavigationBarItem(
-            icon:ImageIcon(AssetImage("assets/images/icons/pieChartIcon.png")),
+            icon: ImageIcon(AssetImage("assets/images/icons/pieChartIcon.png")),
             label: 'Pie Chart',
           ),
         ],
