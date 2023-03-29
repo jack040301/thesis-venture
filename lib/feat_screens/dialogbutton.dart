@@ -297,7 +297,7 @@ class DialogQuestion {
                       hint: const Text('Choose your Budget Range'),
                       style: const TextStyle(
                         color: Color.fromARGB(255, 74, 74, 74),
-                        fontSize: 15.0,
+                        fontSize: 13.0,
                       ),
                     ),
 
@@ -368,7 +368,6 @@ class DialogQuestion {
                         style: const TextStyle(
                           color: Color.fromARGB(255, 65, 99, 200),
                         )),
-
                     /*   TextFormField(
                         controller: areaController,
                         enableInteractiveSelection: false,

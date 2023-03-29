@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../userInfo.dart';
+import 'deletehistorycard_dialog.dart';
 import 'history.dart';
 
 //THE LIST VIEW CARD IN HISTORY
@@ -26,12 +27,21 @@ class ListViewHome extends State<ListViewHomeLayout> {
 /*   final icons = [Icons.ac_unit, Icons.access_alarm, Icons.access_time]; */
   var userid = GoogleUserStaticInfo().uid;
 
-/*   Future getHistory() async {
-    QuerySnapshot qn =
-        await firestore.collection("pinnedhistory").where(userid).get();
-    return qn.docs;
+  var SnackDialog = const SnackBar(
+    content: Text('Deleted Successfully'),
+  );
+  CollectionReference pinnedhistory =
+      FirebaseFirestore.instance.collection('pinnedlocation');
+
+  Future<void> deleteHistoryCard(historyid) {
+    return pinnedhistory
+        .doc(historyid)
+        .delete()
+        .then(
+            (value) => ScaffoldMessenger.of(context).showSnackBar(SnackDialog))
+        .catchError(
+            (error) => ScaffoldMessenger.of(context).showSnackBar(error));
   }
-  var firestore = FirebaseFirestore.instance; */
 
   @override
   Widget build(BuildContext context) {
@@ -167,6 +177,23 @@ class ListViewHome extends State<ListViewHomeLayout> {
                     height: 25,
                     width: 18.6,
                   ),
+                ),
+                trailing: Wrap(
+                  spacing: -16,
+                  children: [
+                    IconButton(
+                      icon: const Icon(
+                        Icons.delete,
+                        color: Colors.redAccent,
+                      ),
+                      onPressed: () async {
+                        DeleteHistoryCardDialog(
+                                historycardid: datadocs[index].id)
+                            .showMyDialog(context);
+                        //  await deleteHistoryCard(datadocs[index].id);
+                      },
+                    ),
+                  ],
                 ),
                 /*   trailing: Icon(icons[index])  */
               ));

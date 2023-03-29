@@ -14,6 +14,7 @@ import '../feat_screens/history.dart';
 import '../feat_screens/how_to_use_app.dart';
 import '../feat_screens/settings.dart';
 import '../feat_screens/listhistorycard.dart';
+import 'quick_guide.dart';
 
 class Discover {
   Future<void> showDiscover(BuildContext context) async {
@@ -54,7 +55,7 @@ class Discover {
                               color: Colors.white,
                               padding: const EdgeInsets.fromLTRB(20, 2, 40, 7),
                               child: const Center(
-                                child: Text("Discover how Venture workst",
+                                child: Text("Discover how Venture works",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         color: Color.fromARGB(255, 28, 28, 28),
@@ -78,7 +79,13 @@ class Discover {
                               padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
                             ),
                             GestureDetector(
-                              onTap: () async {},
+                              onTap: () async {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SliderScreen()));
+                              },
                               child: Material(
                                 color: const Color.fromARGB(255, 0, 110, 195),
                                 borderRadius: BorderRadius.circular(5.0),

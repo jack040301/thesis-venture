@@ -265,9 +265,9 @@ class _DemogResultState extends State<DemogResult> {
                                 padding:
                                     const EdgeInsets.fromLTRB(35, 15, 35, 5),
                                 color: Colors.white,
-                                child: const Row(
+                                child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
+                                    children: const <Widget>[
                                       const Center(
                                         child: Text(
                                             "Population\t\t", //POPULATION
@@ -279,9 +279,9 @@ class _DemogResultState extends State<DemogResult> {
                                       const Center(
                                         child: const Tooltip(
                                           textStyle:
-                                              TextStyle(color: Colors.black),
-                                          decoration: BoxDecoration(
-                                              color: Colors.white),
+                                              TextStyle(color: Colors.white),
+                                          decoration:
+                                              BoxDecoration(color: Colors.grey),
                                           message:
                                               'Population of the pinned zone',
                                           triggerMode: TooltipTriggerMode
@@ -319,9 +319,9 @@ class _DemogResultState extends State<DemogResult> {
                                       const Center(
                                         child: const Tooltip(
                                           textStyle:
-                                              TextStyle(color: Colors.black),
-                                          decoration: BoxDecoration(
-                                              color: Colors.white),
+                                              TextStyle(color: Colors.white),
+                                          decoration:
+                                              BoxDecoration(color: Colors.grey),
                                           message:
                                               'Revenue per year of the pinned zone',
                                           triggerMode: TooltipTriggerMode
@@ -369,9 +369,9 @@ class _DemogResultState extends State<DemogResult> {
                                       const Center(
                                         child: const Tooltip(
                                           textStyle:
-                                              TextStyle(color: Colors.black),
-                                          decoration: BoxDecoration(
-                                              color: Colors.white),
+                                              TextStyle(color: Colors.white),
+                                          decoration:
+                                              BoxDecoration(color: Colors.grey),
                                           message:
                                               'Land value per square meter in peso',
                                           triggerMode: TooltipTriggerMode
@@ -407,9 +407,9 @@ class _DemogResultState extends State<DemogResult> {
                                       const Center(
                                         child: const Tooltip(
                                           textStyle:
-                                              TextStyle(color: Colors.black),
-                                          decoration: BoxDecoration(
-                                              color: Colors.white),
+                                              TextStyle(color: Colors.white),
+                                          decoration:
+                                              BoxDecoration(color: Colors.grey),
                                           message:
                                               'Budget required for the area (per sqm) in peso',
                                           triggerMode: TooltipTriggerMode
@@ -449,9 +449,9 @@ class _DemogResultState extends State<DemogResult> {
                                       const Center(
                                         child: const Tooltip(
                                           textStyle:
-                                              TextStyle(color: Colors.black),
-                                          decoration: BoxDecoration(
-                                              color: Colors.white),
+                                              TextStyle(color: Colors.white),
+                                          decoration:
+                                              BoxDecoration(color: Colors.grey),
                                           message:
                                               'Percentage of how feasible your business is',
                                           triggerMode: TooltipTriggerMode
@@ -497,9 +497,9 @@ class _DemogResultState extends State<DemogResult> {
                                       const Center(
                                         child: const Tooltip(
                                           textStyle:
-                                              TextStyle(color: Colors.black),
-                                          decoration: BoxDecoration(
-                                              color: Colors.white),
+                                              TextStyle(color: Colors.white),
+                                          decoration:
+                                              BoxDecoration(color: Colors.grey),
                                           message: 'Business type you selected',
                                           triggerMode: TooltipTriggerMode
                                               .tap, // ensures the label appears when tapped
@@ -543,9 +543,9 @@ class _DemogResultState extends State<DemogResult> {
                                       const Center(
                                         child: const Tooltip(
                                           textStyle:
-                                              TextStyle(color: Colors.black),
-                                          decoration: BoxDecoration(
-                                              color: Colors.white),
+                                              TextStyle(color: Colors.white),
+                                          decoration:
+                                              BoxDecoration(color: Colors.grey),
                                           message:
                                               'Business type suggested for you',
                                           triggerMode: TooltipTriggerMode
@@ -612,23 +612,6 @@ class _DemogResultState extends State<DemogResult> {
                                                     70, 40), //////// HERE
                                               ),
                                               onPressed: () async {
-                                                int count = 0;
-
-                                                final image =
-                                                    await screenshotController
-                                                        .capture(
-                                                            delay:
-                                                                const Duration(
-                                                                    milliseconds:
-                                                                        10),
-                                                            pixelRatio: 1.5);
-                                                if (image == null) return;
-                                                await savingImage(image);
-
-                                                // ignore: use_build_context_synchronously
-                                                Navigator.of(context).popUntil(
-                                                    (_) => count++ >= 2);
-
                                                 /*    Printing.layoutPdf(
                                                   onLayout:
                                                       (PdfPageFormat format) {

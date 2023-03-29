@@ -6,45 +6,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:main_venture/userInfo.dart';
 
-class RequestedDialog {
-  final double lat, lng;
-  RequestedDialog(this.lat, this.lng);
+class DeleteHistoryCardDialog {
+  final String historycardid;
+  DeleteHistoryCardDialog({required this.historycardid});
 
-  var RequestedPop = const SnackBar(
-    content:
-        Text('This place is requested please wait for the admin to approve it'),
+  var SnackDialog = const SnackBar(
+    content: Text('Deleted Successfully'),
   );
+  CollectionReference pinnedhistory =
+      FirebaseFirestore.instance.collection('pinnedlocation');
 
-  static const colortext = Color.fromARGB(255, 74, 74, 74);
-
-  Future savedRequestMarker(context) async {
-    GeoPoint geopoint = GeoPoint(lat, lng);
-
-    final pinnedData = {
-      "coords": geopoint,
-      "place": "None",
-      "id": "",
-      "land": 0,
-      "land_size": "",
-      "popu_future": "",
-      "popu_past": "",
-      "population": "",
-      "revenue": "",
-      "user_id_requested": GoogleUserStaticInfo().uid,
-      "request_status": false,
-    };
-
-    var db = FirebaseFirestore.instance;
-    db
-        .collection("testmarkers")
-        .add(pinnedData)
-        .then((documentSnapshot) => {
-              ScaffoldMessenger.of(context).showSnackBar(RequestedPop)
-              //showing if data is saved
-            })
-        .catchError((error) {
-      ScaffoldMessenger.of(context).showSnackBar(error);
-    });
+  Future<void> deleteHistoryCard(historyid, context) {
+    return pinnedhistory
+        .doc(historyid)
+        .delete()
+        .then(
+            (value) => ScaffoldMessenger.of(context).showSnackBar(SnackDialog))
+        .catchError(
+            (error) => ScaffoldMessenger.of(context).showSnackBar(error));
   }
 
   Future showMyDialog(BuildContext context) {
@@ -64,7 +43,7 @@ class RequestedDialog {
                     ),
                     const SizeBoxTwenty(),
                     const Text(
-                        "Do you want to Requeset this Place?\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
+                        "Are you sure you want to delete this History?\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
                         style: TextStyle(
                           color: Color.fromARGB(255, 74, 74, 74),
                           fontSize: 16.0,
@@ -74,9 +53,9 @@ class RequestedDialog {
                     SizedBox(
                       width: 200.0,
                       child: RawMaterialButton(
-                        fillColor: const Color.fromARGB(255, 0, 110, 195),
+                        fillColor: Color.fromARGB(255, 243, 87, 82),
                         onPressed: () async {
-                          await savedRequestMarker(context)
+                          await deleteHistoryCard(historycardid, context)
                               .then((_) => {Navigator.of(context).pop()});
                         },
                         elevation: 0.0,

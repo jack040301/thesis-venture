@@ -11,9 +11,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:main_venture/feat_screens/Dialogbutton.dart';
 // import 'package:main_venture/feat_screens/layer_simulation.dart';
 import 'package:main_venture/feat_screens/profilenav.dart';
-import 'package:main_venture/feat_screens/requesting.dialog.dart';
+import 'package:main_venture/feat_screens/requesting_dialog.dart';
 import 'package:main_venture/feat_screens/zonecreen.dart';
 import 'package:main_venture/models/auto_complete_results.dart';
+import 'package:main_venture/onboarding_screens/discover.dart';
 import 'package:main_venture/providers/search_places.dart';
 import 'package:main_venture/services/maps_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -554,8 +555,21 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 
           FloatingButtonUserProfile(
               UserInfofirstname: UserInfofirstname,
-              UserInfolastname:
-                  UserInfolastname), //breaking the Widget of floating button and passing the data from the stateless widget below
+              UserInfolastname: UserInfolastname),
+          FloatingActionButton(
+            disabledElevation: 0,
+            elevation: 0.0,
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            mini: true,
+            heroTag: null,
+            child: const Icon(Icons.info),
+            onPressed: () {
+              Discover().showDiscover(context);
+            },
+          ),
+
+          //breaking the Widget of floating button and passing the data from the stateless widget below
           // const HomeFloatingDialog(),
         ],
       ),
