@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { createContext, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { auth, signInWithEmailAndPassword, doc, getDoc, db } from "../firebase";
@@ -8,6 +8,7 @@ import ReactToast from "../components/Toast/toast"; /* import Component of toast
 import { ReCapt } from "./recatpcha";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import ReCAPTCHA from "react-google-recaptcha";
+
 
 import {
   MDBBtn,
@@ -37,6 +38,7 @@ function App() {
   const [password, setPassword] = useState("");
   const [check, setCheckBox] = useState(false);
   const [check2, setCheckBox2] = useState(false);
+  
 
   // const [loggedemail,setLoggedEmail] = useState("");
 
@@ -48,6 +50,10 @@ function App() {
       //   toastRef.current.showToast("Logging in....")
 
       navigate("/dashboard");
+
+    }else if(docSnap.exists() && docSnap.data().role === "moderator"){
+      navigate("/dashboard");
+
     } else {
       //Toast message
 
@@ -85,6 +91,7 @@ function App() {
           localStorage.setItem("email", user.email);
           //  setLoggedEmail(user.email)
           getdata(user.uid);
+          
         })
         .catch((error) => {
           //console.log(error)
@@ -185,7 +192,7 @@ function App() {
                 {/*<MDBCheckbox label="SampleCheckBox" checked={check} onClick={(e)=>{handleTick()}} />*/}
                 
                 <ReCAPTCHA sitekey={process.env.REACT_APP_SITE_KEY}  theme="dark" onChange={(e)=>{handleTick()}} />
-          {/*       <ReCapt check={check2} /> */}
+                {/*<ReCapt check={check2} />*/}
               </MDBCardBody>
             </MDBCard>
           </MDBCol>
