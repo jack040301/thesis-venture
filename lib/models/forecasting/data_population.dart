@@ -12,6 +12,18 @@ class BarChartModel {
   });
 }
 
+class BarDataThreeYears {
+  String year;
+  double revenue;
+  final charts.Color color;
+
+  BarDataThreeYears({
+    required this.year,
+    required this.revenue,
+    required this.color,
+  });
+}
+
 class SalesData {
   double months;
   double sales;

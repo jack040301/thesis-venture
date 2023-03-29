@@ -35,6 +35,7 @@ class SyncLineChart extends StatelessWidget {
       permit = 0,
       oneTimeCostResult = 0,
       assumptItems = 3500;
+  double totalform2ndyear = 0, totalform3rdyear = 0;
   @override
   void initState() {
     _tooltipBehavior = TooltipBehavior(enable: true);
@@ -365,6 +366,25 @@ class SyncLineChart extends StatelessWidget {
             cost: (sec * index) + firstmonth));
     dummyData2[0] = ChartData(months: "Jan", cost: firstmonth);
     //plot the first month value
+    double secondyear = dummyData2[1].cost;
+    double resultform = secondyear * 12;
+    double firstyearRevenue = dummyData2[7].cost;
+
+    totalform2ndyear = resultform + firstyearRevenue;
+    totalform3rdyear = resultform + totalform2ndyear;
+
+    final updateData = {
+      "firstyear": firstyearRevenue,
+      "secondyear": totalform2ndyear,
+      "thirdyear": totalform3rdyear,
+    };
+
+    FirebaseFirestore.instance
+        .collection('forecast')
+        .doc("8gt1T3xZKOfRPZMgkscB")
+        .set(updateData)
+        .onError((e, _) => print("Error writing document: $e"));
+
     //  dummyData2[1] = ChartData(months: "Feb", cost: secondmonth); //plot the first month value
     return <ChartSeries>[
       // Initialize line series
