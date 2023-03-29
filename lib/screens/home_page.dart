@@ -333,7 +333,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
           .collection("testmarkers")
           .where("coords", isGreaterThanOrEqualTo: greatercoordinates)
           .orderBy("coords")
-          .limit(1)
+          .limit(2)
           .get()
           .then((QuerySnapshot querySnapshot) => {
                 querySnapshot.docs.forEach((documents) async {

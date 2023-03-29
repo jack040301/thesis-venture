@@ -68,27 +68,27 @@ class _BottomNavState extends State<BottomNav> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.blue[800],
-        iconSize: 40,
+        backgroundColor: Colors.blue[900],
+        iconSize: 22,
         selectedFontSize: 18,
         unselectedFontSize: 18,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.stacked_line_chart),
+            icon:ImageIcon(AssetImage("assets/images/icons/lineChartIcon.png")),
             label: 'Line Chart',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart),
+            icon:ImageIcon(AssetImage("assets/images/icons/barChartIcon.png")),
             label: 'Bar Chart',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.pie_chart),
+            icon:ImageIcon(AssetImage("assets/images/icons/pieChartIcon.png")),
             label: 'Pie Chart',
           ),
         ],
         currentIndex: _selectedIndex,
         unselectedItemColor: Colors.white,
-        selectedItemColor: Colors.blue[600],
+        selectedItemColor: Colors.blue[200],
         onTap: _onItemTapped,
       ),
     );

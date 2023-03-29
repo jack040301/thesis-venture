@@ -137,7 +137,7 @@ class SyncLineChart extends StatelessWidget {
                               key: _printKey,
                               child: Center(
                                   child: Container(
-                                      height: 1110,
+                                      height: 1100,
                                       padding: const EdgeInsets.all(5),
                                       child: Card(
                                           elevation: 0,

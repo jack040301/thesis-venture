@@ -146,7 +146,7 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
                 ),
               ),
               const SizedBox(
-                height: 20.0,
+                height: 10.0,
               ),
               /*   Container(
                 width: 350,
@@ -268,20 +268,28 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               //   ),
               // ),
               const SizedBox(
-                height: 20.0,
+                height: 10.0,
               ),
-              SizedBox(
-                width: 480,
-                height: 50,
-                child: ElevatedButton(
+          Container(
+            padding: const EdgeInsets.all(5.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+            RawMaterialButton(
+            padding: const EdgeInsets.all(13.0),
+            fillColor: const Color.fromARGB(255, 0, 110, 195),
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5.0)),
                   onPressed: () async {
                     updateAccount();
                   },
-                  child: const Text(
-                    'Save Changes',
-                    style: TextStyle(height: 1.5, fontSize: 18),
-                  ),
-                ),
+              child: const Text(
+                'Save Changes',
+                style: TextStyle(
+                    fontSize: 16, color: Colors.white),
+              ))
+                ]),
               ),
             ],
           ),
