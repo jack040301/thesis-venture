@@ -185,7 +185,7 @@ function App() {
                 {/*<MDBCheckbox label="SampleCheckBox" checked={check} onClick={(e)=>{handleTick()}} />*/}
                 
                 <ReCAPTCHA sitekey={process.env.REACT_APP_SITE_KEY}  theme="dark" onChange={(e)=>{handleTick()}} />
-                <ReCapt check={check2} />
+          {/*       <ReCapt check={check2} /> */}
               </MDBCardBody>
             </MDBCard>
           </MDBCol>
