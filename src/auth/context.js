@@ -8,13 +8,13 @@ import {
 import { auth } from '../firebase';
 
 const UserContext = createContext();
+const userType = createContext('mod01');
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
 
    const createUser = (email, password) => {
   
-    
 
     
     return createUserWithEmailAndPassword(auth, email, password);
@@ -56,6 +56,8 @@ export const AuthContextProvider = ({ children }) => {
 export const UserAuth = () => {
   return useContext(UserContext);
 };
+
+
 
 /* export const createModAcc = (email, password) => {
   createUserWithEmailAndPassword(auth, email, password)

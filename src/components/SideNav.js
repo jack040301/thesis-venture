@@ -13,6 +13,8 @@ import {
   MDBModalFooter,
 } from "mdb-react-ui-kit";
 
+import { Moderator } from "../auth/moderatorsOnly";
+
 import ReactToast from "./Toast/toast"; /* import Component of toast */
 
 export default function SideNav({ user, setAuthState, setUser }) {
@@ -98,18 +100,18 @@ export default function SideNav({ user, setAuthState, setUser }) {
                   </NavLink>
                 </li>
 
-                <li className="nav-item">
+                <Moderator  modId={"mod01"} >
                   <NavLink to="/addmoderator" className="nav-link">
                     <i className="nav-icon fas fa-user-plus" />
                     <p>Add Moderators</p>
                   </NavLink>
-                </li>
-                <li className="nav-item">
+                </Moderator>
+                <Moderator modId={"mod01"}>
                   <NavLink to="/managemoderator" className="nav-link">
                     <i className="nav-icon fas fa-users" />
                     <p>Manage Moderators</p>
                   </NavLink>
-                </li>
+                </Moderator>
                 {/* <li className="nav-item">
                 <Link to="/request" className="nav-link">
                   <i className="nav-icon fas fa-list" />
