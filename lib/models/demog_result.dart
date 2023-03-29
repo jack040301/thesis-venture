@@ -16,7 +16,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'dart:ui' as ui;
 import 'package:syncfusion_flutter_pdf/pdf.dart';
-/* import 'package:pdf/pdf.dart';
+/* uncomment this to use the pdf package 
+import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart'; */
 
@@ -265,10 +266,10 @@ class _DemogResultState extends State<DemogResult> {
                                 padding:
                                     const EdgeInsets.fromLTRB(35, 15, 35, 5),
                                 color: Colors.white,
-                                child: Row(
+                                child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const <Widget>[
-                                      const Center(
+                                    children: <Widget>[
+                                      Center(
                                         child: Text(
                                             "Population\t\t", //POPULATION
                                             style: TextStyle(
@@ -276,8 +277,8 @@ class _DemogResultState extends State<DemogResult> {
                                                     255, 44, 45, 48),
                                                 fontSize: 15.0)),
                                       ),
-                                      const Center(
-                                        child: const Tooltip(
+                                      Center(
+                                        child: Tooltip(
                                           textStyle:
                                               TextStyle(color: Colors.white),
                                           decoration:
@@ -305,10 +306,10 @@ class _DemogResultState extends State<DemogResult> {
                                 padding:
                                     const EdgeInsets.fromLTRB(35, 10, 35, 5),
                                 color: Colors.white,
-                                child: Row(
+                                child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const <Widget>[
-                                      const Center(
+                                    children: <Widget>[
+                                      Center(
                                         child: Text(
                                             "Revenue per year\t\t", //REVENUE PER YEAR
                                             style: TextStyle(
@@ -316,8 +317,8 @@ class _DemogResultState extends State<DemogResult> {
                                                     255, 44, 45, 48),
                                                 fontSize: 15.0)), // <-- Text
                                       ),
-                                      const Center(
-                                        child: const Tooltip(
+                                      Center(
+                                        child: Tooltip(
                                           textStyle:
                                               TextStyle(color: Colors.white),
                                           decoration:
@@ -355,10 +356,10 @@ class _DemogResultState extends State<DemogResult> {
                                 padding:
                                     const EdgeInsets.fromLTRB(35, 10, 35, 5),
                                 color: Colors.white,
-                                child: Row(
+                                child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const <Widget>[
-                                      const Center(
+                                    children: <Widget>[
+                                      Center(
                                         child: Text(
                                             "Land per SqM\t\t", //LAND PER SQ
                                             style: TextStyle(
@@ -366,8 +367,8 @@ class _DemogResultState extends State<DemogResult> {
                                                     255, 44, 45, 48),
                                                 fontSize: 15.0)), // <-- Text
                                       ),
-                                      const Center(
-                                        child: const Tooltip(
+                                      Center(
+                                        child: Tooltip(
                                           textStyle:
                                               TextStyle(color: Colors.white),
                                           decoration:
@@ -392,10 +393,10 @@ class _DemogResultState extends State<DemogResult> {
                                 padding:
                                     const EdgeInsets.fromLTRB(35, 10, 35, 5),
                                 color: Colors.white,
-                                child: Row(
+                                child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const <Widget>[
-                                      const Center(
+                                    children: <Widget>[
+                                      Center(
                                         child: Text(
                                             "Budget required for the area\t\t",
                                             //BUDGET REQUIRED FOR THE AREA
@@ -404,8 +405,8 @@ class _DemogResultState extends State<DemogResult> {
                                                     255, 44, 45, 48),
                                                 fontSize: 15.0)), // <-- Text
                                       ),
-                                      const Center(
-                                        child: const Tooltip(
+                                      Center(
+                                        child: Tooltip(
                                           textStyle:
                                               TextStyle(color: Colors.white),
                                           decoration:
@@ -434,10 +435,10 @@ class _DemogResultState extends State<DemogResult> {
                                 padding:
                                     const EdgeInsets.fromLTRB(35, 10, 35, 5),
                                 color: Colors.white,
-                                child: Row(
+                                child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const <Widget>[
-                                      const Center(
+                                    children: <Widget>[
+                                      Center(
                                         child: Text(
                                             textAlign: TextAlign.justify,
                                             "The Feasibilty (%) of your ideal \n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tbusiness is\t\t",
@@ -446,8 +447,8 @@ class _DemogResultState extends State<DemogResult> {
                                                     255, 65, 99, 200),
                                                 fontSize: 16.0)), // <-- Text
                                       ),
-                                      const Center(
-                                        child: const Tooltip(
+                                      Center(
+                                        child: Tooltip(
                                           textStyle:
                                               TextStyle(color: Colors.white),
                                           decoration:
@@ -483,10 +484,10 @@ class _DemogResultState extends State<DemogResult> {
                                 padding:
                                     const EdgeInsets.fromLTRB(35, 2, 35, 5),
                                 color: Colors.white,
-                                child: Row(
+                                child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const <Widget>[
-                                      const Center(
+                                    children: <Widget>[
+                                      Center(
                                         child: Text(
                                             "Business Type Selected\t\t",
                                             style: TextStyle(
@@ -494,8 +495,8 @@ class _DemogResultState extends State<DemogResult> {
                                                     255, 44, 45, 48),
                                                 fontSize: 15.0)), // <-- Text
                                       ),
-                                      const Center(
-                                        child: const Tooltip(
+                                      Center(
+                                        child: Tooltip(
                                           textStyle:
                                               TextStyle(color: Colors.white),
                                           decoration:
@@ -529,10 +530,10 @@ class _DemogResultState extends State<DemogResult> {
                                 padding:
                                     const EdgeInsets.fromLTRB(35, 2, 35, 5),
                                 color: Colors.white,
-                                child: Row(
+                                child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const <Widget>[
-                                      const Center(
+                                    children: <Widget>[
+                                      Center(
                                         child: Text(
                                             "Suggested business for you\t\t",
                                             style: TextStyle(
@@ -540,8 +541,8 @@ class _DemogResultState extends State<DemogResult> {
                                                     255, 44, 45, 48),
                                                 fontSize: 15.0)), // <-- Text
                                       ),
-                                      const Center(
-                                        child: const Tooltip(
+                                      Center(
+                                        child: Tooltip(
                                           textStyle:
                                               TextStyle(color: Colors.white),
                                           decoration:
@@ -577,7 +578,7 @@ class _DemogResultState extends State<DemogResult> {
                                               color: Color.fromARGB(
                                                   255, 65, 99, 200),
                                               fontSize: 20.0)),
-                                      Icon(
+                                      const Icon(
                                         Icons.arrow_forward_ios_rounded,
                                         size: 20.0,
                                         color: Color.fromARGB(255, 65, 99, 200),
@@ -612,7 +613,8 @@ class _DemogResultState extends State<DemogResult> {
                                                     70, 40), //////// HERE
                                               ),
                                               onPressed: () async {
-                                                /*    Printing.layoutPdf(
+                                                /* uncomment this to use the pdf generator   
+                                                 Printing.layoutPdf(
                                                   onLayout:
                                                       (PdfPageFormat format) {
                                                     // Any valid Pdf document can be returned here as a list of int
@@ -927,7 +929,9 @@ class _DemogResultState extends State<DemogResult> {
   }
 }
 
-/* Future<Uint8List> buildPdf(
+/* uncomment this to use the pdf generator
+
+ Future<Uint8List> buildPdf(
     PdfPageFormat format,
     String businessbudget,
     businessname,
