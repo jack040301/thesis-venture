@@ -8,6 +8,12 @@ import 'package:main_venture/models/forecasting/forecasting_population.dart';
 import 'package:main_venture/screens/home_page.dart';
 import 'package:main_venture/userInfo.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
+import 'dart:ui' as ui;
+import 'dart:io';
+
 /* import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart'; */
@@ -22,6 +28,7 @@ class PieChartForecasting extends StatelessWidget {
   late TooltipBehavior _tooltipBehavior;
   late TooltipBehavior _tooltip;
   late List<_ChartData> piedata;
+  late GlobalKey<SfCircularChartState> _cartesianChartKey;
 
   double marketcost = 0,
       laborcost = 0,
@@ -35,8 +42,9 @@ class PieChartForecasting extends StatelessWidget {
       permit = 0,
       oneTimeCostResult = 0,
       assumptItems = 3500;
-  @override
+
   void initState() {
+    _cartesianChartKey = GlobalKey();
     _tooltipBehavior = TooltipBehavior(enable: true);
     _tooltip = TooltipBehavior(enable: true);
   }
@@ -208,6 +216,7 @@ class PieChartForecasting extends StatelessWidget {
                                                         fontSize: 19.0)),
                                                 Expanded(
                                                     child: SfCircularChart(
+                                                        key: _cartesianChartKey,
                                                         tooltipBehavior:
                                                             _tooltip,
                                                         series: <CircularSeries>[
@@ -287,7 +296,11 @@ class PieChartForecasting extends StatelessWidget {
                                                                       ),
                                                                       onPressed:
                                                                           () {
-                                                                        _printScreen();
+                                                                        //   _printScreen();
+
+                                                                        _renderChartAsImage(
+                                                                            context,
+                                                                            _cartesianChartKey);
                                                                       },
                                                                       icon:
                                                                           const Icon(
@@ -418,6 +431,46 @@ Future showSnack(context, ChartPointDetails details) async {
   // ScaffoldMessenger.of(context)
   // .showSnackBar(popSnackbar.popsnackbar(a.toString()));
 }
+
+Future<void> _renderChartAsImage(context, _cartesianChartKey) async {
+  final ui.Image data =
+      await _cartesianChartKey.currentState!.toImage(pixelRatio: 3.0);
+  final ByteData? bytes = await data.toByteData(format: ui.ImageByteFormat.png);
+  final Uint8List imageBytes =
+      bytes!.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
+
+  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+    content: Text('Processing...'),
+  ));
+
+  final PdfBitmap bitmap = PdfBitmap(imageBytes);
+
+  final PdfDocument document = PdfDocument();
+  document.pageSettings.size =
+      Size(bitmap.width.toDouble(), bitmap.height.toDouble());
+  final PdfPage page = document.pages.add();
+  final Size pageSize = page.getClientSize();
+  page.graphics
+      .drawImage(bitmap, Rect.fromLTWH(0, 0, pageSize.width, pageSize.height));
+  final List<int> bits = document.saveSync();
+  document.dispose();
+  //Get external storage directory
+  final Directory directory = await getApplicationSupportDirectory();
+  //Get directory path
+  final String path = directory.path;
+  //Create an empty file to write PDF data
+  File file = File('$path/Venture_Forecast-PieChart.pdf');
+  //Write PDF bytes data
+  await file.writeAsBytes(bits, flush: true);
+  //Open the PDF document in mobile
+  OpenFile.open('$path/Venture_Forecast-PieChart.pdf');
+
+  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+    content: Text('VenturePieChart...'),
+  ));
+}
+
+
 /* Future<String> savingImage(Uint8List bytes) async {
   PopSnackbar popSnackbar = PopSnackbar();
   await [Permission.storage].request();

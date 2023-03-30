@@ -26,6 +26,11 @@ class ZoneScreen extends StatefulWidget {
 class _ZoneScreenState extends State<ZoneScreen> {
   List<DropdownData> dropdownDatas = [];
   List<DropdownDataAssumption> dropdownAssumption = [];
+  RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+  String Function(Match) mathFunc = (Match match) => '${match[1]},';
+  String popstrA = '';
+  String landbudgetstrA = '';
+  String revstrA = '';
 
   Future getBusiness() async {
     await FirebaseFirestore.instance
@@ -208,7 +213,10 @@ class _ZoneScreenState extends State<ZoneScreen> {
                       width: 15.0,
                     ),
                     Expanded(
-                      child: Text('Land Size: ${widget.land_size}',
+                      child: Text(
+                          'Land Size: ${widget.land_size}'
+                              .replaceAllMapped(reg, mathFunc)
+                              .toString(),
                           style: const TextStyle(
                             color: Color.fromARGB(255, 44, 45, 48),
                             fontSize: 16.0,
@@ -235,7 +243,10 @@ class _ZoneScreenState extends State<ZoneScreen> {
                       width: 26.0,
                     ),
                     Expanded(
-                      child: Text('Population: ${widget.population}',
+                      child: Text(
+                          'Population: ${widget.population}'
+                              .replaceAllMapped(reg, mathFunc)
+                              .toString(),
                           style: const TextStyle(
                             color: Color.fromARGB(255, 44, 45, 48),
                             fontSize: 16.0,
@@ -262,7 +273,10 @@ class _ZoneScreenState extends State<ZoneScreen> {
                       width: 35.0,
                     ),
                     Expanded(
-                      child: Text('Revenue: ${widget.revenue}',
+                      child: Text(
+                          'Revenue: ₱${widget.revenue}'
+                              .replaceAllMapped(reg, mathFunc)
+                              .toString(),
                           style: const TextStyle(
                             color: Color.fromARGB(255, 44, 45, 48),
                             fontSize: 16.0,
@@ -277,39 +291,26 @@ class _ZoneScreenState extends State<ZoneScreen> {
               Container(
                 color: Colors.white,
                 padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-              ),
-              GestureDetector(
-                onTap: () async {
-                  await DialogQuestion(
-                          widget.dataID, dropdownDatas, dropdownAssumption)
-                      .showMyDialog(context);
-                },
-                child: Material(
-                  color: const Color.fromARGB(255, 0, 110, 195),
-                  borderRadius: BorderRadius.circular(5.0),
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  child: Row(
+                child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(width: 10.0, height: 50),
-                      Text('Venture it!\t\t',
-                          style:
-                              TextStyle(color: Colors.white, fontSize: 20.0)),
-// Ink.image(
-//     image: const AssetImage(
-//         'assets/images/icons/back.png'),
-//     height: 40,
-//     width: 30),
-                    ],
-                  ),
-                ),
+                    children: <Widget>[
+                      RawMaterialButton(
+                          padding: const EdgeInsets.all(15.0),
+                          fillColor: const Color.fromARGB(255, 0, 110, 195),
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5.0)),
+                          onPressed: () async {
+                            await DialogQuestion(widget.dataID, dropdownDatas,
+                                    dropdownAssumption)
+                                .showMyDialog(context);
+                          },
+                          child: const Text(
+                            'Venture It!',
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ))
+                    ]),
               ),
-              Container(
-                color: Colors.white,
-                padding: const EdgeInsets.fromLTRB(20, 2, 20, 20),
-              ),
-
-//END
             ],
           ),
         ),

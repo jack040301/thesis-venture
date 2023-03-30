@@ -17,7 +17,7 @@ class HistoryDialog extends State<HistoryDialogLayout> {
   @override
   Widget build(BuildContext context) {
     CollectionReference mark =
-    FirebaseFirestore.instance.collection("pinnedlocation");
+        FirebaseFirestore.instance.collection("pinnedlocation");
     // final String con = widget.marker.trim(); //this still has problem
     return FutureBuilder<DocumentSnapshot>(
       future: mark.doc(widget.historyid).get(),
@@ -31,7 +31,7 @@ class HistoryDialog extends State<HistoryDialogLayout> {
         }
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
-          snapshot.data!.data() as Map<String, dynamic>;
+              snapshot.data!.data() as Map<String, dynamic>;
           String placename = data['place_name'];
           String percentage = data['percentage'];
 
@@ -65,151 +65,151 @@ class HistoryDialog extends State<HistoryDialogLayout> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SizedBox(
-                              height: 10.0,
-                            ),
-                            DemogPlace(placename: placename),
-                            Container(
-                              padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
-                              color: Colors.white,
-                              child: const Center(
-                                child: Text("Population", //POPULATION
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 44, 45, 48),
-                                        fontSize: 15.0)), // <-- Text
-                              ),
-                            ),
-                            DemogPopulation(popstrB: population),
-                            Container(
-                              padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
-                              color: Colors.white,
-                              child: const Center(
-                                child: Text("Revenue per year", //REVENUE PER YEAR
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 44, 45, 48),
-                                        fontSize: 15.0)), // <-- Text
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
-                              color: Colors.white,
-                              child: Center(
-                                child: Text('₱ $revenue', //REVENUE PER YEAR
-                                    style: const TextStyle(
-                                        color: Color.fromARGB(255, 44, 45, 48),
-                                        fontSize: 20.0)), // <-- Text
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
-                              color: Colors.white,
-                              child: const Center(
-                                child: Text("Land per SqM", //LAND PER SQ
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 44, 45, 48),
-                                        fontSize: 15.0)), // <-- Text
-                              ),
-                            ),
-                            LandPerSQM(landstr: landSize),
-                            Container(
-                              padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
-                              color: Colors.white,
-                              child: const Center(
-                                child: Text("Budget required for the area",
-                                    //BUDGET REQUIRED FOR THE AREA
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 44, 45, 48),
-                                        fontSize: 15.0)), // <-- Text
-                              ),
-                            ),
-                            BudgetRequiredArea(landbudgetstrB: '₱ $budgetRequired'),
-                            Container(
-                              padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
-                              color: Colors.white,
-                              child: const Center(
-                                child: Text(
-                                    textAlign: TextAlign.justify,
-                                    "The Feasibilty (%) of your ideal \n business is",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 65, 99, 200),
-                                        fontSize: 16.0)), // <-- Text
-                              ),
-                            ),
-                            IdealBusinessResult(resultfinal: percentage),
-                            Container(
-                              padding: const EdgeInsets.fromLTRB(35, 2, 35, 5),
-                              color: Colors.white,
-                              child: const Center(
-                                child: Text(
-                                    "Venture Suggested Business in this Place",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 44, 45, 48),
-                                        fontSize: 15.0)), // <-- Text
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
-                              color: Colors.white,
-                              child: Center(
-                                child: GestureDetector(
-                                  onTap: () {},
-                                  child: Text(idealShop,
-                                      style: const TextStyle(
-                                          color: Color.fromARGB(255, 65, 99, 200),
-                                          fontSize: 20.0)),
-                                ), // <-- Text
-                              ),
-                            ),
-                            Container(
-                                padding: const EdgeInsets.fromLTRB(10, 5, 10, 20),
-                                color: Colors.white,
-                                child: Row(
-                                    mainAxisAlignment:
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        DemogPlace(placename: placename),
+                        Container(
+                          padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
+                          color: Colors.white,
+                          child: const Center(
+                            child: Text("Population", //POPULATION
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 44, 45, 48),
+                                    fontSize: 15.0)), // <-- Text
+                          ),
+                        ),
+                        DemogPopulation(popstrB: population),
+                        Container(
+                          padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
+                          color: Colors.white,
+                          child: const Center(
+                            child: Text("Revenue per year", //REVENUE PER YEAR
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 44, 45, 48),
+                                    fontSize: 15.0)), // <-- Text
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
+                          color: Colors.white,
+                          child: Center(
+                            child: Text('₱ $revenue', //REVENUE PER YEAR
+                                style: const TextStyle(
+                                    color: Color.fromARGB(255, 44, 45, 48),
+                                    fontSize: 20.0)), // <-- Text
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
+                          color: Colors.white,
+                          child: const Center(
+                            child: Text("Land per SqM", //LAND PER SQ
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 44, 45, 48),
+                                    fontSize: 15.0)), // <-- Text
+                          ),
+                        ),
+                        LandPerSQM(landstr: landSize),
+                        Container(
+                          padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
+                          color: Colors.white,
+                          child: const Center(
+                            child: Text("Budget required for the area",
+                                //BUDGET REQUIRED FOR THE AREA
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 44, 45, 48),
+                                    fontSize: 15.0)), // <-- Text
+                          ),
+                        ),
+                        BudgetRequiredArea(landbudgetstrB: '₱ $budgetRequired'),
+                        Container(
+                          padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
+                          color: Colors.white,
+                          child: const Center(
+                            child: Text(
+                                textAlign: TextAlign.justify,
+                                "The Feasibilty (%) of your ideal \n business is",
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 65, 99, 200),
+                                    fontSize: 16.0)), // <-- Text
+                          ),
+                        ),
+                        IdealBusinessResult(resultfinal: percentage),
+                        Container(
+                          padding: const EdgeInsets.fromLTRB(35, 2, 35, 5),
+                          color: Colors.white,
+                          child: const Center(
+                            child: Text(
+                                "Venture Suggested Business in this Place",
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 44, 45, 48),
+                                    fontSize: 15.0)), // <-- Text
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
+                          color: Colors.white,
+                          child: Center(
+                            child: GestureDetector(
+                              onTap: () {},
+                              child: Text(idealShop,
+                                  style: const TextStyle(
+                                      color: Color.fromARGB(255, 65, 99, 200),
+                                      fontSize: 20.0)),
+                            ), // <-- Text
+                          ),
+                        ),
+                        Container(
+                            padding: const EdgeInsets.fromLTRB(10, 5, 10, 20),
+                            color: Colors.white,
+                            child: Row(
+                                mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
-                                    children: <Widget>[
-                                      Expanded(
-                                          child: ElevatedButton.icon(
-                                              style: ElevatedButton.styleFrom(
-                                                elevation: 0.0,
-                                                padding: const EdgeInsets.all(10.0),
-                                                primary: const Color.fromARGB(
-                                                    255, 0, 110, 195), // background
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
+                                children: <Widget>[
+                                  Expanded(
+                                      child: ElevatedButton.icon(
+                                          style: ElevatedButton.styleFrom(
+                                            elevation: 0.0,
+                                            padding: const EdgeInsets.all(10.0),
+                                            primary: const Color.fromARGB(
+                                                255, 0, 110, 195), // background
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
                                                     BorderRadius.circular(5.0)),
-                                                minimumSize: const Size(
-                                                    70, 40), //////// HERE
-                                              ),
-                                              onPressed: () async {
-                                                await Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            ForecastingNavBar(
-                                                              markerid: markerId,
-                                                              businessname:
+                                            minimumSize: const Size(
+                                                70, 40), //////// HERE
+                                          ),
+                                          onPressed: () async {
+                                            await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ForecastingNavBar(
+                                                          markerid: markerId,
+                                                          businessname:
                                                               idealShop,
-                                                            )));
-                                              },
-                                              icon: const Icon(
-                                                Icons.file_download_outlined,
-                                                size: 18.0,
-                                              ),
-                                              label: const Text(
-                                                "Show Forecast",
-                                                style:
+                                                        )));
+                                          },
+                                          icon: const Icon(
+                                            Icons.stacked_bar_chart,
+                                            size: 18.0,
+                                          ),
+                                          label: const Text(
+                                            "Show Forecast",
+                                            style:
                                                 TextStyle(color: Colors.white),
-                                              ))),
-                                      //Spacer(),
-                                      const SizedBox(
-                                        width: 10.0,
-                                      ),
-                                    ]))
-                          ]))));
+                                          ))),
+                                  //Spacer(),
+                                  const SizedBox(
+                                    width: 10.0,
+                                  ),
+                                ]))
+                      ]))));
         }
         return const Center(
             child:
-            CircularProgressIndicator.adaptive()); //while loading the data
+                CircularProgressIndicator.adaptive()); //while loading the data
       },
     );
   }

@@ -49,7 +49,7 @@ dependencies:
   #Sliding Panel
   sliding_up_panel: ^2.0.0+1
   screenshot:
-
+  syncfusion_flutter_pdf:
 
   #Carousel
   carousel_slider: ^4.1.1
@@ -82,6 +82,7 @@ dependencies:
   printing:
  # pdf: ^3.8.4
   share_plus:
+  flutter_native_screenshot: ^1.1.2
 
 dev_dependencies:
   flutter_launcher_icons: ^0.10.0

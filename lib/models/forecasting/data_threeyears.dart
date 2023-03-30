@@ -10,22 +10,17 @@ import 'dart:typed_data';
 import 'dart:math';
 
 import 'data_population.dart';
-
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'dart:ui' as ui;
 import 'dart:io';
 
-class BarchartPop extends StatelessWidget {
-  final String markerid;
-  BarchartPop({super.key, required this.markerid});
-  //const BarchartPop({super.key});
-  //const BarchartPop({super.key});
-
+class BarThreeYears extends StatelessWidget {
+  BarThreeYears({super.key});
+  //const BarThreeYears({super.key});
+  //const BarThreeYears({super.key});
   late GlobalKey<SfCartesianChartState> _cartesianChartKey;
-
-  @override
   void initState() {
     _cartesianChartKey = GlobalKey();
   }
@@ -35,10 +30,10 @@ class BarchartPop extends StatelessWidget {
     //   String docuid = markerid;
     initState();
     CollectionReference population =
-        FirebaseFirestore.instance.collection("testmarkers");
+        FirebaseFirestore.instance.collection("forecast");
 
     return FutureBuilder<DocumentSnapshot>(
-      future: population.doc(markerid).get(),
+      future: population.doc("8gt1T3xZKOfRPZMgkscB").get(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {
           return const Text("Error");
@@ -51,42 +46,51 @@ class BarchartPop extends StatelessWidget {
           Map<String, dynamic> datafirebase =
               snapshot.data!.data() as Map<String, dynamic>;
 
-          double pastPop = double.parse(datafirebase["popu_past"]);
-          double presentPop = double.parse(datafirebase["popu_present"]);
-          double futurePop = double.parse(datafirebase["popu_future"]);
+          double pastPop = datafirebase["firstyear"];
+          double presentPop = datafirebase["secondyear"];
 
-          final List<BarChartModel> data = [
-            BarChartModel(
-              year: "2015",
-              financial: pastPop,
-              color: const Color.fromARGB(255, 32, 175, 246),
+          double futurePop = datafirebase["thirdyear"];
+
+          final List<BarDataThreeYears> data = [
+            BarDataThreeYears(
+              year: "1st Year",
+              revenue: pastPop,
+              color: const Color.fromARGB(255, 76, 72, 72),
             ),
-            BarChartModel(
-              year: "2020",
-              financial: presentPop,
-              color: const Color.fromARGB(255, 14, 122, 193),
+            BarDataThreeYears(
+              year: "2nd Year",
+              revenue: presentPop,
+              color: const Color.fromARGB(255, 228, 228, 228),
             ),
-            BarChartModel(
-              year: "2025",
-              financial: futurePop,
-              color: const Color.fromARGB(255, 29, 95, 154),
+            BarDataThreeYears(
+              year: "3rd Year",
+              revenue: futurePop,
+              color: const Color.fromARGB(255, 37, 33, 33),
             ),
           ];
 
-          /*  List<charts.Series<BarChartModel, String>> series = [
+          /*   List<charts.Series<BarDataThreeYears, String>> series = [
             charts.Series(
-              id: "population",
+              id: "Revenue",
               data: data,
-              domainFn: (BarChartModel series, _) => series.year,
-              measureFn: (BarChartModel series, _) => series.financial,
-              colorFn: (BarChartModel series, _) => series.color,
-              labelAccessorFn: (BarChartModel series, _) =>
-                  series.financial.toString(),
+              domainFn: (BarDataThreeYears series, _) => series.year,
+              measureFn: (BarDataThreeYears series, _) => series.revenue,
+              colorFn: (BarDataThreeYears series, _) => series.color,
+              labelAccessorFn: (BarDataThreeYears series, _) =>
+                  series.revenue.toString(),
             ),
           ]; */
 
           return Scaffold(
               backgroundColor: const Color.fromARGB(255, 241, 242, 242),
+              appBar: AppBar(
+                  backgroundColor: Colors.transparent,
+                  title: const Text('Revenue Forecast'),
+                  foregroundColor: const Color.fromARGB(255, 44, 45, 48),
+                  elevation: 0.0,
+                  leading: const BackButton(
+                    color: Color.fromARGB(255, 44, 45, 48),
+                  )),
               body: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: SingleChildScrollView(
@@ -107,35 +111,37 @@ class BarchartPop extends StatelessWidget {
                                       padding: const EdgeInsets.fromLTRB(
                                           5, 20, 5, 10),
                                       child: Column(children: <Widget>[
-                                        const Text("Bar Chart Forecast",
+                                        const Text("Revenue Forecast",
                                             style: TextStyle(fontSize: 19.0)),
                                         Expanded(
                                             child: SfCartesianChart(
                                                 key: _cartesianChartKey,
                                                 primaryXAxis: CategoryAxis(),
                                                 series: <ChartSeries<
-                                                    BarChartModel, String>>[
+                                                    BarDataThreeYears, String>>[
                                               // Renders column chart
 
-                                              ColumnSeries<BarChartModel,
+                                              ColumnSeries<BarDataThreeYears,
                                                   String>(
                                                 dataSource: data,
                                                 xValueMapper:
-                                                    (BarChartModel data, _) =>
+                                                    (BarDataThreeYears data,
+                                                            _) =>
                                                         data.year,
                                                 yValueMapper:
-                                                    (BarChartModel data, _) =>
-                                                        data.financial
-                                                            .toDouble(),
+                                                    (BarDataThreeYears data,
+                                                            _) =>
+                                                        data.revenue.toDouble(),
                                                 pointColorMapper:
-                                                    (BarChartModel data, _) =>
+                                                    (BarDataThreeYears data,
+                                                            _) =>
                                                         data.color,
                                                 dataLabelSettings:
                                                     const DataLabelSettings(
                                                         isVisible: true),
                                               )
                                             ])
-                                            /* charts.BarChart(
+                                            /*    charts.BarChart(
                                             series,
                                             animate: true,
                                             barRendererDecorator: charts
@@ -147,7 +153,7 @@ class BarchartPop extends StatelessWidget {
                                         const Padding(
                                             padding: EdgeInsets.all(8.0),
                                             child: Text(
-                                              'The graph shows the population data from 2015 to 2020 a slight increase (1.049%) in 5 years utilizing its growth percent we can assume the forecasted population by year 2025',
+                                              'The graph shows the revenue forecast for 3 years',
                                               textAlign: TextAlign.justify,
                                               style: TextStyle(
                                                 height: 1.5,
@@ -269,11 +275,11 @@ Future<void> _renderChartAsImage(context, _cartesianChartKey) async {
   //Get directory path
   final String path = directory.path;
   //Create an empty file to write PDF data
-  File file = File('$path/Venture_Forecast-BarChart.pdf');
+  File file = File('$path/Venture_Forecast-PieChart.pdf');
   //Write PDF bytes data
   await file.writeAsBytes(bits, flush: true);
   //Open the PDF document in mobile
-  OpenFile.open('$path/Venture_Forecast-BarChart.pdf');
+  OpenFile.open('$path/Venture_Forecast-PieChart.pdf');
 
   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
     content: Text('Processing...'),

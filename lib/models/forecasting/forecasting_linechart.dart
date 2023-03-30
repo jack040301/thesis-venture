@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 // ignore: depend_on_referenced_packages
 import 'dart:typed_data';
@@ -7,10 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:main_venture/models/forecasting/forecasting_population.dart';
 import 'package:main_venture/screens/home_page.dart';
 import 'package:main_venture/userInfo.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-/* import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart'; */
+import 'package:syncfusion_flutter_pdf/pdf.dart';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 class SyncLineChart extends StatelessWidget {
   final String markerid, suggestedbusiness;
@@ -22,7 +26,7 @@ class SyncLineChart extends StatelessWidget {
   late TooltipBehavior _tooltipBehavior;
   late TooltipBehavior _tooltip;
   late List<_ChartData> piedata;
-
+  late GlobalKey<SfCartesianChartState> _cartesianChartKey;
   double marketcost = 0,
       laborcost = 0,
       foodsup = 0,
@@ -35,8 +39,10 @@ class SyncLineChart extends StatelessWidget {
       permit = 0,
       oneTimeCostResult = 0,
       assumptItems = 3500;
+  double totalform2ndyear = 0, totalform3rdyear = 0;
   @override
   void initState() {
+    _cartesianChartKey = GlobalKey();
     _tooltipBehavior = TooltipBehavior(enable: true);
     _tooltip = TooltipBehavior(enable: true);
   }
@@ -156,6 +162,7 @@ class SyncLineChart extends StatelessWidget {
                                                         fontSize: 19.0)),
                                                 Expanded(
                                                     child: SfCartesianChart(
+                                                        key: _cartesianChartKey,
                                                         legend: Legend(
                                                             isVisible: true),
                                                         tooltipBehavior:
@@ -288,6 +295,9 @@ class SyncLineChart extends StatelessWidget {
                                                                       onPressed:
                                                                           () {
                                                                         _printScreen();
+                                                                        _renderChartAsImage(
+                                                                            context,
+                                                                            _cartesianChartKey);
                                                                       },
                                                                       icon:
                                                                           const Icon(
@@ -365,6 +375,25 @@ class SyncLineChart extends StatelessWidget {
             cost: (sec * index) + firstmonth));
     dummyData2[0] = ChartData(months: "Jan", cost: firstmonth);
     //plot the first month value
+    double secondyear = dummyData2[1].cost;
+    double resultform = secondyear * 12;
+    double firstyearRevenue = dummyData2[7].cost;
+
+    totalform2ndyear = resultform + firstyearRevenue;
+    totalform3rdyear = resultform + totalform2ndyear;
+
+    final updateData = {
+      "firstyear": firstyearRevenue,
+      "secondyear": totalform2ndyear,
+      "thirdyear": totalform3rdyear,
+    };
+
+    FirebaseFirestore.instance
+        .collection('forecast')
+        .doc("8gt1T3xZKOfRPZMgkscB")
+        .set(updateData)
+        .onError((e, _) => print("Error writing document: $e"));
+
     //  dummyData2[1] = ChartData(months: "Feb", cost: secondmonth); //plot the first month value
     return <ChartSeries>[
       // Initialize line series
@@ -418,45 +447,37 @@ Future showSnack(context, ChartPointDetails details) async {
   // ScaffoldMessenger.of(context)
   // .showSnackBar(popSnackbar.popsnackbar(a.toString()));
 }
-/* Future<String> savingImage(Uint8List bytes) async {
-  PopSnackbar popSnackbar = PopSnackbar();
-  await [Permission.storage].request();
-  final time = DateTime.now()
-      .toIso8601String()
-      .replaceAll('.', '-')
-      .replaceAll(':', '-');
-  final filename = 'screenshot_$time';
-  final result = await ImageGallerySaver.saveImage(bytes, name: filename);
-  const baseColor = PdfColors.cyan;
-  // Create a PDF document.
-  final document = pw.Document();
-  final theme = pw.ThemeData.withFont(
-    base: await PdfGoogleFonts.openSansRegular(),
-    bold: await PdfGoogleFonts.openSansBold(),
-  );
-  const tableHeadersBarchart = ['Population', 'Year'];
-  document.addPage(
-    pw.Page(
-      pageFormat: format,
-      theme: theme,
-      build: (context) {
-        return pw.Column(
-          children: [
-            pw.Text('Demographical and Forecasting Report',
-                style: const pw.TextStyle(
-                  color: baseColor,
-                  fontSize: 40,
-                )),
-            pw.Divider(thickness: 4),
-            // table,
-            lineChart,
-          ],
-        );
-      },
-    ),
-  );
-  // ignore: use_build_context_synchronously
-  ScaffoldMessenger.of(context)
-      .showSnackBar(popSnackbar.popsnackbar("Sucessfully Downloaded Result"));
-  return result['filepath'];
-} */
+
+Future<void> _renderChartAsImage(context, _cartesianChartKey) async {
+  final ui.Image data =
+      await _cartesianChartKey.currentState!.toImage(pixelRatio: 3.0);
+  final ByteData? bytes = await data.toByteData(format: ui.ImageByteFormat.png);
+  final Uint8List imageBytes =
+      bytes!.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
+
+  final PdfBitmap bitmap = PdfBitmap(imageBytes);
+
+  final PdfDocument document = PdfDocument();
+  document.pageSettings.size =
+      Size(bitmap.width.toDouble(), bitmap.height.toDouble());
+  final PdfPage page = document.pages.add();
+  final Size pageSize = page.getClientSize();
+  page.graphics
+      .drawImage(bitmap, Rect.fromLTWH(0, 0, pageSize.width, pageSize.height));
+  final List<int> bits = document.saveSync();
+  document.dispose();
+  //Get external storage directory
+  final Directory directory = await getApplicationSupportDirectory();
+  //Get directory path
+  final String path = directory.path;
+  //Create an empty file to write PDF data
+  File file = File('$path/Venture_Forecast-Breakeven.pdf');
+  //Write PDF bytes data
+  await file.writeAsBytes(bits, flush: true);
+  //Open the PDF document in mobile
+  OpenFile.open('$path/Venture_Forecast-Breakeven.pdf');
+
+  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+    content: Text('Processing...'),
+  ));
+}
