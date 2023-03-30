@@ -177,8 +177,7 @@ class _DemogResultState extends State<DemogResult> {
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference mark =
-        FirebaseFirestore.instance.collection("markers");
+    CollectionReference mark = FirebaseFirestore.instance.collection("markers");
     final String con = widget.marker.trim(); //this still has problem
     return FutureBuilder<DocumentSnapshot>(
       future: mark.doc(con).get(),

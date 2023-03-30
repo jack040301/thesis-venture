@@ -345,10 +345,15 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
     //     ) )
     // );
 
+    /*   Query namequery = FirebaseFirestore.instance
+        .collection("markers")
+        .where("request_status", isEqualTo: true)
+        .where("coords", isGreaterThanOrEqualTo: greatercoordinates);
+ */
     await FirebaseFirestore.instance
         .collection("markers")
+        //   .where("request_status", isEqualTo: true)
         .where("coords", isGreaterThanOrEqualTo: greatercoordinates)
-        //.where("request_status", isEqualTo: true)
         //.orderBy("coords", descending: true)
         .limit(1)
         .get()
@@ -362,6 +367,8 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
                 //     ) )
                 // );
                 if (data['request_status'] == true) {
+                  //debugPrint("theres data");
+
                   allmarkers.add(Marker(
                       onTap: () async {
                         Navigator.push(
@@ -386,16 +393,18 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
                       icon: markerIcon,
                       position: LatLng(
                           data["coords"].latitude, data["coords"].longitude)));
+                } else {
+                  // debugPrint("no data");
                 }
               })
             });
 
     await FirebaseFirestore.instance
         .collection("markers")
-        .where("coords", isGreaterThanOrEqualTo: greatercoordinates)
-        // .where("request_status", isEqualTo: true)
-        .orderBy("coords", descending: false)
-        .limit(2)
+        .where("coords", isLessThanOrEqualTo: greatercoordinates)
+        //  .where("request_status", isEqualTo: true)
+        // .orderBy("coords", descending: false)
+        .limit(1)
         .get()
         .then((QuerySnapshot querySnapshot) => {
               querySnapshot.docs.forEach((documents) async {
@@ -428,6 +437,8 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
                       icon: markerIcon,
                       position: LatLng(
                           data["coords"].latitude, data["coords"].longitude)));
+                } else {
+                  // debugPrint("no data");
                 }
               })
             });
