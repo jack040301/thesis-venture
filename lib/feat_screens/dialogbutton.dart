@@ -222,7 +222,7 @@ class DialogQuestion {
 //TEXT BOX 2
                     const SizeBoxTwenty(),
 
-                    const Text("Enter budget for the area (per square meter)",
+                    const Text("Choose budget for the area (per square meter)",
                         style: TextStyle(
                           color: Color.fromARGB(255, 74, 74, 74),
                           fontSize: 16.0,
@@ -344,7 +344,7 @@ class DialogQuestion {
 
                     const SizeBoxTwenty(),
                     const Text(
-                        "Enter area size (per square meter)\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
+                        "Choose area size (per square meter)\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
                         style: TextStyle(
                           color: Color.fromARGB(255, 74, 74, 74),
                           fontSize: 16.0,
@@ -357,14 +357,14 @@ class DialogQuestion {
                       max: 50000,
                       divisions: 20,
                       label:
-                          " Area : ${_currentSliderValue.round().toString()}",
+                          " Area :  ${_currentSliderValue.round().toString()}",
                       onChanged: (double value) {
                         setState(() {
                           _currentSliderValue = value;
                         });
                       },
                     ),
-                    Text('Area: $_currentSliderValue',
+                    Text('Area: ₱ $_currentSliderValue',
                         style: const TextStyle(
                           color: Color.fromARGB(255, 65, 99, 200),
                         )),
