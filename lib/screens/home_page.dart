@@ -58,7 +58,12 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
         'No marker data is available for this area! please submit a request'),
   );
   var map_pinnedLoc = const SnackBar(
-    content: Text('This Area have Establishment, Please tap other Area'),
+// <<<<<<< HEAD
+    content: Text(
+        'You cant request for this restricted location. Please choose other locations to request for pinning'),
+// =======
+    // content: Text('This Area have Establishment, Please tap other Area'),
+// >>>>>>> 0d93212a53365f07b5bddcd5ad8c2c5a2a27d2c0
   );
 
 // Markers set

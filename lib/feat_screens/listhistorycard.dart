@@ -79,7 +79,7 @@ class ListViewHome extends State<ListViewHomeLayout> {
                           Container(
                             color: Colors.white,
                             padding: const EdgeInsets.fromLTRB(35, 20, 40, 7),
-                            child: const Row(
+                            child:  Row(
                               children: <Widget>[
                                 ImageIcon(
                                   AssetImage(
