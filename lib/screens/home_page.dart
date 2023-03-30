@@ -59,7 +59,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
   );
   var map_pinnedLoc = const SnackBar(
     content: Text(
-        'This Area have Establishment, Please tap other Area'),
+        'You cant request for this restricted location. Please choose other locations to request for pinning'),
   );
 
 // Markers set
