@@ -22,7 +22,7 @@ export default function Dashboard({ user, setAuthState, setUser }) {
 
   useEffect(() => {
     const collect = collection(db, "users");
-    const markersRequest = collection(db,"testmarkers")
+    const markersRequest = collection(db,"markers")
     const moderator = query(collect,where("role","==","admin"))
     const approveReq = query(markersRequest,where("request_status","==",true))
     const Reqprocess = query(markersRequest,where("request_status","==",false))
