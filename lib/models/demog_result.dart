@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
 import 'dart:typed_data';
 import 'package:screenshot/screenshot.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -40,18 +42,19 @@ class _DemogResultState extends State<DemogResult> {
   String popstrA = '';
   String landbudgetstrA = '';
   String revstrA = '';
+  //final GlobalKey _globalKey = GlobalKey();
+
   // ignore: prefer_typing_uninitialized_variables
   var businessname, businessbudget, landbudget, landrevenue, landpop;
   @override
+  final _globalKey = GlobalKey();
+
   void initState() {
     getBusinessData();
     super.initState();
   }
 
-  GlobalKey _globalKey = new GlobalKey();
-late Uint8List _imageFile;
-
-
+  late Uint8List _imageFile;
 
   Future<void> _captureScreenshot(_globalKey) async {
     try {
@@ -252,8 +255,8 @@ late Uint8List _imageFile;
                   color: Color.fromARGB(255, 44, 45, 48),
                 ),
               ),
-              body: Screenshot(
-                  controller: screenshotController,
+              body: RepaintBoundary(
+                  key: _globalKey,
                   child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: SingleChildScrollView(
@@ -616,6 +619,8 @@ late Uint8List _imageFile;
                                                     70, 40), //////// HERE
                                               ),
                                               onPressed: () async {
+                                                _demogResult(
+                                                    context, _globalKey);
                                                 /* uncomment this to use the pdf generator   
                                                  Printing.layoutPdf(
                                                   onLayout:
@@ -1121,4 +1126,37 @@ class DemogPlace extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<void> _demogResult(context, _cartesianChartKey) async {
+  ui.Image image =
+      await _cartesianChartKey.currentContext!.findRenderObject()!.toImage();
+  ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+  Uint8List imageBytes = byteData!.buffer.asUint8List();
+
+  final PdfBitmap bitmap = PdfBitmap(imageBytes);
+
+  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+    content: Text('Processing...'),
+  ));
+
+  final PdfDocument document = PdfDocument();
+  document.pageSettings.size =
+      Size(bitmap.width.toDouble(), bitmap.height.toDouble());
+  final PdfPage page = document.pages.add();
+  final Size pageSize = page.getClientSize();
+  page.graphics
+      .drawImage(bitmap, Rect.fromLTWH(0, 0, pageSize.width, pageSize.height));
+  final List<int> bits = document.saveSync();
+  document.dispose();
+  //Get external storage directory
+  final Directory directory = await getApplicationSupportDirectory();
+  //Get directory path
+  final String path = directory.path;
+  //Create an empty file to write PDF data
+  File file = File('$path/Venture_Forecast-Demographical.pdf');
+  //Write PDF bytes data
+  await file.writeAsBytes(bits, flush: true);
+  //Open the PDF document in mobile
+  OpenFile.open('$path/Venture_Forecast-Demographical.pdf');
 }
