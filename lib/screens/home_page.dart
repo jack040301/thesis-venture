@@ -408,7 +408,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
         .collection("markers")
         .where("coords", isLessThanOrEqualTo: greatercoordinates)
         //  .where("request_status", isEqualTo: true)
-        // .orderBy("coords", descending: false)
+        .orderBy("coords", descending: true)
         .limit(1)
         .get()
         .then((QuerySnapshot querySnapshot) => {
