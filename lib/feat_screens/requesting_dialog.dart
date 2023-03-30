@@ -36,7 +36,7 @@ class RequestedDialog {
 
     var db = FirebaseFirestore.instance;
     db
-        .collection("testmarkers")
+        .collection("markers")
         .add(pinnedData)
         .then((documentSnapshot) => {
               ScaffoldMessenger.of(context).showSnackBar(RequestedPop)
