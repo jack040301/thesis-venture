@@ -2,6 +2,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:main_venture/screens/home_page.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 /* import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart'; */
@@ -9,15 +10,25 @@ import 'dart:typed_data';
 import 'dart:math';
 
 import 'data_population.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
+import 'dart:ui' as ui;
+import 'dart:io';
 
 class BarThreeYears extends StatelessWidget {
-  const BarThreeYears({super.key});
+  BarThreeYears({super.key});
   //const BarThreeYears({super.key});
   //const BarThreeYears({super.key});
+  late GlobalKey<SfCartesianChartState> _cartesianChartKey;
+  void initState() {
+    _cartesianChartKey = GlobalKey();
+  }
 
   @override
   Widget build(BuildContext context) {
     //   String docuid = markerid;
+    initState();
     CollectionReference population =
         FirebaseFirestore.instance.collection("forecast");
 
@@ -44,24 +55,21 @@ class BarThreeYears extends StatelessWidget {
             BarDataThreeYears(
               year: "1st Year",
               revenue: pastPop,
-              color: charts.ColorUtil.fromDartColor(
-                  const Color.fromARGB(255, 76, 72, 72)),
+              color: const Color.fromARGB(255, 76, 72, 72),
             ),
             BarDataThreeYears(
               year: "2nd Year",
               revenue: presentPop,
-              color: charts.ColorUtil.fromDartColor(
-                  const Color.fromARGB(255, 228, 228, 228)),
+              color: const Color.fromARGB(255, 228, 228, 228),
             ),
             BarDataThreeYears(
               year: "3rd Year",
               revenue: futurePop,
-              color: charts.ColorUtil.fromDartColor(
-                  const Color.fromARGB(255, 37, 33, 33)),
+              color: const Color.fromARGB(255, 37, 33, 33),
             ),
           ];
 
-          List<charts.Series<BarDataThreeYears, String>> series = [
+          /*   List<charts.Series<BarDataThreeYears, String>> series = [
             charts.Series(
               id: "Revenue",
               data: data,
@@ -71,7 +79,7 @@ class BarThreeYears extends StatelessWidget {
               labelAccessorFn: (BarDataThreeYears series, _) =>
                   series.revenue.toString(),
             ),
-          ];
+          ]; */
 
           return Scaffold(
               backgroundColor: const Color.fromARGB(255, 241, 242, 242),
@@ -106,15 +114,42 @@ class BarThreeYears extends StatelessWidget {
                                         const Text("Revenue Forecast",
                                             style: TextStyle(fontSize: 19.0)),
                                         Expanded(
-                                          child: charts.BarChart(
+                                            child: SfCartesianChart(
+                                                key: _cartesianChartKey,
+                                                primaryXAxis: CategoryAxis(),
+                                                series: <ChartSeries<
+                                                    BarDataThreeYears, String>>[
+                                              // Renders column chart
+
+                                              ColumnSeries<BarDataThreeYears,
+                                                  String>(
+                                                dataSource: data,
+                                                xValueMapper:
+                                                    (BarDataThreeYears data,
+                                                            _) =>
+                                                        data.year,
+                                                yValueMapper:
+                                                    (BarDataThreeYears data,
+                                                            _) =>
+                                                        data.revenue.toDouble(),
+                                                pointColorMapper:
+                                                    (BarDataThreeYears data,
+                                                            _) =>
+                                                        data.color,
+                                                dataLabelSettings:
+                                                    const DataLabelSettings(
+                                                        isVisible: true),
+                                              )
+                                            ])
+                                            /*    charts.BarChart(
                                             series,
                                             animate: true,
                                             barRendererDecorator: charts
                                                 .BarLabelDecorator<String>(),
                                             domainAxis:
                                                 const charts.OrdinalAxisSpec(),
-                                          ),
-                                        ),
+                                          ), */
+                                            ),
                                         const Padding(
                                             padding: EdgeInsets.all(8.0),
                                             child: Text(
@@ -162,7 +197,11 @@ class BarThreeYears extends StatelessWidget {
                                                                         70,
                                                                         40), //////// HERE
                                                               ),
-                                                              onPressed: () {},
+                                                              onPressed: () {
+                                                                _renderChartAsImage(
+                                                                    context,
+                                                                    _cartesianChartKey);
+                                                              },
                                                               icon: const Icon(
                                                                 Icons
                                                                     .file_download_outlined,
@@ -211,4 +250,38 @@ class BarThreeYears extends StatelessWidget {
       },
     );
   }
+}
+
+Future<void> _renderChartAsImage(context, _cartesianChartKey) async {
+  final ui.Image data =
+      await _cartesianChartKey.currentState!.toImage(pixelRatio: 3.0);
+  final ByteData? bytes = await data.toByteData(format: ui.ImageByteFormat.png);
+  final Uint8List imageBytes =
+      bytes!.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
+
+  final PdfBitmap bitmap = PdfBitmap(imageBytes);
+
+  final PdfDocument document = PdfDocument();
+  document.pageSettings.size =
+      Size(bitmap.width.toDouble(), bitmap.height.toDouble());
+  final PdfPage page = document.pages.add();
+  final Size pageSize = page.getClientSize();
+  page.graphics
+      .drawImage(bitmap, Rect.fromLTWH(0, 0, pageSize.width, pageSize.height));
+  final List<int> bits = document.saveSync();
+  document.dispose();
+  //Get external storage directory
+  final Directory directory = await getApplicationSupportDirectory();
+  //Get directory path
+  final String path = directory.path;
+  //Create an empty file to write PDF data
+  File file = File('$path/Venture_Forecast-PieChart.pdf');
+  //Write PDF bytes data
+  await file.writeAsBytes(bits, flush: true);
+  //Open the PDF document in mobile
+  OpenFile.open('$path/Venture_Forecast-PieChart.pdf');
+
+  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+    content: Text('Processing...'),
+  ));
 }

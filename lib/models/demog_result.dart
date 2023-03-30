@@ -49,6 +49,9 @@ class _DemogResultState extends State<DemogResult> {
   }
 
   GlobalKey _globalKey = new GlobalKey();
+late Uint8List _imageFile;
+
+
 
   Future<void> _captureScreenshot(_globalKey) async {
     try {

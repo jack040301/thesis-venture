@@ -2,6 +2,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:main_venture/screens/home_page.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 /* import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart'; */
@@ -10,15 +11,29 @@ import 'dart:math';
 
 import 'data_population.dart';
 
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
+import 'dart:ui' as ui;
+import 'dart:io';
+
 class BarchartPop extends StatelessWidget {
   final String markerid;
-  const BarchartPop({super.key, required this.markerid});
+  BarchartPop({super.key, required this.markerid});
   //const BarchartPop({super.key});
   //const BarchartPop({super.key});
+
+  late GlobalKey<SfCartesianChartState> _cartesianChartKey;
+
+  @override
+  void initState() {
+    _cartesianChartKey = GlobalKey();
+  }
 
   @override
   Widget build(BuildContext context) {
     //   String docuid = markerid;
+    initState();
     CollectionReference population =
         FirebaseFirestore.instance.collection("testmarkers");
 
@@ -44,24 +59,21 @@ class BarchartPop extends StatelessWidget {
             BarChartModel(
               year: "2015",
               financial: pastPop,
-              color: charts.ColorUtil.fromDartColor(
-                  const Color.fromARGB(255, 32, 175, 246)),
+              color: const Color.fromARGB(255, 32, 175, 246),
             ),
             BarChartModel(
               year: "2020",
               financial: presentPop,
-              color: charts.ColorUtil.fromDartColor(
-                  const Color.fromARGB(255, 14, 122, 193)),
+              color: const Color.fromARGB(255, 14, 122, 193),
             ),
             BarChartModel(
               year: "2025",
               financial: futurePop,
-              color: charts.ColorUtil.fromDartColor(
-                  const Color.fromARGB(255, 29, 95, 154)),
+              color: const Color.fromARGB(255, 29, 95, 154),
             ),
           ];
 
-          List<charts.Series<BarChartModel, String>> series = [
+          /*  List<charts.Series<BarChartModel, String>> series = [
             charts.Series(
               id: "population",
               data: data,
@@ -71,7 +83,7 @@ class BarchartPop extends StatelessWidget {
               labelAccessorFn: (BarChartModel series, _) =>
                   series.financial.toString(),
             ),
-          ];
+          ]; */
 
           return Scaffold(
               backgroundColor: const Color.fromARGB(255, 241, 242, 242),
@@ -98,15 +110,40 @@ class BarchartPop extends StatelessWidget {
                                         const Text("Bar Chart Forecast",
                                             style: TextStyle(fontSize: 19.0)),
                                         Expanded(
-                                          child: charts.BarChart(
+                                            child: SfCartesianChart(
+                                                key: _cartesianChartKey,
+                                                primaryXAxis: CategoryAxis(),
+                                                series: <ChartSeries<
+                                                    BarChartModel, String>>[
+                                              // Renders column chart
+
+                                              ColumnSeries<BarChartModel,
+                                                  String>(
+                                                dataSource: data,
+                                                xValueMapper:
+                                                    (BarChartModel data, _) =>
+                                                        data.year,
+                                                yValueMapper:
+                                                    (BarChartModel data, _) =>
+                                                        data.financial
+                                                            .toDouble(),
+                                                pointColorMapper:
+                                                    (BarChartModel data, _) =>
+                                                        data.color,
+                                                dataLabelSettings:
+                                                    const DataLabelSettings(
+                                                        isVisible: true),
+                                              )
+                                            ])
+                                            /* charts.BarChart(
                                             series,
                                             animate: true,
                                             barRendererDecorator: charts
                                                 .BarLabelDecorator<String>(),
                                             domainAxis:
                                                 const charts.OrdinalAxisSpec(),
-                                          ),
-                                        ),
+                                          ), */
+                                            ),
                                         const Padding(
                                             padding: EdgeInsets.all(8.0),
                                             child: Text(
@@ -154,7 +191,11 @@ class BarchartPop extends StatelessWidget {
                                                                         70,
                                                                         40), //////// HERE
                                                               ),
-                                                              onPressed: () {},
+                                                              onPressed: () {
+                                                                _renderChartAsImage(
+                                                                    context,
+                                                                    _cartesianChartKey);
+                                                              },
                                                               icon: const Icon(
                                                                 Icons
                                                                     .file_download_outlined,
@@ -203,4 +244,38 @@ class BarchartPop extends StatelessWidget {
       },
     );
   }
+}
+
+Future<void> _renderChartAsImage(context, _cartesianChartKey) async {
+  final ui.Image data =
+      await _cartesianChartKey.currentState!.toImage(pixelRatio: 3.0);
+  final ByteData? bytes = await data.toByteData(format: ui.ImageByteFormat.png);
+  final Uint8List imageBytes =
+      bytes!.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
+
+  final PdfBitmap bitmap = PdfBitmap(imageBytes);
+
+  final PdfDocument document = PdfDocument();
+  document.pageSettings.size =
+      Size(bitmap.width.toDouble(), bitmap.height.toDouble());
+  final PdfPage page = document.pages.add();
+  final Size pageSize = page.getClientSize();
+  page.graphics
+      .drawImage(bitmap, Rect.fromLTWH(0, 0, pageSize.width, pageSize.height));
+  final List<int> bits = document.saveSync();
+  document.dispose();
+  //Get external storage directory
+  final Directory directory = await getApplicationSupportDirectory();
+  //Get directory path
+  final String path = directory.path;
+  //Create an empty file to write PDF data
+  File file = File('$path/Venture_Forecast-BarChart.pdf');
+  //Write PDF bytes data
+  await file.writeAsBytes(bits, flush: true);
+  //Open the PDF document in mobile
+  OpenFile.open('$path/Venture_Forecast-BarChart.pdf');
+
+  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+    content: Text('Processing...'),
+  ));
 }

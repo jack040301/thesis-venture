@@ -1,9 +1,11 @@
+import 'dart:ui';
+
 import 'package:charts_flutter/flutter.dart' as charts;
 
 class BarChartModel {
   String year;
   double financial;
-  final charts.Color color;
+  final Color color;
 
   BarChartModel({
     required this.year,
@@ -15,7 +17,7 @@ class BarChartModel {
 class BarDataThreeYears {
   String year;
   double revenue;
-  final charts.Color color;
+  final Color color;
 
   BarDataThreeYears({
     required this.year,

@@ -81,6 +81,7 @@ dependencies:
   printing:
  # pdf: ^3.8.4
   share_plus:
+  flutter_native_screenshot: ^1.1.2
 
 dev_dependencies:
   flutter_launcher_icons: ^0.10.0

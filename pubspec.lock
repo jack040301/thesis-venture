@@ -334,6 +334,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  flutter_native_screenshot:
+    dependency: "direct main"
+    description:
+      name: flutter_native_screenshot
+      sha256: "86dbc0f5b3554a1750fa7eb17a9f5e6274e6bbb7d48272370511846f88fe2c75"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.2"
   flutter_password_strength:
     dependency: "direct main"
     description:

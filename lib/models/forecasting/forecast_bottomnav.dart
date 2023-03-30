@@ -33,10 +33,8 @@ class ForecastingNavBar extends StatelessWidget {
                 color: Color.fromARGB(255, 35, 111, 197),
               ),
               onPressed: () async {
-                await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const BarThreeYears()));
+                await Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => BarThreeYears()));
 
                 /*    Navigator.push(
             MaterialPageRoute(
