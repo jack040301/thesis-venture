@@ -77,7 +77,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                 child: const Center(
                   child: Text(
-                      "Sending a request to the Venture admin requires the user to submit a form containing the Land Value, Land Size, Land Population, Population Past, Population Present, and Revenue. Response can be expected for at least 72 hours after requesting. After checking that the information provided is correct and valid, the admin will input the information provided by the user in the admin website, and the pin can now be seen on the map in the Venture mobile application.\n\n",
+                      "Sending a request to the Venture admin requires the user to pin a location on the map and proceed requesting. It will automatically be approved considering the restrictions of the map. \n\n",
                       textAlign: TextAlign.justify,
                       style: TextStyle(
                           color: Color.fromARGB(255, 44, 45, 48),
@@ -131,26 +131,36 @@ class WidgetUpgradeAccount extends StatelessWidget {
                   // icon: Icon(Icons.code),
                   //color: Colors.green,
                   onPressed: () async {
-                    new Image.asset("assets/imgaes/icons/gmail.png");
+                    ScaffoldMessenger.of(context).showSnackBar( SnackBar(
+                              content: Text(
+                                "Tap anywhere on the map where you want to request a location to be pinned and then tap again the Building icon"
+                               ))
+                          );
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HomePage()),
+                    );
+                    // new Image.asset("assets/imgaes/icons/gmail.png");
                     //new Tab(icon: new Icon(Icons.arrow_forward),
                     // icon: Icon(Icons.email, size: 18);
-                    String email = Uri.encodeComponent("ucc.venture@gmail.com");
-                    String subject =
-                        Uri.encodeComponent("Request  for Pinning Location");
-                    String body = Uri.encodeComponent(
-                        "(Fill out the necessary information below that will be used for pinning of location request, and wait for at least 72 hours for the response of the admin. The pinned location will then be reflected on the application. All information provided will be kept confidential.) \n\n Location:\n\nGeopoint\nLatitude   :\nLongitude: \n\nPopulation past: \n\nPopulation Present: \n\nLand value: \n\nLand size ( km² ): \n\nRevenue (The total earnings of the are/barangay you are at):");
-                    print(subject); //output: Hello%20Flutter
-                    Uri mail =
-                        Uri.parse("mailto:$email?subject=$subject&body=$body");
-                    if (await launchUrl(mail)) {
-                      //email app opened
-                    } else {
-                      //email app is not opened
-                    }
+                    // String email = Uri.encodeComponent("ucc.venture@gmail.com");
+                    // String subject =
+                    //     Uri.encodeComponent("Request  for Pinning Location");
+                    // String body = Uri.encodeComponent(
+                    //     "(Fill out the necessary information below that will be used for pinning of location request, and wait for at least 72 hours for the response of the admin. The pinned location will then be reflected on the application. All information provided will be kept confidential.) \n\n Location:\n\nGeopoint\nLatitude   :\nLongitude: \n\nPopulation past: \n\nPopulation Present: \n\nLand value: \n\nLand size ( km² ): \n\nRevenue (The total earnings of the are/barangay you are at):");
+                    // print(subject); //output: Hello%20Flutter
+                    // Uri mail =
+                    //     Uri.parse("mailto:$email?subject=$subject&body=$body");
+                    // if (await launchUrl(mail)) {
+                    //   //email app opened
+                    // } else {
+                    //   //email app is not opened
+                    // }
                   },
 
                   child: const Center(
-                    child: Text("Send Request",
+                    child: Text("Pin Location",
                         style: TextStyle(
                           color: Color.fromARGB(255, 255, 255, 255),
                           fontSize: 20.0,
