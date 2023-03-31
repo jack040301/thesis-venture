@@ -634,6 +634,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
             mini: true,
             heroTag: null,
             child: const Icon(Icons.info),
+            foregroundColor: Colors.blue,
             onPressed: () {
               Discover().showDiscover(context);
             },

@@ -53,13 +53,13 @@ class Discover {
                           children: [
                             Container(
                               color: Colors.white,
-                              padding: const EdgeInsets.fromLTRB(20, 2, 40, 7),
+                              //padding: const EdgeInsets.fromLTRB(20, 2, 40, 7),
                               child: const Center(
                                 child: Text("Discover how Venture works",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         color: Color.fromARGB(255, 28, 28, 28),
-                                        fontSize: 18.0)), // <-- Text
+                                        fontSize: 16.0)), // <-- Text
                               ),
                             ),
                             Container(
@@ -70,7 +70,7 @@ class Discover {
                                   Image(
                                       image: AssetImage(
                                           'assets/images/icons/CoordinatesIcon.png'),
-                                      height: 200)
+                                      height: 80)
                                 ],
                               ),
                             ),
@@ -88,16 +88,17 @@ class Discover {
                               },
                               child: Material(
                                 color: const Color.fromARGB(255, 0, 110, 195),
-                                borderRadius: BorderRadius.circular(5.0),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0)),
                                 clipBehavior: Clip.antiAliasWithSaveLayer,
                                 child:  Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    SizedBox(width: 10.0, height: 50),
+                                    SizedBox(width: 10.0, height: 35),
                                     Text('Discover!\t\t',
                                         style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 20.0)),
+                                            fontSize: 17.0)),
                                   ],
                                 ),
                               ),
