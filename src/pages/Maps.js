@@ -28,8 +28,13 @@ import {
   MDBModalFooter,
 } from "mdb-react-ui-kit";
 import ReactToast from "../components/Toast/toast"; /* import Component of toast */
+import { async } from "@firebase/util";
 
 function MapPage() {
+  const [testData, setTestData] = useState(true);
+  const [sampleData, setSampleData] = useState("caloocan");
+  const [restricted, setRestriction] = useState(true);
+
   const center = { lat: 14.774477, lng: 121.04483 };
   const [basicModal, setBasicModal] = useState(false);
   const [basicModal2, setBasicModal2] = useState(false);
@@ -50,9 +55,11 @@ function MapPage() {
   const [coorID, setCoorID] = useState("");
   let markers = [];
   let request_markers = [];
+  let restrictedLoc = [];
 
   const [data, setData] = useState(markers);
   const [datarequest, setDataRequest] = useState(request_markers);
+  const [retrict, setRestrictedCol] = useState(restrictedLoc);
 
   const [requestApprove, setRequestApprove] = useState({
     id: "",
@@ -148,7 +155,30 @@ function MapPage() {
     height: "1000px",
   };
 
+  const checkRestiction = async () => {
+    const ReqTrueQuery = query(
+      collection(db, "map_pinnedLocation")      
+    );
+    await getDocs(ReqTrueQuery).then((querySnapshot) => {
+      const newData = querySnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      const newxx = querySnapshot.docs.map((doc) => ({
+        lat: doc.data().address._lat,
+        lng: doc.data().address._long,        
+      }));
+
+      setRestrictedCol(newxx);
+      
+      console.log('Retricted locations: ', retrict);
+    });
+  };
+
+
   const addMarkers = async (e) => {
+    checkRestiction();
+
     try {
       if (
         coorlat !== null &&
@@ -170,7 +200,7 @@ function MapPage() {
       ) {
         const future = coorPresentpopu * 0.49;
 
-        const docRef = await addDoc(collection(db, "markers"), {
+        const docRef = await addDoc(collection(db, "testmarkers"), {
           coords: new GeoPoint(coorlat, coorlong),
           place: coorname,
           land: Number(coorland),
@@ -180,6 +210,7 @@ function MapPage() {
           land_size: coorlandSize,
           population: coorPopulation,
           revenue: coorRevenue,
+          request_status: testData,
         });
         toastRef.current.showToast("Successful Adding Marker");
 
@@ -198,12 +229,12 @@ function MapPage() {
 
       //alert("Error adding Marker : " , e)
 
-      //    console.error("Error adding document: ", e);
+      console.error("Error adding document: ", e);
     }
   };
 
   const updateMarkers = async (e) => {
-    const docRef = doc(db, "markers", coorID);
+    const docRef = doc(db, "testmarkers", coorID);
 
     try {
       if (
@@ -266,7 +297,7 @@ function MapPage() {
   const deleteMarkers = async (e) => {
     try {
       if (coorID !== null && coorID !== "") {
-        const delMark = await deleteDoc(doc(db, "markers", coorID));
+        const delMark = await deleteDoc(doc(db, "testmarkers", coorID));
         //success
 
         //alert("Successful delete Marker")
@@ -286,9 +317,13 @@ function MapPage() {
     }
   };
 
+  const getRestrictedLoc = async () => {
+    
+  };
+
   const fetchPost = async () => {
     const ReqTrueQuery = query(
-      collection(db, "markers"),
+      collection(db, "testmarkers"),
       where("request_status", "==", true)
     );
     await getDocs(ReqTrueQuery).then((querySnapshot) => {
@@ -309,10 +344,12 @@ function MapPage() {
       }));
 
       setData(newxx);
+      console.log('Request True: ');
     });
+    
 
     const ReqFalseQuery = query(
-      collection(db, "markers"),
+      collection(db, "testmarkers"),
       where("request_status", "==", false)
     );
 
@@ -366,7 +403,7 @@ function MapPage() {
 
   //real time in map
   useEffect(() => {
-    const collect = collection(db, "markers");
+    const collect = collection(db, "testmarkers");
 
     const approveReq = query(collect, where("request_status", "==", true));
 
@@ -478,7 +515,7 @@ function MapPage() {
         requestApprove.id !== null &&
         requestApprove.id !== ""
       ) {
-        const docRef = doc(db, "markers", requestApprove.id);
+        const docRef = doc(db, "testmarkers", requestApprove.id);
 
         const updateRequest = await updateDoc(docRef, {
           coords: new GeoPoint(requestApprove.lat, requestApprove.long),
@@ -573,6 +610,9 @@ function MapPage() {
                         }
                         key={createKey(reqmark)}
                         position={reqmark}
+                        onLoad={(e)=>{
+                          console.log('test');
+                        }}
                       />
                     ))}
 
