@@ -140,7 +140,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
                     IconButton(
                         onPressed: () async {
                           await goToWebPage(
-                              "https://www.facebook.com/people/Venture-App/pfbid0LrkH9ncYhbVpUHgTJ8Pi8quqyXKMmbhaw4fKUeSGo73xbBJwsxpcDTvj1SSvEXQsl/");
+                              "https://www.facebook.com/profile.php?id=100090538134749");
                         },
                         icon: const ImageIcon(
                           AssetImage("assets/images/icons/Facebook.png"),
