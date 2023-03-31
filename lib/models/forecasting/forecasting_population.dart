@@ -35,7 +35,7 @@ class BarchartPop extends StatelessWidget {
     //   String docuid = markerid;
     initState();
     CollectionReference population =
-        FirebaseFirestore.instance.collection("testmarkers");
+        FirebaseFirestore.instance.collection("markers");
 
     return FutureBuilder<DocumentSnapshot>(
       future: population.doc(markerid).get(),
@@ -45,6 +45,8 @@ class BarchartPop extends StatelessWidget {
         }
 
         if (snapshot.hasData && !snapshot.data!.exists) {
+          //  debugPrint(snapshot.data);
+
           return const Text("Retry");
         }
         if (snapshot.connectionState == ConnectionState.done) {
