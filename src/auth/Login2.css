@@ -37,6 +37,7 @@ body {
 .mb-5 {
   margin-top: 10px;
   font-size: 20pt;
+  height: 100px;
   margin-bottom: -10px;
 }
 .emailLabel {
@@ -62,7 +63,7 @@ body {
 }
 .insideForm {
   padding-top: -15px;
-  margin-top: -50px;
+  margin-top: -80px;
   border: none;
   border-radius: 50px;
   height: 502px;
