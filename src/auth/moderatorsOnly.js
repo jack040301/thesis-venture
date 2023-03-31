@@ -12,11 +12,11 @@ export const Moderator = ({children, userId}) => {
 
 
     if(user){
-        console.log('User is logged in');
-        console.log('UID: ', user.uid);
+        //console.log('User is logged in');
+        //console.log('UID: ', user.uid);
         getdata(user.uid);
     }else{
-        console.log('User is logged out');
+        //console.log('User is logged out');
     }
 
     async function getdata(userid) {
@@ -24,13 +24,13 @@ export const Moderator = ({children, userId}) => {
         const docSnap = await getDoc(docRef);
     
         if (docSnap.exists() && docSnap.data().role === "admin") {                      
-            console.log("The user is admin");
+          //  console.log("The user is admin");
             setModId('admin');
         }else if(docSnap.exists() && docSnap.data().role === "moderator"){
-            console.log("The user is Moderator");
+            //console.log("The user is Moderator");
             setModId('mod01');
         } else {
-          console.log('not admin or moderator');
+          //console.log('not admin or moderator');
           logout();
         }
       }

@@ -13,6 +13,7 @@ import {
   getDocs,
   query,
   onSnapshot,
+  limit,
   getMarkers,
   where,
 } from "../firebase";
@@ -324,7 +325,7 @@ function MapPage() {
   const fetchPost = async () => {
     const ReqTrueQuery = query(
       collection(db, "markers"),
-      where("request_status", "==", true)
+      where("request_status", "==", true),limit(12)
     );
     await getDocs(ReqTrueQuery).then((querySnapshot) => {
       const newData = querySnapshot.docs.map((doc) => ({
@@ -345,12 +346,13 @@ function MapPage() {
 
       setData(newxx);
       console.log('Request True: ');
+      
     });
     
 
     const ReqFalseQuery = query(
       collection(db, "markers"),
-      where("request_status", "==", false)
+      where("request_status", "==", false),limit(12)
     );
 
     await getDocs(ReqFalseQuery).then((querySnapshot) => {
@@ -405,7 +407,7 @@ function MapPage() {
   useEffect(() => {
     const collect = collection(db, "markers");
 
-    const approveReq = query(collect, where("request_status", "==", true));
+    const approveReq = query(collect, where("request_status", "==", true),limit(12));
 
     const unsub = onSnapshot(approveReq, (snapshot) => {
       const markreal = snapshot.docs.map((doc) => ({
