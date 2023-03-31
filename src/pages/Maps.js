@@ -30,6 +30,9 @@ import {
 import ReactToast from "../components/Toast/toast"; /* import Component of toast */
 
 function MapPage() {
+  const [testData, setTestData] = useState(true);
+  const [sampleData, setSampleData] = useState("caloocan");
+
   const center = { lat: 14.774477, lng: 121.04483 };
   const [basicModal, setBasicModal] = useState(false);
   const [basicModal2, setBasicModal2] = useState(false);
@@ -148,7 +151,17 @@ function MapPage() {
     height: "1000px",
   };
 
+
+
   const addMarkers = async (e) => {
+
+    if(sampleData == "caloocan"){
+      console.log('sample data is caloocan');
+      setTestData(false);
+    }else{
+      console.log('added locations');      
+    }
+
     try {
       if (
         coorlat !== null &&
@@ -170,7 +183,7 @@ function MapPage() {
       ) {
         const future = coorPresentpopu * 0.49;
 
-        const docRef = await addDoc(collection(db, "markers"), {
+        const docRef = await addDoc(collection(db, "testmarkers"), {
           coords: new GeoPoint(coorlat, coorlong),
           place: coorname,
           land: Number(coorland),
@@ -180,6 +193,7 @@ function MapPage() {
           land_size: coorlandSize,
           population: coorPopulation,
           revenue: coorRevenue,
+          request_status: testData,
         });
         toastRef.current.showToast("Successful Adding Marker");
 
@@ -198,12 +212,12 @@ function MapPage() {
 
       //alert("Error adding Marker : " , e)
 
-      //    console.error("Error adding document: ", e);
+      console.error("Error adding document: ", e);
     }
   };
 
   const updateMarkers = async (e) => {
-    const docRef = doc(db, "markers", coorID);
+    const docRef = doc(db, "testmarkers", coorID);
 
     try {
       if (
@@ -266,7 +280,7 @@ function MapPage() {
   const deleteMarkers = async (e) => {
     try {
       if (coorID !== null && coorID !== "") {
-        const delMark = await deleteDoc(doc(db, "markers", coorID));
+        const delMark = await deleteDoc(doc(db, "testmarkers", coorID));
         //success
 
         //alert("Successful delete Marker")
@@ -288,7 +302,7 @@ function MapPage() {
 
   const fetchPost = async () => {
     const ReqTrueQuery = query(
-      collection(db, "markers"),
+      collection(db, "testmarkers"),
       where("request_status", "==", true)
     );
     await getDocs(ReqTrueQuery).then((querySnapshot) => {
@@ -309,10 +323,11 @@ function MapPage() {
       }));
 
       setData(newxx);
+      console.log('Request True: ');
     });
 
     const ReqFalseQuery = query(
-      collection(db, "markers"),
+      collection(db, "testmarkers"),
       where("request_status", "==", false)
     );
 
@@ -366,7 +381,7 @@ function MapPage() {
 
   //real time in map
   useEffect(() => {
-    const collect = collection(db, "markers");
+    const collect = collection(db, "testmarkers");
 
     const approveReq = query(collect, where("request_status", "==", true));
 
@@ -478,7 +493,7 @@ function MapPage() {
         requestApprove.id !== null &&
         requestApprove.id !== ""
       ) {
-        const docRef = doc(db, "markers", requestApprove.id);
+        const docRef = doc(db, "testmarkers", requestApprove.id);
 
         const updateRequest = await updateDoc(docRef, {
           coords: new GeoPoint(requestApprove.lat, requestApprove.long),
@@ -573,6 +588,9 @@ function MapPage() {
                         }
                         key={createKey(reqmark)}
                         position={reqmark}
+                        onLoad={(e)=>{
+                          console.log('test');
+                        }}
                       />
                     ))}
 
