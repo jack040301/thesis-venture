@@ -71,7 +71,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                 child: const Center(
                   child: Text(
-                      "Hexagon is lorem ipsum dolor sit ametghgh upgrading your account allows you to add your commercial space to be rented and be available on map. It can be seen by the other users of the application. Tap the link provided below to submit your request for upgrading your account.\nNote: Approval of requests may take up to 24hrs to approve.\n\nUpgrading your account allows you to add your commercial space to be rented and be available on map. It can be seen by the other users of the application. Tap the link provided below to submit your request for upgrading your account. \nNote: Approval of requests may take up to 24hrs to approve.\n\n",
+                      "Hexagon is a team of young and dynamic individuals with a shared passion for innovation and technology. We work collaboratively to develop cutting-edge solutions that address real-world challenges. With our diverse skill sets and backgrounds, we pride ourselves on being able to deliver high-quality products that meet the unique needs of our clients. Our team is committed to excellence, creativity, and customer satisfaction, and we always strive to exceed expectations.\nNote: Approval of requests may take up to 24hrs to approve.\n\nUpgrading your account allows you to add your commercial space to be rented and be available on map. It can be seen by the other users of the application. Tap the link provided below to submit your request for upgrading your account. \nNote: Approval of requests may take up to 24hrs to approve.\n\n",
                       textAlign: TextAlign.justify,
                       style: TextStyle(
                           color: Color.fromARGB(255, 44, 45, 48),
@@ -79,6 +79,21 @@ class WidgetUpgradeAccount extends StatelessWidget {
                 ),
               ),
               GestureDetector(
+                onTap: () async {
+                  String email = Uri.encodeComponent("ucc.venture@gmail.com");
+                  String subject = Uri.encodeComponent("Question/s");
+                  String body = Uri.encodeComponent("Hi Developers, \n");
+                  print(subject); //output: Hello%20Flutter
+                  Uri mail =
+                      Uri.parse("mailto:$email?subject=$subject&body=$body");
+                  if (await launchUrl(mail)) {
+                    //email app opened
+                  } else {
+                    //email app is not opened
+                  }
+                },
+                //  color: Colors.white,
+                // padding: const EdgeInsets.fromLTRB(35, 2, 35, 250),
                 child: Material(
                   color: const Color.fromARGB(255, 0, 110, 195),
                   borderRadius: BorderRadius.circular(5.0),
@@ -112,7 +127,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
               ),
               Container(
                 color: Colors.white,
-                padding: const EdgeInsets.fromLTRB(135, 20, 30, 7),
+                padding: const EdgeInsets.fromLTRB(145, 20, 30, 7),
                 child: Row(
                   children: const <Widget>[
                     ImageIcon(
