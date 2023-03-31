@@ -59,8 +59,8 @@ class WidgetUpgradeAccount extends StatelessWidget {
               Container(
                 color: Colors.white,
                 padding: const EdgeInsets.fromLTRB(23, 20, 30, 7),
-                child: const Row(
-                  children: <Widget>[
+                child: Row(
+                  children: const <Widget>[
                     SizedBox(
                       width: 10.0,
                     ),
@@ -105,7 +105,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
                   color: const Color.fromARGB(255, 0, 110, 195),
                   borderRadius: BorderRadius.circular(5.0),
                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       //  Ink.image(
@@ -113,8 +113,8 @@ class WidgetUpgradeAccount extends StatelessWidget {
                       //  'assets/images/icons/contactUsIcon.png'),
                       // height: 40,
                       //  width: 30),
-                      SizedBox(width: 10.0, height: 50),
-                      Text('Send us an email',
+                      const SizedBox(width: 10.0, height: 50),
+                      const Text('Send us an email',
                           style:
                               TextStyle(color: Colors.white, fontSize: 20.0)),
                     ],
@@ -134,43 +134,43 @@ class WidgetUpgradeAccount extends StatelessWidget {
               ),
               Container(
                 color: Colors.white,
-                padding: const EdgeInsets.fromLTRB(35, 20, 30, 7),
+                padding: const EdgeInsets.fromLTRB(100, 20, 30, 7),
                 child: Row(
                   children: [
                     IconButton(
                         onPressed: () async {
                           await goToWebPage(
-                              "https://www.facebook.com/profile.php?id=100090538134749");
+                              "https://facebook.com/profile.php?id=100090538134749");
                         },
-                        icon: const ImageIcon(
+                        icon: ImageIcon(
                           AssetImage("assets/images/icons/Facebook.png"),
                           color: Color.fromARGB(255, 44, 45, 48),
-                          size: 25,
+                          size: 20,
                         )),
                     const SizedBox(
-                      width: 20.0,
+                      width: 10.0,
                     ),
                     IconButton(
                         onPressed: () async {
                           await goToWebPage("https://twitter.com/ventureapp5");
                         },
-                        icon: const ImageIcon(
+                        icon: ImageIcon(
                           AssetImage("assets/images/icons/Twitter.png"),
                           color: Color.fromARGB(255, 44, 45, 48),
-                          size: 25,
+                          size: 20,
                         )),
                     const SizedBox(
-                      width: 20.0,
+                      width: 10.0,
                     ),
                     IconButton(
                         onPressed: () async {
                           await goToWebPage(
-                              "https://www.instagram.com/ventureapp5/");
+                              "https://instagram.com/ventureapp5/");
                         },
-                        icon: const ImageIcon(
+                        icon: ImageIcon(
                           AssetImage("assets/images/icons/Instagram.png"),
                           color: Color.fromARGB(255, 44, 45, 48),
-                          size: 25,
+                          size: 20,
                         )),
                   ],
                 ),
