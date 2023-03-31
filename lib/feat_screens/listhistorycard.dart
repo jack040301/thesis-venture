@@ -59,7 +59,7 @@ class ListViewHome extends State<ListViewHomeLayout> {
             final datadocs = snapshot.data!.docs;
 
             return Scaffold(
-                backgroundColor: const Color.fromARGB(255, 241, 242, 242),
+                backgroundColor: const Color.fromARGB(255, 255, 255, 255),
                 appBar: AppBar(
                   backgroundColor: Colors.transparent,
                   title: const Text('Pinned Locations History'),
@@ -73,6 +73,7 @@ class ListViewHome extends State<ListViewHomeLayout> {
                     padding: const EdgeInsets.all(10.0),
                     child: SingleChildScrollView(
                         child: Column(
+                            mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -87,9 +88,9 @@ class ListViewHome extends State<ListViewHomeLayout> {
                                   color: Color.fromARGB(255, 23, 23, 23),
                                   size: 23,
                                 ),
-                                SizedBox(
-                                  width: 5.0,
-                                ),
+                                // SizedBox(
+                                //   width: 5.0,
+                                // ),
                                 Expanded(
                                   child: Text(
                                       'Below are the recent locations pinned',
@@ -105,7 +106,7 @@ class ListViewHome extends State<ListViewHomeLayout> {
                               ? Container(
                                   color: Colors.white,
                                   padding:
-                                      const EdgeInsets.fromLTRB(15, 7, 15, 7),
+                                     const EdgeInsets.fromLTRB(15, 7, 15, 7),
                                   child: ListviewForNull())
                               : ListviewBuilderFlutter(datadocs),
                         ]))));
@@ -133,7 +134,7 @@ class ListViewHome extends State<ListViewHomeLayout> {
       subtitle:
           const Text('You dont have any history data, venture place first'),
       leading: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 0, 0, 22),
+         padding: const EdgeInsets.fromLTRB(0, 0, 0, 22),
         child: Image.asset(
           'assets/images/icons/pin.png',
           height: 25,
@@ -143,6 +144,8 @@ class ListViewHome extends State<ListViewHomeLayout> {
     );
   }
 
+
+  //COLUMN
   ListView ListviewBuilderFlutter(
       List<QueryDocumentSnapshot<Map<String, dynamic>>> datadocs) {
     return ListView.builder(
@@ -150,7 +153,7 @@ class ListViewHome extends State<ListViewHomeLayout> {
         shrinkWrap: true,
         itemBuilder: (context, index) {
           return Card(
-              elevation: 0,
+              elevation: 0.0,
               color: Colors.white,
               child: ListTile(
                 onTap: () async {
@@ -179,7 +182,7 @@ class ListViewHome extends State<ListViewHomeLayout> {
                   ),
                 ),
                 trailing: Wrap(
-                  spacing: -16,
+                  spacing: -6,
                   children: [
                     IconButton(
                       icon: const Icon(
