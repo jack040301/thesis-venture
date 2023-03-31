@@ -64,7 +64,7 @@ class RequestedDialog {
                     ),
                     const SizeBoxTwenty(),
                     const Text(
-                        "Do you want to Request this Place to be Venture Out?\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
+                        "Do you want to request this place to be ventured out?\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
                         style: TextStyle(
                           color: Color.fromARGB(255, 74, 74, 74),
                           fontSize: 16.0,
