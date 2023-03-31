@@ -31,7 +31,7 @@ class ListViewHome extends State<ListViewHomeLayout> {
     content: Text('Deleted Successfully'),
   );
   CollectionReference pinnedhistory =
-      FirebaseFirestore.instance.collection('pinnedlocation');
+  FirebaseFirestore.instance.collection('pinnedlocation');
 
   Future<void> deleteHistoryCard(historyid) {
     return pinnedhistory
@@ -77,39 +77,39 @@ class ListViewHome extends State<ListViewHomeLayout> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                          Container(
-                            color: Colors.white,
-                            padding: const EdgeInsets.fromLTRB(35, 20, 40, 7),
-                            child:  Row(
-                              children: <Widget>[
-                                ImageIcon(
-                                  AssetImage(
-                                      "assets/images/icons/historyIcon.png"),
-                                  color: Color.fromARGB(255, 23, 23, 23),
-                                  size: 23,
-                                ),
-                                // SizedBox(
-                                //   width: 5.0,
-                                // ),
-                                Expanded(
-                                  child: Text(
-                                      'Below are the recent locations pinned',
-                                      style: TextStyle(
-                                          color:
+                              Container(
+                                color: Colors.white,
+                                padding: const EdgeInsets.fromLTRB(35, 20, 40, 7),
+                                child: Row(
+                                  children: <Widget>[
+                                    ImageIcon(
+                                      AssetImage(
+                                          "assets/images/icons/historyIcon.png"),
+                                      color: Color.fromARGB(255, 23, 23, 23),
+                                      size: 23,
+                                    ),
+                                    // SizedBox(
+                                    //   width: 5.0,
+                                    // ),
+                                    Expanded(
+                                      child: Text(
+                                          'Below are the recent locations pinned',
+                                          style: TextStyle(
+                                              color:
                                               Color.fromARGB(255, 23, 23, 23),
-                                          fontSize: 18.0)),
-                                )
-                              ],
-                            ),
-                          ),
-                          datadocs.isEmpty
-                              ? Container(
+                                              fontSize: 18.0)),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              datadocs.isEmpty
+                                  ? Container(
                                   color: Colors.white,
                                   padding:
-                                     const EdgeInsets.fromLTRB(15, 7, 15, 7),
+                                  const EdgeInsets.fromLTRB(15, 7, 15, 7),
                                   child: ListviewForNull())
-                              : ListviewBuilderFlutter(datadocs),
-                        ]))));
+                                  : ListviewBuilderFlutter(datadocs),
+                            ]))));
 
             // return ListviewBuilderFlutter(datadocs);
           }
@@ -132,9 +132,9 @@ class ListViewHome extends State<ListViewHomeLayout> {
       },
       title: const Text("No History"),
       subtitle:
-          const Text('You dont have any history data, venture place first'),
+      const Text('You dont have any history data, venture place first'),
       leading: Padding(
-         padding: const EdgeInsets.fromLTRB(0, 0, 0, 22),
+        padding: const EdgeInsets.fromLTRB(0, 0, 0, 22),
         child: Image.asset(
           'assets/images/icons/pin.png',
           height: 25,
@@ -143,7 +143,6 @@ class ListViewHome extends State<ListViewHomeLayout> {
       ),
     );
   }
-
 
   //COLUMN
   ListView ListviewBuilderFlutter(
@@ -161,8 +160,8 @@ class ListViewHome extends State<ListViewHomeLayout> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => HistoryDialogLayout(
-                                historyid: datadocs[index].id,
-                              )));
+                            historyid: datadocs[index].id,
+                          )));
 
                   //      HistoryDialog().showHistoryDialog(context);
                 },
@@ -191,7 +190,7 @@ class ListViewHome extends State<ListViewHomeLayout> {
                       ),
                       onPressed: () async {
                         DeleteHistoryCardDialog(
-                                historycardid: datadocs[index].id)
+                            historycardid: datadocs[index].id)
                             .showMyDialog(context);
                         //  await deleteHistoryCard(datadocs[index].id);
                       },

@@ -46,123 +46,121 @@ class WidgetUpgradeAccount extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-              const SizedBox(
-                height: 10.0,
-              ),
-              Container(
-                color: Colors.white,
-                padding: const EdgeInsets.fromLTRB(23, 20, 30, 7),
-                child: Row(
-                  children: const <Widget>[
-                    SizedBox(
-                      width: 10.0,
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.fromLTRB(23, 20, 30, 7),
+                    child: Row(
+                      children: const <Widget>[
+                        SizedBox(
+                          width: 10.0,
+                        ),
+                        Expanded(
+                          child: Text('\n\nYou have Questions? Contact our Team!\n',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 44, 45, 48),
+                                  fontSize: 16.0)),
+                        )
+                      ],
                     ),
-                    Expanded(
-                      child: Text('\n\nYou have Questions? Contact our Team!\n',
+                  ),
+                  Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+                    child: const Center(
+                      child: Text(
+                          "Hexagon is a team of young and dynamic individuals with a shared passion for innovation and technology. We work collaboratively to develop cutting-edge solutions that address real-world challenges. With our diverse skill sets and backgrounds, we pride ourselves on being able to deliver high-quality products that meet the unique needs of our clients. Our team is committed to excellence, creativity, and customer satisfaction, and we always strive to exceed expectations.\nNote: Approval of requests may take up to 24hrs to approve.\n\nUpgrading your account allows you to add your commercial space to be rented and be available on map. It can be seen by the other users of the application. Tap the link provided below to submit your request for upgrading your account. \nNote: Approval of requests may take up to 24hrs to approve.\n\n",
+                          textAlign: TextAlign.justify,
                           style: TextStyle(
                               color: Color.fromARGB(255, 44, 45, 48),
-                              fontSize: 16.0)),
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                color: Colors.white,
-                padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                child: const Center(
-                  child: Text(
-                      "Hexagon is a team of young and dynamic individuals with a shared passion for innovation and technology. We work collaboratively to develop cutting-edge solutions that address real-world challenges. With our diverse skill sets and backgrounds, we pride ourselves on being able to deliver high-quality products that meet the unique needs of our clients. Our team is committed to excellence, creativity, and customer satisfaction, and we always strive to exceed expectations.\nNote: Approval of requests may take up to 24hrs to approve.\n\nUpgrading your account allows you to add your commercial space to be rented and be available on map. It can be seen by the other users of the application. Tap the link provided below to submit your request for upgrading your account. \nNote: Approval of requests may take up to 24hrs to approve.\n\n",
-                      textAlign: TextAlign.justify,
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 44, 45, 48),
-                          fontSize: 17.0)),
-                ),
-              ),
-              GestureDetector(
-                onTap: () async {
-                String email = Uri.encodeComponent("ucc.venture@gmail.com");
-                String subject = Uri.encodeComponent("Question/s");
-                 String body =
-                 Uri.encodeComponent("Hi Developers, \n");
-                print(subject); //output: Hello%20Flutter
-                 Uri mail =
-                 Uri.parse("mailto:$email?subject=$subject&body=$body");
-                  if (await launchUrl(mail)) {
-                   //email app opened
-                 } else {
-                   //email app is not opened
-                 }
-                 },
-               //  color: Colors.white,
-               // padding: const EdgeInsets.fromLTRB(35, 2, 35, 250),
-                child: Material(
-                  color: const Color.fromARGB(255, 0, 110, 195),
-                  borderRadius: BorderRadius.circular(5.0),
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      //  Ink.image(
-                      //  image: const AssetImage(
-                      //  'assets/images/icons/contactUsIcon.png'),
-                      // height: 40,
-                      //  width: 30),
-                      const SizedBox(width: 10.0, height: 50),
-                      const Text('Send us an email',
-                          style:
-                              TextStyle(color: Colors.white, fontSize: 20.0)),
-                    ],
+                              fontSize: 17.0)),
+                    ),
                   ),
-                ),
-              ),
-
-          Container(
-                color: Colors.white,
-               padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                child: const Center(
-              child: Text("\n\n\n\nConnect with us",
-                     textAlign: TextAlign.justify,
-                  style: TextStyle(
-                   color: Color.fromARGB(255, 44, 45, 48),
-                      fontSize: 17.0)),
-             ),
-             ),
-              Container(
-               color: Colors.white,
-                 padding: const EdgeInsets.fromLTRB(145, 20, 30, 7),
-             child: Row(
-              children: const <Widget>[
-                ImageIcon(
-                   AssetImage(
-                         "assets/images/icons/upgrade.png"), //FACEBOOK ICON
-                      color: Color.fromARGB(255, 44, 45, 48),
-                    size: 25,
-                     ),
-                  const SizedBox(
-                    width: 20.0,
-                   ),
-                     ImageIcon(
-                       AssetImage(
-                           "assets/images/icons/upgrade.png"), //TWITTER ICON
-                      color: Color.fromARGB(255, 44, 45, 48),
-                       size: 25,
+                  GestureDetector(
+                    onTap: () async {
+                      String email = Uri.encodeComponent("ucc.venture@gmail.com");
+                      String subject = Uri.encodeComponent("Question/s");
+                      String body = Uri.encodeComponent("Hi Developers, \n");
+                      print(subject); //output: Hello%20Flutter
+                      Uri mail =
+                      Uri.parse("mailto:$email?subject=$subject&body=$body");
+                      if (await launchUrl(mail)) {
+                        //email app opened
+                      } else {
+                        //email app is not opened
+                      }
+                    },
+                    //  color: Colors.white,
+                    // padding: const EdgeInsets.fromLTRB(35, 2, 35, 250),
+                    child: Material(
+                      color: const Color.fromARGB(255, 0, 110, 195),
+                      borderRadius: BorderRadius.circular(5.0),
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          //  Ink.image(
+                          //  image: const AssetImage(
+                          //  'assets/images/icons/contactUsIcon.png'),
+                          // height: 40,
+                          //  width: 30),
+                          const SizedBox(width: 10.0, height: 50),
+                          const Text('Send us an email',
+                              style:
+                              TextStyle(color: Colors.white, fontSize: 20.0)),
+                        ],
+                      ),
                     ),
-                     const SizedBox(
-                       width: 20.0,
-                     ),
-                     ImageIcon(
-                       AssetImage("assets/images/icons/upgrade.png"), //IG ICON
-                       color: Color.fromARGB(255, 44, 45, 48),
-                       size: 25,
+                  ),
+                  Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+                    child: const Center(
+                      child: Text("\n\n\n\nConnect with us",
+                          textAlign: TextAlign.justify,
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 44, 45, 48),
+                              fontSize: 17.0)),
                     ),
+                  ),
+                  Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.fromLTRB(145, 20, 30, 7),
+                    child: Row(
+                      children: const <Widget>[
+                        ImageIcon(
+                          AssetImage(
+                              "assets/images/icons/upgrade.png"), //FACEBOOK ICON
+                          color: Color.fromARGB(255, 44, 45, 48),
+                          size: 25,
+                        ),
+                        const SizedBox(
+                          width: 20.0,
+                        ),
+                        ImageIcon(
+                          AssetImage(
+                              "assets/images/icons/upgrade.png"), //TWITTER ICON
+                          color: Color.fromARGB(255, 44, 45, 48),
+                          size: 25,
+                        ),
+                        const SizedBox(
+                          width: 20.0,
+                        ),
+                        ImageIcon(
+                          AssetImage("assets/images/icons/upgrade.png"), //IG ICON
+                          color: Color.fromARGB(255, 44, 45, 48),
+                          size: 25,
+                        ),
 
-                    // Container(
-                    //   color: Colors.white,
-                    //   padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                    // ),
-                  ],
-                ),
-              )
-        ])));
+                        // Container(
+                        //   color: Colors.white,
+                        //   padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
+                        // ),
+                      ],
+                    ),
+                  )
+                ])));
   }
 }
