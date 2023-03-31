@@ -325,7 +325,7 @@ function MapPage() {
   const fetchPost = async () => {
     const ReqTrueQuery = query(
       collection(db, "markers"),
-      where("request_status", "==", true),limit(12)
+      where("request_status", "==", true)
     );
     await getDocs(ReqTrueQuery).then((querySnapshot) => {
       const newData = querySnapshot.docs.map((doc) => ({
@@ -352,7 +352,7 @@ function MapPage() {
 
     const ReqFalseQuery = query(
       collection(db, "markers"),
-      where("request_status", "==", false),limit(12)
+      where("request_status", "==", false)
     );
 
     await getDocs(ReqFalseQuery).then((querySnapshot) => {
@@ -405,9 +405,9 @@ function MapPage() {
 
   //real time in map
   useEffect(() => {
-    const collect = collection(db, "testmarkers");
+    const collect = collection(db, "markers");
 
-    const approveReq = query(collect, where("request_status", "==", true),limit(12));
+    const approveReq = query(collect, where("request_status", "==", true));
 
     const unsub = onSnapshot(approveReq, (snapshot) => {
       const markreal = snapshot.docs.map((doc) => ({
