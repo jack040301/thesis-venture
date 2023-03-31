@@ -200,7 +200,7 @@ function MapPage() {
       ) {
         const future = coorPresentpopu * 0.49;
 
-        const docRef = await addDoc(collection(db, "testmarkers"), {
+        const docRef = await addDoc(collection(db, "markers"), {
           coords: new GeoPoint(coorlat, coorlong),
           place: coorname,
           land: Number(coorland),
@@ -234,7 +234,7 @@ function MapPage() {
   };
 
   const updateMarkers = async (e) => {
-    const docRef = doc(db, "testmarkers", coorID);
+    const docRef = doc(db, "markers", coorID);
 
     try {
       if (
@@ -297,7 +297,7 @@ function MapPage() {
   const deleteMarkers = async (e) => {
     try {
       if (coorID !== null && coorID !== "") {
-        const delMark = await deleteDoc(doc(db, "testmarkers", coorID));
+        const delMark = await deleteDoc(doc(db, "markers", coorID));
         //success
 
         //alert("Successful delete Marker")
@@ -323,7 +323,7 @@ function MapPage() {
 
   const fetchPost = async () => {
     const ReqTrueQuery = query(
-      collection(db, "testmarkers"),
+      collection(db, "markers"),
       where("request_status", "==", true)
     );
     await getDocs(ReqTrueQuery).then((querySnapshot) => {
@@ -349,7 +349,7 @@ function MapPage() {
     
 
     const ReqFalseQuery = query(
-      collection(db, "testmarkers"),
+      collection(db, "markers"),
       where("request_status", "==", false)
     );
 
@@ -403,7 +403,7 @@ function MapPage() {
 
   //real time in map
   useEffect(() => {
-    const collect = collection(db, "testmarkers");
+    const collect = collection(db, "markers");
 
     const approveReq = query(collect, where("request_status", "==", true));
 
@@ -515,7 +515,7 @@ function MapPage() {
         requestApprove.id !== null &&
         requestApprove.id !== ""
       ) {
-        const docRef = doc(db, "testmarkers", requestApprove.id);
+        const docRef = doc(db, "markers", requestApprove.id);
 
         const updateRequest = await updateDoc(docRef, {
           coords: new GeoPoint(requestApprove.lat, requestApprove.long),
