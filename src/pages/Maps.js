@@ -28,10 +28,12 @@ import {
   MDBModalFooter,
 } from "mdb-react-ui-kit";
 import ReactToast from "../components/Toast/toast"; /* import Component of toast */
+import { async } from "@firebase/util";
 
 function MapPage() {
   const [testData, setTestData] = useState(true);
   const [sampleData, setSampleData] = useState("caloocan");
+  const [restricted, setRestriction] = useState(true);
 
   const center = { lat: 14.774477, lng: 121.04483 };
   const [basicModal, setBasicModal] = useState(false);
@@ -53,9 +55,11 @@ function MapPage() {
   const [coorID, setCoorID] = useState("");
   let markers = [];
   let request_markers = [];
+  let restrictedLoc = [];
 
   const [data, setData] = useState(markers);
   const [datarequest, setDataRequest] = useState(request_markers);
+  const [retrict, setRestrictedCol] = useState(restrictedLoc);
 
   const [requestApprove, setRequestApprove] = useState({
     id: "",
@@ -151,16 +155,29 @@ function MapPage() {
     height: "1000px",
   };
 
+  const checkRestiction = async () => {
+    const ReqTrueQuery = query(
+      collection(db, "map_pinnedLocation")      
+    );
+    await getDocs(ReqTrueQuery).then((querySnapshot) => {
+      const newData = querySnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      const newxx = querySnapshot.docs.map((doc) => ({
+        lat: doc.data().address._lat,
+        lng: doc.data().address._long,        
+      }));
+
+      setRestrictedCol(newxx);
+      
+      console.log('Retricted locations: ', retrict);
+    });
+  };
 
 
   const addMarkers = async (e) => {
-
-    if(sampleData == "caloocan"){
-      console.log('sample data is caloocan');
-      setTestData(false);
-    }else{
-      console.log('added locations');      
-    }
+    checkRestiction();
 
     try {
       if (
@@ -300,6 +317,10 @@ function MapPage() {
     }
   };
 
+  const getRestrictedLoc = async () => {
+    
+  };
+
   const fetchPost = async () => {
     const ReqTrueQuery = query(
       collection(db, "testmarkers"),
@@ -325,6 +346,7 @@ function MapPage() {
       setData(newxx);
       console.log('Request True: ');
     });
+    
 
     const ReqFalseQuery = query(
       collection(db, "testmarkers"),
