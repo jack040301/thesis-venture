@@ -19,6 +19,7 @@ import 'package:main_venture/services/maps_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_geocoding/google_geocoding.dart';
+import 'package:url_launcher/url_launcher.dart';
 // import 'package:geolocator/geolocator.dart';
 // import 'package:place_picker/place_picker.dart';
 import '../feat_screens/requesting_dialog.dart';
@@ -646,6 +647,20 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
               Discover().showDiscover(context);
             },
           ),
+          FloatingActionButton(
+            disabledElevation: 0,
+            elevation: 0.0,
+            backgroundColor: Colors.white,
+            mini: true,
+            heroTag: null,
+            child: const Icon(Icons.home_work_outlined),
+            foregroundColor: Colors.blue,
+            onPressed: () {
+              goToWebPage(
+                  "https://play.unity.com/mg/other/webgl-builds-329405");
+              // Discover().showDiscover(context);
+            },
+          ),
         ],
       ),
       resizeToAvoidBottomInset: false,
@@ -1025,4 +1040,11 @@ class HomeOriginController extends StatelessWidget {
 class Userinformation {
   String UserInfofirstname = "";
   String UserInfolastname = "";
+}
+
+Future<void> goToWebPage(String urlString) async {
+  final Uri _url = Uri.parse(urlString);
+  if (!await launchUrl(_url)) {
+    throw 'Could not launch $_url';
+  }
 }
