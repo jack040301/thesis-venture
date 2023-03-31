@@ -140,7 +140,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
                     IconButton(
                         onPressed: () async {
                           await goToWebPage(
-                              "www.facebook.com/profile.php?id=100090538134749");
+                              "https://www.facebook.com/people/Venture-App/pfbid0LrkH9ncYhbVpUHgTJ8Pi8quqyXKMmbhaw4fKUeSGo73xbBJwsxpcDTvj1SSvEXQsl/");
                         },
                         icon: const ImageIcon(
                           AssetImage("assets/images/icons/Facebook.png"),
@@ -152,7 +152,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
                     ),
                     IconButton(
                         onPressed: () async {
-                          await goToWebPage("www.twitter.com/ventureapp5");
+                          await goToWebPage("https://twitter.com/ventureapp5");
                         },
                         icon: const ImageIcon(
                           AssetImage("assets/images/icons/Twitter.png"),
@@ -164,7 +164,8 @@ class WidgetUpgradeAccount extends StatelessWidget {
                     ),
                     IconButton(
                         onPressed: () async {
-                          await goToWebPage("www.instagram.com/ventureapp5/");
+                          await goToWebPage(
+                              "https://www.instagram.com/ventureapp5/");
                         },
                         icon: const ImageIcon(
                           AssetImage("assets/images/icons/Instagram.png"),
