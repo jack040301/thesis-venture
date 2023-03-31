@@ -115,7 +115,7 @@ class SetDialog {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      const TermsCondiScreen()));
+                                      const termscondi()));
                         },
                       ),
                       const SizedBox(height: 80),

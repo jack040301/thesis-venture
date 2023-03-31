@@ -6,16 +6,16 @@ import 'deletehistorycard_dialog.dart';
 import 'history.dart';
 
 //THE LIST VIEW CARD IN HISTORY
-class ListViewHomeLayout extends StatefulWidget {
-  const ListViewHomeLayout({super.key});
+class termscondi extends StatefulWidget {
+  const termscondi({super.key});
 
   @override
-  ListViewHome createState() {
-    return ListViewHome();
+  termscondition createState() {
+    return termscondition();
   }
 }
 
-class ListViewHome extends State<ListViewHomeLayout> {
+class termscondition extends State<termscondi> {
   List<String> titles = [];
   final subtitles = [];
 /*   List<String> titles = ["List 1", "List 2", "List 3"];
