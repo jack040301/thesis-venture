@@ -184,7 +184,7 @@ class ProfileNav {
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ManualScreen()),
+                                builder: (context) => const ManualScreen()),
                           );
                         },
                         icon: const ImageIcon(
@@ -212,7 +212,7 @@ class ProfileNav {
                             style:
                                 TextStyle(color: Colors.black, fontSize: 15.0)),
                       ),
-                      Row(children: const <Widget>[
+                      const Row(children: <Widget>[
                         Expanded(
                           child: Divider(
                               color: Color.fromARGB(255, 105, 105, 105),
@@ -232,7 +232,7 @@ class ProfileNav {
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AboutUsScreen()),
+                                builder: (context) => const AboutUsScreen()),
                           );
                         },
                         icon: const ImageIcon(
@@ -251,7 +251,7 @@ class ProfileNav {
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => contactus()),
+                                builder: (context) => const contactus()),
                           );
                         },
                         icon: const ImageIcon(
@@ -270,7 +270,7 @@ class ProfileNav {
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => TermsCondiScreen()),
+                                builder: (context) => const TermsCondiScreen()),
                           );
                         },
                         icon: const ImageIcon(
