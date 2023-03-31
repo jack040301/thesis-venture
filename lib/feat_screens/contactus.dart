@@ -12,6 +12,13 @@ class contactus extends StatefulWidget {
   State<contactus> createState() => _contactusState();
 }
 
+Future<void> goToWebPage(String urlString) async {
+  final Uri _url = Uri.parse(urlString);
+  if (!await launchUrl(_url)) {
+    throw 'Could not launch $_url';
+  }
+}
+
 class _contactusState extends State<contactus> {
   @override
   Widget build(BuildContext context) {
@@ -58,7 +65,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
                       width: 10.0,
                     ),
                     Expanded(
-                      child: Text('\n\nYou have Questions? Contact our Team!\n',
+                      child: Text('\n\nYou have questions? Contact our team!\n',
                           style: TextStyle(
                               color: Color.fromARGB(255, 44, 45, 48),
                               fontSize: 16.0)),
@@ -75,7 +82,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
                       textAlign: TextAlign.justify,
                       style: TextStyle(
                           color: Color.fromARGB(255, 44, 45, 48),
-                          fontSize: 17.0)),
+                          fontSize: 16.0)),
                 ),
               ),
               GestureDetector(
@@ -127,37 +134,43 @@ class WidgetUpgradeAccount extends StatelessWidget {
               ),
               Container(
                 color: Colors.white,
-                padding: const EdgeInsets.fromLTRB(145, 20, 30, 7),
+                padding: const EdgeInsets.fromLTRB(35, 20, 30, 7),
                 child: Row(
-                  children: const <Widget>[
-                    ImageIcon(
-                      AssetImage(
-                          "assets/images/icons/upgrade.png"), //FACEBOOK ICON
-                      color: Color.fromARGB(255, 44, 45, 48),
-                      size: 25,
-                    ),
+                  children: [
+                    IconButton(
+                        onPressed: () async {
+                          await goToWebPage(
+                              "www.facebook.com/profile.php?id=100090538134749");
+                        },
+                        icon: ImageIcon(
+                          AssetImage("assets/images/icons/Facebook.png"),
+                          color: Color.fromARGB(255, 44, 45, 48),
+                          size: 25,
+                        )),
                     const SizedBox(
                       width: 20.0,
                     ),
-                    ImageIcon(
-                      AssetImage(
-                          "assets/images/icons/upgrade.png"), //TWITTER ICON
-                      color: Color.fromARGB(255, 44, 45, 48),
-                      size: 25,
-                    ),
+                    IconButton(
+                        onPressed: () async {
+                          await goToWebPage("www.twitter.com/ventureapp5");
+                        },
+                        icon: ImageIcon(
+                          AssetImage("assets/images/icons/Twitter.png"),
+                          color: Color.fromARGB(255, 44, 45, 48),
+                          size: 25,
+                        )),
                     const SizedBox(
                       width: 20.0,
                     ),
-                    ImageIcon(
-                      AssetImage("assets/images/icons/upgrade.png"), //IG ICON
-                      color: Color.fromARGB(255, 44, 45, 48),
-                      size: 25,
-                    ),
-
-                    // Container(
-                    //   color: Colors.white,
-                    //   padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
-                    // ),
+                    IconButton(
+                        onPressed: () async {
+                          await goToWebPage("www.instagram.com/ventureapp5/");
+                        },
+                        icon: ImageIcon(
+                          AssetImage("assets/images/icons/Instagram.png"),
+                          color: Color.fromARGB(255, 44, 45, 48),
+                          size: 25,
+                        )),
                   ],
                 ),
               )
