@@ -22,6 +22,7 @@ import 'package:google_geocoding/google_geocoding.dart';
 // import 'package:geolocator/geolocator.dart';
 // import 'package:place_picker/place_picker.dart';
 import '../feat_screens/requesting_dialog.dart';
+import '../onboarding_screens/discover.dart';
 import '../userInfo.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -350,10 +351,10 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
  */
     await FirebaseFirestore.instance
         .collection("markers")
-      // .where("request_status", isEqualTo: true)
+    //   .where("request_status", isEqualTo: true)
         .where("coords", isGreaterThanOrEqualTo: greatercoordinates)
-    .orderBy("coords", descending: true)
-    //     .limit(1)
+    //.orderBy("coords", descending: true)
+        .limit(1)
         .get()
         .then((QuerySnapshot querySnapshot) => {
       querySnapshot.docs.forEach((documents) async {
@@ -365,8 +366,8 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
         //     ) )
         // );
         if (data['request_status'] == true) {
-          debugPrint("theres data");
-          //
+          //debugPrint("theres data");
+
           allmarkers.add(Marker(
               onTap: () async {
                 Navigator.push(
@@ -626,6 +627,17 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
               UserInfolastname:
               UserInfolastname), //breaking the Widget of floating button and passing the data from the stateless widget below
           // const HomeFloatingDialog(),
+          FloatingActionButton(
+            disabledElevation: 0,
+            elevation: 0.0,
+            backgroundColor: Colors.white,
+            mini: true,
+            heroTag: null,
+            child: const Icon(Icons.info),
+            onPressed: () {
+              Discover().showDiscover(context);
+            },
+          ),
         ],
       ),
       resizeToAvoidBottomInset: false,
