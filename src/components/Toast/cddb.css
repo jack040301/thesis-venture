@@ -1,0 +1,68 @@
+.customDD {
+    width: 105px;
+    /*border: 1px solid red;*/
+    display: block;
+    position: absolute;
+    right: 12%;
+    height: 140px;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.dropbtn {
+    background-color: #3498DB;
+    color: white;
+    padding: 7px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer; 
+    position: relative;    
+}
+
+.dropbtn:hover {
+    background-color: #0086b3;
+    transition: 0.3s;
+}
+
+.dropbtn:active {
+    background-color: #007399;
+    transition: 0.3s;
+}
+
+.dd-content-hide {
+    display: none;
+    position: relative;
+    background-color: #f1f1f1;
+    min-width: 60px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+
+.dd-content {
+    display: block;
+    position: relative;
+    background-color: #f1f1f1;
+    min-width: 60px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+
+  .dd-content button {
+    color: black;
+    width: 100px;
+    display: block;
+    position: relative;
+    border-radius: 5px;
+    margin-top: 2px;
+    border: 1px solid rgba(60,60,190,0.5);
+  }
+
+  .dd-content button:hover {
+    background-color: #3498DB;
+    color: white;
+    transition: 0.2s;
+  }
+
+  .show {display: block;}
