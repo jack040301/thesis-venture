@@ -5,6 +5,10 @@ import 'package:main_venture/auth_screens/forgot_password.dart';
 import 'package:main_venture/auth_screens/signup.dart';
 import 'package:main_venture/userInfo.dart';
 import 'package:main_venture/screens/home_page.dart';
+import 'package:main_venture/feat_screens/personalInfo.dart';
+
+
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -273,18 +277,29 @@ class _LoginScreenState extends State<LoginScreen> {
                   ));
 
                   await Functio().signInWithGoogle();
-                  var usersCheck =
-                  await users.doc(GoogleUserStaticInfo().uid).get();
+                  var usersCheck = await users.doc(GoogleUserStaticInfo().uid).get();
 
-                  if (!usersCheck.exists) {
+                  if (!usersCheck.exists){
+
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const personalinfo()));
+
+
                     await users.doc(GoogleUserStaticInfo().uid).set({
                       'firstname': GoogleUserStaticInfo().firstname,
                       'lastname': GoogleUserStaticInfo().lastname,
                       'email': GoogleUserStaticInfo().email,
                     }).onError((error, stackTrace) => (error.toString()));
+
+
+
+
+                  }else {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const HomePage()));
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //     builder: (context) => const personalinfo()));
                   }
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const HomePage()));
                 },
                 child: Material(
                   color: const Color.fromARGB(255, 0, 110, 195),
