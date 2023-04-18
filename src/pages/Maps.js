@@ -30,6 +30,7 @@ import {
 } from "mdb-react-ui-kit";
 import ReactToast from "../components/Toast/toast"; /* import Component of toast */
 import { async } from "@firebase/util";
+import { CusDropDown } from "../components/Toast/customDropDownBtn";
 
 function MapPage() {
   const [testData, setTestData] = useState(true);
@@ -41,6 +42,7 @@ function MapPage() {
   const [basicModal2, setBasicModal2] = useState(false);
   const [enableInput, setEnableInput] = useState(false);
   const [requestModal, setRequestModal] = useState(false);
+  const [pinLimitModal, setPinLimitModal] = useState(false);
 
   const api = process.env.REACT_APP_GOOGLE_MAPS_API_KEY; //insert the api key of the google map
   const [coorlat, setCoorlat] = useState("");
@@ -74,6 +76,8 @@ function MapPage() {
     population: "",
     revenue: "",
   });
+
+  const [pinLimit, setPinLimit] = useState(20);
 
   const toastRef = useRef();
 
@@ -325,7 +329,7 @@ function MapPage() {
   const fetchPost = async () => {
     const ReqTrueQuery = query(
       collection(db, "markers"),
-      where("request_status", "==", true),limit(100)
+      where("request_status", "==", true),limit(pinLimit)
     );
     await getDocs(ReqTrueQuery).then((querySnapshot) => {
       const newData = querySnapshot.docs.map((doc) => ({
@@ -352,7 +356,7 @@ function MapPage() {
 
     const ReqFalseQuery = query(
       collection(db, "markers"),
-      where("request_status", "==", false)
+      where("request_status", "==", false),limit(pinLimit)
     );
 
     await getDocs(ReqFalseQuery).then((querySnapshot) => {
@@ -542,6 +546,16 @@ function MapPage() {
     }
   };
 
+  const TestFetch = () => {
+    
+
+    return(
+      <>
+        <button onClick={()=>{fetchPost()}}>Set pinned locations Limit?</button>
+      </>
+    );
+  };
+
   return (
     <>
       <ReactToast ref={toastRef} timeout={2000} />
@@ -553,6 +567,11 @@ function MapPage() {
               <div className="card-header">
                 <h3 className="card-title">Map Markers</h3>
                 <div className="card-tools">
+                  <CusDropDown btnName={"Pins"}>
+                    <button onClick={()=>{setPinLimit(20); fetchPost(); setPinLimitModal(true)}}>20</button>
+                    <button onClick={()=>{setPinLimit(100); fetchPost(); setPinLimitModal(true)}}>100</button>
+                    <button onClick={()=>{setPinLimit(200); fetchPost(); setPinLimitModal(true)}}>200</button>
+                  </CusDropDown>
                   <button
                     type="button"
                     className="btn btn-success"
@@ -765,6 +784,19 @@ function MapPage() {
       {/* Request Modal */}
 
       {/*Adding manual markers */}
+
+      <MDBModal show={pinLimitModal} setShow={setPinLimitModal} tabIndex="-1">
+        <MDBModalDialog>
+          <MDBModalContent>
+            <MDBModalHeader>
+              <MDBModalTitle>Set pinned location limit</MDBModalTitle>
+            </MDBModalHeader>
+            <MDBModalBody>
+              <button onClick={()=>{fetchPost(); setPinLimitModal(false);}}>Testing</button>
+            </MDBModalBody>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
 
       <MDBModal show={enableInput} setShow={setEnableInput} tabIndex="-1">
         <MDBModalDialog>
