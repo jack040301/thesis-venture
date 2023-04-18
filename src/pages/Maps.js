@@ -201,7 +201,7 @@ function MapPage() {
       ) {
         const future = coorPresentpopu * 0.49;
 
-        const docRef = await addDoc(collection(db, "testmarkers"), {
+        const docRef = await addDoc(collection(db, "markers"), {
           coords: new GeoPoint(coorlat, coorlong),
           place: coorname,
           land: Number(coorland),
@@ -235,7 +235,7 @@ function MapPage() {
   };
 
   const updateMarkers = async (e) => {
-    const docRef = doc(db, "testmarkers", coorID);
+    const docRef = doc(db, "markers", coorID);
 
     try {
       if (
@@ -298,7 +298,7 @@ function MapPage() {
   const deleteMarkers = async (e) => {
     try {
       if (coorID !== null && coorID !== "") {
-        const delMark = await deleteDoc(doc(db, "testmarkers", coorID));
+        const delMark = await deleteDoc(doc(db, "markers", coorID));
         //success
 
         //alert("Successful delete Marker")
@@ -405,7 +405,7 @@ function MapPage() {
 
   //real time in map
   useEffect(() => {
-    const collect = collection(db, "testmarkers");
+    const collect = collection(db, "markers");
 
     const approveReq = query(collect, where("request_status", "==", true),limit(12));
 
