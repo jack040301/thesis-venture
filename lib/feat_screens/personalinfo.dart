@@ -10,6 +10,8 @@ import 'package:main_venture/auth_screens/email_verification.dart';
 import 'package:main_venture/userInfo.dart';
 import 'package:flutter/services.dart';
 
+import '../screens/home_page.dart';
+
 class personalinfo extends StatefulWidget {
   const personalinfo({Key? key}) : super(key: key);
 
@@ -35,7 +37,20 @@ class _personalinfoState extends State<personalinfo> {
   @override
   void initState() {
     super.initState();
+
+    // inputData();
   }
+
+  // void inputData() async{
+  //
+  //   await Functio().signInWithGoogle();
+  //   var usersCheck = await users.doc(GoogleUserStaticInfo().uid).get();
+  //
+  //   firstNameController.text = GoogleUserStaticInfo().firstname;
+  //   lastNameController.text = GoogleUserStaticInfo().lastname;
+  //
+  //   // here you write the codes to input the data into firestore
+  // }
 
   @override
   void dispose() {
@@ -71,7 +86,7 @@ class _personalinfoState extends State<personalinfo> {
                     fontFamily: 'Questrial',
                     height: 1.5)),
             const Text(
-                "\nPlease fill out the form to complete your registration\n\n",
+                "\nPlease Create your Password to complete your registration\n\n",
                 style: TextStyle(
                   color: Colors.red,
                   fontSize: 12.0,
@@ -94,14 +109,14 @@ class _personalinfoState extends State<personalinfo> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextFormField(
-                      validator: (val) {
-                        if (val == null || val.isEmpty) {
-                          return 'Field cannot be empty';
-                        }
-                        return null;
-                      },
-                      controller: firstNameController,
-                      keyboardType: TextInputType.name,
+                      // validator: (val) {
+                      //   if (val == null || val.isEmpty) {
+                      //     return 'Field cannot be empty';
+                      //   }
+                      //   return null;
+                      // },
+                      controller: emailController,
+                      keyboardType: TextInputType.none,
                       textCapitalization: TextCapitalization.words,
                       enableInteractiveSelection: false,
                       inputFormatters: [
@@ -109,8 +124,10 @@ class _personalinfoState extends State<personalinfo> {
                             RegExp('[a-zA-Z0-9.-]')),
                         //FilteringTextInputFormatter.deny(RegExp(r'[/\\]')),
                       ],
+                      enabled: false,
                       decoration: InputDecoration(
-                        hintText: "example@gmail.com",
+                        // hintText: "example@gmail.com",
+                        hintText: GoogleUserStaticInfo().email,
                         filled: true,
                         fillColor: const Color.fromARGB(255, 230, 230, 230),
                         enabledBorder: OutlineInputBorder(
@@ -148,13 +165,13 @@ class _personalinfoState extends State<personalinfo> {
                       height: 4.0,
                     ),
                     TextFormField(
-                      validator: (val) {
-                        if (val == null || val.isEmpty) {
-                          return 'Field cannot be empty';
-                        }
-                        return null;
-                      },
-                      controller: lastNameController,
+                      // validator: (val) {
+                      //   if (val == null || val.isEmpty) {
+                      //     return 'Field cannot be empty';
+                      //   }
+                      //   return null;
+                      // },
+                      controller: firstNameController,
                       keyboardType: TextInputType.name,
                       textCapitalization: TextCapitalization.words,
                       enableInteractiveSelection: false,
@@ -163,8 +180,9 @@ class _personalinfoState extends State<personalinfo> {
                             RegExp('[a-zA-Z0-9.-]')),
                         //FilteringTextInputFormatter.deny(RegExp(r'[/\\]')),
                       ],
+                      enabled: false,
                       decoration: InputDecoration(
-                        hintText: "First Name",
+                        hintText: GoogleUserStaticInfo().firstname,
                         filled: true,
                         fillColor: const Color.fromARGB(255, 230, 230, 230),
                         enabledBorder: OutlineInputBorder(
@@ -202,13 +220,13 @@ class _personalinfoState extends State<personalinfo> {
                       height: 4.0,
                     ),
                     TextFormField(
-                      validator: (val) {
-                        if (val == null || val.isEmpty) {
-                          return 'Field cannot be empty';
-                        }
-                        return null;
-                      },
-                      controller: emailController,
+                      // validator: (val) {
+                      //   if (val == null || val.isEmpty) {
+                      //     return 'Field cannot be empty';
+                      //   }
+                      //   return null;
+                      // },
+                      controller: lastNameController,
                       keyboardType: TextInputType.emailAddress,
                       enableInteractiveSelection: false,
                       inputFormatters: [
@@ -216,8 +234,9 @@ class _personalinfoState extends State<personalinfo> {
                             RegExp('[a-zA-Z0-9_.@]')),
                         //FilteringTextInputFormatter.deny(RegExp(r'[/\\]')),
                       ],
+                      enabled: false,
                       decoration: InputDecoration(
-                        hintText: "Last Name",
+                        hintText: GoogleUserStaticInfo().lastname,
                         filled: true,
                         fillColor: const Color.fromARGB(255, 230, 230, 230),
                         enabledBorder: OutlineInputBorder(
@@ -287,17 +306,19 @@ class _personalinfoState extends State<personalinfo> {
                       child: RawMaterialButton(
                         fillColor: const Color.fromARGB(255, 0, 110, 195),
                         onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Processing Data')));
-                            createAccount();
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content:
-                                        Text('Fill out the required field')));
-                          }
+                          createAccount();
+                          // if (_formKey.currentState!.validate()) {
+                          //   ScaffoldMessenger.of(context).showSnackBar(
+                          //       const SnackBar(
+                          //           content: Text('Processing Data')));
+                          //   createAccount();
+                          // }
+                          // else {
+                          //   ScaffoldMessenger.of(context).showSnackBar(
+                          //       const SnackBar(
+                          //           content:
+                          //           Text('Fill out the required field')));
+                          // }
                         },
                         elevation: 0.0,
                         padding: const EdgeInsets.symmetric(vertical: 15.0),
@@ -325,22 +346,44 @@ class _personalinfoState extends State<personalinfo> {
     //print('Create account executed');
 
     try {
-      if (emailController.text.isNotEmpty &
-          passwordController.text.isNotEmpty &
-          firstNameController.text.isNotEmpty &
-          lastNameController.text.isNotEmpty) {
+      if (passwordController.text.isNotEmpty) {
         //     print('The fields is not empty');
-        await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(
-              email: emailController.text.trim(),
-              password: passwordController.text.trim(),
-            )
-            .then((value) => users.doc(value.user!.uid).set({
-                  'firstname': firstNameController.text.trim(),
-                  'lastname': lastNameController.text.trim(),
-                  'email': value.user!.email,
-                  'password': passwordController.text.trim(),
-                }));
+        // await FirebaseAuth.instance
+        //     .createUserWithEmailAndPassword(
+        //   email: GoogleUserStaticInfo().email.toString(),
+        //   password: passwordController.text.trim(),
+        // )
+        //     .then((value) => users.doc(value.user!.uid).update({
+        //   'firstname': GoogleUserStaticInfo().firstname,
+        //   'lastname': GoogleUserStaticInfo().lastname,
+        //   'email': GoogleUserStaticInfo().email,
+        //   'password': passwordController.text.trim(),
+        // }));
+        // await FirebaseAuth.instance
+        //     .createUserWithEmailAndPassword(
+        //   email: GoogleUserStaticInfo().email.toString(),
+        //   password: passwordController.text.trim(),
+        // );
+
+        users.doc(GoogleUserStaticInfo().uid).update({
+          "password": passwordController.text.trim(),
+        });
+
+        // await FirebaseAuth.instance
+        //     .createUserWithEmailAndPassword(
+        //   email: GoogleUserStaticInfo().email.toString(),
+        //   password: passwordController.text.trim(),
+        // );
+
+        //     .then((value) => users.doc(value.user!.uid).update({
+        //   'firstname': GoogleUserStaticInfo().firstname,
+        //   'lastname': GoogleUserStaticInfo().lastname,
+        //   'email': GoogleUserStaticInfo().email,
+        //   'password': passwordController.text.trim(),
+        // }));
+
+        // Navigator.of(context).push(MaterialPageRoute(
+        //     builder: (context) => const HomePage()));
       } else {
         //    print('Fields are empty');
       }

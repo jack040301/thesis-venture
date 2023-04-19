@@ -59,8 +59,8 @@ class WidgetUpgradeAccount extends StatelessWidget {
               Container(
                 color: Colors.white,
                 padding: const EdgeInsets.fromLTRB(23, 20, 30, 7),
-                child: Row(
-                  children: const <Widget>[
+                child: const Row(
+                  children: <Widget>[
                     SizedBox(
                       width: 10.0,
                     ),
@@ -105,7 +105,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
                   color: const Color.fromARGB(255, 0, 110, 195),
                   borderRadius: BorderRadius.circular(5.0),
                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       //  Ink.image(
@@ -113,8 +113,8 @@ class WidgetUpgradeAccount extends StatelessWidget {
                       //  'assets/images/icons/contactUsIcon.png'),
                       // height: 40,
                       //  width: 30),
-                      const SizedBox(width: 10.0, height: 50),
-                      const Text('Send us an email',
+                      SizedBox(width: 10.0, height: 50),
+                      Text('Send us an email',
                           style:
                               TextStyle(color: Colors.white, fontSize: 20.0)),
                     ],
@@ -142,7 +142,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
                           await goToWebPage(
                               "https://facebook.com/profile.php?id=100090538134749");
                         },
-                        icon: ImageIcon(
+                        icon: const ImageIcon(
                           AssetImage("assets/images/icons/Facebook.png"),
                           color: Color.fromARGB(255, 44, 45, 48),
                           size: 20,
@@ -154,7 +154,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
                         onPressed: () async {
                           await goToWebPage("https://twitter.com/ventureapp5");
                         },
-                        icon: ImageIcon(
+                        icon: const ImageIcon(
                           AssetImage("assets/images/icons/Twitter.png"),
                           color: Color.fromARGB(255, 44, 45, 48),
                           size: 20,
@@ -167,7 +167,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
                           await goToWebPage(
                               "https://instagram.com/ventureapp5/");
                         },
-                        icon: ImageIcon(
+                        icon: const ImageIcon(
                           AssetImage("assets/images/icons/Instagram.png"),
                           color: Color.fromARGB(255, 44, 45, 48),
                           size: 20,

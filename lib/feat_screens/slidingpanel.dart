@@ -71,10 +71,10 @@ class _SlidingPanelScreenState extends State<SlidingPanelScreen> {
                   ]),
               Container(
                 padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
-                child: Column(
+                child: const Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const <Widget>[
+                  children: <Widget>[
                     Text("Metroplaza",
                         style: TextStyle(
                           color: Color.fromARGB(255, 74, 74, 74),

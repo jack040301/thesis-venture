@@ -561,7 +561,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
                                     contentPadding: EdgeInsets.symmetric(
                                         horizontal: 20.0, vertical: 15.0),
                                     border: InputBorder.none,
-                                    prefixIcon: const Icon(Icons.search),
+                                    prefixIcon: Icon(Icons.search),
                                     hintText: 'Search',
                                   ),
                                   onChanged: (value) {
@@ -641,11 +641,11 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
             backgroundColor: Colors.white,
             mini: true,
             heroTag: null,
-            child: const Icon(Icons.info),
             foregroundColor: Colors.blue,
             onPressed: () {
               Discover().showDiscover(context);
             },
+            child: const Icon(Icons.info),
           ),
           FloatingActionButton(
             disabledElevation: 0,
@@ -653,13 +653,13 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
             backgroundColor: Colors.white,
             mini: true,
             heroTag: null,
-            child: const Icon(Icons.home_work_outlined),
             foregroundColor: Colors.blue,
             onPressed: () {
               goToWebPage(
                   "https://play.unity.com/mg/other/webgl-builds-329405");
               // Discover().showDiscover(context);
             },
+            child: const Icon(Icons.home_work_outlined),
           ),
         ],
       ),

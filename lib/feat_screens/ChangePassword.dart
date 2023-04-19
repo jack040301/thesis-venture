@@ -10,7 +10,7 @@ import 'package:flutter/services.dart';
 import '../userInfo.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
-  ChangePasswordScreen();
+  const ChangePasswordScreen({super.key});
 
   @override
   State<ChangePasswordScreen> createState() => _ChangePasswordScreenState();
@@ -83,7 +83,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           color: Colors.black,
                           fontSize: 16,
                         ),
-                        fillColor: Color.fromARGB(255, 230, 230, 230),
+                        fillColor: const Color.fromARGB(255, 230, 230, 230),
                         filled: true,
                         border: const OutlineInputBorder(
                           borderSide: BorderSide.none,
@@ -122,15 +122,15 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         FilteringTextInputFormatter.allow(RegExp(
                             '[a-zA-Z0-9á-úÁ-Ú_.!@#%^&*()/{}:;' '""<>-]')),
                       ],
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: '************',
-                        labelStyle: const TextStyle(
+                        labelStyle: TextStyle(
                           color: Colors.black,
                           fontSize: 16,
                         ),
                         fillColor: Color.fromARGB(255, 230, 230, 230),
                         filled: true,
-                        border: const OutlineInputBorder(
+                        border: OutlineInputBorder(
                           borderSide: BorderSide.none,
                         ),
                       ),
@@ -189,7 +189,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           _passwordController, context, "Please fill out all the fields");
     }
   } //close change pass
-
 } //class close
 
 void _changePassword(User user, String password, String confirmPassword,

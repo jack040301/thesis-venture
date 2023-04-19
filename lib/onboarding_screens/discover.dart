@@ -65,7 +65,7 @@ class Discover {
                             Container(
                               color: Colors.white,
                               padding: const EdgeInsets.fromLTRB(65, 10, 35, 5),
-                              child:  Row(
+                              child: const Row(
                                 children: <Widget>[
                                   Image(
                                       image: AssetImage(
@@ -91,7 +91,7 @@ class Discover {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30.0)),
                                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                                child:  Row(
+                                child: const Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     SizedBox(width: 10.0, height: 35),

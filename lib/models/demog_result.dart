@@ -82,7 +82,7 @@ class _DemogResultState extends State<DemogResult> {
 //Draw the image
     document.pages.add().graphics.drawImage(
         PdfBitmap(File(bitmapimage).readAsBytesSync()),
-        Rect.fromLTWH(0, 0, 100, 100));
+        const Rect.fromLTWH(0, 0, 100, 100));
 
 //Saves the document
     File('Output.pdf').writeAsBytes(await document.save());
@@ -271,7 +271,7 @@ class _DemogResultState extends State<DemogResult> {
                                 padding:
                                     const EdgeInsets.fromLTRB(35, 15, 35, 5),
                                 color: Colors.white,
-                                child:  Row(
+                                child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Center(
@@ -311,7 +311,7 @@ class _DemogResultState extends State<DemogResult> {
                                 padding:
                                     const EdgeInsets.fromLTRB(35, 10, 35, 5),
                                 color: Colors.white,
-                                child: Row(
+                                child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Center(
@@ -348,10 +348,7 @@ class _DemogResultState extends State<DemogResult> {
                               color: Colors.white,
                               child: Center(
                                 child: Text(
-                                    '₱' +
-                                        revstrB
-                                            .replaceAllMapped(reg, mathFunc)
-                                            .toString(), //REVENUE PER YEAR
+                                    '₱${revstrB.replaceAllMapped(reg, mathFunc)}', //REVENUE PER YEAR
                                     style: const TextStyle(
                                         color: Color.fromARGB(255, 44, 45, 48),
                                         fontSize: 20.0)), // <-- Text
@@ -361,7 +358,7 @@ class _DemogResultState extends State<DemogResult> {
                                 padding:
                                     const EdgeInsets.fromLTRB(35, 10, 35, 5),
                                 color: Colors.white,
-                                child:  Row(
+                                child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Center(
@@ -398,7 +395,7 @@ class _DemogResultState extends State<DemogResult> {
                                 padding:
                                     const EdgeInsets.fromLTRB(35, 10, 35, 5),
                                 color: Colors.white,
-                                child:  Row(
+                                child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Center(
@@ -432,15 +429,13 @@ class _DemogResultState extends State<DemogResult> {
                                       ),
                                     ])),
                             BudgetRequiredArea(
-                                landbudgetstrB: '₱' +
-                                    landbudgetstrB
-                                        .replaceAllMapped(reg, mathFunc)
-                                        .toString()),
+                                landbudgetstrB:
+                                    '₱${landbudgetstrB.replaceAllMapped(reg, mathFunc)}'),
                             Container(
                                 padding:
                                     const EdgeInsets.fromLTRB(35, 10, 35, 5),
                                 color: Colors.white,
-                                child:  Row(
+                                child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Center(
@@ -489,7 +484,7 @@ class _DemogResultState extends State<DemogResult> {
                                 padding:
                                     const EdgeInsets.fromLTRB(35, 2, 35, 5),
                                 color: Colors.white,
-                                child:  Row(
+                                child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Center(
@@ -535,7 +530,7 @@ class _DemogResultState extends State<DemogResult> {
                                 padding:
                                     const EdgeInsets.fromLTRB(35, 2, 35, 5),
                                 color: Colors.white,
-                                child:  Row(
+                                child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Center(

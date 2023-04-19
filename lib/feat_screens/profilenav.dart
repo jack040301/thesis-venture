@@ -118,10 +118,11 @@ class ProfileNav {
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ChangePasswordScreen(
-                                    //  password: password,
-                                    // confirmpassword: confirmpassword,
-                                    )),
+                                builder: (context) =>
+                                    const ChangePasswordScreen(
+                                        //  password: password,
+                                        // confirmpassword: confirmpassword,
+                                        )),
                           );
                         },
                         icon: const ImageIcon(
