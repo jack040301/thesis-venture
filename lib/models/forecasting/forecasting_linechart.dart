@@ -112,8 +112,6 @@ class SyncLineChart extends StatelessWidget {
                           utilLease = 100;
                           misc = 100;
 
-                          debugPrint("$suggestedbusiness");
-
                           /*       marketcost = double.parse(dataDoc['marketing_cost']);
                           laborcost = double.parse(dataDoc['labor_cost']);
                           foodsup = double.parse(dataDoc['food_supply']);

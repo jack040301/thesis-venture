@@ -304,7 +304,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             'firstname': GoogleUserStaticInfo().firstname,
                             'lastname': GoogleUserStaticInfo().lastname,
                             'email': GoogleUserStaticInfo().email,
-                            'password': '',
                           }).onError((error, stackTrace) => (error.toString()));
                           // pushAndRemoveUntil
                           // Navigator.of(context).push(MaterialPageRoute(
@@ -397,7 +396,8 @@ class _LoginScreenState extends State<LoginScreen> {
             title: const Text('Invalid Credentials.'),
             content: const SingleChildScrollView(
               child: Text(
-                  "Invalid Credentials. Please enter a valid Email Address and Password."),
+                  "Invalid Credentials. Please enter a valid Email Address and Password.\n\n\n"
+                  "NOTE: if you used Google Sign in for logging this account, Please Sign in with Google"),
             ),
             actions: <Widget>[
               TextButton(

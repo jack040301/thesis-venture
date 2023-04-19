@@ -88,7 +88,7 @@ class _personalinfoState extends State<personalinfo> {
             const Text(
                 "\nPlease Create your Password to complete your registration\n\n",
                 style: TextStyle(
-                  color: Colors.red,
+                  color: const Color.fromARGB(255, 0, 110, 195),
                   fontSize: 12.0,
                   fontFamily: 'Questrial',
                 )),
@@ -355,10 +355,30 @@ class _personalinfoState extends State<personalinfo> {
 
     try {
       final String password = passwordController.text;
+      final String email = GoogleUserStaticInfo().email.toString();
+      final String firstname = GoogleUserStaticInfo().firstname;
+      final String lastname = GoogleUserStaticInfo().lastname;
+
+      // await users.doc(GoogleUserStaticInfo().uid).set({
+      //   'firstname': GoogleUserStaticInfo().firstname,
+      //   'lastname': GoogleUserStaticInfo().lastname,
+      //   'email': GoogleUserStaticInfo().email,
+      // }).onError((error, stackTrace) => (error.toString()));
 
       users.doc(GoogleUserStaticInfo().uid).update({
         "password": password,
       });
+
+      // await FirebaseAuth.instance
+      //     .createUserWithEmailAndPassword(
+      //   email: email,
+      //   password: password,
+      // );
+
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Successfully Created your account')));
+
+      // await FirebaseAuth.instance.currentUser!.updatePassword(password);
     } on FirebaseAuthException catch (e) {
       /// Showing Error with AlertDialog if the user enter the wrong Email and Password
       //  print('Signup exception: ${e.message}');

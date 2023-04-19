@@ -15,6 +15,7 @@ import 'package:main_venture/feat_screens/profilenav.dart';
 import 'package:main_venture/feat_screens/zonecreen.dart';
 import 'package:main_venture/models/auto_complete_results.dart';
 import 'package:main_venture/providers/search_places.dart';
+import 'package:main_venture/screens/simu_dialog.dart';
 import 'package:main_venture/services/maps_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geocoding/geocoding.dart';
@@ -24,6 +25,7 @@ import 'package:url_launcher/url_launcher.dart';
 // import 'package:place_picker/place_picker.dart';
 import '../feat_screens/requesting_dialog.dart';
 import '../onboarding_screens/discover.dart';
+
 import '../userInfo.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -354,7 +356,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
         .collection("markers")
         //   .where("request_status", isEqualTo: true)
         .where("coords", isGreaterThanOrEqualTo: greatercoordinates)
-        //.orderBy("coords", descending: true)
+        .orderBy("coords", descending: true)
         .limit(1)
         .get()
         .then((QuerySnapshot querySnapshot) => {
@@ -655,9 +657,10 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
             heroTag: null,
             foregroundColor: Colors.blue,
             onPressed: () {
-              goToWebPage(
+              SimuDialog().showSimulation(context);
+              /*    goToWebPage(
                   "https://play.unity.com/mg/other/webgl-builds-329405");
-              // Discover().showDiscover(context);
+              // Discover().showDiscover(context); */
             },
             child: const Icon(Icons.home_work_outlined),
           ),
