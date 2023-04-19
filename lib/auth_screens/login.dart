@@ -240,7 +240,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: Color.fromARGB(255, 0, 110, 195),
                               fontSize: 14.0)),
                     ),
-                    const Row(children: <Widget>[
+                    Row(children: const <Widget>[
                       Expanded(
                         child: Divider(
                             color: Color.fromARGB(255, 105, 105, 105),
@@ -277,20 +277,42 @@ class _LoginScreenState extends State<LoginScreen> {
                         var usersCheck =
                             await users.doc(GoogleUserStaticInfo().uid).get();
 
-                        if (!usersCheck.exists) {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const personalinfo()));
+                        if (usersCheck.exists) {
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => const personalinfo()));
 
+                          // await FirebaseAuth.instance
+                          //     .createUserWithEmailAndPassword(
+                          //   email: GoogleUserStaticInfo().email.toString(),
+                          //   password: "",
+                          // )
+                          //     .then((value) => users.doc(value.user!.uid).set({
+                          //   'firstname': GoogleUserStaticInfo().firstname,
+                          //   'lastname': GoogleUserStaticInfo().lastname,
+                          //   'email': value.user!.email,
+                          // })); pushAndRemoveUntil
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const HomePage()));
+
+                          // await users.doc(GoogleUserStaticInfo().uid).set({
+                          //   'firstname': GoogleUserStaticInfo().firstname,
+                          //   'lastname': GoogleUserStaticInfo().lastname,
+                          //   'email': GoogleUserStaticInfo().email,
+                          // }).onError((error, stackTrace) => (error.toString()));
+                        } else {
                           await users.doc(GoogleUserStaticInfo().uid).set({
                             'firstname': GoogleUserStaticInfo().firstname,
                             'lastname': GoogleUserStaticInfo().lastname,
                             'email': GoogleUserStaticInfo().email,
+                            'password': '',
                           }).onError((error, stackTrace) => (error.toString()));
-                        } else {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const HomePage()));
+                          // pushAndRemoveUntil
                           // Navigator.of(context).push(MaterialPageRoute(
-                          //     builder: (context) => const personalinfo()));
+                          //     builder: (context) => const HomePage()));
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => const personalinfo()),
+                              (Route route) => false);
                         }
                       },
                       child: Material(

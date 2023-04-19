@@ -306,7 +306,15 @@ class _personalinfoState extends State<personalinfo> {
                       child: RawMaterialButton(
                         fillColor: const Color.fromARGB(255, 0, 110, 195),
                         onPressed: () {
-                          createAccount();
+                          // createAccount();
+                          if (passwordController.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content:
+                                        Text('Fill out the Password field')));
+                          } else {
+                            createAccount();
+                          }
                           // if (_formKey.currentState!.validate()) {
                           //   ScaffoldMessenger.of(context).showSnackBar(
                           //       const SnackBar(
@@ -346,47 +354,11 @@ class _personalinfoState extends State<personalinfo> {
     //print('Create account executed');
 
     try {
-      if (passwordController.text.isNotEmpty) {
-        //     print('The fields is not empty');
-        // await FirebaseAuth.instance
-        //     .createUserWithEmailAndPassword(
-        //   email: GoogleUserStaticInfo().email.toString(),
-        //   password: passwordController.text.trim(),
-        // )
-        //     .then((value) => users.doc(value.user!.uid).update({
-        //   'firstname': GoogleUserStaticInfo().firstname,
-        //   'lastname': GoogleUserStaticInfo().lastname,
-        //   'email': GoogleUserStaticInfo().email,
-        //   'password': passwordController.text.trim(),
-        // }));
-        // await FirebaseAuth.instance
-        //     .createUserWithEmailAndPassword(
-        //   email: GoogleUserStaticInfo().email.toString(),
-        //   password: passwordController.text.trim(),
-        // );
+      final String password = passwordController.text;
 
-        users.doc(GoogleUserStaticInfo().uid).update({
-          "password": passwordController.text.trim(),
-        });
-
-        // await FirebaseAuth.instance
-        //     .createUserWithEmailAndPassword(
-        //   email: GoogleUserStaticInfo().email.toString(),
-        //   password: passwordController.text.trim(),
-        // );
-
-        //     .then((value) => users.doc(value.user!.uid).update({
-        //   'firstname': GoogleUserStaticInfo().firstname,
-        //   'lastname': GoogleUserStaticInfo().lastname,
-        //   'email': GoogleUserStaticInfo().email,
-        //   'password': passwordController.text.trim(),
-        // }));
-
-        // Navigator.of(context).push(MaterialPageRoute(
-        //     builder: (context) => const HomePage()));
-      } else {
-        //    print('Fields are empty');
-      }
+      users.doc(GoogleUserStaticInfo().uid).update({
+        "password": password,
+      });
     } on FirebaseAuthException catch (e) {
       /// Showing Error with AlertDialog if the user enter the wrong Email and Password
       //  print('Signup exception: ${e.message}');
