@@ -104,6 +104,12 @@
     align-items: flex-end;    
     justify-content: space-evenly;
     transition: 0.3s;
+    animation: show 0.2s ease-out;
+  }
+
+  @keyframes show {
+    from {top: -60px;}
+    to {top: 0px;}
   }
 
   .m-modal-cont-hide {
