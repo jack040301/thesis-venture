@@ -4,7 +4,7 @@
     display: block;
     position: absolute;
     right: 12%;
-    height: 140px;
+    height: 190px;
     z-index: 1;
     overflow: hidden;
 }
@@ -66,3 +66,93 @@
   }
 
   .show {display: block;}
+
+  /*----------------- Custom Top Modal  */
+  .m-cont {
+    width: 100%;
+    /*border: 1px solid red;*/
+    height: 100vh;
+    background-color: rgba(20, 20, 20, 0.8);
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    transition: 0.3s;
+    display: block;
+  }
+
+  .m-cont-hide {
+    width: 100%;
+    /*border: 1px solid red;*/
+    height: 100vh;
+    background-color: rgba(20, 20, 20, 0.8);
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    transition: 0.3s;
+    display: none;
+  }
+
+  .m-modal-cont {    
+    top: 0px;
+    width: 100vw;
+    height: 11vh;
+    background-color: white;
+    box-shadow: 0px 5px 15px 0px rgba(0,0,0,1);
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;    
+    justify-content: space-evenly;
+    transition: 0.3s;
+  }
+
+  .m-modal-cont-hide {
+    top: -60px;
+    width: 100vw;
+    height: 11vh;
+    background-color: white;
+    box-shadow: 0px 5px 15px 0px rgba(0,0,0,1);
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    
+    justify-content: space-evenly;
+    transition: 0.3s;
+  }
+
+  .m-title {
+    /*border: 1px solid red;*/
+    width: 60vw;
+    height: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .m-btn {
+    /*border: 1px solid blue;*/
+    width: 10vw;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  }
+
+  .m-btn-1 {
+    border:1px solid #99ccff;
+    background-color: white;
+    border-radius: 10px;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    transition: 0.3s;
+  }
+
+  .m-btn-1:hover {
+    color: white;
+    background-color: #99ccff;
+    transition: 0.3s;
+  }
