@@ -200,14 +200,21 @@ void _changePassword(User user, String password, String confirmPassword,
       "password": password,
     });
 
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //     popSnackbar.popsnackbar("Successfully updated your Password"));
+
     ScaffoldMessenger.of(context).showSnackBar(
-        popSnackbar.popsnackbar("Successfully updated your Password"));
+        SnackBar(content: Text("Successfully updated your Password")));
 
     Future.delayed(const Duration(seconds: 1)).then((value) =>
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const HomePage())));
   }).catchError((error) {
-    ScaffoldMessenger.of(context).showSnackBar(
-        popSnackbar.popsnackbar("Password cant be changed due to $error"));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+            "Password cant be changed due to: Password can't be changed because it needs recent login. Please login again before retrying this request.")));
+
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //     popSnackbar.popsnackbar("Password cant be changed due to $error"));
   });
 }
