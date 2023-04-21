@@ -207,7 +207,7 @@ void _changePassword(User user, String password, String confirmPassword,
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const HomePage())));
   }).catchError((error) {
-    ScaffoldMessenger.of(context).showSnackBar(
-        popSnackbar.popsnackbar("Password cant be changed due to $error"));
+    ScaffoldMessenger.of(context).showSnackBar(popSnackbar.popsnackbar(
+        "Password cant be changed due to Password can't be changed because it needs recent login. Please login again before retrying this request."));
   });
 }
