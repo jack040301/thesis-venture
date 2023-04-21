@@ -31,6 +31,7 @@ class RequestedDialog {
 
   static const colortext = Color.fromARGB(255, 74, 74, 74);
   static int count = 0;
+  int countquery = 0;
 
   Future savedRequestMarker(context) async {
     count += 1;
@@ -63,6 +64,17 @@ class RequestedDialog {
         .catchError((error) {
       ScaffoldMessenger.of(context).showSnackBar(error);
     });
+  }
+
+  Future<int> countPerUserRequest() async {
+    await FirebaseFirestore.instance
+        .collection("markers")
+        .where("user_id", isEqualTo: GoogleUserStaticInfo().uid)
+        .get()
+        .then(
+            (QuerySnapshot querySnapshot) => {countquery = querySnapshot.size});
+
+    return countquery;
   }
 
   removeMarkerss(context) {
@@ -103,6 +115,8 @@ class RequestedDialog {
   }
 
   Future showMyDialog(BuildContext context) {
+    countPerUserRequest();
+
     return showDialog(
         context: context,
         builder: (context) {
@@ -126,22 +140,25 @@ class RequestedDialog {
                         )),
                     const SizeBoxTen(),
                     const SizeBoxTwenty(),
-                    SizedBox(
-                      width: 200.0,
-                      child: RawMaterialButton(
-                        fillColor: const Color.fromARGB(255, 0, 110, 195),
-                        onPressed: () async {
-                          await savedRequestMarker(context);
-                        },
-                        elevation: 0.0,
-                        padding: const EdgeInsets.symmetric(vertical: 15.0),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0)),
-                        child: const Text("Request",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 15.0)),
-                      ),
-                    ),
+                    countquery < 5
+                        ? SizedBox(
+                            width: 200.0,
+                            child: RawMaterialButton(
+                              fillColor: const Color.fromARGB(255, 0, 110, 195),
+                              onPressed: () async {
+                                await savedRequestMarker(context);
+                              },
+                              elevation: 0.0,
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 15.0),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.0)),
+                              child: const Text("Request",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 15.0)),
+                            ),
+                          )
+                        : const Text("Note: You can only request 5 places"),
                     const SizeBoxTwenty(),
                     SizedBox(
                       width: 200.0,

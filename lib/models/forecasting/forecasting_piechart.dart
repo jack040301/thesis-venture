@@ -213,7 +213,7 @@ class PieChartForecasting extends StatelessWidget {
                                                         fontSize: 15,
                                                       ),
                                                     )), */
-                                                const Text("Pie Chart Forecast",
+                                                const Text("Costing Chart",
                                                     style: TextStyle(
                                                         fontSize: 19.0)),
                                                 Expanded(

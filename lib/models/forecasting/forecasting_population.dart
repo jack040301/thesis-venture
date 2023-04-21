@@ -109,7 +109,7 @@ class BarchartPop extends StatelessWidget {
                                       padding: const EdgeInsets.fromLTRB(
                                           5, 20, 5, 10),
                                       child: Column(children: <Widget>[
-                                        const Text("Bar Chart Forecast",
+                                        const Text("Population Graph",
                                             style: TextStyle(fontSize: 19.0)),
                                         Expanded(
                                             child: SfCartesianChart(

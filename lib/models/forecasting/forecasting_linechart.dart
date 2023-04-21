@@ -159,7 +159,7 @@ class SyncLineChart extends StatelessWidget {
                                                       5, 20, 5, 10),
                                               child: Column(children: <Widget>[
                                                 const Text(
-                                                    "Line Graph Forecast",
+                                                    "Forecasted Growth",
                                                     style: TextStyle(
                                                         fontSize: 19.0)),
                                                 Expanded(

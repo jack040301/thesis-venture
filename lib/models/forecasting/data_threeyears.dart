@@ -103,7 +103,7 @@ class BarThreeYears extends StatelessWidget {
                                       padding: const EdgeInsets.fromLTRB(
                                           5, 20, 5, 10),
                                       child: Column(children: <Widget>[
-                                        const Text("Revenue Forecast",
+                                        const Text("Forecasted Growth(Years) Revenue",
                                             style: TextStyle(fontSize: 19.0)),
                                         Expanded(
                                             child: SfCartesianChart(

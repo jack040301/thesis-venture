@@ -76,6 +76,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
   Set<Marker> allmarkers = <Marker>{};
   Set<Marker> _markers = <Marker>{};
   final Set<Marker> markcount = <Marker>{};
+   int countquery = 0;
 
   // Set<Marker> allmarkers = HashSet<Marker>();
 
@@ -468,6 +469,8 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
       debugPrint(error);
     });
   } */
+
+
 
   final StreamController<Set<Marker>> _markerStreamController =
       StreamController<Set<Marker>>.broadcast();
