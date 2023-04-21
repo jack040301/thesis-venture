@@ -52,7 +52,7 @@ class SimuDialog {
                             Container(
                               color: Colors.white,
                               padding: const EdgeInsets.fromLTRB(65, 10, 35, 5),
-                              child: const Row(
+                              child:  Row(
                                 children: <Widget>[
                                   Image(
                                       image: AssetImage(
@@ -75,7 +75,7 @@ class SimuDialog {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30.0)),
                                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                                child: const Row(
+                                child:  Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     SizedBox(width: 10.0, height: 35),

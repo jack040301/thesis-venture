@@ -59,7 +59,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
               Container(
                 color: Colors.white,
                 padding: const EdgeInsets.fromLTRB(23, 20, 30, 7),
-                child: const Row(
+                child: Row(
                   children: <Widget>[
                     SizedBox(
                       width: 10.0,
@@ -105,7 +105,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
                   color: const Color.fromARGB(255, 0, 110, 195),
                   borderRadius: BorderRadius.circular(5.0),
                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       //  Ink.image(
@@ -134,7 +134,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
               ),
               Container(
                 color: Colors.white,
-                padding: const EdgeInsets.fromLTRB(125, 20, 30, 7),
+                padding: const EdgeInsets.fromLTRB(88, 20, 30, 7),
                 child: Row(
                   children: [
                     IconButton(
@@ -145,7 +145,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
                         icon: const ImageIcon(
                           AssetImage("assets/images/icons/Facebook.png"),
                           color: Color.fromARGB(255, 44, 45, 48),
-                          size: 20,
+                          size: 50,
                         )),
                     const SizedBox(
                       width: 10.0,
@@ -157,7 +157,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
                         icon: const ImageIcon(
                           AssetImage("assets/images/icons/Twitter.png"),
                           color: Color.fromARGB(255, 44, 45, 48),
-                          size: 20,
+                          size: 50,
                         )),
                     const SizedBox(
                       width: 10.0,
@@ -170,7 +170,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
                         icon: const ImageIcon(
                           AssetImage("assets/images/icons/Instagram.png"),
                           color: Color.fromARGB(255, 44, 45, 48),
-                          size: 20,
+                          size: 50,
                         )),
                   ],
                 ),

@@ -364,9 +364,9 @@ class DialogQuestion {
                         });
                       },
                     ),
-                    Text('Area: ₱ $_currentSliderValue',
+                    Text('Area Size: $_currentSliderValue',
                         style: const TextStyle(
-                          color: Color.fromARGB(255, 65, 99, 200),
+                          color: Color.fromARGB(255, 74, 74, 74),
                         )),
                     /*   TextFormField(
                         controller: areaController,

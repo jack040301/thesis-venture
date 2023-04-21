@@ -271,7 +271,7 @@ class _DemogResultState extends State<DemogResult> {
                                 padding:
                                     const EdgeInsets.fromLTRB(35, 15, 35, 5),
                                 color: Colors.white,
-                                child: const Row(
+                                child:  Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Center(
@@ -311,7 +311,7 @@ class _DemogResultState extends State<DemogResult> {
                                 padding:
                                     const EdgeInsets.fromLTRB(35, 10, 35, 5),
                                 color: Colors.white,
-                                child: const Row(
+                                child:  Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Center(
@@ -358,7 +358,7 @@ class _DemogResultState extends State<DemogResult> {
                                 padding:
                                     const EdgeInsets.fromLTRB(35, 10, 35, 5),
                                 color: Colors.white,
-                                child: const Row(
+                                child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Center(
@@ -395,7 +395,7 @@ class _DemogResultState extends State<DemogResult> {
                                 padding:
                                     const EdgeInsets.fromLTRB(35, 10, 35, 5),
                                 color: Colors.white,
-                                child: const Row(
+                                child:  Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Center(
@@ -435,7 +435,7 @@ class _DemogResultState extends State<DemogResult> {
                                 padding:
                                     const EdgeInsets.fromLTRB(35, 10, 35, 5),
                                 color: Colors.white,
-                                child: const Row(
+                                child:  Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Center(
@@ -484,7 +484,7 @@ class _DemogResultState extends State<DemogResult> {
                                 padding:
                                     const EdgeInsets.fromLTRB(35, 2, 35, 5),
                                 color: Colors.white,
-                                child: const Row(
+                                child:  Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Center(
@@ -530,7 +530,7 @@ class _DemogResultState extends State<DemogResult> {
                                 padding:
                                     const EdgeInsets.fromLTRB(35, 2, 35, 5),
                                 color: Colors.white,
-                                child: const Row(
+                                child:  Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Center(

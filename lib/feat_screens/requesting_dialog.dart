@@ -101,7 +101,7 @@ class RequestedDialog {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Got it'),
+              child: const Text('Okay'),
               onPressed: () {
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => const HomePage()),

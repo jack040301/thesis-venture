@@ -48,7 +48,7 @@ class ContentWidget extends StatelessWidget {
         Container(
           color: Colors.white,
           padding: const EdgeInsets.fromLTRB(35, 20, 40, 7),
-          child: const Row(
+          child:  Row(
             children: <Widget>[
               ImageIcon(
                 AssetImage("assets/images/icons/venture.png"),
@@ -85,7 +85,7 @@ class ContentWidget extends StatelessWidget {
         Container(
           color: Colors.white,
           padding: const EdgeInsets.fromLTRB(35, 20, 40, 7),
-          child: const Row(
+          child:  Row(
             children: <Widget>[
               ImageIcon(
                 AssetImage("assets/images/icons/team.png"),
