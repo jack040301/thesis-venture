@@ -32,11 +32,43 @@ class RequestedDialog {
   static const colortext = Color.fromARGB(255, 74, 74, 74);
   static int count = 0;
   int countquery = 0;
+  bool hasEnd = false;
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   Future savedRequestMarker(context) async {
     count += 1;
 
     GeoPoint geopoint = GeoPoint(lat, lng);
+
+    var docu = GoogleUserStaticInfo().uid.toString();
+    FirebaseFirestore.instance
+        .collection("markers")
+        .where('user_id_requested', isEqualTo: docu)
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((documents) async {
+                var data = documents.data() as Map;
+                // print(data['user_id_requested']);
+                // print(documents.id);// PRINTING OF DOCUMENT ID
+
+                if (hasEnd == false) {
+                  if (data['user_id_requested'] == docu) {
+                    // print(data['user_id_requested']);
+                    if (data['coords'].latitude == geopoint.latitude &&
+                        data['coords'].longitude == geopoint.longitude) {
+                      print("This location is already pinned");
+                      doublePinnedReq(context);
+                      hasEnd = true;
+                    } else {
+                      // print("ekis");
+                      hasEnd = true;
+                    }
+                  }
+                }
+
+                //
+              }) //for loop
+            });
 
     final pinnedData = {
       "coords": geopoint,
@@ -102,6 +134,31 @@ class RequestedDialog {
           actions: <Widget>[
             TextButton(
               child: const Text('Okay'),
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                    (Route route) => false);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future doublePinnedReq(context) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Double Pinned Request"),
+          content: const SingleChildScrollView(
+            child: Text("This location is already pinned"),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Got it'),
               onPressed: () {
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => const HomePage()),
