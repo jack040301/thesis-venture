@@ -145,7 +145,7 @@ class SyncLineChart extends StatelessWidget {
                               key: _printKey,
                               child: Center(
                                   child: Container(
-                                      height: 1100,
+                                      height: 1120,
                                       padding: const EdgeInsets.all(5),
                                       child: Card(
                                           elevation: 0,
@@ -159,7 +159,7 @@ class SyncLineChart extends StatelessWidget {
                                                       5, 20, 5, 10),
                                               child: Column(children: <Widget>[
                                                 const Text(
-                                                    "Forecasted Growth",
+                                                    "Forecasted Growth Revenue (1 Year)",
                                                     style: TextStyle(
                                                         fontSize: 19.0)),
                                                 Expanded(
@@ -177,10 +177,11 @@ class SyncLineChart extends StatelessWidget {
                                                     padding:
                                                         EdgeInsets.all(7.0),
                                                     child: Text(
-                                                      "the graph shows the potential growth of the chose business starting with the first month "
-                                                      "up to the last month of the year with the use of venture's Average algorithm and Parameters "
-                                                      "The Blue line dot in the graph represents the One Time Cost in establishing the business"
-                                                      "The Red line dot represents the daily revenue of the business"
+                                                      "The graph shows the potential growth of the chose business starting with the"
+                                                      " first month up to the last month of the year"
+                                                      " with the use of venture's Average algorithm and Parameters "
+                                                      "The Blue line dot in the graph represents the One Time Cost in establishing the business."
+                                                      " The Red line dot represents the daily revenue of the business"
                                                       // yung parameters siguro gray nalang to and mas maliit para maempasize na parang legend lang sya or meaning ganun
                                                       "Parameters includes the following "
                                                       "*Daily Cost (Man power, Supplies, Marketing Cost, Lease and Utilities and lastly Miscellaneous) "
@@ -188,10 +189,10 @@ class SyncLineChart extends StatelessWidget {
                                                       "*Assumed Sales (Sample Items and Sales per day) "
                                                       "*Daily Revenue (Assumed Sales - Daily Cost)"
                                                       // ito di normal text na ulit
-                                                      "The First month as state in the graph shows a lower revenue unlike the following year"
-                                                      "for the reason because the first month of the business there is a allocation of Marketing Cost for the advertisement"
-                                                      "and promotion of business The intersection of the Red and Blue line in the Graph states the ROI (Return of investment) "
-                                                      "that let you visualize the Timespan in which the the revenue will surpass the one time cost in simpler term the month in which you can get your investment back after "
+                                                      " The First month as state in the graph shows a lower revenue unlike the following year"
+                                                      " for the reason because the first month of the business there is a allocation of Marketing Cost for the advertisement"
+                                                      " and promotion of business The intersection of the Red and Blue line in the Graph states the ROI (Return of investment) "
+                                                      " that let you visualize the Timespan in which the the revenue will surpass the one time cost in simpler term the month in which you can get your investment back after "
                                                       // ito same gray ulit na maliit nalang
                                                       "*ROI (Return of Investment) Return on investment or return on costs is a Computation between net income and investment."
                                                       "The Early the ROI reach means the faster the investment can be back to the owner. As a performance measure, ROI is used to evaluate the efficiency of"
@@ -199,6 +200,7 @@ class SyncLineChart extends StatelessWidget {
                                                       textAlign:
                                                           TextAlign.justify,
                                                       style: TextStyle(
+                                                        // decoration: TextDecoration.underline,
                                                         height: 1.5,
                                                         color: Color.fromARGB(
                                                             255, 54, 54, 54),
@@ -474,16 +476,29 @@ Future<void> _renderChartAsImage(context, _cartesianChartKey) async {
   final ByteData? bytes = await data.toByteData(format: ui.ImageByteFormat.png);
   final Uint8List imageBytes =
       bytes!.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
-
+  PdfFont font = PdfStandardFont(PdfFontFamily.helvetica, 12);
   final PdfBitmap bitmap = PdfBitmap(imageBytes);
 
   final PdfDocument document = PdfDocument();
   document.pageSettings.size =
       Size(bitmap.width.toDouble(), bitmap.height.toDouble());
+//try this text, experiment on this
+  String text = 'Hello World!!!';
+  Size size = font.measureString(text);
+
+  //add the text in document
+  document.pages.add().graphics.drawString(text, font,
+      brush: PdfBrushes.black,
+      bounds: Rect.fromLTWH(0, 0, size.width, size.height));
+
   final PdfPage page = document.pages.add();
+
   final Size pageSize = page.getClientSize();
+  //add the image in document
+
   page.graphics
       .drawImage(bitmap, Rect.fromLTWH(0, 0, pageSize.width, pageSize.height));
+
   final List<int> bits = document.saveSync();
   document.dispose();
   //Get external storage directory
