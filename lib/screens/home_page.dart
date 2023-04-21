@@ -73,6 +73,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 // Markers set
   Set<Marker> allmarkers = <Marker>{};
   Set<Marker> _markers = <Marker>{};
+  Set<Marker> markcount = <Marker>{};
 
   // Set<Marker> allmarkers = HashSet<Marker>();
 
@@ -467,15 +468,50 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
           await RequestedDialog(trimmedlat, trimmedlong).showMyDialog(context);
         },
         icon: primaryMarker);
-    gettingZoneMarkers(trimmedlat, trimmedlong);
 
     // debugPrint(lat.toString());
 
     setState(() {
-      allmarkers.clear();
-      allmarkers.add(markerparams);
+//      allmarkers.clear();
+
+      if (markcount.length >= 5) {
+        allmarkers.removeWhere((element) =>
+            element.markerId == MarkerId(markcount.first.markerId.value));
+        markcount.removeWhere((element) =>
+            element.markerId == MarkerId(markcount.first.markerId.value));
+
+        debugPrint(markcount.length.toString());
+        showAlertDialog(context);
+      } else {
+        gettingZoneMarkers(trimmedlat, trimmedlong);
+
+        markcount.add(markerparams);
+
+        allmarkers.add(markerparams);
+      }
+
       //  _markers.add(marker);
     });
+  }
+
+  void showAlertDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Information'),
+          content: const Text('The Request is limited only to 5 markers'),
+          actions: [
+            TextButton(
+              child: const Text('I understand'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Widget builds(BuildContext context) {

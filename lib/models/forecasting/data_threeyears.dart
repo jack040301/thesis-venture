@@ -83,14 +83,6 @@ class BarThreeYears extends StatelessWidget {
 
           return Scaffold(
               backgroundColor: const Color.fromARGB(255, 241, 242, 242),
-              appBar: AppBar(
-                  backgroundColor: Colors.transparent,
-                  title: const Text('Revenue Forecast'),
-                  foregroundColor: const Color.fromARGB(255, 44, 45, 48),
-                  elevation: 0.0,
-                  leading: const BackButton(
-                    color: Color.fromARGB(255, 44, 45, 48),
-                  )),
               body: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: SingleChildScrollView(

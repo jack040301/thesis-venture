@@ -38,7 +38,8 @@ class SyncLineChart extends StatelessWidget {
       equipment = 0,
       permit = 0,
       oneTimeCostResult = 0,
-      assumptItems = 3500;
+      assumptItems = 0;
+
   double totalform2ndyear = 0, totalform3rdyear = 0;
   @override
   void initState() {
@@ -96,27 +97,21 @@ class SyncLineChart extends StatelessWidget {
                     children: [
                   FutureBuilder<DocumentSnapshot>(
                       future: forebusiness.doc(suggestedbusiness).get(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<DocumentSnapshot> snapshot) {
+                      builder: //(BuildContext context,
+                          //   AsyncSnapshot<DocumentSnapshot> snapshot)
+                          (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                         if (snapshot.hasError) {
                           return const Text("Error");
-                        }
-                        if (snapshot.hasData) {
+                        } else if (snapshot.hasData) {
                           Map<String, dynamic> dataDoc =
                               snapshot.data!.data() as Map<String, dynamic>;
                           //monthly cost
-
-                          marketcost = 100;
-                          laborcost = 100;
-                          foodsup = 100;
-                          utilLease = 100;
-                          misc = 100;
-
-                          /*       marketcost = double.parse(dataDoc['marketing_cost']);
+                          marketcost = double.parse(dataDoc['marketing_cost']);
                           laborcost = double.parse(dataDoc['labor_cost']);
                           foodsup = double.parse(dataDoc['food_supply']);
                           utilLease = double.parse(dataDoc['lease_utilities']);
-                          misc = double.parse(dataDoc['misc']); */
+                          misc = double.parse(dataDoc['misc']);
+                          assumptItems = double.parse(dataDoc['sales_per_day']);
                           monthlyResultCost = marketcost +
                               laborcost +
                               foodsup +
@@ -182,7 +177,25 @@ class SyncLineChart extends StatelessWidget {
                                                     padding:
                                                         EdgeInsets.all(7.0),
                                                     child: Text(
-                                                      'The graph shows that the timespan in which is the assumption sales would reach and surpass the one time cost that the owner used in starting the business it includes Stall cost, Business permit and equipment.',
+                                                      "the graph shows the potential growth of the chose business starting with the first month "
+                                                      "up to the last month of the year with the use of venture's Average algorithm and Parameters "
+                                                      "The Blue line dot in the graph represents the One Time Cost in establishing the business"
+                                                      "The Red line dot represents the daily revenue of the business"
+                                                      // yung parameters siguro gray nalang to and mas maliit para maempasize na parang legend lang sya or meaning ganun
+                                                      "Parameters includes the following "
+                                                      "*Daily Cost (Man power, Supplies, Marketing Cost, Lease and Utilities and lastly Miscellaneous) "
+                                                      "*One Time Cost (Stalls, Equipment and Permit) "
+                                                      "*Assumed Sales (Sample Items and Sales per day) "
+                                                      "*Daily Revenue (Assumed Sales - Daily Cost)"
+                                                      // ito di normal text na ulit
+                                                      "The First month as state in the graph shows a lower revenue unlike the following year"
+                                                      "for the reason because the first month of the business there is a allocation of Marketing Cost for the advertisement"
+                                                      "and promotion of business The intersection of the Red and Blue line in the Graph states the ROI (Return of investment) "
+                                                      "that let you visualize the Timespan in which the the revenue will surpass the one time cost in simpler term the month in which you can get your investment back after "
+                                                      // ito same gray ulit na maliit nalang
+                                                      "*ROI (Return of Investment) Return on investment or return on costs is a Computation between net income and investment."
+                                                      "The Early the ROI reach means the faster the investment can be back to the owner. As a performance measure, ROI is used to evaluate the efficiency of"
+                                                      "an investment or to compare the efficiencies of several different investments",
                                                       textAlign:
                                                           TextAlign.justify,
                                                       style: TextStyle(

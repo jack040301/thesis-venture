@@ -67,8 +67,7 @@ class SimuDialog {
                             ),
                             GestureDetector(
                               onTap: () async {
-                                goToWebPage(
-                                    "https://play.unity.com/mg/other/webgl-builds-329405");
+                                goToWebPage("https://jrchjuls.itch.io/my-game");
                                 // Discover().showDiscover(context);
                               },
                               child: Material(

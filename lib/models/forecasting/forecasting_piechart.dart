@@ -102,8 +102,7 @@ class PieChartForecasting extends StatelessWidget {
                           AsyncSnapshot<DocumentSnapshot> snapshot) {
                         if (snapshot.hasError) {
                           return const Text("Error");
-                        }
-                        if (snapshot.hasData) {
+                        } else if (snapshot.hasData) {
                           Map<String, dynamic> dataDoc =
                               snapshot.data!.data() as Map<String, dynamic>;
                           //monthly cost
@@ -129,11 +128,14 @@ class PieChartForecasting extends StatelessWidget {
                               (foodsup / monthlyResultCost) * 100;
                           double pieUtilLease =
                               (utilLease / monthlyResultCost) * 100;
+                          double pieMarketCost =
+                              (marketcost / monthlyResultCost) * 100;
                           double pieMisc = (misc / monthlyResultCost) * 100;
                           piedata = [
                             _ChartData('Labor Cost', pieLabor),
                             _ChartData('Food Supply', pieFoodSup),
-                            _ChartData('Utility Lease', pieUtilLease),
+                            _ChartData('Utility and Lease', pieUtilLease),
+                            _ChartData('Market Cost', pieMarketCost),
                             _ChartData('Miscellaneous', pieMisc)
                           ];
                           //one time cost
@@ -253,7 +255,14 @@ class PieChartForecasting extends StatelessWidget {
                                                     padding:
                                                         EdgeInsets.all(8.0),
                                                     child: Text(
-                                                      'The graph shows the allocation of monthly cost into following categories such as Labor Cost, Food Supply, Utility/Lease and Miscellaneous excluding the one time cost',
+                                                      "The graph shows the allocation of monthly cost into following categories such as Labor Cost, Food Supply, Utility/Lease and Miscellaneous excluding the one time cost"
+                                                      "As state in the Chart we can visualize the partition of the Monthly Cost of your chosen business in terms of given parameters"
+                                                      "the Labor Cost and Food Supplies are the two major factors to be considered in establishing your business mostly of the stalls are maneuver or are functioned by at least two people and about the supplies it includes not just the raw material or staple it also other necessities like the Gas etc"
+                                                      "The Marketing Cost includes the promotional materials needed to promote or engage people into your business"
+                                                      "The Utility and Lease Cost is the budget required for the renting and other billings such as Electricity and Water that is needed for alll the businesses today"
+                                                      "The Miscellaneous Cost is for the other costing like the employees benefits and also it acts as emergency fund for other uncertain cases "
+                                                      // nakagray din ito and maliit
+                                                      "*Cost may varies depending on the market factors like inflation",
                                                       textAlign:
                                                           TextAlign.justify,
                                                       style: TextStyle(

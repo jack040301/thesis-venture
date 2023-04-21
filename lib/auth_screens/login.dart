@@ -300,6 +300,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           //   'email': GoogleUserStaticInfo().email,
                           // }).onError((error, stackTrace) => (error.toString()));
                         } else {
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => const personalinfo()),
+                              (Route route) => false);
+
                           await users.doc(GoogleUserStaticInfo().uid).set({
                             'firstname': GoogleUserStaticInfo().firstname,
                             'lastname': GoogleUserStaticInfo().lastname,
@@ -308,10 +313,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           // pushAndRemoveUntil
                           // Navigator.of(context).push(MaterialPageRoute(
                           //     builder: (context) => const HomePage()));
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (context) => const personalinfo()),
-                              (Route route) => false);
                         }
                       },
                       child: Material(

@@ -5,6 +5,7 @@ import 'package:main_venture/models/demog_result.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:main_venture/userInfo.dart';
+import 'package:main_venture/screens/home_page.dart';
 
 class RequestedDialog {
   final double lat, lng;
@@ -16,8 +17,11 @@ class RequestedDialog {
   );
 
   static const colortext = Color.fromARGB(255, 74, 74, 74);
+  static int count = 0;
 
   Future savedRequestMarker(context) async {
+    count += 1;
+
     GeoPoint geopoint = GeoPoint(lat, lng);
 
     final pinnedData = {
@@ -37,14 +41,41 @@ class RequestedDialog {
     var db = FirebaseFirestore.instance;
     db
         .collection("markers")
-        .add(pinnedData)
+        .doc(count.toString() + "-" + GoogleUserStaticInfo().email.toString())
+        .set(pinnedData)
         .then((documentSnapshot) => {
-              ScaffoldMessenger.of(context).showSnackBar(RequestedPop)
+              alertmessage(context)
               //showing if data is saved
             })
         .catchError((error) {
       ScaffoldMessenger.of(context).showSnackBar(error);
     });
+  }
+
+  Future alertmessage(context) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Request Sent"),
+          content: const SingleChildScrollView(
+            child: Text(
+                "The request has been sent to the admin successfully. Please wait for the approval of admin."),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Got it'),
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                    (Route route) => false);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future showMyDialog(BuildContext context) {
@@ -76,8 +107,7 @@ class RequestedDialog {
                       child: RawMaterialButton(
                         fillColor: const Color.fromARGB(255, 0, 110, 195),
                         onPressed: () async {
-                          await savedRequestMarker(context)
-                              .then((_) => {Navigator.of(context).pop()});
+                          await savedRequestMarker(context);
                         },
                         elevation: 0.0,
                         padding: const EdgeInsets.symmetric(vertical: 15.0),

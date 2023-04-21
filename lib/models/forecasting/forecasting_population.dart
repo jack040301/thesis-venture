@@ -149,7 +149,15 @@ class BarchartPop extends StatelessWidget {
                                         const Padding(
                                             padding: EdgeInsets.all(8.0),
                                             child: Text(
-                                              'The graph shows the population data from 2015 to 2020 a slight increase (1.049%) in 5 years utilizing its growth percent we can assume the forecasted population by year 2025',
+                                              "The graph shows the population data from 2015 to 2020 a slight increase (1.049%) in 5 years utilizing its growth percent we can assume the forecasted population by year 2025"
+                                              "The data interprets that if the business is establish in this specific place we can take advantage the population increase in the following years in which most of the entrepreneurs considered of before investing."
+                                              "The higher the population of a specific place can be a huge aspect in the field of business."
+                                              // naka gray din ito and maliit lanf din then kapag clinick nya yung (1) may info nalang katulad sa demog result then itong mga nasa baba nakalagay
+                                              "*The population data comes from the PSA (1)"
+                                              "PSA (Philippine Statistic Authoristy)"
+                                              "The PSA shall primarily be responsible for the implementation of the objectives and provisions of R.A. 10625, R.A. 11055, and R.A. 11315."
+                                              "It shall plan, develop, prescribe, disseminate, and enforce policies, rules and regulations, and coordinate government-wide programs governing the production of official statistics, general purpose statistics, civil registration services and inclusive identification system."
+                                              "It shall primarily be responsible for all national censuses and surveys, sectoral statistics, community-based statistics, consolidation of selected administrative recording systems, and compilation of national accounts.",
                                               textAlign: TextAlign.justify,
                                               style: TextStyle(
                                                 height: 1.5,
