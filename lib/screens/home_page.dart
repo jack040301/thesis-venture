@@ -126,7 +126,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
         color: Colors.blue,
         points: points.map((e) => LatLng(e.latitude, e.longitude)).toList()));
   }
-
+  //bool  markerOnClick = true;
   //converting custom icon marker to bytes
   void addCustomIconMarker() {
     String assetpicture = "assets/images/icons/venture.png";
@@ -282,20 +282,20 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 
     //east
     if (greatercoordinates.longitude > 121.09) {
-      ScaffoldMessenger.of(context).showSnackBar(warning);
+      ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
     }
     // west
     else if (greatercoordinates.longitude < 120.96) {
-      ScaffoldMessenger.of(context).showSnackBar(warning);
+      ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
     }
     // north
     else if (greatercoordinates.latitude > 14.78) {
-      ScaffoldMessenger.of(context).showSnackBar(warning);
+      ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
     }
 
     // south
     else if (greatercoordinates.latitude < 14.62) {
-      ScaffoldMessenger.of(context).showSnackBar(warning);
+      ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
     } else {
       // debugPrint(greatercoordinates.latitude.toString());
 
@@ -312,21 +312,21 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
                   // 14 <= 15
                   // if( (greatercoordinates.latitude <= ( data["address"].latitude) || greatercoordinates.latitude <= ( lati)) && (greatercoordinates.longitude <= ( data["address"].longitude) || greatercoordinates.longitude <= (long ))){
                   //   // ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
-                  if ((greatercoordinates.latitude ==
-                          (data["address"].latitude)) &&
-                      (greatercoordinates.longitude ==
-                          (data["address"].longitude))) {
+                  if (greatercoordinates.longitude > 121.09) {
                     ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
+                  }
+                  // west
+                  else if (greatercoordinates.longitude < 120.96) {
+                    ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
+                  }
+                  // north
+                  else if (greatercoordinates.latitude > 14.78) {
+                    ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
+                  }
 
-                    // ScaffoldMessenger.of(context).showSnackBar( SnackBar(
-                    //           content: Text(
-                    //             "asd"
-                    //               // "orig \t" +data["address"].latitude.toString()+"\n"+
-                    //               //     // "ADDRESS1 \t"+latit.toString()+"\n"+
-                    //               //     "orig \t" +data["address"].longitude.toString()+"\n"+
-                    //               //     "ADDRESS3 \t"+long.toString()
-                    //            ))
-                    //       );
+                  // south
+                  else if (greatercoordinates.latitude < 14.62) {
+                    ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
                   } else {
                     // testMarker();
                     showMarkers(greatercoordinates);
@@ -449,32 +449,55 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 
     return allmarkers;
   }
+  void stop (double lat, double lng){
+    ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
+  }
 
   void markerOnClick(double lat, double lng) {
     var counter = markerIdCounter++;
+    var greatercoordinates = GeoPoint( lat,  lng);
 
     String trimminglat = lat.toStringAsFixed(7);
     String trimminglong = lng.toStringAsFixed(7);
     double trimmedlat = double.parse(trimminglat); //
     double trimmedlong = double.parse(trimminglong); //
 
-    final Marker markerparams = Marker(
-        markerId: MarkerId('marker_$counter'),
-        position: LatLng(lat, lng),
-        onTap: () async {
-          await RequestedDialog(trimmedlat, trimmedlong).showMyDialog(context);
-        },
-        icon: primaryMarker);
-    gettingZoneMarkers(trimmedlat, trimmedlong);
+    if (greatercoordinates.longitude > 121.09) {
+      ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
+    }
+    // west
+    else if (greatercoordinates.longitude < 120.96) {
+      ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
+    }
+    // north
+    else if (greatercoordinates.latitude > 14.78) {
+      ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
+    }
+
+    // south
+    else if (greatercoordinates.latitude < 14.62) {
+      ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
+    }
+
+    else {
+      final Marker markerparams = Marker(
+          markerId: MarkerId('marker_$counter'),
+          position: LatLng(lat, lng),
+          onTap: () async {
+            await RequestedDialog(trimmedlat, trimmedlong).showMyDialog(
+                context);
+          },
+          icon: primaryMarker);
+      gettingZoneMarkers(trimmedlat, trimmedlong);
 
     // debugPrint(lat.toString());
 
     setState(() {
-      allmarkers.clear();
+      //allmarkers.clear();
       allmarkers.add(markerparams);
       //  _markers.add(marker);
     });
-  }
+  }}
 
   Widget builds(BuildContext context) {
     return Padding(

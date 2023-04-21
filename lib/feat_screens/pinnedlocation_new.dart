@@ -198,7 +198,7 @@ class ContentHowToUse extends StatelessWidget {
             Container(
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(20, 10, 35, 5),
-              child: const Row(
+              child:  Row(
                 children:  <Widget>[
                   Image(
                       image: const AssetImage(
@@ -225,7 +225,7 @@ class ContentHowToUse extends StatelessWidget {
             Container(
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(20, 10, 35, 5),
-              child: const Row(
+              child:  Row(
                 children:  <Widget>[
                   Image(
                       image: const AssetImage(

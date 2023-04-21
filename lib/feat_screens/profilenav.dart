@@ -133,7 +133,7 @@ class ProfileNav {
                             style:
                                 TextStyle(color: Colors.black, fontSize: 15.0)),
                       ),
-                      const Row(children: <Widget>[
+                       Row(children: <Widget>[
                         Expanded(
                           child: Divider(
                               color: Color.fromARGB(255, 105, 105, 105),
@@ -212,7 +212,7 @@ class ProfileNav {
                             style:
                                 TextStyle(color: Colors.black, fontSize: 15.0)),
                       ),
-                      const Row(children: <Widget>[
+                       Row(children: <Widget>[
                         Expanded(
                           child: Divider(
                               color: Color.fromARGB(255, 105, 105, 105),

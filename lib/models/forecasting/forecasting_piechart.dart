@@ -103,7 +103,7 @@ class PieChartForecasting extends StatelessWidget {
                         if (snapshot.hasError) {
                           return const Text("Error");
                         }
-                        if (snapshot.hasData) {
+                        else if (snapshot.hasData) {
                           Map<String, dynamic> dataDoc =
                               snapshot.data!.data() as Map<String, dynamic>;
                           //monthly cost
@@ -129,11 +129,14 @@ class PieChartForecasting extends StatelessWidget {
                               (foodsup / monthlyResultCost) * 100;
                           double pieUtilLease =
                               (utilLease / monthlyResultCost) * 100;
+                          double pieMarketCost =
+                              (marketcost / monthlyResultCost) * 100;
                           double pieMisc = (misc / monthlyResultCost) * 100;
                           piedata = [
                             _ChartData('Labor Cost', pieLabor),
                             _ChartData('Food Supply', pieFoodSup),
-                            _ChartData('Utility Lease', pieUtilLease),
+                            _ChartData('Utility and Lease', pieUtilLease),
+                            _ChartData('Market Cost', pieMarketCost),
                             _ChartData('Miscellaneous', pieMisc)
                           ];
                           //one time cost
@@ -145,7 +148,7 @@ class PieChartForecasting extends StatelessWidget {
                               key: _printKey,
                               child: Center(
                                   child: Container(
-                                      height: 510,
+                                      height: 1250,
                                       padding: const EdgeInsets.all(5),
                                       child: Card(
                                           elevation: 0,
@@ -211,7 +214,7 @@ class PieChartForecasting extends StatelessWidget {
                                                         fontSize: 15,
                                                       ),
                                                     )), */
-                                                const Text("Pie Chart Forecast",
+                                                const Text("Monthly Cost Chart Forecast",
                                                     style: TextStyle(
                                                         fontSize: 19.0)),
                                                 Expanded(
@@ -253,7 +256,18 @@ class PieChartForecasting extends StatelessWidget {
                                                     padding:
                                                         EdgeInsets.all(8.0),
                                                     child: Text(
-                                                      'The graph shows the allocation of monthly cost into following categories such as Labor Cost, Food Supply, Utility/Lease and Miscellaneous excluding the one time cost',
+                                                          "The graph shows the allocation of monthly cost into following categories such as Labor Cost, Food Supply, Utility/Lease and Miscellaneous excluding the one time cost\n"
+                                                          "As state in the Chart we can visualize the partition of the Monthly Cost of your chosen business in terms of given parameters\n\n"
+
+                                                          "the Labor Cost and Food Supplies are the two major factors to be considered in establishing your business mostly of the stalls are maneuver or are functioned by at least two people and about the supplies it includes not just the raw material or staple it also other necessities like the Gas etc\n\n"
+
+                                                          "The Marketing Cost includes the promotional materials needed to promote or engage people into your business\n\n"
+
+                                                          "The Utility and Lease Cost is the budget required for the renting and other billings such as Electricity and Water that is needed for alll the businesses today\n\n"
+
+                                                          "The Miscellaneous Cost is for the other costing like the employees benefits and also it acts as emergency fund for other uncertain cases\n\n"
+                                                          // nakagray din ito and maliit
+                                                          "*Cost may varies depending on the market factors like inflation",
                                                       textAlign:
                                                           TextAlign.justify,
                                                       style: TextStyle(
@@ -450,8 +464,38 @@ Future<void> _renderChartAsImage(context, _cartesianChartKey) async {
       Size(bitmap.width.toDouble(), bitmap.height.toDouble());
   final PdfPage page = document.pages.add();
   final Size pageSize = page.getClientSize();
+  page.graphics.drawString("Cost Chart Forecast",
+    PdfStandardFont(PdfFontFamily.helvetica, 40, style: PdfFontStyle.bold),
+    brush: PdfSolidBrush(PdfColor(0, 0, 0)),
+    bounds: const Rect.fromLTWH(0, 10, 950, 2000),
+    format: PdfStringFormat(alignment: PdfTextAlignment.center),
+  );
   page.graphics
-      .drawImage(bitmap, Rect.fromLTWH(0, 0, pageSize.width, pageSize.height));
+      .drawImage(bitmap, Rect.fromLTWH(-12, 60, 850, 430));
+  page.graphics.drawString(
+        "The graph shows the allocation of monthly cost into following categories such as Labor Cost\n"
+        "Food Supply, Utility/Lease and Miscellaneous excluding the one time cost\n"
+        "As state in the Chart we can visualize the partition of the Monthly Cost of your chosen\n"
+        "business in terms of given parameters\n\n"
+        "the Labor Cost and Food Supplies are the two major factors to be considered in establishing\n"
+        "your business mostly of the stalls are maneuver or are functioned by at least two people and\n"
+        "about the supplies it includes not just the raw material or staple it also other necessities\n"
+         "like the Gas etc\n\n"
+        "The Marketing Cost includes the promotional materials needed to promote or engage people\n"
+        "into your business\n\n"
+        "The Utility and Lease  Cost is  the budget required for  the renting and other billings such as\n"
+        "Electricity and Water that is needed for alll the businesses today\n\n"
+        "The Miscellaneous Cost is for the  other costing like the employees benefits and also it acts\n"
+        "as emergency fund for other uncertain cases\n\n"
+    // nakagray din ito and maliit
+        "*Cost may varies depending on the market factors like inflation",
+    PdfStandardFont(PdfFontFamily.helvetica, 20),
+    brush: PdfSolidBrush(PdfColor(0, 0, 0)),
+    bounds: const Rect.fromLTWH(0, 530, 850, 2000),
+    format: PdfStringFormat(alignment: PdfTextAlignment.justify),
+  );
+
+
   final List<int> bits = document.saveSync();
   document.dispose();
   //Get external storage directory

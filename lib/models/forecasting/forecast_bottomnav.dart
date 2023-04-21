@@ -19,32 +19,14 @@ class ForecastingNavBar extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 241, 242, 242),
       appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          title: const Text('Forecasting Graphs'),
-          foregroundColor: const Color.fromARGB(255, 44, 45, 48),
-          elevation: 0.0,
-          leading: const BackButton(
-            color: Color.fromARGB(255, 44, 45, 48),
-          ),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(
-                Icons.add_chart_rounded,
-                color: Color.fromARGB(255, 35, 111, 197),
-              ),
-              onPressed: () async {
-                await Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => BarThreeYears()));
-
-                /*    Navigator.push(
-            MaterialPageRoute(
-              builder: (context) =>  BarThreeYears(),
-            ),
-          ); */
-                // do something
-              },
-            )
-          ]),
+        backgroundColor: Colors.transparent,
+        title: const Text('Forecasting Graphs'),
+        foregroundColor: const Color.fromARGB(255, 44, 45, 48),
+        elevation: 0.0,
+        leading: const BackButton(
+          color: Color.fromARGB(255, 44, 45, 48),
+        ),
+      ),
       body: BottomNav(markerid: markerid, businessname: businessname),
     );
   }
@@ -63,11 +45,12 @@ class _BottomNavState extends State<BottomNav> {
   int _selectedIndex = 0;
 
   TextStyle optionStyle =
-      const TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  const TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   late final List<Widget> _widgetOptions = <Widget>[
     SyncLineChart(
         markerid: widget.markerid, suggestedbusiness: widget.businessname),
     BarchartPop(markerid: widget.markerid),
+    BarThreeYears(),
     PieChartForecasting(
       markerid: widget.markerid,
       suggestedbusiness: widget.businessname,
@@ -88,18 +71,23 @@ class _BottomNavState extends State<BottomNav> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.blue[900],
+        type: BottomNavigationBarType.fixed,
         iconSize: 22,
         selectedFontSize: 18,
         unselectedFontSize: 18,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon:
-                ImageIcon(AssetImage("assets/images/icons/lineChartIcon.png")),
+            ImageIcon(AssetImage("assets/images/icons/lineChartIcon.png")),
             label: 'Line Chart',
           ),
           BottomNavigationBarItem(
             icon: ImageIcon(AssetImage("assets/images/icons/barChartIcon.png")),
             label: 'Bar Chart',
+          ),
+          BottomNavigationBarItem(
+            icon: ImageIcon(AssetImage("assets/images/icons/barChartIcon.png")),
+            label: '3 Years',
           ),
           BottomNavigationBarItem(
             icon: ImageIcon(AssetImage("assets/images/icons/pieChartIcon.png")),
