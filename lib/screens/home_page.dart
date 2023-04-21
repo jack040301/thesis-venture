@@ -501,14 +501,18 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
     setState(() {
 //      allmarkers.clear();
 
-      if (markcount.length >= 5) {
+      if (markcount.length == 5) {
         allmarkers.removeWhere((element) =>
             element.markerId == MarkerId(markcount.first.markerId.value));
-        markcount.removeWhere((element) =>
-            element.markerId == MarkerId(markcount.first.markerId.value));
+        /*    markcount.removeWhere((element) =>
+            element.markerId == MarkerId(markcount.first.markerId.value)); */
 
         // debugPrint(markcount.length.toString());
         showAlertDialog(context);
+      }
+      if (markcount.length >= 6) {
+        allmarkers.clear();
+        markcount.clear();
       } else {
         //  savedClickMarkers(saveClickBusiness);
         //debugPrint(markcount.toString());
