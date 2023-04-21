@@ -476,29 +476,56 @@ Future<void> _renderChartAsImage(context, _cartesianChartKey) async {
   final ByteData? bytes = await data.toByteData(format: ui.ImageByteFormat.png);
   final Uint8List imageBytes =
       bytes!.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
-  PdfFont font = PdfStandardFont(PdfFontFamily.helvetica, 12);
+
   final PdfBitmap bitmap = PdfBitmap(imageBytes);
 
   final PdfDocument document = PdfDocument();
   document.pageSettings.size =
       Size(bitmap.width.toDouble(), bitmap.height.toDouble());
-//try this text, experiment on this
-  String text = 'Hello World!!!';
-  Size size = font.measureString(text);
-
-  //add the text in document
-  document.pages.add().graphics.drawString(text, font,
-      brush: PdfBrushes.black,
-      bounds: Rect.fromLTWH(0, 0, size.width, size.height));
-
   final PdfPage page = document.pages.add();
-
   final Size pageSize = page.getClientSize();
-  //add the image in document
-
-  page.graphics
-      .drawImage(bitmap, Rect.fromLTWH(0, 0, pageSize.width, pageSize.height));
-
+  page.graphics.drawString(
+    "Forecasted Growth Revenue (1 Year)",
+    PdfStandardFont(PdfFontFamily.helvetica, 40, style: PdfFontStyle.bold),
+    brush: PdfSolidBrush(PdfColor(0, 0, 0)),
+    bounds: const Rect.fromLTWH(0, 10, 950, 2000),
+    format: PdfStringFormat(alignment: PdfTextAlignment.center),
+  );
+  page.graphics.drawImage(bitmap, Rect.fromLTWH(-12, 60, 930, 490));
+  page.graphics.drawString(
+    "The graph shows the potential growth of the chose business starting with the first month"
+    "up to the last month of the year with the use of venture's Average algorithm\n and Parameters\n\n"
+    "The Blue line dot in the graph represents the One Time Cost in establishing the business.\n\n"
+    "The Red line dot represents the daily revenue of the business\n\n"
+    // yung parameters siguro gray nalang to and mas maliit para maempasize na parang legend lang sya or meaning ganun
+    "Parameters includes the following\n"
+    "*Daily Cost (Man power, Supplies, Marketing Cost, Lease and Utilities and lastly Miscella-\nneous)\n"
+    "*One Time Cost (Stalls, Equipment and Permit)\n"
+    "*Assumed Sales (Sample Items and Sales per day)\n"
+    "*Daily Revenue (Assumed Sales - Daily Cost)\n"
+    // ito di normal text na ulit
+    "The First month as state in the graph shows a lower revenue unlike the following year for "
+    "the reason because the first month of the business there is a allocation of Marketing Cost "
+    "for the advertisement and promotion of business The intersection of the Red and Blue line in\n "
+    "the Graph states the ROI (Return of investment) that let you visualize the Timespan in which\n "
+    "the the revenue will surpass the one time cost in simpler term the month in which you can \n get "
+    "your investment back after \n\n",
+    PdfStandardFont(PdfFontFamily.helvetica, 20),
+    brush: PdfSolidBrush(PdfColor(0, 0, 0)),
+    bounds: const Rect.fromLTWH(0, 550, 850, 2000),
+    format: PdfStringFormat(alignment: PdfTextAlignment.justify),
+  );
+  document.pages.add().graphics.drawString(
+        // ito same gray ulit na maliit nalang
+        "\n*ROI (Return of Investment) Return on investment or return on costs is a Computation between "
+        "net income and investment. The Early the ROI reach means the faster the investment can be back "
+        "to the owner. As a performance measure, ROI is used to evaluate the efficiency of"
+        "an investment or to compare the efficiencies of several different investments",
+        PdfStandardFont(PdfFontFamily.helvetica, 20),
+        brush: PdfSolidBrush(PdfColor(0, 0, 0)),
+        bounds: const Rect.fromLTWH(0, 10, 850, 2000),
+        format: PdfStringFormat(alignment: PdfTextAlignment.justify),
+      );
   final List<int> bits = document.saveSync();
   document.dispose();
   //Get external storage directory

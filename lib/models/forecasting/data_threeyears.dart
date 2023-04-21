@@ -267,8 +267,30 @@ Future<void> _renderChartAsImage(context, _cartesianChartKey) async {
       Size(bitmap.width.toDouble(), bitmap.height.toDouble());
   final PdfPage page = document.pages.add();
   final Size pageSize = page.getClientSize();
-  page.graphics
-      .drawImage(bitmap, Rect.fromLTWH(0, 0, pageSize.width, pageSize.height));
+  page.graphics.drawString(
+    "Forecasted Growth Revenue (3 Years)",
+    PdfStandardFont(PdfFontFamily.helvetica, 40, style: PdfFontStyle.bold),
+    brush: PdfSolidBrush(PdfColor(0, 0, 0)),
+    bounds: const Rect.fromLTWH(0, 10, 950, 2000),
+    format: PdfStringFormat(alignment: PdfTextAlignment.center),
+  );
+  page.graphics.drawImage(bitmap, Rect.fromLTWH(-12, 80, 930, 490));
+  page.graphics.drawString(
+    "The graph shows the potential growth of the chose business from its first three years with "
+    "the use of venture's Average algorithm and Parameters as shown in the graph the first year "
+    "of the business displays a typical low revenue it is because the first year of the business "
+    "is where the invested money is being subtracted from the initial annual revenue as a result it"
+    " has a lower income but the following years as forecasted with different parameters (excluding "
+    "the marketing cost and one time cost) as an outcome it has a bigger revenue and at the end of "
+    "the 3 years forecast we can interpret that the investment fund is not just returned but also "
+    "matured and as the business progress we can conclude that the chosen business is feasible and "
+    "worth to ventured on\n\n"
+    "*Revenue may varies depending on the market factors like inflation",
+    PdfStandardFont(PdfFontFamily.helvetica, 20),
+    brush: PdfSolidBrush(PdfColor(0, 0, 0)),
+    bounds: const Rect.fromLTWH(0, 580, 850, 2000),
+    format: PdfStringFormat(alignment: PdfTextAlignment.justify),
+  );
   final List<int> bits = document.saveSync();
   document.dispose();
   //Get external storage directory

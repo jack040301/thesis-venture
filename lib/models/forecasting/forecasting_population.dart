@@ -98,7 +98,7 @@ class BarchartPop extends StatelessWidget {
                         children: [
                       Center(
                           child: Container(
-                              height: 1000,
+                              height: 780,
                               padding: const EdgeInsets.all(5),
                               child: Card(
                                   elevation: 0,
@@ -146,26 +146,94 @@ class BarchartPop extends StatelessWidget {
                                                 const charts.OrdinalAxisSpec(),
                                           ), */
                                             ),
+
                                         const Padding(
-                                            padding: EdgeInsets.all(8.0),
+                                            padding: EdgeInsets.all(7.0),
                                             child: Text(
-                                              "The graph shows the population data from 2015 to 2020 a slight increase (1.049%) in 5 years utilizing its growth percent we can assume the forecasted population by year 2025"
-                                              "The data interprets that if the business is establish in this specific place we can take advantage the population increase in the following years in which most of the entrepreneurs considered of before investing."
-                                              "The higher the population of a specific place can be a huge aspect in the field of business."
-                                              // naka gray din ito and maliit lanf din then kapag clinick nya yung (1) may info nalang katulad sa demog result then itong mga nasa baba nakalagay
-                                              "*The population data comes from the PSA (1)"
-                                              "PSA (Philippine Statistic Authoristy)"
-                                              "The PSA shall primarily be responsible for the implementation of the objectives and provisions of R.A. 10625, R.A. 11055, and R.A. 11315."
-                                              "It shall plan, develop, prescribe, disseminate, and enforce policies, rules and regulations, and coordinate government-wide programs governing the production of official statistics, general purpose statistics, civil registration services and inclusive identification system."
-                                              "It shall primarily be responsible for all national censuses and surveys, sectoral statistics, community-based statistics, consolidation of selected administrative recording systems, and compilation of national accounts.",
+                                              "The graph shows the population data from 2015 to 2020 a slight increase (1.049%) in 5 years utilizing its growth percent we can assume the forecasted population by year 2025."
+                                              " The data interprets that if the business is establish in this specific place we can take advantage the population increase in the following years in which most of the entrepreneurs considered of before investing."
+                                              " The higher the population of a specific place can be a huge aspect in the field of business.",
                                               textAlign: TextAlign.justify,
                                               style: TextStyle(
+                                                // decoration: TextDecoration.underline,
                                                 height: 1.5,
                                                 color: Color.fromARGB(
                                                     255, 54, 54, 54),
                                                 fontSize: 15,
                                               ),
                                             )),
+                                        Container(
+                                            padding: EdgeInsets.all(2.0),
+                                            color: Colors.white,
+                                            child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                  Center(
+                                                    child: Text(
+                                                        "The population data comes from the PSA",
+                                                        //  " The data interprets that if the business is establish in this specific place we can take advantage the population increase in the following years in which most of the entrepreneurs considered of before investing."
+                                                        //" The higher the population of a specific place can be a huge aspect in the field of business.",
+                                                        style: TextStyle(
+                                                            //height: 1.5,
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    54,
+                                                                    54,
+                                                                    54),
+                                                            fontSize:
+                                                                15.0)), // <-- Text
+                                                  ),
+                                                  Center(
+                                                    child: Tooltip(
+                                                      textStyle: TextStyle(
+                                                          color: Colors.white),
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.grey),
+                                                      message:
+                                                          " PSA (Philippine Statistic Authority)"
+                                                          " The PSA shall primarily be responsible for the implementation of the objectives and provisions of R.A. 10625, R.A. 11055, and R.A. 11315."
+                                                          " It shall plan, develop, prescribe, disseminate, and enforce policies, rules and regulations, and coordinate government-wide programs governing the production of official statistics, general purpose statistics, civil registration services and inclusive identification system."
+                                                          " It shall primarily be responsible for all national censuses and surveys, sectoral statistics, community-based statistics, consolidation of selected administrative recording systems, and compilation of national accounts.",
+                                                      triggerMode:
+                                                          TooltipTriggerMode
+                                                              .tap, // ensures the label appears when tapped
+                                                      preferBelow:
+                                                          false, // use this if you want the label above the widget
+                                                      child: Icon(
+                                                        Icons.info_outline,
+                                                        size: 15,
+                                                        color: Color.fromARGB(
+                                                            255, 65, 99, 200),
+                                                      ), // <-- Text
+                                                    ),
+                                                  )
+                                                ])),
+
+                                        // const Padding(
+                                        //     padding: EdgeInsets.all(8.0),
+                                        //     child: Text(
+                                        //       "The graph shows the population data from 2015 to 2020 a slight increase (1.049%) in 5 years utilizing its growth percent we can assume the forecasted population by year 2025."
+                                        //       " The data interprets that if the business is establish in this specific place we can take advantage the population increase in the following years in which most of the entrepreneurs considered of before investing."
+                                        //       " The higher the population of a specific place can be a huge aspect in the field of business."
+                                        //       // naka gray din ito and maliit lanf din then kapag clinick nya yung (1) may info nalang katulad sa demog result then itong mga nasa baba nakalagay
+                                        //       " * The population data comes from the PSA (1)"
+                                        //
+                                        //
+                                        //
+                                        //       " PSA (Philippine Statistic Authority)"
+                                        //       " The PSA shall primarily be responsible for the implementation of the objectives and provisions of R.A. 10625, R.A. 11055, and R.A. 11315."
+                                        //       " It shall plan, develop, prescribe, disseminate, and enforce policies, rules and regulations, and coordinate government-wide programs governing the production of official statistics, general purpose statistics, civil registration services and inclusive identification system."
+                                        //       " It shall primarily be responsible for all national censuses and surveys, sectoral statistics, community-based statistics, consolidation of selected administrative recording systems, and compilation of national accounts.",
+                                        //       textAlign: TextAlign.justify,
+                                        //       style: TextStyle(
+                                        //         height: 1.5,
+                                        //         color: Color.fromARGB(
+                                        //             255, 54, 54, 54),
+                                        //         fontSize: 15,
+                                        //       ),
+                                        //     )),
                                         Container(
                                             padding: const EdgeInsets.fromLTRB(
                                                 10, 5, 10, 20),
@@ -269,9 +337,38 @@ Future<void> _renderChartAsImage(context, _cartesianChartKey) async {
   document.pageSettings.size =
       Size(bitmap.width.toDouble(), bitmap.height.toDouble());
   final PdfPage page = document.pages.add();
+
   final Size pageSize = page.getClientSize();
-  page.graphics
-      .drawImage(bitmap, Rect.fromLTWH(0, 0, pageSize.width, pageSize.height));
+  page.graphics.drawString(
+    "Population Graph",
+    PdfStandardFont(PdfFontFamily.helvetica, 40, style: PdfFontStyle.bold),
+    brush: PdfSolidBrush(PdfColor(0, 0, 0)),
+    bounds: const Rect.fromLTWH(0, 10, 950, 2000),
+    format: PdfStringFormat(alignment: PdfTextAlignment.center),
+  );
+  page.graphics.drawImage(bitmap, Rect.fromLTWH(-12, 60, 930, 490));
+  page.graphics.drawString(
+    "The graph shows the population data from 2015 to 2020 a slight increase (1.049%) in 5 years "
+    "utilizing its growth percent we can assume the forecasted population by year 2025 The "
+    "data interprets that if the business is establish in this specific place we can take "
+    "advantage the population increase in the following years in which most of the entrepreneurs "
+    "considered of before investing. The higher the population of a specific place can be a "
+    "huge aspect in the field of business.\n\n"
+    "*The population data comes from the PSA \n\n"
+    "PSA (Philippine Statistic Authoristy)\n"
+    "The PSA shall primarily be responsible for the implementation of the objectives and provisions of "
+    "R.A. 10625, R.A. 11055, and R.A. 11315.\n\n"
+    "It shall plan, develop, prescribe, disseminate, and enforce policies, rules and regulations, "
+    "and coordinate government-wide programs governing the production of official statistics, general "
+    "purpose statistics, civil registration services and inclusive identification system.\n\n"
+    "It shall primarily be responsible for all national censuses and surveys, sectoral "
+    "statistics, community-based statistics, consolidation of selected administrative recording systems,"
+    "and compilation of national accounts.",
+    PdfStandardFont(PdfFontFamily.helvetica, 20),
+    brush: PdfSolidBrush(PdfColor(0, 0, 0)),
+    bounds: const Rect.fromLTWH(0, 550, 850, 2000),
+    format: PdfStringFormat(alignment: PdfTextAlignment.justify),
+  );
   final List<int> bits = document.saveSync();
   document.dispose();
   //Get external storage directory
