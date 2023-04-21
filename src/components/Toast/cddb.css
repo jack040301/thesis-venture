@@ -78,6 +78,12 @@
     top: 0;
     transition: 0.3s;
     display: block;
+    animation: dims 0.5s ease-out;
+  }
+
+  @keyframes dims {
+    from {background-color: rgba(20, 20, 20, 0.1);}
+    to {background-color: rgba(20, 20, 20, 0.8);}
   }
 
   .m-cont-hide {
