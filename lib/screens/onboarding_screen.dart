@@ -13,58 +13,80 @@ class IntroductionScreens extends StatelessWidget {
       body: IntroductionScreen(
           pages: [
             PageViewModel(
-              title: 'Title of 1st Page',
-              body: 'Body of 1st Page',
-              image: buildImage("assets/images/icons/1TapAnywhere.png"),
+              title: 'Tap anywhere on the map',
+              body:
+                  'You can choose any location by tapping anywhere on the map around Caloocan',
+              image: Center(
+                  child: Image.asset("assets/images/icons/1TapAnywhere.png",
+                      height: 5000)),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
             PageViewModel(
-              title: 'Title of 2nd Page',
-              body: 'Body of 2nd Page',
-              image: buildImage("assets/images/icons/2PinnedLocDisplay.png"),
+              title: 'Pinned Location\'s Display',
+              body:
+                  'After pinning a location, available zone markers will be shown and can be tapped',
+              image: Center(
+                  child: Image.asset(
+                      "assets/images/icons/2PinnedLocDisplay.png",
+                      height: 5000)),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
             PageViewModel(
-              title: 'Title of 3rd Page',
-              body: 'Body of 3rd Page',
-              image: buildImage("assets/images/icons/3PinnedLoc.png"),
+              title: 'Pinned Location\'s Place Name',
+              body:
+                  'Pinned location\'s place name will be shown including the Barangay and the City',
+              image: Center(
+                  child: Image.asset("assets/images/icons/3PinnedLoc.png",
+                      height: 5000)),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
             PageViewModel(
-              title: 'Title of 3rd Page',
-              body: 'Body of 3rd Page',
-              image: buildImage("assets/images/icons/4PinnedLoc.png"),
+              title: 'Pinned Location\'s Coordinates',
+              body:
+                  'Coordinates of the pinned location will be shown including its latitude and longitude',
+              image: Center(
+                  child: Image.asset("assets/images/icons/4PinnedLoc.png",
+                      height: 5000)),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
             PageViewModel(
-              title: 'Title of 3rd Page',
-              body: 'Body of 3rd Page',
-              image: buildImage("assets/images/icons/5PinnedLoc.png"),
+              title: 'Pinned Location\'s Land Size',
+              body: 'You can see the land size here',
+              image: Center(
+                  child: Image.asset("assets/images/icons/5PinnedLoc.png",
+                      height: 5000)),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
             PageViewModel(
-              title: 'Title of 3rd Page',
-              body: 'Body of 3rd Page',
-              image: buildImage("assets/images/icons/6PinnedLoc.png"),
+              title: 'Pinned Location\'s Population',
+              body: 'Here, you can see the pinned location\'s population',
+              image: Center(
+                  child: Image.asset("assets/images/icons/6PinnedLoc.png",
+                      height: 5000)),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
             PageViewModel(
-              title: 'Title of 3rd Page',
-              body: 'Body of 3rd Page',
-              image: buildImage("assets/images/icons/7PinnedLoc.png"),
+              title: 'Pinned Location\'s Revenue',
+              body:
+                  'In this section, you can see the pinned location\'s approximate revenue',
+              image: Center(
+                  child: Image.asset("assets/images/icons/7PinnedLoc.png",
+                      height: 5000)),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
             PageViewModel(
-              title: 'Title of 3rd Page',
-              body: 'Body of 3rd Page',
-              image: buildImage("assets/images/icons/8PinnedLoc.png"),
+              title: 'Venture it!',
+              body: 'Tap the button to begin your Venture',
+              image: Center(
+                  child: Image.asset("assets/images/icons/8PinnedLoc.png",
+                      height: 5000)),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
@@ -94,23 +116,15 @@ class IntroductionScreens extends StatelessWidget {
   }
 
   //widget to add the image on screen
-  Widget buildImage(String imagePath) {
-    return Center(
-        child: Image.asset(
-      imagePath,
-      width: 450,
-      height: 200,
-    ));
-  }
 
   //method to customise the page style
   PageDecoration getPageDecoration() {
     return const PageDecoration(
-      imagePadding: EdgeInsets.only(top: 120),
+      imagePadding: EdgeInsets.only(top: 50),
       pageColor: Colors.white,
-      bodyPadding: EdgeInsets.only(top: 8, left: 20, right: 20),
-      titlePadding: EdgeInsets.only(top: 50),
-      bodyTextStyle: TextStyle(color: Colors.black54, fontSize: 15),
+      bodyPadding: EdgeInsets.only(top: 8, left: 10, right: 10),
+      titlePadding: EdgeInsets.only(top: 40),
+      bodyTextStyle: TextStyle(color: Colors.black54, fontSize: 14),
     );
   }
 
