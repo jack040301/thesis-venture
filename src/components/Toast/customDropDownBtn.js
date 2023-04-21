@@ -25,3 +25,21 @@ export const CusDropDown = ({btnName, children}) => {
         </>
     );
 }
+
+export const TopFullWidthModal = ({title, showcont, showModal, f}) => {
+
+    return(
+        <>
+            <div class={showcont}>                
+                <div class={showModal}>
+                    <div class="m-title">
+                        <h5>Pinned locations is limited to {title}</h5>
+                    </div>
+                    <div class="m-btn">
+                        <button onClick={f} class="m-btn-1">OK</button>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+};

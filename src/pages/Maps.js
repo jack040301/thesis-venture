@@ -27,10 +27,11 @@ import {
   MDBModalBody,
   MDBInput,
   MDBModalFooter,
+  MDBBtn,
 } from "mdb-react-ui-kit";
 import ReactToast from "../components/Toast/toast"; /* import Component of toast */
 import { async } from "@firebase/util";
-import { CusDropDown } from "../components/Toast/customDropDownBtn";
+import { CusDropDown, TopFullWidthModal } from "../components/Toast/customDropDownBtn";
 
 function MapPage() {
   const [testData, setTestData] = useState(true);
@@ -43,6 +44,8 @@ function MapPage() {
   const [enableInput, setEnableInput] = useState(false);
   const [requestModal, setRequestModal] = useState(false);
   const [pinLimitModal, setPinLimitModal] = useState(false);
+  const [pinLimitModal2, setPinLimitModal2] = useState("m-cont-hide");
+  const [pinLimitModal2b, setPinLimitModal2b] = useState("m-modal-cont-hide");
 
   const api = process.env.REACT_APP_GOOGLE_MAPS_API_KEY; //insert the api key of the google map
   const [coorlat, setCoorlat] = useState("");
@@ -551,7 +554,7 @@ function MapPage() {
 
     return(
       <>
-        <button onClick={()=>{fetchPost()}}>Set pinned locations Limit?</button>
+        <button onClick={()=>{fetchPost()}}>Pinned locations on map is limited to {pinLimit}</button>
       </>
     );
   };
@@ -568,9 +571,10 @@ function MapPage() {
                 <h3 className="card-title">Map Markers</h3>
                 <div className="card-tools">
                   <CusDropDown btnName={"Pins"}>
-                    <button onClick={()=>{setPinLimit(20); fetchPost(); setPinLimitModal(true)}}>20</button>
-                    <button onClick={()=>{setPinLimit(100); fetchPost(); setPinLimitModal(true)}}>100</button>
-                    <button onClick={()=>{setPinLimit(200); fetchPost(); setPinLimitModal(true)}}>200</button>
+                    <button onClick={()=>{setPinLimit(20); fetchPost(); setPinLimitModal2('m-cont'); setPinLimitModal2b('m-modal-cont');}}>20</button>
+                    <button onClick={()=>{setPinLimit(100); fetchPost(); setPinLimitModal2('m-cont'); setPinLimitModal2b('m-modal-cont');}}>100</button>
+                    <button onClick={()=>{setPinLimit(200); fetchPost(); setPinLimitModal2('m-cont'); setPinLimitModal2b('m-modal-cont');}}>200</button>
+                    <button onClick={()=>{setPinLimit(300); fetchPost(); setPinLimitModal2('m-cont'); setPinLimitModal2b('m-modal-cont');}}>300</button>
                   </CusDropDown>
                   <button
                     type="button"
@@ -645,6 +649,13 @@ function MapPage() {
           </div>
         </div>
       </div>
+
+      {/* Pin limit modal */}
+      <TopFullWidthModal title={pinLimit} showcont={pinLimitModal2} showModal={pinLimitModal2b} f={()=>{
+                    setPinLimitModal2('m-cont-hide'); 
+                    setPinLimitModal2b('m-modal-cont-hide');
+                    fetchPost();
+                  }}/>      
 
       {/* Request Modal */}
       <MDBModal show={requestModal} setShow={setRequestModal} tabIndex="-1">
@@ -786,13 +797,13 @@ function MapPage() {
       {/*Adding manual markers */}
 
       <MDBModal show={pinLimitModal} setShow={setPinLimitModal} tabIndex="-1">
-        <MDBModalDialog>
+        <MDBModalDialog centered >
           <MDBModalContent>
             <MDBModalHeader>
-              <MDBModalTitle>Set pinned location limit</MDBModalTitle>
+              <MDBModalTitle>Set pinned location limit to {pinLimit}</MDBModalTitle>
             </MDBModalHeader>
-            <MDBModalBody>
-              <button onClick={()=>{fetchPost(); setPinLimitModal(false);}}>Testing</button>
+            <MDBModalBody >
+              <MDBBtn onClick={()=>{fetchPost(); setPinLimitModal(false);}}>Ok</MDBBtn>
             </MDBModalBody>
           </MDBModalContent>
         </MDBModalDialog>
