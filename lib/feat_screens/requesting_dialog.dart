@@ -31,104 +31,51 @@ class RequestedDialog {
 
   static const colortext = Color.fromARGB(255, 74, 74, 74);
   static int count = 0;
-  bool hasEnd = false;
-  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  int countquery = 0;
 
   Future savedRequestMarker(context) async {
     count += 1;
+
     GeoPoint geopoint = GeoPoint(lat, lng);
 
-////checking
-    var docu = GoogleUserStaticInfo().uid.toString();
-    FirebaseFirestore.instance
+    final pinnedData = {
+      "coords": geopoint,
+      "place": "None",
+      "id": "",
+      "land": 0,
+      "land_size": "",
+      "popu_future": "",
+      "popu_past": "",
+      "population": "",
+      "revenue": "",
+      "user_id_requested": GoogleUserStaticInfo().uid,
+      "request_status": false,
+    };
+
+    var db = FirebaseFirestore.instance;
+    db
         .collection("markers")
-        .where('user_id_requested', isEqualTo: docu)
+        .doc(count.toString() + "-" + GoogleUserStaticInfo().email.toString())
+        .set(pinnedData)
+        .then((documentSnapshot) => {
+              alertmessage(context)
+              //showing if data is saved
+            })
+        .catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(error);
+    });
+  }
+
+  Future<int> countPerUserRequest() async {
+    await FirebaseFirestore.instance
+        .collection("markers")
+        .where("user_id", isEqualTo: GoogleUserStaticInfo().uid)
         .get()
-        .then((QuerySnapshot querySnapshot) => {
-              querySnapshot.docs.forEach((documents) async {
-                var data = documents.data() as Map;
-                // print(data['user_id_requested']);
-                // print(documents.id);// PRINTING OF DOCUMENT ID
+        .then(
+            (QuerySnapshot querySnapshot) => {countquery = querySnapshot.size});
 
-                if (hasEnd == false) {
-                  if (data['user_id_requested'] == docu) {
-                    // print("check");
-                    // print(data['user_id_requested']);
-                    // hasEnd = true;
-                    if (data['coords'].latitude == geopoint.latitude &&
-                        data['coords'].longitude == geopoint.longitude) {
-                      doublePinnedReq(context);
-                      // print("This location is already pinned");
-                      // doublePinnedReq(context);
-                      // print("check");
-                      hasEnd = true;
-                    } else {
-                      // print("ekis");
-                      final pinnedData = {
-                        "coords": geopoint,
-                        "place": "None",
-                        "id": "",
-                        "land": 0,
-                        "land_size": "",
-                        "popu_future": "",
-                        "popu_past": "",
-                        "population": "",
-                        "revenue": "",
-                        "user_id_requested": GoogleUserStaticInfo().uid,
-                        "request_status": false,
-                      };
-
-                      var db = FirebaseFirestore.instance;
-                      db
-                          .collection("markers")
-                          .doc(count.toString() +
-                              "-" +
-                              GoogleUserStaticInfo().email.toString())
-                          .set(pinnedData)
-                          .then((documentSnapshot) => {
-                                alertmessage(context)
-                                //showing if data is saved
-                              })
-                          .catchError((error) {
-                        ScaffoldMessenger.of(context).showSnackBar(error);
-                      });
-                      hasEnd = true;
-                    }
-                  }
-                }
-
-                //
-              }) //for loop
-            });
-//  checking
-
-    // final pinnedData = {
-    //   "coords": geopoint,
-    //   "place": "None",
-    //   "id": "",
-    //   "land": 0,
-    //   "land_size": "",
-    //   "popu_future": "",
-    //   "popu_past": "",
-    //   "population": "",
-    //   "revenue": "",
-    //   "user_id_requested": GoogleUserStaticInfo().uid,
-    //   "request_status": false,
-    // };
-
-    // var db = FirebaseFirestore.instance;
-    // db
-    //     .collection("markers")
-    //     .doc(count.toString() + "-" + GoogleUserStaticInfo().email.toString())
-    //     .set(pinnedData)
-    //     .then((documentSnapshot) => {
-    //           alertmessage(context)
-    //           //showing if data is saved
-    //         })
-    //     .catchError((error) {
-    //   ScaffoldMessenger.of(context).showSnackBar(error);
-    // });
-  } //end savedRequestMarker
+    return countquery;
+  }
 
   removeMarkerss(context) {
     markcount.removeWhere(
@@ -167,32 +114,9 @@ class RequestedDialog {
     );
   }
 
-  Future doublePinnedReq(context) {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Double Pinned Request"),
-          content: const SingleChildScrollView(
-            child: Text("This location is already pinned"),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Got it'),
-              onPressed: () {
-                Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => const HomePage()),
-                    (Route route) => false);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   Future showMyDialog(BuildContext context) {
+    countPerUserRequest();
+
     return showDialog(
         context: context,
         builder: (context) {
@@ -216,22 +140,25 @@ class RequestedDialog {
                         )),
                     const SizeBoxTen(),
                     const SizeBoxTwenty(),
-                    SizedBox(
-                      width: 200.0,
-                      child: RawMaterialButton(
-                        fillColor: const Color.fromARGB(255, 0, 110, 195),
-                        onPressed: () async {
-                          await savedRequestMarker(context);
-                        },
-                        elevation: 0.0,
-                        padding: const EdgeInsets.symmetric(vertical: 15.0),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0)),
-                        child: const Text("Request",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 15.0)),
-                      ),
-                    ),
+                    countquery < 5
+                        ? SizedBox(
+                            width: 200.0,
+                            child: RawMaterialButton(
+                              fillColor: const Color.fromARGB(255, 0, 110, 195),
+                              onPressed: () async {
+                                await savedRequestMarker(context);
+                              },
+                              elevation: 0.0,
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 15.0),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.0)),
+                              child: const Text("Request",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 15.0)),
+                            ),
+                          )
+                        : const Text("Note: You can only request 5 places"),
                     const SizeBoxTwenty(),
                     SizedBox(
                       width: 200.0,

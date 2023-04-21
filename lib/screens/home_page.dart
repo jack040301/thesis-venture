@@ -74,6 +74,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 
 // Markers set
   Set<Marker> allmarkers = <Marker>{};
+  Set<Marker> requestLoc = <Marker>{};
   Set<Marker> _markers = <Marker>{};
   final Set<Marker> markcount = <Marker>{};
 
@@ -100,12 +101,62 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 
   @override
   void initState() {
+    // requestedLocation();
     userinfoFirestore();
     addCustomIconMarker();
     // getBusiness();
     //run the function before the map loads
     super.initState();
   }
+
+//FOR AUTO DISPLAY SANA NG MGA REQUESTED LOCATION
+  // void requestedLocation() {
+  //   String assetspin = "assets/images/icons/pinBuildingIcon.png";
+  //   var docu = GoogleUserStaticInfo().uid.toString();
+  //   // FirebaseFirestore.instance
+  //   //     .collection("markers")
+  //   //     .where('user_id_requested', isEqualTo: docu)
+  //   //     .get()
+  //   //     .then((QuerySnapshot querySnapshot) => {
+  //   //           querySnapshot.docs.forEach((documents) async {
+  //   //             var data = documents.data() as Map;
+  //   //             print(data['user_id_requested']);
+  //   //             // print(documents.id);// PRINTING OF DOCUMENT ID
+  //   //             // position:
+  //   //             // LatLng(data["coords"].latitude, data["coords"].longitude);
+
+  //   //             // BitmapDescriptor.fromAssetImage(
+  //   //             //         const ImageConfiguration(), assetspin)
+  //   //             //     .then((primaryicon) => setState(() {
+  //   //             //           primaryMarker = primaryicon;
+  //   //             //         }));
+  //   //           }) //for loop
+  //   //         });
+
+  //   FirebaseFirestore.instance
+  //       .collection("markers")
+  //       .where('user_id_requested', isEqualTo: docu)
+  //       .get()
+  //       .then((QuerySnapshot querySnapshot) => {
+  //             querySnapshot.docs.forEach((documents) async {
+  //               var data = documents.data() as Map;
+
+  //               /*   print(data["coords"].latitude);
+  //               print(data["coords"].longitude); */
+
+  //               allmarkers.add(Marker(
+  //                   onTap: () async {
+  //                     /*  await DialogQuestion(
+  //                             documents.id, dropdownDatas, dropdownAssumption)
+  //                         .showMyDialog(context); */
+  //                   },
+  //                   markerId: MarkerId(documents.id),
+  //                   icon: markerIcon,
+  //                   position: LatLng(
+  //                       data["coords"].latitude, data["coords"].longitude)));
+  //             })
+  //           });
+  // }
 
   void _setMarker(point) {
     var counter = markerIdCounter++;

@@ -94,7 +94,7 @@ class _ZoneScreenState extends State<ZoneScreen> {
               Container(
                 color: Colors.white,
                 padding: const EdgeInsets.fromLTRB(70, 10, 35, 5),
-                child:  Row(
+                child: Row(
                   children: <Widget>[
                     Image(
                         image: AssetImage(
@@ -290,7 +290,7 @@ class _ZoneScreenState extends State<ZoneScreen> {
 // ),
               Container(
                 color: Colors.white,
-                padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+                padding: const EdgeInsets.fromLTRB(8, 18, 8, 20),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
