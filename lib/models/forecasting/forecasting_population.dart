@@ -286,6 +286,7 @@ Future<void> _renderChartAsImage(context, _cartesianChartKey) async {
   OpenFile.open('$path/Venture_Forecast-BarChart.pdf');
 
   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+    behavior: SnackBarBehavior.floating,
     content: Text('Processing...'),
   ));
 }

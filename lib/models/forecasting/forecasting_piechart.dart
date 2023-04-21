@@ -449,6 +449,7 @@ Future<void> _renderChartAsImage(context, _cartesianChartKey) async {
       bytes!.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
 
   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+    behavior: SnackBarBehavior.floating,
     content: Text('Processing...'),
   ));
 
@@ -475,6 +476,7 @@ Future<void> _renderChartAsImage(context, _cartesianChartKey) async {
   OpenFile.open('$path/Venture_Forecast-PieChart.pdf');
 
   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+    behavior: SnackBarBehavior.floating,
     content: Text('VenturePieChart...'),
   ));
 }

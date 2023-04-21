@@ -1,15 +1,28 @@
 //import 'package:firebase_core/firebase_core.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_flutter_platform_interface/src/types/marker.dart';
 import 'package:main_venture/models/demog_result.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:main_venture/userInfo.dart';
 import 'package:main_venture/screens/home_page.dart';
+import 'package:main_venture/screens/home_page.dart';
+
+import '../providers/search_places.dart';
 
 class RequestedDialog {
   final double lat, lng;
-  RequestedDialog(this.lat, this.lng);
+  Set<Marker> markcount;
+  Set<Marker> markcout;
+
+  int counter;
+  StreamController<Set<Marker>> markerStreamController;
+  RequestedDialog(this.lat, this.lng, this.markcount, this.markcout,
+      this.counter, this.markerStreamController);
 
   var RequestedPop = const SnackBar(
     content:
@@ -50,6 +63,17 @@ class RequestedDialog {
         .catchError((error) {
       ScaffoldMessenger.of(context).showSnackBar(error);
     });
+  }
+
+  removeMarkerss(context) {
+    markcount.removeWhere(
+        (element) => element.markerId == MarkerId("marker_$counter"));
+    markcout.removeWhere(
+        (element) => element.markerId == MarkerId("marker_$counter"));
+
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: Text('Tap to another place')));
   }
 
   Future alertmessage(context) {
@@ -113,7 +137,7 @@ class RequestedDialog {
                         padding: const EdgeInsets.symmetric(vertical: 15.0),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5.0)),
-                        child: const Text("Yes",
+                        child: const Text("Request",
                             style:
                                 TextStyle(color: Colors.white, fontSize: 15.0)),
                       ),
@@ -134,7 +158,29 @@ class RequestedDialog {
                         padding: const EdgeInsets.symmetric(vertical: 15.0),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5.0)),
-                        child: const Text("No",
+                        child: const Text("Cancel",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 15.0)),
+                      ),
+                    ),
+                    const SizeBoxTwenty(),
+                    SizedBox(
+                      width: 200.0,
+                      child: RawMaterialButton(
+                        fillColor: const Color.fromARGB(255, 0, 110, 195),
+//onPressed: null,
+//SAVE USERS' ANSWERS TO THE FIREBASE
+
+                        onPressed: () async {
+                          removeMarkerss(context);
+                          Navigator.of(context).pop();
+                          // ito yun sana kapag initinallize dapat
+                        },
+                        elevation: 0.0,
+                        padding: const EdgeInsets.symmetric(vertical: 15.0),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0)),
+                        child: const Text("Replace",
                             style:
                                 TextStyle(color: Colors.white, fontSize: 15.0)),
                       ),

@@ -58,10 +58,12 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 
   // for boundary error
   var warning = const SnackBar(
+    behavior: SnackBarBehavior.floating,
     content: Text(
         'No marker data is available for this area! please submit a request'),
   );
   var map_pinnedLoc = const SnackBar(
+    behavior: SnackBarBehavior.floating,
 // <<<<<<< HEAD
     content: Text(
         'You cant request for this restricted location. Please choose other locations to request for pinning'),
@@ -73,7 +75,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 // Markers set
   Set<Marker> allmarkers = <Marker>{};
   Set<Marker> _markers = <Marker>{};
-  Set<Marker> markcount = <Marker>{};
+  final Set<Marker> markcount = <Marker>{};
 
   // Set<Marker> allmarkers = HashSet<Marker>();
 
@@ -452,6 +454,24 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 
     return allmarkers;
   }
+/* 
+  Future savedClickMarkers(pinnedData) async {
+    var db = FirebaseFirestore.instance;
+    db
+        .collection("saved_markers")
+        .add(pinnedData)
+        .then((documentSnapshot) => {
+              debugPrint("savedData")
+              //showing if data is saved
+            })
+        .catchError((error) {
+      debugPrint(error);
+    });
+  } */
+
+  final StreamController<Set<Marker>> _markerStreamController =
+      StreamController<Set<Marker>>.broadcast();
+  Stream<Set<Marker>> get markerStream => _markerStreamController.stream;
 
   void markerOnClick(double lat, double lng) {
     var counter = markerIdCounter++;
@@ -465,9 +485,16 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
         markerId: MarkerId('marker_$counter'),
         position: LatLng(lat, lng),
         onTap: () async {
-          await RequestedDialog(trimmedlat, trimmedlong).showMyDialog(context);
+          //    await removeMarkerss(lat, lng);
+          await RequestedDialog(trimmedlat, trimmedlong, allmarkers, markcount,
+                  counter, _markerStreamController)
+              .showMyDialog(context);
+
+          //   removeMarkerss(lat, lng);
         },
         icon: primaryMarker);
+
+    gettingZoneMarkers(trimmedlat, trimmedlong);
 
     // debugPrint(lat.toString());
 
@@ -480,19 +507,27 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
         markcount.removeWhere((element) =>
             element.markerId == MarkerId(markcount.first.markerId.value));
 
-        debugPrint(markcount.length.toString());
+        // debugPrint(markcount.length.toString());
         showAlertDialog(context);
       } else {
-        gettingZoneMarkers(trimmedlat, trimmedlong);
-
+        //  savedClickMarkers(saveClickBusiness);
+        //debugPrint(markcount.toString());
         markcount.add(markerparams);
-
         allmarkers.add(markerparams);
+
+        _markerStreamController.add(allmarkers);
+
+        //allmarkers.add(markerparams);
       }
 
       //  _markers.add(marker);
     });
   }
+
+  /* removeMarkerss(counter) {
+    allmarkers.removeWhere(
+        (element) => element.markerId == MarkerId("marker_$counter"));
+  } */
 
   void showAlertDialog(BuildContext context) {
     showDialog(
@@ -544,6 +579,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
         Future.delayed(const Duration(milliseconds: 250), () => true);
 
     //Providers
+
     final allSearchResults = ref.watch(placeResultsProvider);
     final searchFlag = ref.watch(searchToggleProvider);
     /* return FutureBuilder(
