@@ -546,6 +546,7 @@ function MapPage() {
     } catch (e) {
       //error
       toastRef.current.showToast("Error Approving Request : ", e);
+      console.log(e);
     }
   };
 
