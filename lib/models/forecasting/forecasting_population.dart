@@ -98,7 +98,7 @@ class BarchartPop extends StatelessWidget {
                         children: [
                       Center(
                           child: Container(
-                              height: 700,
+                              height: 1000,
                               padding: const EdgeInsets.all(5),
                               child: Card(
                                   elevation: 0,

@@ -86,7 +86,7 @@ class _BottomNavState extends State<BottomNav> {
             label: 'Bar Chart',
           ),
           BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage("assets/images/icons/pieChartIcon.png")),
+            icon: ImageIcon(AssetImage("assets/images/icons/barChartIcon.png")),
             label: '3 Years',
           ),
           BottomNavigationBarItem(

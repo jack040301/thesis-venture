@@ -92,7 +92,7 @@ class BarThreeYears extends StatelessWidget {
                         children: [
                       Center(
                           child: Container(
-                              height: 700,
+                              height: 900,
                               padding: const EdgeInsets.all(5),
                               child: Card(
                                   elevation: 0,
@@ -103,7 +103,8 @@ class BarThreeYears extends StatelessWidget {
                                       padding: const EdgeInsets.fromLTRB(
                                           5, 20, 5, 10),
                                       child: Column(children: <Widget>[
-                                        const Text("Forecasted Growth(Years) Revenue",
+                                        const Text(
+                                            "Forecasted Growth Revenue (3 Years)",
                                             style: TextStyle(fontSize: 19.0)),
                                         Expanded(
                                             child: SfCartesianChart(
@@ -145,7 +146,15 @@ class BarThreeYears extends StatelessWidget {
                                         const Padding(
                                             padding: EdgeInsets.all(8.0),
                                             child: Text(
-                                              'The graph shows the revenue forecast for 3 years',
+                                              "The graph shows the potential growth of the chose business from its first three years with the use of venture's Average algorithm and Parameters "
+                                              "as shown in the graph the first year of the business displays a typical low revenue it is because the first year of the business is where the"
+                                              "invested money is being subtracted from the initial anual revenue as a result it has a lower income but the following years as foreacsted"
+                                              "with diffrent parameters (excluding the marketing cost and one time cost) as an outcome it has a bigger revenue and at the end of the 3 years forecast"
+                                              "we can interpret that the investement fund is not just returned but also matured and as the buisness progress we can conclude that the chosen business"
+                                              "is feasible and worth to ventured on "
+                                              ""
+                                              // gray and maliit lang din to
+                                              "*Revenue may varies depending on the market factors like inflation",
                                               textAlign: TextAlign.justify,
                                               style: TextStyle(
                                                 height: 1.5,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:main_venture/auth_screens/forgot_password.dart';
 import 'package:main_venture/auth_screens/signup.dart';
+import 'package:main_venture/screens/onboarding_screen.dart';
 import 'package:main_venture/userInfo.dart';
 import 'package:main_venture/screens/home_page.dart';
 import 'package:main_venture/feat_screens/personalInfo.dart';
@@ -296,7 +297,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           //   'email': value.user!.email,
                           // })); pushAndRemoveUntil
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const HomePage()));
+                              builder: (context) =>
+                                  const IntroductionScreens()));
 
                           // await users.doc(GoogleUserStaticInfo().uid).set({
                           //   'firstname': GoogleUserStaticInfo().firstname,

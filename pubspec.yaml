@@ -64,6 +64,7 @@ dependencies:
   flutter_polyline_points:
   flutter_rating_stars:
   flip_card:
+  introduction_screen:
   firebase_core: ^2.1.1
   firebase_auth: ^4.1.1
   google_sign_in: ^5.4.2

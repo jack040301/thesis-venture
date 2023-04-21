@@ -101,7 +101,7 @@ class RequestedDialog {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Got it'),
+              child: const Text('Okay'),
               onPressed: () {
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => const HomePage()),
@@ -140,25 +140,30 @@ class RequestedDialog {
                         )),
                     const SizeBoxTen(),
                     const SizeBoxTwenty(),
-                    countquery < 5
-                        ? SizedBox(
-                            width: 200.0,
-                            child: RawMaterialButton(
-                              fillColor: const Color.fromARGB(255, 0, 110, 195),
-                              onPressed: () async {
-                                await savedRequestMarker(context);
-                              },
-                              elevation: 0.0,
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 15.0),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5.0)),
-                              child: const Text("Request",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 15.0)),
-                            ),
-                          )
-                        : const Text("Note: You can only request 5 places"),
+                    SizedBox(
+                      width: 200.0,
+                      child: RawMaterialButton(
+                        fillColor: const Color.fromARGB(255, 0, 110, 195),
+                        onPressed: () async {
+                          if (countquery <= 5) {
+                            await savedRequestMarker(context);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    behavior: SnackBarBehavior.floating,
+                                    content: Text(
+                                        'You have reached the maximum number of request')));
+                          }
+                        },
+                        elevation: 0.0,
+                        padding: const EdgeInsets.symmetric(vertical: 15.0),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0)),
+                        child: const Text("Request",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 15.0)),
+                      ),
+                    ),
                     const SizeBoxTwenty(),
                     SizedBox(
                       width: 200.0,
