@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:main_venture/screens/home_page.dart';
 import '../screens/onboarding_screen.dart';
 import 'login.dart';
+import 'package:main_venture/auth_screens/signup.dart';
 
 class Emailverificationscreen extends StatefulWidget {
   const Emailverificationscreen({super.key});
@@ -107,7 +108,7 @@ class EmailverificationscreenState extends State<Emailverificationscreen> {
                     ),
                     onPressed: () {
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
+                        builder: (context) => const SignupWidget(),
                       ));
                     }),
               ],

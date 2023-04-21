@@ -43,7 +43,7 @@ class WidgetTermsAndCondition extends StatelessWidget {
               Container(
                 color: Colors.white,
                 padding: const EdgeInsets.fromLTRB(30, 20, 30, 7),
-                child: const Row(
+                child:  Row(
                   children: <Widget>[
                     ImageIcon(
                       AssetImage("assets/images/icons/termsOfServiceIcon.png"),
@@ -405,7 +405,7 @@ class WidgetTermsAndCondition extends StatelessWidget {
               Container(
                 color: Colors.white,
                 padding: const EdgeInsets.fromLTRB(30, 20, 30, 7),
-                child: const Row(
+                child:  Row(
                   children: <Widget>[
                     ImageIcon(
                       AssetImage("assets/images/icons/termsOfServiceIcon.png"),

@@ -65,7 +65,7 @@ class ContentHowToUse extends StatelessWidget {
             Container(
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(65, 10, 35, 5),
-              child: const Row(
+              child:  Row(
                 children: <Widget>[
                   Image(
                       image: const AssetImage('assets/images/device1.PNG'),
@@ -148,7 +148,7 @@ class ContentHowToUse extends StatelessWidget {
             Container(
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(100, 5, 35, 5),
-              child: const Row(
+              child:  Row(
                 children: <Widget>[
                   Image(
                       image: AssetImage('assets/images/icons/Selecting.png'),
@@ -368,7 +368,7 @@ class ContentHowToUse extends StatelessWidget {
             Container(
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(100, 5, 35, 5),
-              child: const Row(
+              child:  Row(
                 children: <Widget>[
                   Image(
                       image: AssetImage('assets/images/icons/Customize.png'),
@@ -467,7 +467,7 @@ class ContentHowToUse extends StatelessWidget {
             Container(
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(100, 5, 35, 5),
-              child: const Row(
+              child:  Row(
                 children: <Widget>[
                   Image(
                       image: AssetImage('assets/images/icons/ChangePass.png'),
@@ -567,7 +567,7 @@ class ContentHowToUse extends StatelessWidget {
             Container(
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(100, 5, 35, 5),
-              child: const Row(
+              child:  Row(
                 children: <Widget>[
                   Image(
                       image: AssetImage('assets/images/icons/Request.png'),
