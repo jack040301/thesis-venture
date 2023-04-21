@@ -94,7 +94,7 @@ class _ZoneScreenState extends State<ZoneScreen> {
               Container(
                 color: Colors.white,
                 padding: const EdgeInsets.fromLTRB(70, 10, 35, 5),
-                child: const Row(
+                child:  Row(
                   children: <Widget>[
                     Image(
                         image: AssetImage(

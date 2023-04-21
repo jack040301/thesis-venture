@@ -62,7 +62,7 @@ class ContentHowToUse extends StatelessWidget {
             Container(
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(70, 10, 35, 5),
-              child: const Row(
+              child:  Row(
                 children: <Widget>[
                   Image(
                       image:
@@ -89,7 +89,7 @@ class ContentHowToUse extends StatelessWidget {
             Container(
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(20, 10, 35, 5),
-              child: const Row(
+              child:  Row(
                 children: <Widget>[
                   Image(
                       image: AssetImage('assets/images/icons/PlaceIcon.png'),
@@ -116,7 +116,7 @@ class ContentHowToUse extends StatelessWidget {
             Container(
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(20, 10, 35, 5),
-              child: const Row(
+              child:  Row(
                 children: <Widget>[
                   Image(
                       image:
@@ -143,7 +143,7 @@ class ContentHowToUse extends StatelessWidget {
             Container(
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(20, 10, 35, 5),
-              child: const Row(
+              child:  Row(
                 children: <Widget>[
                   Image(
                       image: AssetImage('assets/images/icons/ZoneIcon.png'),
@@ -169,7 +169,7 @@ class ContentHowToUse extends StatelessWidget {
             Container(
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(20, 10, 35, 5),
-              child: const Row(
+              child:  Row(
                 children: <Widget>[
                   Image(
                       image: AssetImage('assets/images/icons/LandSizeIcon.png'),
@@ -195,7 +195,7 @@ class ContentHowToUse extends StatelessWidget {
             Container(
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(20, 10, 35, 5),
-              child: const Row(
+              child:  Row(
                 children: <Widget>[
                   Image(
                       image:
@@ -222,7 +222,7 @@ class ContentHowToUse extends StatelessWidget {
             Container(
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(20, 10, 35, 5),
-              child: const Row(
+              child:  Row(
                 children: <Widget>[
                   Image(
                       image: AssetImage('assets/images/icons/RevenueIcon.png'),
@@ -256,7 +256,7 @@ class ContentHowToUse extends StatelessWidget {
                 color: const Color.fromARGB(255, 0, 110, 195),
                 borderRadius: BorderRadius.circular(5.0),
                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                child: const Row(
+                child:  Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(width: 10.0, height: 50),

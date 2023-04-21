@@ -59,7 +59,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
               Container(
                 color: Colors.white,
                 padding: const EdgeInsets.fromLTRB(23, 20, 30, 7),
-                child: const Row(
+                child:  Row(
                   children: <Widget>[
                     SizedBox(
                       width: 10.0,
@@ -105,7 +105,7 @@ class WidgetUpgradeAccount extends StatelessWidget {
                   color: const Color.fromARGB(255, 0, 110, 195),
                   borderRadius: BorderRadius.circular(5.0),
                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                  child: const Row(
+                  child:  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       //  Ink.image(

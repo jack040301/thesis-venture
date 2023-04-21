@@ -31,39 +31,104 @@ class RequestedDialog {
 
   static const colortext = Color.fromARGB(255, 74, 74, 74);
   static int count = 0;
+  bool hasEnd = false;
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   Future savedRequestMarker(context) async {
     count += 1;
-
     GeoPoint geopoint = GeoPoint(lat, lng);
 
-    final pinnedData = {
-      "coords": geopoint,
-      "place": "None",
-      "id": "",
-      "land": 0,
-      "land_size": "",
-      "popu_future": "",
-      "popu_past": "",
-      "population": "",
-      "revenue": "",
-      "user_id_requested": GoogleUserStaticInfo().uid,
-      "request_status": false,
-    };
-
-    var db = FirebaseFirestore.instance;
-    db
+////checking
+    var docu = GoogleUserStaticInfo().uid.toString();
+    FirebaseFirestore.instance
         .collection("markers")
-        .doc(count.toString() + "-" + GoogleUserStaticInfo().email.toString())
-        .set(pinnedData)
-        .then((documentSnapshot) => {
-              alertmessage(context)
-              //showing if data is saved
-            })
-        .catchError((error) {
-      ScaffoldMessenger.of(context).showSnackBar(error);
-    });
-  }
+        .where('user_id_requested', isEqualTo: docu)
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((documents) async {
+                var data = documents.data() as Map;
+                // print(data['user_id_requested']);
+                // print(documents.id);// PRINTING OF DOCUMENT ID
+
+                if (hasEnd == false) {
+                  if (data['user_id_requested'] == docu) {
+                    // print("check");
+                    // print(data['user_id_requested']);
+                    // hasEnd = true;
+                    if (data['coords'].latitude == geopoint.latitude &&
+                        data['coords'].longitude == geopoint.longitude) {
+                      doublePinnedReq(context);
+                      // print("This location is already pinned");
+                      // doublePinnedReq(context);
+                      // print("check");
+                      hasEnd = true;
+                    } else {
+                      // print("ekis");
+                      final pinnedData = {
+                        "coords": geopoint,
+                        "place": "None",
+                        "id": "",
+                        "land": 0,
+                        "land_size": "",
+                        "popu_future": "",
+                        "popu_past": "",
+                        "population": "",
+                        "revenue": "",
+                        "user_id_requested": GoogleUserStaticInfo().uid,
+                        "request_status": false,
+                      };
+
+                      var db = FirebaseFirestore.instance;
+                      db
+                          .collection("markers")
+                          .doc(count.toString() +
+                              "-" +
+                              GoogleUserStaticInfo().email.toString())
+                          .set(pinnedData)
+                          .then((documentSnapshot) => {
+                                alertmessage(context)
+                                //showing if data is saved
+                              })
+                          .catchError((error) {
+                        ScaffoldMessenger.of(context).showSnackBar(error);
+                      });
+                      hasEnd = true;
+                    }
+                  }
+                }
+
+                //
+              }) //for loop
+            });
+//  checking
+
+    // final pinnedData = {
+    //   "coords": geopoint,
+    //   "place": "None",
+    //   "id": "",
+    //   "land": 0,
+    //   "land_size": "",
+    //   "popu_future": "",
+    //   "popu_past": "",
+    //   "population": "",
+    //   "revenue": "",
+    //   "user_id_requested": GoogleUserStaticInfo().uid,
+    //   "request_status": false,
+    // };
+
+    // var db = FirebaseFirestore.instance;
+    // db
+    //     .collection("markers")
+    //     .doc(count.toString() + "-" + GoogleUserStaticInfo().email.toString())
+    //     .set(pinnedData)
+    //     .then((documentSnapshot) => {
+    //           alertmessage(context)
+    //           //showing if data is saved
+    //         })
+    //     .catchError((error) {
+    //   ScaffoldMessenger.of(context).showSnackBar(error);
+    // });
+  } //end savedRequestMarker
 
   removeMarkerss(context) {
     markcount.removeWhere(
@@ -86,6 +151,31 @@ class RequestedDialog {
           content: const SingleChildScrollView(
             child: Text(
                 "The request has been sent to the admin successfully. Please wait for the approval of admin."),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Okay'),
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                    (Route route) => false);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future doublePinnedReq(context) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Double Pinned Request"),
+          content: const SingleChildScrollView(
+            child: Text("This location is already pinned"),
           ),
           actions: <Widget>[
             TextButton(

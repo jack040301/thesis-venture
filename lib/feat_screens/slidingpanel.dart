@@ -71,7 +71,7 @@ class _SlidingPanelScreenState extends State<SlidingPanelScreen> {
                   ]),
               Container(
                 padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
-                child: const Column(
+                child:  Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
