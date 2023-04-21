@@ -81,6 +81,9 @@ function MapPage() {
   });
 
   const [pinLimit, setPinLimit] = useState(20);
+  const [appDocId, setAppDocId] = useState({
+    docId: "none",
+  });
 
   const toastRef = useRef();
 
@@ -185,7 +188,7 @@ function MapPage() {
 
 
   const addMarkers = async (e) => {
-    checkRestiction();
+    //checkRestiction();
 
     try {
       if (
@@ -452,6 +455,7 @@ function MapPage() {
       setDataRequest(reqproc);
     });
 
+
     return () => {
       unsub();
       unsubReqProcess();
@@ -550,6 +554,40 @@ function MapPage() {
     }
   };
 
+  const ApproveAll = async (docId) => {
+    const appAll = query(collection(db, "markers"), where("request_status", "==", false));
+    const docRef = doc(db, "markers", docId);
+
+
+    try {
+      const updateMarker = await updateDoc(docRef, {
+        request_status: true,
+      });
+
+      console.log("Success!");
+    }catch (e){
+      console.log("Approve all funtion:", e);
+    }
+  };
+
+  const getDocsIds = async () => {
+    const ReqTrueQuery = query(
+      collection(db, "markers"),where("request_status", "==", false)     
+    );
+    await getDocs(ReqTrueQuery).then((querySnapshot) => {
+      const newData = querySnapshot.docs.map((doc) => ({        
+        docId: doc.id,
+      }));
+      console.log(newData);
+      //setAppDocId({docId: newData[0].docId}); 
+      //ApproveAll(newData[0].docId);
+      for(let x of newData){
+        console.log(x.docId);
+        ApproveAll(x.docId);
+      }
+    });    
+  };  
+
   const TestFetch = () => {
     
 
@@ -591,11 +629,16 @@ function MapPage() {
                 <LoadScript googleMapsApiKey={api}>
                   <GoogleMap
                     class="map"
-                    onClick={(e) => handleMapClick2(e)}
+                    onClick={(e) => {
+                      handleMapClick2(e);                                                                  
+                    }}
                     mapContainerStyle={containerStyle}
                     center={center}
                     zoom={14.4746}
-                    onLoad={fetchPost}
+                    onLoad={()=>{
+                      fetchPost();
+                      getDocsIds();
+                    }}
                   >
                     {data.map((mark) => (
                       <Marker
