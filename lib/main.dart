@@ -1,18 +1,20 @@
 // ignore_for_file: unnecessary_const, empty_catches
 
-import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:animated_splash_screen/animated_splash_screen.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:main_venture/auth_screen.dart';
+import 'package:main_venture/feat_screens/zonecreen.dart';
 import 'package:main_venture/global_objects/ui_class.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:main_venture/screens/home_page.dart';
 
-import 'models/forecasting/Linechartsync.dart';
-import 'models/forecasting/forecasting_linechart.dart';
-import 'screens/home_page.dart';
-
+// import 'models/forecasting/Linechartsync.dart';
+// import 'models/forecasting/forecasting_linechart.dart';S
+// import 'screens/home_page.dart';
+//My copy
 void main() async {
   /// initialize FireBase App
   ///

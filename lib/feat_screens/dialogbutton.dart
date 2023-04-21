@@ -1,5 +1,6 @@
 //import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:main_venture/models/demog_result.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,24 +10,42 @@ class DialogQuestion {
 //////////////////////////////////////////////////////////////////////////////
   final String markerid;
 //use this string to get the clicked marker id
-  DialogQuestion(this.markerid, this.dropdownDatas); //do not remove this
-  CollectionReference mark = FirebaseFirestore.instance.collection("business");
+  DialogQuestion(this.markerid, this.dropdownDatas,
+      this.dropdownAssumption); //do not remove this
+  //CollectionReference mark = FirebaseFirestore.instance.collection("business");
   List<DropdownData> dropdownDatas = [];
+  List<DropdownDataAssumption> dropdownAssumption = [];
+
   var selectdropval = "";
+  var selectbusinessassump = "";
+
+  var Questionall = const SnackBar(
+    content: Text(
+        'No Empty answers Allowed! Please fill all the questions correctly'),
+  );
+  var Questionall1 = const SnackBar(
+    content:
+        Text('No zero values Allowed! Please fill all the questions correctly'),
+  );
+
+  var Questionall2 = const SnackBar(
+    content: Text(
+        'No business budget match! Please fill all the questions correctly'),
+  );
 
   final TextEditingController areaBudgetController = TextEditingController();
   final areaController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
+  double _currentSliderValue = 10000;
   static const colortext = Color.fromARGB(255, 74, 74, 74);
 
-  Future<void> demogResult(BuildContext context) async {
+  Future demogResult(BuildContext context) async {
     await Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => DemogResult(
                 marker: markerid,
-                budget: areaBudgetController.text,
+                budget: selectbusinessassump,
                 ideal: selectdropval)));
   }
 
@@ -84,9 +103,12 @@ class DialogQuestion {
         context: context,
         builder: (context) {
 //bool isChecked = false;
+          // value slider
+
           return StatefulBuilder(builder: (context, setState) {
             return AlertDialog(
               content: Form(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
 //key: _formKey,
                 child: SingleChildScrollView(
                     child: Column(
@@ -95,13 +117,24 @@ class DialogQuestion {
                     const SizedBox(
                       height: 5.0,
                     ),
-                    const Align(
-                      alignment: Alignment.topRight,
-                      child: Icon(Icons.close),
-                    ),
+                    Align(
+                        alignment: Alignment.topRight,
+                        child: IconButton(
+                            icon: const Icon(Icons.close),
+                            onPressed: () => Navigator.of(context).pop())
+                        // child: Icon(Icons.close),
+                        // ontap: () async {
+                        //     // ito yun sana kapag initinallize dapat
+
+                        //     //  getMarkerData();
+                        //     //  getMarkerData();
+                        //     await demogResult(context);
+                        //   } ///////////////////////////////
+                        ),
                     const SizeBoxTwenty(),
 
-                    const Text("What kind of business do you prefer?",
+                    const Text(
+                        "What kind of business do you prefer?\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
                         style: TextStyle(
                           color: Color.fromARGB(255, 74, 74, 74),
                           fontSize: 16.0,
@@ -113,6 +146,11 @@ class DialogQuestion {
                     DropdownButtonFormField<DropdownData>(
                       icon: const Icon(Icons.keyboard_arrow_down_rounded),
                       isExpanded: true,
+                      validator: (value) {
+                        return selectdropval.isNotEmpty
+                            ? null
+                            : 'Invalid Input';
+                      },
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all((15.0)),
                         enabledBorder: OutlineInputBorder(
@@ -143,7 +181,6 @@ class DialogQuestion {
                         fillColor: const Color.fromARGB(255, 230, 230, 230),
                       ),
                       dropdownColor: const Color.fromARGB(255, 230, 230, 230),
-
 //value: dropdownValue,
                       items: dropdownDatas.map<DropdownMenuItem<DropdownData>>(
                           (DropdownData data) {
@@ -176,27 +213,110 @@ class DialogQuestion {
                       ),
                     ),
 
+                    //this is another
+
+                    const SizeBoxTwenty(),
+
+//DROPDOWN
+
 //TEXT BOX 2
                     const SizeBoxTwenty(),
 
-                    const Text("Enter budget for the area (per square meter)",
+                    const Text("Choose budget for the area (per square meter)",
                         style: TextStyle(
                           color: Color.fromARGB(255, 74, 74, 74),
                           fontSize: 16.0,
                         )),
                     const SizeBoxTen(),
-                    TextFormField(
+
+                    DropdownButtonFormField<DropdownDataAssumption>(
+                      icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                      isExpanded: true,
+                      validator: (value) {
+                        return selectbusinessassump.isNotEmpty
+                            ? null
+                            : 'Invalid Input';
+                      },
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all((15.0)),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 230, 230, 230)
+                                  .withOpacity(0.5),
+                              width: 2),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 230, 230, 230)
+                                  .withOpacity(0.5),
+                              width: 2),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 230, 230, 230)
+                                  .withOpacity(0.5),
+                              width: 2),
+                        ),
+                        filled: true,
+                        fillColor: const Color.fromARGB(255, 230, 230, 230),
+                      ),
+                      dropdownColor: const Color.fromARGB(255, 230, 230, 230),
+//value: dropdownValue,
+                      items: dropdownAssumption
+                          .map<DropdownMenuItem<DropdownDataAssumption>>(
+                              (DropdownDataAssumption data) {
+                        return DropdownMenuItem<DropdownDataAssumption>(
+                          value: data,
+                          child: Text(data.budgetassump),
+                        );
+                      }).toList(),
+                      /*  dropitems
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value,
+                                style: const TextStyle(
+                                  color: Color.fromARGB(255, 74, 74, 74),
+                                  fontSize: 14.0,
+                                )));
+                      }).toList(), */
+                      onChanged: (value) {
+                        setState(() {
+// selectedbusinesstype = selecteditem;
+                          selectbusinessassump = value!.budgetassump;
+                        });
+                      },
+//value: selectedbusinesstype,
+
+                      hint: const Text('Choose your Budget Range'),
+                      style: const TextStyle(
+                        color: Color.fromARGB(255, 74, 74, 74),
+                        fontSize: 13.0,
+                      ),
+                    ),
+
+                    /*    TextFormField(
                         controller: areaBudgetController,
-                        keyboardType: TextInputType.number,
                         validator: (areaBudgetController) {
                           return areaBudgetController!.isNotEmpty
                               ? null
                               : 'Invalid Input';
                         },
+                        enableInteractiveSelection: false,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
-                          hintText: "0",
+                          hintText: " Please enter 200328",
                           filled: true,
-                          fillColor: const Color.fromARGB(255, 230, 230, 230),
+                          fillColor: Color.fromARGB(255, 230, 230, 230),
                           enabledBorder: OutlineInputBorder(
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(5.0)),
@@ -218,25 +338,53 @@ class DialogQuestion {
                             borderSide: BorderSide(
                                 color: Colors.redAccent.withOpacity(0.5)),
                           ),
-                        )),
+                        )), */
 
 // TEXT BOX 3
 
                     const SizeBoxTwenty(),
-                    const Text("Enter value of area (per square meter)",
+                    const Text(
+                        "Choose area size (per square meter)\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
                         style: TextStyle(
                           color: Color.fromARGB(255, 74, 74, 74),
                           fontSize: 16.0,
                         )),
                     const SizeBoxTen(),
-                    TextFormField(
-// controller: areaController,
-                        keyboardType: TextInputType.number,
+
+                    Slider(
+                      value: _currentSliderValue,
+                      min: 10000,
+                      max: 50000,
+                      divisions: 20,
+                      label:
+                          " Area :  ${_currentSliderValue.round().toString()}",
+                      onChanged: (double value) {
+                        setState(() {
+                          _currentSliderValue = value;
+                        });
+                      },
+                    ),
+                    Text('Area Size: $_currentSliderValue',
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 74, 74, 74),
+                        )),
+                    /*   TextFormField(
+                        controller: areaController,
+                        enableInteractiveSelection: false,
                         validator: (areaController) {
-                          return areaController!.isNotEmpty
-                              ? null
-                              : 'Invalid Input';
+                          if (areaController!.isEmpty) {
+                            return "Please fill this field correctly";
+                          } else if (!RegExp(r'^[0-9]+$')
+                              .hasMatch(areaController!)) {
+                            return "No Special characters allowed! Please fill this field correctly";
+                          } else {
+                            return null;
+                          }
                         },
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           hintText: '0',
                           filled: true,
@@ -262,7 +410,7 @@ class DialogQuestion {
                             borderSide: BorderSide(
                                 color: Colors.redAccent.withOpacity(0.5)),
                           ),
-                        )),
+                        )), */
                     const SizeBoxTwenty(),
                     SizedBox(
                       width: 200.0,
@@ -273,10 +421,17 @@ class DialogQuestion {
 
                         onPressed: () async {
                           // ito yun sana kapag initinallize dapat
-
-                          //  getMarkerData();
-                          //  getMarkerData();
-                          await demogResult(context);
+                          if (selectdropval.isEmpty ||
+                              selectbusinessassump.isEmpty) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(Questionall);
+                          } else if (selectbusinessassump.isNotEmpty &&
+                              selectbusinessassump.isNotEmpty) {
+                            demogResult(context);
+                          } else {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(Questionall2);
+                          }
                         },
                         elevation: 0.0,
                         padding: const EdgeInsets.symmetric(vertical: 15.0),

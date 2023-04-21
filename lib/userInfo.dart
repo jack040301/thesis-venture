@@ -6,15 +6,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:main_venture/auth_screens/login.dart';
 
 import 'auth_screen.dart';
-
-// final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-// final CollectionReference _collection = _firestore.collection('users');
 
 class GoogleUserStaticInfo {
   final name = FirebaseAuth.instance.currentUser!.displayName;
   final uid = FirebaseAuth.instance.currentUser!.uid;
+  final email = FirebaseAuth.instance.currentUser!.email;
+
+  final names = FirebaseAuth.instance.currentUser!.displayName?.split(' ');
+  late final lastname = names![0];
+  late final firstname = names!.length > 1 ? names![1] : '';
 }
 
 class Profile {
@@ -26,10 +29,13 @@ class FunctionAuthentication with GoogleUserStaticInfo {
     try {
       await GoogleSignIn().signOut();
       await FirebaseAuth.instance.signOut();
+      // Navigator.of(context).pushReplacement(
+      // MaterialPageRoute(builder: (context) => const LoginScreen()));
       //  print('Signout initiated');
     } catch (e) {
-      //print("error in sign in $e");
+      print("error in sign in $e");
     }
+
     try {
       FirebaseAuth.instance.authStateChanges().listen((User? user) {
         if (user == null) {
@@ -49,6 +55,7 @@ class FunctionAuthentication with GoogleUserStaticInfo {
 class PopSnackbar extends FunctionAuthentication {
   SnackBar popsnackbar(String contentpop) {
     var popContent = SnackBar(
+      behavior: SnackBarBehavior.floating,
       content: Text(contentpop),
     );
 
@@ -87,9 +94,9 @@ class PopSnackbar extends FunctionAuthentication {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("LOGOUT"),
+          title: const Text("Logout"),
           content: const SingleChildScrollView(
-            child: Text("Are you sure to Logout?"),
+            child: Text("Are you sure you want to logout?"),
           ),
           actions: <Widget>[
             TextButton(
@@ -101,10 +108,25 @@ class PopSnackbar extends FunctionAuthentication {
             TextButton(
               child: const Text('Logout'),
               onPressed: () async {
-                await logOut().then((value) =>
-                    Navigator.of(context, rootNavigator: true).pushReplacement(
-                        MaterialPageRoute(
-                            builder: (context) => const AuthScreen())));
+                // FunctionAuthentication;
+                await logOut();
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen()),
+                    (Route route) => false);
+                // await logOut().then((value) => Navigator.of(context)
+                //     .pushNamedAndRemoveUntil('/login', (Route route) => false));
+
+                // await logOut().then((value) => Navigator.of(context)
+                //     .pushAndRemoveUntil(
+                //         MaterialPageRoute(builder: (context) => LoginScreen()),
+                //         (Route route) => true));
+
+                // await logOut().then((value) => Navigator.of(context,
+                //         rootNavigator: true)
+                //     .pushAndRemoveUntil(
+                //         MaterialPageRoute(builder: (context) => LoginScreen()),
+                //         (route) => false));
               },
             ),
           ],
@@ -127,12 +149,6 @@ class Functio {
     //create a new credential
     final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-/* 
-    await users.doc(uid).set({
-      'firstname': 'Firstname',
-      'lastname': 'Lastname',
-      'email': 'Email',
-    }).onError((error, stackTrace) => Println(error.toString())); */
 
     //once signed in, return the user credential
     return await FirebaseAuth.instance.signInWithCredential(credential);
@@ -150,7 +166,11 @@ class DialogShowBusiness {
                 //var data = documents.data() as Map;
                 var data = documents.data() as Map;
 
-                datalist = [DropdownData(nameofbusiness: data['name'])];
+                datalist = [
+                  DropdownData(
+                    nameofbusiness: data['name'],
+                  )
+                ];
               })
             });
   }
@@ -160,4 +180,10 @@ class DropdownData {
   final String nameofbusiness;
 
   DropdownData({required this.nameofbusiness});
+}
+
+class DropdownDataAssumption {
+  final String budgetassump;
+
+  DropdownDataAssumption({required this.budgetassump});
 }

@@ -1,13 +1,27 @@
+import 'dart:ui';
+
 import 'package:charts_flutter/flutter.dart' as charts;
 
 class BarChartModel {
   String year;
-  int financial;
-  final charts.Color color;
+  double financial;
+  final Color color;
 
   BarChartModel({
     required this.year,
     required this.financial,
+    required this.color,
+  });
+}
+
+class BarDataThreeYears {
+  String year;
+  double revenue;
+  final Color color;
+
+  BarDataThreeYears({
+    required this.year,
+    required this.revenue,
     required this.color,
   });
 }

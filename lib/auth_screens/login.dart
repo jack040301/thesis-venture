@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:main_venture/auth_screens/forgot_password.dart';
 import 'package:main_venture/auth_screens/signup.dart';
+import 'package:main_venture/screens/onboarding_screen.dart';
 import 'package:main_venture/userInfo.dart';
+import 'package:main_venture/screens/home_page.dart';
+import 'package:main_venture/feat_screens/personalInfo.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,9 +19,27 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   CollectionReference users = FirebaseFirestore.instance.collection('users');
+  bool loading = false;
+
+  var fSnackBar = const SnackBar(
+    behavior: SnackBarBehavior.floating,
+    content: Text('The Email & Password Fields Must Fill!'),
+  );
+
+  /// Email Fill & Password Empty
+  var sSnackBar = const SnackBar(
+    behavior: SnackBarBehavior.floating,
+    content: Text('Password Field Must Fill!'),
+  );
+
+  /// Email Empty & Password Fill
+  var tSnackBar = const SnackBar(
+    behavior: SnackBarBehavior.floating,
+    content: Text('Email Field Must Fill!'),
+  );
+
   final textFieldFocusNode = FocusNode();
   bool _obscured = true;
-
   void _toggleObscured() {
     setState(() {
       _obscured = !_obscured;
@@ -29,8 +50,6 @@ class _LoginScreenState extends State<LoginScreen> {
       } // Prevents focus if tap on eye
     });
   }
-
-  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -103,6 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 15.0,
                     ),
+
                     const Text("Password",
                         style: TextStyle(
                           color: Color.fromARGB(255, 74, 74, 74),
@@ -111,37 +131,62 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 4.0,
                     ),
+                    // password
+                    // TextField(
+                    //   enableSuggestions: false,
+                    //   autocorrect: false,
+                    //   controller: _passwordController,
+                    //   obscureText: true,
+                    //   decoration: InputDecoration(
+                    //     border: InputBorder.none,
+                    //     hintText: "Password",
+                    //     filled: true,
+                    //     fillColor: const Color.fromARGB(255, 230, 230, 230),
+                    //     enabledBorder: OutlineInputBorder(
+                    //       borderRadius:
+                    //           const BorderRadius.all(Radius.circular(5.0)),
+                    //       borderSide: BorderSide(
+                    //           color: const Color.fromARGB(255, 230, 230, 230)
+                    //               .withOpacity(0.5),
+                    //           width: 2),
+                    //     ),
+                    //     focusedBorder: OutlineInputBorder(
+                    //       borderRadius:
+                    //           const BorderRadius.all(Radius.circular(5.0)),
+                    //       borderSide: BorderSide(
+                    //           color: const Color.fromARGB(255, 230, 230, 230)
+                    //               .withOpacity(0.5)),
+                    //     ),
+                    //     errorBorder: OutlineInputBorder(
+                    //       borderRadius:
+                    //           const BorderRadius.all(Radius.circular(5.0)),
+                    //       borderSide: BorderSide(
+                    //           color: Colors.redAccent.withOpacity(0.5)),
+                    //     ),
+                    //     suffix: InkWell(
+                    //       onTap: () {},
+                    //       child: const Icon(Icons.visibility,
+                    //           color: Color.fromARGB(255, 74, 74, 74)),
+                    //     ),
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   height: 20.0,
+                    // ),
                     TextField(
-                      enableSuggestions: false,
-                      autocorrect: false,
                       controller: _passwordController,
                       obscureText: _obscured,
                       focusNode: textFieldFocusNode,
                       decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Password",
+                        hintText: '************',
+                        labelStyle: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 25,
+                        ),
+                        fillColor: Colors.grey.shade200,
                         filled: true,
-                        fillColor: const Color.fromARGB(255, 230, 230, 230),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(
-                              color: const Color.fromARGB(255, 230, 230, 230)
-                                  .withOpacity(0.5),
-                              width: 2),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(
-                              color: const Color.fromARGB(255, 230, 230, 230)
-                                  .withOpacity(0.5)),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(
-                              color: Colors.redAccent.withOpacity(0.5)),
+                        border: const OutlineInputBorder(
+                          borderSide: BorderSide.none,
                         ),
                         suffix: InkWell(
                           onTap: _toggleObscured,
@@ -160,19 +205,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: double.infinity,
                       child: RawMaterialButton(
                         fillColor: const Color.fromARGB(255, 0, 110, 195),
-                        onPressed: () async {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            duration: const Duration(seconds: 4),
-                            content: Row(
-                              children: const <Widget>[
-                                CircularProgressIndicator(),
-                                Text("  Signing-In...")
-                              ],
-                            ),
-                          ));
-
-                          await signIn();
-                        },
+                        onPressed: signIn,
                         elevation: 0,
                         padding: const EdgeInsets.symmetric(vertical: 15.0),
                         shape: RoundedRectangleBorder(
@@ -182,6 +215,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 TextStyle(color: Colors.white, fontSize: 15.0)),
                       ),
                     ),
+
                     const SizedBox(
                       height: 15.0,
                     ),
@@ -232,8 +266,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     GestureDetector(
                       onTap: () async {
+                        // const AuthScreen().signInWithGoogle();
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          duration: const Duration(seconds: 4),
+                          behavior: SnackBarBehavior.floating,
+                          duration: const Duration(seconds: 2),
                           content: Row(
                             children: const <Widget>[
                               CircularProgressIndicator(),
@@ -246,12 +282,43 @@ class _LoginScreenState extends State<LoginScreen> {
                         var usersCheck =
                             await users.doc(GoogleUserStaticInfo().uid).get();
 
-                        if (!usersCheck.exists) {
+                        if (usersCheck.exists) {
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => const personalinfo()));
+
+                          // await FirebaseAuth.instance
+                          //     .createUserWithEmailAndPassword(
+                          //   email: GoogleUserStaticInfo().email.toString(),
+                          //   password: "",
+                          // )
+                          //     .then((value) => users.doc(value.user!.uid).set({
+                          //   'firstname': GoogleUserStaticInfo().firstname,
+                          //   'lastname': GoogleUserStaticInfo().lastname,
+                          //   'email': value.user!.email,
+                          // })); pushAndRemoveUntil
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  const IntroductionScreens()));
+
+                          // await users.doc(GoogleUserStaticInfo().uid).set({
+                          //   'firstname': GoogleUserStaticInfo().firstname,
+                          //   'lastname': GoogleUserStaticInfo().lastname,
+                          //   'email': GoogleUserStaticInfo().email,
+                          // }).onError((error, stackTrace) => (error.toString()));
+                        } else {
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => const personalinfo()),
+                              (Route route) => false);
+
                           await users.doc(GoogleUserStaticInfo().uid).set({
-                            'firstname': 'Firstname',
-                            'lastname': 'Lastname',
-                            'email': 'Email',
+                            'firstname': GoogleUserStaticInfo().firstname,
+                            'lastname': GoogleUserStaticInfo().lastname,
+                            'email': GoogleUserStaticInfo().email,
                           }).onError((error, stackTrace) => (error.toString()));
+                          // pushAndRemoveUntil
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => const HomePage()));
                         }
                       },
                       child: Material(
@@ -281,8 +348,17 @@ class _LoginScreenState extends State<LoginScreen> {
           );
   }
 
+  //===========FUNCTIONS
+/* Future<bool> isLoggedIn() async {
+    User user = await FirebaseAuth.currentUser();
+    if (user == null) {
+      return false;
+    }
+    return user.is;
+  }
+ */
+
   Future signIn() async {
-    PopSnackbar popSnackbar = PopSnackbar();
     try {
       /// In the below, with if statement we have some simple validate
       if (_emailController.text.isNotEmpty &
@@ -301,49 +377,48 @@ class _LoginScreenState extends State<LoginScreen> {
           setState(() {
             loading = false;
           });
-          //  await FunctionAuthentication().logOut();
+          // logOut();
+        } else {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => const HomePage(),
+          ));
         }
       } else if (_emailController.text.isNotEmpty &
           _passwordController.text.isEmpty) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(popSnackbar.popsnackbar("Password Field Must Fill!"));
+        ScaffoldMessenger.of(context).showSnackBar(sSnackBar);
       } else if (_emailController.text.isEmpty &
           _passwordController.text.isNotEmpty) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(popSnackbar.popsnackbar("Email Field Must Fill!"));
+        ScaffoldMessenger.of(context).showSnackBar(tSnackBar);
       } else if (_emailController.text.isEmpty &
           _passwordController.text.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            popSnackbar.popsnackbar("The Email & Password Fields Must Fill"));
+        ScaffoldMessenger.of(context).showSnackBar(fSnackBar);
       }
-    } catch (error) {
+    } catch (e) {
       /// Showing Error with AlertDialog if the user enter the wrong Email and Password
-
-      popSnackbar.showErrorDialog(
-          _emailController, _passwordController, context, error);
-      /*  showDialog<void>(
+      showDialog<void>(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Error Happened'),
+            title: const Text('Invalid Credentials.'),
             content: const SingleChildScrollView(
               child: Text(
-                  "The Email and Password that you Entered is Not valid ,Try Enter a valid Email and Password."),
+                  "Invalid Credentials. Please enter a valid Email Address and Password.\n\n\n"
+                  "NOTE: if you used Google Sign in for logging this account, Please Sign in with Google"),
             ),
             actions: <Widget>[
               TextButton(
                 child: const Text('Got it'),
                 onPressed: () {
-                  Navigator.of(context).pop();
-                  _emailController.clear();
-                  _passwordController.clear();
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const LoginScreen(),
+                  ));
                 },
               ),
             ],
           );
         },
-      ); */
+      );
     }
-  }
-}
+  } //signIn close
+}// class closing

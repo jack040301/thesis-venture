@@ -38,8 +38,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   getwidget: ^3.0.1
-  
-    
+  google_geocoding:
+  #place_picker:
+
   decorated_dropdownbutton: ^0.0.3
 
 
@@ -48,7 +49,7 @@ dependencies:
   #Sliding Panel
   sliding_up_panel: ^2.0.0+1
   screenshot:
-
+  syncfusion_flutter_pdf:
 
   #Carousel
   carousel_slider: ^4.1.1
@@ -63,6 +64,7 @@ dependencies:
   flutter_polyline_points:
   flutter_rating_stars:
   flip_card:
+  introduction_screen:
   firebase_core: ^2.1.1
   firebase_auth: ^4.1.1
   google_sign_in: ^5.4.2
@@ -73,6 +75,15 @@ dependencies:
   image_gallery_saver:
   permission_handler:
   syncfusion_flutter_charts:
+  url_launcher: ^6.1.10
+ # flutter_pdf:
+  pdf:
+  path_provider:
+  open_file:
+  printing:
+ # pdf: ^3.8.4
+  share_plus:
+  flutter_native_screenshot: ^1.1.2
 
 dev_dependencies:
   flutter_launcher_icons: ^0.10.0
