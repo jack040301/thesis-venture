@@ -54,7 +54,7 @@ class _SignupWidgetState extends State<SignupWidget> {
   // }
 
   var tSnackBar = const SnackBar(
-    behavior: SnackBarBehavior.floating,
+   // behavior: SnackBarBehavior.floating,
     content: Text('Email Field Must Fill!'),
   );
 
@@ -309,13 +309,13 @@ class _SignupWidgetState extends State<SignupWidget> {
                           if (_formKey.currentState!.validate()) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                    behavior: SnackBarBehavior.floating,
+                                  //      behavior: SnackBarBehavior.floating,
                                     content: Text('Processing Data')));
                             createAccount();
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                    behavior: SnackBarBehavior.floating,
+                                  //     behavior: SnackBarBehavior.floating,
                                     content:
                                         Text('Fill out the required field')));
                           }

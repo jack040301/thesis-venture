@@ -22,19 +22,19 @@ class _LoginScreenState extends State<LoginScreen> {
   bool loading = false;
 
   var fSnackBar = const SnackBar(
-    behavior: SnackBarBehavior.floating,
+   // behavior: SnackBarBehavior.floating,
     content: Text('The Email & Password Fields Must Fill!'),
   );
 
   /// Email Fill & Password Empty
   var sSnackBar = const SnackBar(
-    behavior: SnackBarBehavior.floating,
+    //behavior: SnackBarBehavior.floating,
     content: Text('Password Field Must Fill!'),
   );
 
   /// Email Empty & Password Fill
   var tSnackBar = const SnackBar(
-    behavior: SnackBarBehavior.floating,
+    //behavior: SnackBarBehavior.floating,
     content: Text('Email Field Must Fill!'),
   );
 
@@ -268,7 +268,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       onTap: () async {
                         // const AuthScreen().signInWithGoogle();
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          behavior: SnackBarBehavior.floating,
+                      //    behavior: SnackBarBehavior.floating,
                           duration: const Duration(seconds: 2),
                           content: Row(
                             children: const <Widget>[

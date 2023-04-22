@@ -55,7 +55,7 @@ class FunctionAuthentication with GoogleUserStaticInfo {
 class PopSnackbar extends FunctionAuthentication {
   SnackBar popsnackbar(String contentpop) {
     var popContent = SnackBar(
-      behavior: SnackBarBehavior.floating,
+      // behavior: SnackBarBehavior.floating,
       content: Text(contentpop),
     );
 

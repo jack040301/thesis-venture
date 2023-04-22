@@ -33,6 +33,7 @@ class RequestedDialog {
   static int count = 0;
   int countquery = 0;
   bool hasEnd = false;
+  bool hasLimit = false;
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   Future savedRequestMarker(context) async {
@@ -70,19 +71,20 @@ class RequestedDialog {
               }) //for loop
             });
 
-    // var getData = GoogleUserStaticInfo().uid.toString();
+    // // var getData = GoogleUserStaticInfo().uid.toString();
     // FirebaseFirestore.instance
     //     .collection("markers")
-    //     .where("coords", isLessThanOrEqualTo: geopoint)
-    //     .where('request_status', isEqualTo: true)
-    //     .orderBy("coords", descending: true)
-    //     .limit(1)
+    //     // .where("coords", isLessThanOrEqualTo: geopoint)
+    //     // .where('request_status', isEqualTo: true)
+    //     // .orderBy("coords", descending: true)
     //     .get()
     //     .then((QuerySnapshot querySnapshot) => {
     //   querySnapshot.docs.forEach((documents) async {
     //     var data = documents.data() as Map;
-    //     print(data['user_id_requested']);
-    //
+    // if (hasEnd == false) {
+    //   print(data['user_id_requested']);
+    //   hasLimit = true;
+    // }
     //   }) //for loop
     // });
 
@@ -132,7 +134,7 @@ class RequestedDialog {
         (element) => element.markerId == MarkerId("marker_$counter"));
 
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        behavior: SnackBarBehavior.floating,
+     //   behavior: SnackBarBehavior.floating,
         content: Text('Tap to another place')));
   }
 
