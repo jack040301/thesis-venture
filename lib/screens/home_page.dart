@@ -15,6 +15,7 @@ import 'package:main_venture/feat_screens/profilenav.dart';
 import 'package:main_venture/feat_screens/zonecreen.dart';
 import 'package:main_venture/models/auto_complete_results.dart';
 import 'package:main_venture/providers/search_places.dart';
+import 'package:main_venture/screens/simu_dialog.dart';
 import 'package:main_venture/services/maps_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geocoding/geocoding.dart';
@@ -24,6 +25,7 @@ import 'package:url_launcher/url_launcher.dart';
 // import 'package:place_picker/place_picker.dart';
 import '../feat_screens/requesting_dialog.dart';
 import '../onboarding_screens/discover.dart';
+
 import '../userInfo.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -56,10 +58,12 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 
   // for boundary error
   var warning = const SnackBar(
+    behavior: SnackBarBehavior.floating,
     content: Text(
         'No marker data is available for this area! please submit a request'),
   );
   var map_pinnedLoc = const SnackBar(
+    behavior: SnackBarBehavior.floating,
 // <<<<<<< HEAD
     content: Text(
         'You cant request for this restricted location. Please choose other locations to request for pinning'),
@@ -70,7 +74,10 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 
 // Markers set
   Set<Marker> allmarkers = <Marker>{};
+  Set<Marker> requestLoc = <Marker>{};
   Set<Marker> _markers = <Marker>{};
+  final Set<Marker> markcount = <Marker>{};
+   int countquery = 0;
 
   // Set<Marker> allmarkers = HashSet<Marker>();
 
@@ -95,12 +102,62 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 
   @override
   void initState() {
+    // requestedLocation();
     userinfoFirestore();
     addCustomIconMarker();
     // getBusiness();
     //run the function before the map loads
     super.initState();
   }
+
+//FOR AUTO DISPLAY SANA NG MGA REQUESTED LOCATION
+  // void requestedLocation() {
+  //   String assetspin = "assets/images/icons/pinBuildingIcon.png";
+  //   var docu = GoogleUserStaticInfo().uid.toString();
+  //   // FirebaseFirestore.instance
+  //   //     .collection("markers")
+  //   //     .where('user_id_requested', isEqualTo: docu)
+  //   //     .get()
+  //   //     .then((QuerySnapshot querySnapshot) => {
+  //   //           querySnapshot.docs.forEach((documents) async {
+  //   //             var data = documents.data() as Map;
+  //   //             print(data['user_id_requested']);
+  //   //             // print(documents.id);// PRINTING OF DOCUMENT ID
+  //   //             // position:
+  //   //             // LatLng(data["coords"].latitude, data["coords"].longitude);
+
+  //   //             // BitmapDescriptor.fromAssetImage(
+  //   //             //         const ImageConfiguration(), assetspin)
+  //   //             //     .then((primaryicon) => setState(() {
+  //   //             //           primaryMarker = primaryicon;
+  //   //             //         }));
+  //   //           }) //for loop
+  //   //         });
+
+  //   FirebaseFirestore.instance
+  //       .collection("markers")
+  //       .where('user_id_requested', isEqualTo: docu)
+  //       .get()
+  //       .then((QuerySnapshot querySnapshot) => {
+  //             querySnapshot.docs.forEach((documents) async {
+  //               var data = documents.data() as Map;
+
+  //               /*   print(data["coords"].latitude);
+  //               print(data["coords"].longitude); */
+
+  //               allmarkers.add(Marker(
+  //                   onTap: () async {
+  //                     /*  await DialogQuestion(
+  //                             documents.id, dropdownDatas, dropdownAssumption)
+  //                         .showMyDialog(context); */
+  //                   },
+  //                   markerId: MarkerId(documents.id),
+  //                   icon: markerIcon,
+  //                   position: LatLng(
+  //                       data["coords"].latitude, data["coords"].longitude)));
+  //             })
+  //           });
+  // }
 
   void _setMarker(point) {
     var counter = markerIdCounter++;
@@ -354,7 +411,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
         .collection("markers")
         //   .where("request_status", isEqualTo: true)
         .where("coords", isGreaterThanOrEqualTo: greatercoordinates)
-        //.orderBy("coords", descending: true)
+        .orderBy("coords", descending: true)
         .limit(1)
         .get()
         .then((QuerySnapshot querySnapshot) => {
@@ -449,9 +506,31 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 
     return allmarkers;
   }
+
   void stop (double lat, double lng){
     ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
   }
+
+/* 
+  Future savedClickMarkers(pinnedData) async {
+    var db = FirebaseFirestore.instance;
+    db
+        .collection("saved_markers")
+        .add(pinnedData)
+        .then((documentSnapshot) => {
+              debugPrint("savedData")
+              //showing if data is saved
+            })
+        .catchError((error) {
+      debugPrint(error);
+    });
+  } */
+
+
+
+  final StreamController<Set<Marker>> _markerStreamController =
+      StreamController<Set<Marker>>.broadcast();
+  Stream<Set<Marker>> get markerStream => _markerStreamController.stream;
 
   void markerOnClick(double lat, double lng) {
     var counter = markerIdCounter++;
@@ -480,24 +559,86 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
     }
 
     else {
-      final Marker markerparams = Marker(
-          markerId: MarkerId('marker_$counter'),
-          position: LatLng(lat, lng),
-          onTap: () async {
-            await RequestedDialog(trimmedlat, trimmedlong).showMyDialog(
-                context);
-          },
-          icon: primaryMarker);
-      gettingZoneMarkers(trimmedlat, trimmedlong);
+    final Marker markerparams = Marker(
+        markerId: MarkerId('marker_$counter'),
+        position: LatLng(lat, lng),
+        onTap: () async {
+          //    await removeMarkerss(lat, lng);
+          await RequestedDialog(trimmedlat, trimmedlong, allmarkers, markcount,
+                  counter, _markerStreamController)
+              .showMyDialog(context);
+
+          //   removeMarkerss(lat, lng);
+        },
+        icon: primaryMarker);
+
+    gettingZoneMarkers(trimmedlat, trimmedlong);
+
 
     // debugPrint(lat.toString());
 
     setState(() {
+
       //allmarkers.clear();
       allmarkers.add(markerparams);
+
+//      allmarkers.clear();
+
+      if (markcount.length == 5) {
+        allmarkers.removeWhere((element) =>
+            element.markerId == MarkerId(markcount.first.markerId.value));
+        /*    markcount.removeWhere((element) =>
+            element.markerId == MarkerId(markcount.first.markerId.value)); */
+
+        // debugPrint(markcount.length.toString());
+        showAlertDialog(context);
+      }
+      if (markcount.length >= 6) {
+        allmarkers.removeWhere((element) =>
+        element.markerId == MarkerId(markcount.last.markerId.value));
+        allmarkers.length == 4;
+        // allmarkers.clear();
+       // markcount.clear();
+        markcount.length == 4;
+      } else {
+        //  savedClickMarkers(saveClickBusiness);
+        //debugPrint(markcount.toString());
+        markcount.add(markerparams);
+        allmarkers.add(markerparams);
+
+        _markerStreamController.add(allmarkers);
+
+        //allmarkers.add(markerparams);
+      }
+
       //  _markers.add(marker);
     });
   }}
+
+  /* removeMarkerss(counter) {
+    allmarkers.removeWhere(
+        (element) => element.markerId == MarkerId("marker_$counter"));
+  } */
+
+  void showAlertDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Information'),
+          content: const Text('The Request is limited only to 5 markers if exceeded all the existing markers will be cleared'),
+          actions: [
+            TextButton(
+              child: const Text('I understand'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   Widget builds(BuildContext context) {
     return Padding(
@@ -529,6 +670,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
         Future.delayed(const Duration(milliseconds: 250), () => true);
 
     //Providers
+
     final allSearchResults = ref.watch(placeResultsProvider);
     final searchFlag = ref.watch(searchToggleProvider);
     /* return FutureBuilder(
@@ -584,7 +726,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
                                     contentPadding: EdgeInsets.symmetric(
                                         horizontal: 20.0, vertical: 15.0),
                                     border: InputBorder.none,
-                                    prefixIcon: const Icon(Icons.search),
+                                    prefixIcon: Icon(Icons.search),
                                     hintText: 'Search',
                                   ),
                                   onChanged: (value) {
@@ -664,11 +806,11 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
             backgroundColor: Colors.white,
             mini: true,
             heroTag: null,
-            child: const Icon(Icons.info),
             foregroundColor: Colors.blue,
             onPressed: () {
               Discover().showDiscover(context);
             },
+            child: const Icon(Icons.info),
           ),
           FloatingActionButton(
             disabledElevation: 0,
@@ -676,13 +818,14 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
             backgroundColor: Colors.white,
             mini: true,
             heroTag: null,
-            child: const Icon(Icons.home_work_outlined),
             foregroundColor: Colors.blue,
             onPressed: () {
-              goToWebPage(
+              SimuDialog().showSimulation(context);
+              /*    goToWebPage(
                   "https://play.unity.com/mg/other/webgl-builds-329405");
-              // Discover().showDiscover(context);
+              // Discover().showDiscover(context); */
             },
+            child: const Icon(Icons.home_work_outlined),
           ),
         ],
       ),

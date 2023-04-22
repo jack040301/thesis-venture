@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:main_venture/models/auto_complete_results.dart';
 
 final placeResultsProvider = ChangeNotifierProvider<PlaceResults>((ref) {
@@ -24,6 +25,26 @@ class SearchToggle extends ChangeNotifier {
 
   void toggleSearch() {
     searchToggle = !searchToggle;
+    notifyListeners();
+  }
+}
+
+final mySetProvider = ChangeNotifierProvider<MySet>((ref) {
+  return MySet();
+});
+
+class MySet extends ChangeNotifier {
+  final Set<Marker> _set = <Marker>{};
+
+  Set<Marker> get set => _set;
+
+  void add(value) {
+    _set.add(value);
+    notifyListeners();
+  }
+
+  void remove(String value) {
+    _set.remove(value);
     notifyListeners();
   }
 }

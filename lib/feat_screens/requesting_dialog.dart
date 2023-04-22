@@ -1,14 +1,28 @@
 //import 'package:firebase_core/firebase_core.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_flutter_platform_interface/src/types/marker.dart';
 import 'package:main_venture/models/demog_result.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:main_venture/userInfo.dart';
+import 'package:main_venture/screens/home_page.dart';
+import 'package:main_venture/screens/home_page.dart';
+
+import '../providers/search_places.dart';
 
 class RequestedDialog {
   final double lat, lng;
-  RequestedDialog(this.lat, this.lng);
+  Set<Marker> markcount;
+  Set<Marker> markcout;
+
+  int counter;
+  StreamController<Set<Marker>> markerStreamController;
+  RequestedDialog(this.lat, this.lng, this.markcount, this.markcout,
+      this.counter, this.markerStreamController);
 
   var RequestedPop = const SnackBar(
     content:
@@ -16,20 +30,56 @@ class RequestedDialog {
   );
 
   static const colortext = Color.fromARGB(255, 74, 74, 74);
+  static int count = 0;
+  int countquery = 0;
+  bool hasEnd = false;
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   Future savedRequestMarker(context) async {
+    count += 1;
+
     GeoPoint geopoint = GeoPoint(lat, lng);
+
+    var docu = GoogleUserStaticInfo().uid.toString();
+    FirebaseFirestore.instance
+        .collection("markers")
+        .where('user_id_requested', isEqualTo: docu)
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((documents) async {
+                var data = documents.data() as Map;
+                // print(data['user_id_requested']);
+                // print(documents.id);// PRINTING OF DOCUMENT ID
+
+                if (hasEnd == false) {
+                  if (data['user_id_requested'] == docu) {
+                    // print(data['user_id_requested']);
+                    if (data['coords'].latitude == geopoint.latitude &&
+                        data['coords'].longitude == geopoint.longitude) {
+                      print("This location is already pinned");
+                      doublePinnedReq(context);
+                      hasEnd = true;
+                    } else {
+                      // print("ekis");
+                      hasEnd = true;
+                    }
+                  }
+                }
+
+                //
+              }) //for loop
+            });
 
     final pinnedData = {
       "coords": geopoint,
       "place": "None",
       "id": "",
-      "land": 0,
-      "land_size": "",
-      "popu_future": "",
-      "popu_past": "",
-      "population": "",
-      "revenue": "",
+      "land": 10000,
+      "land_size": "10000",
+      "popu_future": "20000",
+      "popu_past": "10000",
+      "population": "15000",
+      "revenue": "20000",
       "user_id_requested": GoogleUserStaticInfo().uid,
       "request_status": false,
     };
@@ -37,9 +87,10 @@ class RequestedDialog {
     var db = FirebaseFirestore.instance;
     db
         .collection("markers")
-        .add(pinnedData)
+        .doc(count.toString() + "-" + GoogleUserStaticInfo().email.toString())
+        .set(pinnedData)
         .then((documentSnapshot) => {
-              ScaffoldMessenger.of(context).showSnackBar(RequestedPop)
+              alertmessage(context)
               //showing if data is saved
             })
         .catchError((error) {
@@ -47,7 +98,82 @@ class RequestedDialog {
     });
   }
 
+  Future<int> countPerUserRequest() async {
+    await FirebaseFirestore.instance
+        .collection("markers")
+        .where("user_id", isEqualTo: GoogleUserStaticInfo().uid)
+        .get()
+        .then(
+            (QuerySnapshot querySnapshot) => {countquery = querySnapshot.size});
+
+    return countquery;
+  }
+
+  removeMarkerss(context) {
+    markcount.removeWhere(
+        (element) => element.markerId == MarkerId("marker_$counter"));
+    markcout.removeWhere(
+        (element) => element.markerId == MarkerId("marker_$counter"));
+
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: Text('Tap to another place')));
+  }
+
+  Future alertmessage(context) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Request Sent"),
+          content: const SingleChildScrollView(
+            child: Text(
+                "The request has been sent to the admin successfully. Please wait for the approval of admin."),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Okay'),
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                    (Route route) => false);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future doublePinnedReq(context) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Double Pinned Request"),
+          content: const SingleChildScrollView(
+            child: Text("This location is already pinned"),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Got it'),
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                    (Route route) => false);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future showMyDialog(BuildContext context) {
+    countPerUserRequest();
+
     return showDialog(
         context: context,
         builder: (context) {
@@ -76,14 +202,21 @@ class RequestedDialog {
                       child: RawMaterialButton(
                         fillColor: const Color.fromARGB(255, 0, 110, 195),
                         onPressed: () async {
-                          await savedRequestMarker(context)
-                              .then((_) => {Navigator.of(context).pop()});
+                          if (countquery <= 5) {
+                            await savedRequestMarker(context);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    behavior: SnackBarBehavior.floating,
+                                    content: Text(
+                                        'You have reached the maximum number of request')));
+                          }
                         },
                         elevation: 0.0,
                         padding: const EdgeInsets.symmetric(vertical: 15.0),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5.0)),
-                        child: const Text("Yes",
+                        child: const Text("Request",
                             style:
                                 TextStyle(color: Colors.white, fontSize: 15.0)),
                       ),
@@ -104,7 +237,29 @@ class RequestedDialog {
                         padding: const EdgeInsets.symmetric(vertical: 15.0),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5.0)),
-                        child: const Text("No",
+                        child: const Text("Cancel",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 15.0)),
+                      ),
+                    ),
+                    const SizeBoxTwenty(),
+                    SizedBox(
+                      width: 200.0,
+                      child: RawMaterialButton(
+                        fillColor: const Color.fromARGB(255, 0, 110, 195),
+//onPressed: null,
+//SAVE USERS' ANSWERS TO THE FIREBASE
+
+                        onPressed: () async {
+                          removeMarkerss(context);
+                          Navigator.of(context).pop();
+                          // ito yun sana kapag initinallize dapat
+                        },
+                        elevation: 0.0,
+                        padding: const EdgeInsets.symmetric(vertical: 15.0),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0)),
+                        child: const Text("Replace",
                             style:
                                 TextStyle(color: Colors.white, fontSize: 15.0)),
                       ),

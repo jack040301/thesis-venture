@@ -493,7 +493,7 @@ Future<void> _renderChartAsImage(context, _cartesianChartKey) async {
   page.graphics
       .drawImage(bitmap, Rect.fromLTWH(-12, 60, 930, 490));
   page.graphics.drawString(
-        "The graph shows the potential growth of the chose business starting with the first month"
+    "The graph shows the potential growth of the chose business starting with the first month"
         "up to the last month of the year with the use of venture's Average algorithm\n and Parameters\n\n"
         "The Blue line dot in the graph represents the One Time Cost in establishing the business.\n\n"
         "The Red line dot represents the daily revenue of the business\n\n"
@@ -517,7 +517,7 @@ Future<void> _renderChartAsImage(context, _cartesianChartKey) async {
   );
   document.pages.add().graphics.drawString(
     // ito same gray ulit na maliit nalang
-        "\n*ROI (Return of Investment) Return on investment or return on costs is a Computation between "
+    "\n*ROI (Return of Investment) Return on investment or return on costs is a Computation between "
         "net income and investment. The Early the ROI reach means the faster the investment can be back "
         "to the owner. As a performance measure, ROI is used to evaluate the efficiency of"
         "an investment or to compare the efficiencies of several different investments",

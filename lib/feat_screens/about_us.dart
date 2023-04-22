@@ -48,9 +48,9 @@ class ContentWidget extends StatelessWidget {
         Container(
           color: Colors.white,
           padding: const EdgeInsets.fromLTRB(35, 20, 40, 7),
-          child: Row(
-            children: const <Widget>[
-              const ImageIcon(
+          child:  Row(
+            children: <Widget>[
+              ImageIcon(
                 AssetImage("assets/images/icons/venture.png"),
                 color: Color.fromARGB(255, 23, 23, 23),
                 size: 23,
@@ -85,9 +85,9 @@ class ContentWidget extends StatelessWidget {
         Container(
           color: Colors.white,
           padding: const EdgeInsets.fromLTRB(35, 20, 40, 7),
-          child: Row(
-            children: const <Widget>[
-              const ImageIcon(
+          child:  Row(
+            children: <Widget>[
+              ImageIcon(
                 AssetImage("assets/images/icons/team.png"),
                 color: Color.fromARGB(255, 23, 23, 23),
                 size: 23,
@@ -107,7 +107,7 @@ class ContentWidget extends StatelessWidget {
         Container(
           color: Colors.white,
           padding: const EdgeInsets.fromLTRB(35, 2, 35, 70),
-          child: Text(
+          child: const Text(
             'We are team Hexagon, and we would love you to meet our team. Our team consists of 14 brilliant computer science students from the University of Caloocan City',
             textAlign: TextAlign.justify,
             style: TextStyle(

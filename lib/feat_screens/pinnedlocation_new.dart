@@ -62,11 +62,11 @@ class ContentHowToUse extends StatelessWidget {
             Container(
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(70, 10, 35, 5),
-              child: Row(
-                children: const <Widget>[
+              child:  Row(
+                children: <Widget>[
                   Image(
-                      image: const AssetImage(
-                          'assets/images/icons/pinBuildingIcon.png'),
+                      image:
+                          AssetImage('assets/images/icons/pinBuildingIcon.png'),
                       height: 30),
                   SizedBox(
                     width: 10.0,
@@ -89,11 +89,10 @@ class ContentHowToUse extends StatelessWidget {
             Container(
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(20, 10, 35, 5),
-              child: Row(
-                children: const <Widget>[
+              child:  Row(
+                children: <Widget>[
                   Image(
-                      image:
-                          const AssetImage('assets/images/icons/PlaceIcon.png'),
+                      image: AssetImage('assets/images/icons/PlaceIcon.png'),
                       height: 100),
                   SizedBox(
                     width: 10.0,
@@ -117,11 +116,11 @@ class ContentHowToUse extends StatelessWidget {
             Container(
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(20, 10, 35, 5),
-              child: Row(
-                children: const <Widget>[
+              child:  Row(
+                children: <Widget>[
                   Image(
-                      image: const AssetImage(
-                          'assets/images/icons/CoordinatesIcon.png'),
+                      image:
+                          AssetImage('assets/images/icons/CoordinatesIcon.png'),
                       height: 70),
                   SizedBox(
                     width: 17.0,
@@ -144,11 +143,10 @@ class ContentHowToUse extends StatelessWidget {
             Container(
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(20, 10, 35, 5),
-              child: Row(
-                children: const <Widget>[
+              child:  Row(
+                children: <Widget>[
                   Image(
-                      image:
-                          const AssetImage('assets/images/icons/ZoneIcon.png'),
+                      image: AssetImage('assets/images/icons/ZoneIcon.png'),
                       height: 90),
                   SizedBox(
                     width: 25.0,
@@ -171,11 +169,10 @@ class ContentHowToUse extends StatelessWidget {
             Container(
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(20, 10, 35, 5),
-              child: Row(
-                children: const <Widget>[
+              child:  Row(
+                children: <Widget>[
                   Image(
-                      image: const AssetImage(
-                          'assets/images/icons/LandSizeIcon.png'),
+                      image: AssetImage('assets/images/icons/LandSizeIcon.png'),
                       height: 80),
                   SizedBox(
                     width: 15.0,
@@ -199,10 +196,14 @@ class ContentHowToUse extends StatelessWidget {
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(20, 10, 35, 5),
               child:  Row(
+
                 children:  <Widget>[
+
+
+
                   Image(
-                      image: const AssetImage(
-                          'assets/images/icons/PopulationIcon.png'),
+                      image:
+                          AssetImage('assets/images/icons/PopulationIcon.png'),
                       height: 80),
                   SizedBox(
                     width: 26.0,
@@ -226,10 +227,11 @@ class ContentHowToUse extends StatelessWidget {
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(20, 10, 35, 5),
               child:  Row(
+
                 children:  <Widget>[
+
                   Image(
-                      image: const AssetImage(
-                          'assets/images/icons/RevenueIcon.png'),
+                      image: AssetImage('assets/images/icons/RevenueIcon.png'),
                       height: 80),
                   SizedBox(
                     width: 35.0,
@@ -260,11 +262,11 @@ class ContentHowToUse extends StatelessWidget {
                 color: const Color.fromARGB(255, 0, 110, 195),
                 borderRadius: BorderRadius.circular(5.0),
                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                child: Row(
+                child:  Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(width: 10.0, height: 50),
-                    const Text('Venture it!\t\t',
+                    SizedBox(width: 10.0, height: 50),
+                    Text('Venture it!\t\t',
                         style: TextStyle(color: Colors.white, fontSize: 20.0)),
                     // Ink.image(
                     //     image: const AssetImage(

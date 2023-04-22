@@ -43,9 +43,9 @@ class WidgetTermsAndCondition extends StatelessWidget {
               Container(
                 color: Colors.white,
                 padding: const EdgeInsets.fromLTRB(30, 20, 30, 7),
-                child: Row(
-                  children: const <Widget>[
-                    const ImageIcon(
+                child:  Row(
+                  children: <Widget>[
+                    ImageIcon(
                       AssetImage("assets/images/icons/termsOfServiceIcon.png"),
                       color: Colors.black,
                       size: 18,
@@ -141,7 +141,7 @@ class WidgetTermsAndCondition extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                 child: RichText(
                   textAlign: TextAlign.justify,
-                  text: TextSpan(
+                  text: const TextSpan(
                     style: TextStyle(
                       height: 1.5,
                       color: Color.fromARGB(255, 54, 54, 54),
@@ -224,7 +224,7 @@ class WidgetTermsAndCondition extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                   child: RichText(
                       textAlign: TextAlign.justify,
-                      text: TextSpan(
+                      text: const TextSpan(
                           style: TextStyle(
                             height: 1.5,
                             color: Color.fromARGB(255, 54, 54, 54),
@@ -250,7 +250,7 @@ class WidgetTermsAndCondition extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                 child: RichText(
                   textAlign: TextAlign.justify,
-                  text: TextSpan(
+                  text: const TextSpan(
                     style: TextStyle(
                       height: 1.5,
                       color: Color.fromARGB(255, 54, 54, 54),
@@ -290,7 +290,7 @@ class WidgetTermsAndCondition extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                   child: RichText(
                       textAlign: TextAlign.justify,
-                      text: TextSpan(
+                      text: const TextSpan(
                           style: TextStyle(
                             height: 1.5,
                             color: Color.fromARGB(255, 54, 54, 54),
@@ -405,9 +405,9 @@ class WidgetTermsAndCondition extends StatelessWidget {
               Container(
                 color: Colors.white,
                 padding: const EdgeInsets.fromLTRB(30, 20, 30, 7),
-                child: Row(
-                  children: const <Widget>[
-                    const ImageIcon(
+                child:  Row(
+                  children: <Widget>[
+                    ImageIcon(
                       AssetImage("assets/images/icons/termsOfServiceIcon.png"),
                       color: Colors.black,
                       size: 18,
@@ -503,7 +503,7 @@ class WidgetTermsAndCondition extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                 child: RichText(
                   textAlign: TextAlign.justify,
-                  text: TextSpan(
+                  text: const TextSpan(
                     style: TextStyle(
                       height: 1.5,
                       color: Color.fromARGB(255, 54, 54, 54),
@@ -657,7 +657,7 @@ class WidgetTermsAndCondition extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                 child: RichText(
                   textAlign: TextAlign.justify,
-                  text: TextSpan(
+                  text: const TextSpan(
                     style: TextStyle(
                       height: 1.5,
                       color: Color.fromARGB(255, 54, 54, 54),
@@ -708,7 +708,7 @@ class WidgetTermsAndCondition extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                 child: RichText(
                   textAlign: TextAlign.justify,
-                  text: TextSpan(
+                  text: const TextSpan(
                     style: TextStyle(
                       height: 1.5,
                       color: Color.fromARGB(255, 54, 54, 54),
@@ -758,7 +758,7 @@ class WidgetTermsAndCondition extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                   child: RichText(
                       textAlign: TextAlign.justify,
-                      text: TextSpan(
+                      text: const TextSpan(
                           style: TextStyle(
                             height: 1.5,
                             color: Color.fromARGB(255, 54, 54, 54),
@@ -792,7 +792,7 @@ class WidgetTermsAndCondition extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                   child: RichText(
                       textAlign: TextAlign.justify,
-                      text: TextSpan(
+                      text: const TextSpan(
                           style: TextStyle(
                             height: 1.5,
                             color: Color.fromARGB(255, 54, 54, 54),
@@ -826,7 +826,7 @@ class WidgetTermsAndCondition extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                   child: RichText(
                       textAlign: TextAlign.justify,
-                      text: TextSpan(
+                      text: const TextSpan(
                           style: TextStyle(
                             height: 1.5,
                             color: Color.fromARGB(255, 54, 54, 54),
@@ -877,7 +877,7 @@ class WidgetTermsAndCondition extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(35, 2, 35, 7),
                 child: RichText(
                   textAlign: TextAlign.justify,
-                  text: TextSpan(
+                  text: const TextSpan(
                     style: TextStyle(
                       height: 1.5,
                       color: Color.fromARGB(255, 54, 54, 54),
@@ -988,7 +988,7 @@ class WidgetTermsAndCondition extends StatelessWidget {
                   color: Colors.white,
                   padding: const EdgeInsets.fromLTRB(35, 2, 35, 20),
                   child: RichText(
-                      text: TextSpan(
+                      text: const TextSpan(
                           style: TextStyle(
                             height: 1.5,
                             color: Color.fromARGB(255, 54, 54, 54),

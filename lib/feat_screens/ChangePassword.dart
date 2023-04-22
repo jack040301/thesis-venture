@@ -10,7 +10,7 @@ import 'package:flutter/services.dart';
 import '../userInfo.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
-  ChangePasswordScreen();
+  const ChangePasswordScreen({super.key});
 
   @override
   State<ChangePasswordScreen> createState() => _ChangePasswordScreenState();
@@ -83,7 +83,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           color: Colors.black,
                           fontSize: 16,
                         ),
-                        fillColor: Color.fromARGB(255, 230, 230, 230),
+                        fillColor: const Color.fromARGB(255, 230, 230, 230),
                         filled: true,
                         border: const OutlineInputBorder(
                           borderSide: BorderSide.none,
@@ -122,15 +122,15 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         FilteringTextInputFormatter.allow(RegExp(
                             '[a-zA-Z0-9á-úÁ-Ú_.!@#%^&*()/{}:;' '""<>-]')),
                       ],
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: '************',
-                        labelStyle: const TextStyle(
+                        labelStyle: TextStyle(
                           color: Colors.black,
                           fontSize: 16,
                         ),
                         fillColor: Color.fromARGB(255, 230, 230, 230),
                         filled: true,
-                        border: const OutlineInputBorder(
+                        border: OutlineInputBorder(
                           borderSide: BorderSide.none,
                         ),
                       ),
@@ -189,7 +189,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           _passwordController, context, "Please fill out all the fields");
     }
   } //close change pass
-
 } //class close
 
 void _changePassword(User user, String password, String confirmPassword,
@@ -201,14 +200,21 @@ void _changePassword(User user, String password, String confirmPassword,
       "password": password,
     });
 
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //     popSnackbar.popsnackbar("Successfully updated your Password"));
+
     ScaffoldMessenger.of(context).showSnackBar(
-        popSnackbar.popsnackbar("Successfully updated your Password"));
+        SnackBar(content: Text("Successfully updated your Password")));
 
     Future.delayed(const Duration(seconds: 1)).then((value) =>
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const HomePage())));
   }).catchError((error) {
-    ScaffoldMessenger.of(context).showSnackBar(
-        popSnackbar.popsnackbar("Password cant be changed due to $error"));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+            "Password cant be changed due to: Password can't be changed because it needs recent login. Please login again before retrying this request.")));
+
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //     popSnackbar.popsnackbar("Password cant be changed due to $error"));
   });
 }

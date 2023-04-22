@@ -54,6 +54,7 @@ class _SignupWidgetState extends State<SignupWidget> {
   // }
 
   var tSnackBar = const SnackBar(
+    behavior: SnackBarBehavior.floating,
     content: Text('Email Field Must Fill!'),
   );
 
@@ -308,11 +309,13 @@ class _SignupWidgetState extends State<SignupWidget> {
                           if (_formKey.currentState!.validate()) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
+                                    behavior: SnackBarBehavior.floating,
                                     content: Text('Processing Data')));
                             createAccount();
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
+                                    behavior: SnackBarBehavior.floating,
                                     content:
                                         Text('Fill out the required field')));
                           }
@@ -436,19 +439,20 @@ class _SignupWidgetState extends State<SignupWidget> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Error Happened'),
+            title: const Text('Email Already Exist'),
             content: SingleChildScrollView(
-              child: Text("Error: ${e.message}"),
+              child: Text(
+                  "The Email address you have provided is already existing. Please use the login form to login your account"),
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Got it'),
+                child: const Text('Okay'),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  passwordController.clear();
+                  // passwordController.clear();
                   emailController.clear();
-                  firstNameController.clear();
-                  lastNameController.clear();
+                  // firstNameController.clear();
+                  // lastNameController.clear();
                 },
               ),
             ],

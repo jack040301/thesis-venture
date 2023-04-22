@@ -298,11 +298,11 @@ Future<void> _renderChartAsImage(context, _cartesianChartKey) async {
         "It shall primarily be responsible for all national censuses and surveys, sectoral "
         "statistics, community-based statistics, consolidation of selected administrative recording systems,"
         "and compilation of national accounts.",
-      PdfStandardFont(PdfFontFamily.helvetica, 20),
-      brush: PdfSolidBrush(PdfColor(0, 0, 0)),
-      bounds: const Rect.fromLTWH(0, 550, 850, 2000),
-      format: PdfStringFormat(alignment: PdfTextAlignment.justify),
-       );
+    PdfStandardFont(PdfFontFamily.helvetica, 20),
+    brush: PdfSolidBrush(PdfColor(0, 0, 0)),
+    bounds: const Rect.fromLTWH(0, 550, 850, 2000),
+    format: PdfStringFormat(alignment: PdfTextAlignment.justify),
+  );
   final List<int> bits = document.saveSync();
   document.dispose();
   //Get external storage directory

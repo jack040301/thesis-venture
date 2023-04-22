@@ -274,7 +274,7 @@ Future<void> _renderChartAsImage(context, _cartesianChartKey) async {
       .drawImage(bitmap, Rect.fromLTWH(-12, 80, 930, 490));
   page.graphics.drawString(
 
-        "The graph shows the potential growth of the chose business from its first three years with "
+    "The graph shows the potential growth of the chose business from its first three years with "
         "the use of venture's Average algorithm and Parameters as shown in the graph the first year "
         "of the business displays a typical low revenue it is because the first year of the business "
         "is where the invested money is being subtracted from the initial annual revenue as a result it"
