@@ -70,6 +70,22 @@ class RequestedDialog {
               }) //for loop
             });
 
+    // var getData = GoogleUserStaticInfo().uid.toString();
+    // FirebaseFirestore.instance
+    //     .collection("markers")
+    //     .where("coords", isLessThanOrEqualTo: geopoint)
+    //     .where('request_status', isEqualTo: true)
+    //     .orderBy("coords", descending: true)
+    //     .limit(1)
+    //     .get()
+    //     .then((QuerySnapshot querySnapshot) => {
+    //   querySnapshot.docs.forEach((documents) async {
+    //     var data = documents.data() as Map;
+    //     print(data['user_id_requested']);
+    //
+    //   }) //for loop
+    // });
+
     final pinnedData = {
       "coords": geopoint,
       "place": "None",
