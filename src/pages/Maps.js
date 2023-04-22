@@ -83,6 +83,13 @@ function MapPage() {
   const [pinLimit, setPinLimit] = useState(20);
   const [appDocId, setAppDocId] = useState({
     docId: "none",
+    geoLoc: "none",
+  });
+  const [restrictedPLaces, setRestrictedPlaces] = useState({
+    coors: {
+      lat: "",
+      long: "",
+    },
   });
 
   const toastRef = useRef();
@@ -561,8 +568,14 @@ function MapPage() {
 
     try {
       const updateMarker = await updateDoc(docRef, {
-        request_status: true,
+        request_status: false,
+        land: "10000",
+        land_size: "0.1212",
+        popu_past: "20000",
+        popu_present: "23000",
+        revenue: "123123.2",
       });
+
 
       console.log("Success!");
     }catch (e){
@@ -572,17 +585,20 @@ function MapPage() {
 
   const getDocsIds = async () => {
     const ReqTrueQuery = query(
-      collection(db, "markers"),where("request_status", "==", false)     
+      collection(db, "markers"),where("request_status", "==", true),limit(150)     
     );
     await getDocs(ReqTrueQuery).then((querySnapshot) => {
       const newData = querySnapshot.docs.map((doc) => ({        
         docId: doc.id,
+        geoLoc: doc.data().coords,
       }));
       console.log(newData);
       //setAppDocId({docId: newData[0].docId}); 
       //ApproveAll(newData[0].docId);
       for(let x of newData){
         console.log(x.docId);
+        console.log(x.geoLoc._lat);
+        console.log(x.geoLoc._long);
         ApproveAll(x.docId);
       }
     });    
