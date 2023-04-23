@@ -87,6 +87,24 @@ function MapPage() {
 
   const toastRef = useRef();
 
+  const getDocsIds = async () => {
+    const ReqTrueQuery = query(
+      collection(db, "markers"),where("request_status", "==", false)     
+    );
+    await getDocs(ReqTrueQuery).then((querySnapshot) => {
+      const newData = querySnapshot.docs.map((doc) => ({        
+        docId: doc.id,
+      }));
+      console.log(newData);
+      //setAppDocId({docId: newData[0].docId}); 
+      //ApproveAll(newData[0].docId);
+      for(let x of newData){
+        console.log(x.docId);
+        ApproveAll(x.docId);
+      }
+    });    
+  };
+
   function resetAllFilters() {
     setCoorPopulation("");
     setCoorlandSize("");
@@ -457,6 +475,7 @@ function MapPage() {
 
 
     return () => {
+      getDocsIds();
       unsub();
       unsubReqProcess();
     };
@@ -568,24 +587,6 @@ function MapPage() {
     }catch (e){
       console.log("Approve all funtion:", e);
     }
-  };
-
-  const getDocsIds = async () => {
-    const ReqTrueQuery = query(
-      collection(db, "markers"),where("request_status", "==", false)     
-    );
-    await getDocs(ReqTrueQuery).then((querySnapshot) => {
-      const newData = querySnapshot.docs.map((doc) => ({        
-        docId: doc.id,
-      }));
-      console.log(newData);
-      //setAppDocId({docId: newData[0].docId}); 
-      //ApproveAll(newData[0].docId);
-      for(let x of newData){
-        console.log(x.docId);
-        ApproveAll(x.docId);
-      }
-    });    
   };  
 
   const TestFetch = () => {
