@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:fl'
+    'utter/material.dart';
 
 import 'package:main_venture/screens/home_page.dart';
 import '../screens/onboarding_screen.dart';
@@ -67,7 +68,7 @@ class EmailverificationscreenState extends State<Emailverificationscreen> {
 
   @override
   Widget build(BuildContext context) => isEmailVerified
-      ? const IntroductionScreens()
+      ? const HomePage()
       : Scaffold(
           appBar: AppBar(
             title: const Text('Verify Email'),

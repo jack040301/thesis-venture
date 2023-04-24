@@ -298,7 +298,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           // })); pushAndRemoveUntil
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>
-                                  const IntroductionScreens()));
+                                  const HomePage()));
 
                           // await users.doc(GoogleUserStaticInfo().uid).set({
                           //   'firstname': GoogleUserStaticInfo().firstname,

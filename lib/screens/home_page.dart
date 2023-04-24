@@ -313,21 +313,21 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
           // 14 <= 15
           // if( (greatercoordinates.latitude <= ( data["address"].latitude) || greatercoordinates.latitude <= ( lati)) && (greatercoordinates.longitude <= ( data["address"].longitude) || greatercoordinates.longitude <= (long ))){
           //   // ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
-          if (greatercoordinates.longitude > 121.09) {
+          if ((greatercoordinates.latitude ==
+              (data["address"].latitude)) &&
+              (greatercoordinates.longitude ==
+                  (data["address"].longitude))) {
             ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
-          }
-          // west
-          else if (greatercoordinates.longitude < 120.96) {
-            ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
-          }
-          // north
-          else if (greatercoordinates.latitude > 14.78) {
-            ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
-          }
 
-          // south
-          else if (greatercoordinates.latitude < 14.62) {
-            ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
+            // ScaffoldMessenger.of(context).showSnackBar( SnackBar(
+            //           content: Text(
+            //             "asd"
+            //               // "orig \t" +data["address"].latitude.toString()+"\n"+
+            //               //     // "ADDRESS1 \t"+latit.toString()+"\n"+
+            //               //     "orig \t" +data["address"].longitude.toString()+"\n"+
+            //               //     "ADDRESS3 \t"+long.toString()
+            //            ))
+            //       );
           } else {
             // testMarker();
             showMarkers(greatercoordinates);
@@ -496,20 +496,20 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
       // debugPrint(lat.toString());
 
       setState(() {
-        if (markcount.length >= 5) {
+        if (markcount.length > 5) {
           allmarkers.removeWhere((element) =>
           element.markerId == MarkerId(markcount.first.markerId.value));
 
           // debugPrint(markcount.length.toString());
           showAlertDialog(context);
-
-          if(markcount.length>= 6){
+        }
+          else if(markcount.length>= 6){
             markcount.removeWhere((element) =>
             element.markerId == MarkerId(markcount.first.markerId.value));
 
             allmarkers.clear();
           }
-        }
+
        else {
           //  savedClickMarkers(saveClickBusiness);
           //debugPrint(markcount.toString());

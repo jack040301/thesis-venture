@@ -67,7 +67,7 @@ class SimuDialog {
                             ),
                             GestureDetector(
                               onTap: () async {
-                                goToWebPage("https://jrchjuls.itch.io/my-game");
+                                goToWebPage("https://hexagonventure.itch.io/simulation");
                                 // Discover().showDiscover(context);
                               },
                               child: Material(
