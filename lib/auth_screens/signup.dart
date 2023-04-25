@@ -125,7 +125,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                       enableInteractiveSelection: false,
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(
-                            RegExp('[ a-zA-Z0-9.-]')),
+                            RegExp('[ a-zA-Z.-]')),
                         //FilteringTextInputFormatter.deny(RegExp(r'[/\\]')),
                       ],
                       decoration: InputDecoration(
@@ -179,7 +179,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                       enableInteractiveSelection: false,
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(
-                            RegExp('[ a-zA-Z0-9.-]')),
+                            RegExp('[ a-zA-Z.-]')),
                         //FilteringTextInputFormatter.deny(RegExp(r'[/\\]')),
                       ],
                       decoration: InputDecoration(
