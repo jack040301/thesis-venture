@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:main_venture/screens/home_page.dart';
 
 class SliderScreen extends StatefulWidget {
   const SliderScreen({super.key});
@@ -10,14 +11,15 @@ class SliderScreen extends StatefulWidget {
 
 class _SliderScreenState extends State<SliderScreen> {
   List imageList = [
-    {"id": 1, "image_path": "assets/images/icons/1TapAnywhere.png"},
-    {"id": 2, "image_path": "assets/images/icons/2PinnedLocDisplay.png"},
-    {"id": 3, "image_path": "assets/images/icons/3PinnedLoc.png"},
-    {"id": 4, "image_path": "assets/images/icons/4PinnedLoc.png"},
-    {"id": 5, "image_path": "assets/images/icons/5PinnedLoc.png"},
-    {"id": 6, "image_path": "assets/images/icons/6PinnedLoc.png"},
-    {"id": 7, "image_path": "assets/images/icons/7PinnedLoc.png"},
-    {"id": 8, "image_path": "assets/images/icons/8PinnedLoc.png"},
+    {"id": 1, "image_path": "assets/images/icons/Welcome.png"},
+    {"id": 2, "image_path": "assets/images/icons/1TapAnywhere.png"},
+    {"id": 3, "image_path": "assets/images/icons/2PinnedLocDisplay.png"},
+    {"id": 4, "image_path": "assets/images/icons/3PinnedLoc.png"},
+    {"id": 5, "image_path": "assets/images/icons/4PinnedLoc.png"},
+    {"id": 6, "image_path": "assets/images/icons/5PinnedLoc.png"},
+    {"id": 7, "image_path": "assets/images/icons/6PinnedLoc.png"},
+    {"id": 8, "image_path": "assets/images/icons/7PinnedLoc.png"},
+    {"id": 9, "image_path": "assets/images/icons/8PinnedLoc.png"},
   ];
   final CarouselController carouselController = CarouselController();
   int currentIndex = 0;
@@ -48,11 +50,11 @@ class _SliderScreenState extends State<SliderScreen> {
                 items: imageList
                     .map(
                       (item) => Image.asset(
-                        item['image_path'],
-                        fit: BoxFit.fill,
-                        width: double.infinity,
-                      ),
-                    )
+                    item['image_path'],
+                    fit: BoxFit.fill,
+                    width: double.infinity,
+                  ),
+                )
                     .toList(),
                 carouselController: carouselController,
                 options: CarouselOptions(
@@ -60,7 +62,7 @@ class _SliderScreenState extends State<SliderScreen> {
                   scrollPhysics: const BouncingScrollPhysics(),
                   autoPlay: true,
                   //  enlargeCenterPage: true,
-                  aspectRatio: 2,
+                  aspectRatio: 5,
                   viewportFraction: 1,
                   onPageChanged: (index, reason) {
                     setState(() {
@@ -95,6 +97,17 @@ class _SliderScreenState extends State<SliderScreen> {
                   );
                 }).toList(),
               ),
+            ),
+            RawMaterialButton(
+              onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                      const HomePage())),
+              child: const Text("SKIP",
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 0, 110, 195),
+                      fontSize: 14.0)),
             ),
           ],
         ),
