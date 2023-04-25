@@ -52,7 +52,7 @@ class SyncLineChart extends StatelessWidget {
   List<ChartData> dummyData1 = [];
   List<ChartData> dummyData2 = [];
   CollectionReference forebusiness =
-      FirebaseFirestore.instance.collection("business");
+  FirebaseFirestore.instance.collection("business");
   void _printScreen() {
     /*   Printing.layoutPdf(onLayout: (PdfPageFormat format) async {
       final doc = pw.Document();
@@ -95,128 +95,130 @@ class SyncLineChart extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                  FutureBuilder<DocumentSnapshot>(
-                      future: forebusiness.doc(suggestedbusiness).get(),
-                      builder: //(BuildContext context,
+                      FutureBuilder<DocumentSnapshot>(
+                          future: forebusiness.doc(suggestedbusiness).get(),
+                          builder: //(BuildContext context,
                           //   AsyncSnapshot<DocumentSnapshot> snapshot)
-                          (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                        if (snapshot.hasError) {
-                          return const Text("Error");
-                        } else if (snapshot.hasData) {
-                          Map<String, dynamic> dataDoc =
+                              (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                            if (snapshot.hasError) {
+                              return const Text("Error");
+                            } else if (snapshot.hasData) {
+                              Map<String, dynamic> dataDoc =
                               snapshot.data!.data() as Map<String, dynamic>;
-                          //monthly cost
-                          marketcost = double.parse(dataDoc['marketing_cost']);
-                          laborcost = double.parse(dataDoc['labor_cost']);
-                          foodsup = double.parse(dataDoc['food_supply']);
-                          utilLease = double.parse(dataDoc['lease_utilities']);
-                          misc = double.parse(dataDoc['misc']);
-                          assumptItems = double.parse(dataDoc['sales_per_day']);
-                          monthlyResultCost = marketcost +
-                              laborcost +
-                              foodsup +
-                              utilLease +
-                              misc;
-                          dailyyResultCost = (marketcost +
+                              //monthly cost
+                              marketcost = double.parse(dataDoc['marketing_cost']);
+                              laborcost = double.parse(dataDoc['labor_cost']);
+                              foodsup = double.parse(dataDoc['food_supply']);
+                              utilLease = double.parse(dataDoc['lease_utilities']);
+                              misc = double.parse(dataDoc['misc']);
+                              assumptItems = double.parse(dataDoc['sales_per_day']);
+                              monthlyResultCost = marketcost +
+                                  laborcost +
+                                  foodsup +
+                                  utilLease +
+                                  misc;
+                              dailyyResultCost = (marketcost +
                                   laborcost +
                                   foodsup +
                                   utilLease +
                                   misc) /
-                              30;
-                          double pieLabor =
-                              (laborcost / monthlyResultCost) * 100;
-                          double pieFoodSup =
-                              (foodsup / monthlyResultCost) * 100;
-                          double pieUtilLease =
-                              (utilLease / monthlyResultCost) * 100;
-                          double pieMisc = (misc / monthlyResultCost) * 100;
-                          piedata = [
-                            _ChartData('Labor Cost', pieLabor),
-                            _ChartData('Food Supply', pieFoodSup),
-                            _ChartData('Utility Lease', pieUtilLease),
-                            _ChartData('Miscellaneous', pieMisc)
-                          ];
-                          //one time cost
-                          permit = double.parse(dataDoc['permit']);
-                          equipment = double.parse(dataDoc['equipment']);
-                          stall = double.parse(dataDoc["stall"]);
-                          oneTimeCostResult = permit + equipment + stall;
-                          return RepaintBoundary(
-                              key: _printKey,
-                              child: Center(
-                                  child: Container(
-                                      height: 1100,
-                                      padding: const EdgeInsets.all(5),
-                                      child: Card(
-                                          elevation: 0,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
+                                  30;
+                              double pieLabor =
+                                  (laborcost / monthlyResultCost) * 100;
+                              double pieFoodSup =
+                                  (foodsup / monthlyResultCost) * 100;
+                              double pieUtilLease =
+                                  (utilLease / monthlyResultCost) * 100;
+                              double pieMisc = (misc / monthlyResultCost) * 100;
+                              piedata = [
+                                _ChartData('Labor Cost', pieLabor),
+                                _ChartData('Food Supply', pieFoodSup),
+                                _ChartData('Utility Lease', pieUtilLease),
+                                _ChartData('Miscellaneous', pieMisc)
+                              ];
+                              //one time cost
+                              permit = double.parse(dataDoc['permit']);
+                              equipment = double.parse(dataDoc['equipment']);
+                              stall = double.parse(dataDoc["stall"]);
+                              oneTimeCostResult = permit + equipment + stall;
+                              return RepaintBoundary(
+                                  key: _printKey,
+                                  child: Center(
+                                      child: Container(
+                                          height: 1400,
+                                          padding: const EdgeInsets.all(5),
+                                          child: Card(
+                                              elevation: 0,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
                                                 BorderRadius.circular(0.0),
-                                          ),
-                                          child: Padding(
-                                              padding:
+                                              ),
+                                              child: Padding(
+                                                  padding:
                                                   const EdgeInsets.fromLTRB(
                                                       5, 20, 5, 10),
-                                              child: Column(children: <Widget>[
-                                                const Text(
-                                                    "Line Graph Forecast",
-                                                    style: TextStyle(
-                                                        fontSize: 19.0)),
-                                                Expanded(
-                                                    child: SfCartesianChart(
-                                                        key: _cartesianChartKey,
-                                                        legend: Legend(
-                                                            isVisible: true),
-                                                        tooltipBehavior:
+                                                  child: Column(children: <Widget>[
+                                                    const Text(
+                                                        "Forecasted Growth Revenue (1 Year)",
+                                                        style: TextStyle(
+                                                            fontSize: 19.0)),
+                                                    Expanded(
+                                                        child: SfCartesianChart(
+                                                            key: _cartesianChartKey,
+                                                            legend: Legend(
+                                                                isVisible: true),
+                                                            tooltipBehavior:
                                                             _tooltipBehavior,
-                                                        primaryXAxis:
+                                                            primaryXAxis:
                                                             CategoryAxis(),
-                                                        series:
+                                                            series:
                                                             getData(context))),
-                                                const Padding(
-                                                    padding:
+                                                    const Padding(
+                                                        padding:
                                                         EdgeInsets.all(7.0),
-                                                    child: Text(
-                                                      "the graph shows the potential growth of the chose business starting with the first month "
-                                                      "up to the last month of the year with the use of venture's Average algorithm and Parameters "
-                                                      "The Blue line dot in the graph represents the One Time Cost in establishing the business"
-                                                      "The Red line dot represents the daily revenue of the business"
-                                                      // yung parameters siguro gray nalang to and mas maliit para maempasize na parang legend lang sya or meaning ganun
-                                                      "Parameters includes the following "
-                                                      "*Daily Cost (Man power, Supplies, Marketing Cost, Lease and Utilities and lastly Miscellaneous) "
-                                                      "*One Time Cost (Stalls, Equipment and Permit) "
-                                                      "*Assumed Sales (Sample Items and Sales per day) "
-                                                      "*Daily Revenue (Assumed Sales - Daily Cost)"
-                                                      // ito di normal text na ulit
-                                                      "The First month as state in the graph shows a lower revenue unlike the following year"
-                                                      "for the reason because the first month of the business there is a allocation of Marketing Cost for the advertisement"
-                                                      "and promotion of business The intersection of the Red and Blue line in the Graph states the ROI (Return of investment) "
-                                                      "that let you visualize the Timespan in which the the revenue will surpass the one time cost in simpler term the month in which you can get your investment back after "
-                                                      // ito same gray ulit na maliit nalang
-                                                      "*ROI (Return of Investment) Return on investment or return on costs is a Computation between net income and investment."
-                                                      "The Early the ROI reach means the faster the investment can be back to the owner. As a performance measure, ROI is used to evaluate the efficiency of"
-                                                      "an investment or to compare the efficiencies of several different investments",
-                                                      textAlign:
+                                                        child: Text(
+                                                          "The graph shows the potential growth of the chose business starting with the"
+                                                              "first month up to the last month of the year"
+                                                              "with the use of venture's Average algorithm and Parameters\n\n"
+                                                              "The Blue line dot in the graph represents the One Time Cost in establishing the business.\n\n"
+                                                              "The Red line dot represents the daily revenue of the business\n\n"
+                                                          // yung parameters siguro gray nalang to and mas maliit para maempasize na parang legend lang sya or meaning ganun
+                                                              "Parameters includes the following\n"
+                                                              "*Daily Cost (Man power, Supplies, Marketing Cost, Lease and Utilities and lastly Miscellaneous)\n"
+                                                              "*One Time Cost (Stalls, Equipment and Permit)\n"
+                                                              "*Assumed Sales (Sample Items and Sales per day)\n"
+                                                              "*Daily Revenue (Assumed Sales - Daily Cost)\n"
+                                                          // ito di normal text na ulit
+                                                              " The First month as state in the graph shows a lower revenue unlike the following year"
+                                                              " for the reason because the first month of the business there is a allocation of Marketing Cost for the advertisement"
+                                                              " and promotion of business The intersection of the Red and Blue line in the Graph states the ROI (Return of investment) "
+                                                              " that let you visualize the Timespan in which the the revenue will surpass the one time cost in simpler term the month in which you can get your investment back after \n\n"
+                                                          // ito same gray ulit na maliit nalang
+                                                              "*ROI (Return of Investment) Return on investment or return on costs is a Computation between net income and investment."
+                                                              "The Early the ROI reach means the faster the investment can be back to the owner. As a performance measure, ROI is used to evaluate the efficiency of"
+                                                              "an investment or to compare the efficiencies of several different investments",
+                                                          textAlign:
                                                           TextAlign.justify,
-                                                      style: TextStyle(
-                                                        height: 1.5,
-                                                        color: Color.fromARGB(
-                                                            255, 54, 54, 54),
-                                                        fontSize: 15,
-                                                      ),
-                                                    )),
-                                                //   iuncomment to para sa barchart
-                                                /* const SizedBox(
+                                                          style: TextStyle(
+                                                            // decoration: TextDecoration.underline,
+                                                            height: 1.5,
+                                                            color: Color.fromARGB(
+                                                                255, 54, 54, 54),
+                                                            fontSize: 15,
+                                                          ),
+                                                        )),
+                                                    //   iuncomment to para sa barchart
+                                                    /* const SizedBox(
                                                   height: 10.0,
                                                 ),
                                                 const Text("Bar Chart Forecast",
                                                     style: TextStyle(
                                                         fontSize: 19.0)), */
-                                                /*  Expanded(
+                                                    /*  Expanded(
                                                     child: BarchartPop(
                                                   markerid: markerid,
                                                 )), */
-                                                /* const Padding(
+                                                    /* const Padding(
                                                     padding:
                                                         EdgeInsets.all(8.0),
                                                     child: Text(
@@ -266,7 +268,7 @@ class SyncLineChart extends StatelessWidget {
                                                           // Explode the segments on tap
                                                           explode: true,
                                                           explodeIndex: 1)
-                                                    ])), 
+                                                    ])),
                                                 const Padding(
                                                     padding:
                                                         EdgeInsets.all(8.0),
@@ -281,25 +283,25 @@ class SyncLineChart extends StatelessWidget {
                                                         fontSize: 15,
                                                       ),
                                                     )),*/
-                                                Container(
-                                                    padding: const EdgeInsets
+                                                    Container(
+                                                        padding: const EdgeInsets
                                                             .fromLTRB(
-                                                        10, 5, 10, 20),
-                                                    color: Colors.white,
-                                                    child: Row(
-                                                        mainAxisAlignment:
+                                                            10, 5, 10, 20),
+                                                        color: Colors.white,
+                                                        child: Row(
+                                                            mainAxisAlignment:
                                                             MainAxisAlignment
                                                                 .spaceEvenly,
-                                                        children: <Widget>[
-                                                          Expanded(
-                                                              child: ElevatedButton
-                                                                  .icon(
+                                                            children: <Widget>[
+                                                              Expanded(
+                                                                  child: ElevatedButton
+                                                                      .icon(
                                                                       style: ElevatedButton
                                                                           .styleFrom(
                                                                         elevation:
-                                                                            0.0,
+                                                                        0.0,
                                                                         padding:
-                                                                            const EdgeInsets.all(10.0),
+                                                                        const EdgeInsets.all(10.0),
                                                                         primary: const Color.fromARGB(
                                                                             255,
                                                                             0,
@@ -307,7 +309,7 @@ class SyncLineChart extends StatelessWidget {
                                                                             195), // background
                                                                         shape: RoundedRectangleBorder(
                                                                             borderRadius:
-                                                                                BorderRadius.circular(5.0)),
+                                                                            BorderRadius.circular(5.0)),
                                                                         minimumSize: const Size(
                                                                             70,
                                                                             40), //////// HERE
@@ -320,60 +322,60 @@ class SyncLineChart extends StatelessWidget {
                                                                             _cartesianChartKey);
                                                                       },
                                                                       icon:
-                                                                          const Icon(
+                                                                      const Icon(
                                                                         Icons
                                                                             .file_download_outlined,
                                                                         size:
-                                                                            18.0,
+                                                                        18.0,
                                                                       ),
                                                                       label:
-                                                                          const Text(
+                                                                      const Text(
                                                                         "Download",
                                                                         style: TextStyle(
                                                                             color:
-                                                                                Colors.white),
+                                                                            Colors.white),
                                                                       ))),
-                                                          //Spacer(),
-                                                          const SizedBox(
-                                                            width: 10.0,
-                                                          ),
-                                                          Expanded(
-                                                              child: TextButton(
-                                                            onPressed: () {
-                                                              Navigator.of(context).pushAndRemoveUntil(
-                                                                  MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) =>
-                                                                              const HomePage()),
-                                                                  (Route route) =>
-                                                                      false);
-                                                            },
-                                                            style: TextButton
-                                                                .styleFrom(
-                                                              minimumSize:
-                                                                  const Size(70,
-                                                                      40), //<-- SEE HERE
-                                                              side:
-                                                                  const BorderSide(
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        0,
-                                                                        110,
-                                                                        195),
-                                                                width: 3,
+                                                              //Spacer(),
+                                                              const SizedBox(
+                                                                width: 10.0,
                                                               ),
-                                                            ),
-                                                            child: const Text(
-                                                                'Done'),
-                                                          ))
-                                                        ]))
-                                              ]))))));
-                        }
-                        return const Center(
-                            child: CircularProgressIndicator.adaptive());
-                      })
-                ]))));
+                                                              Expanded(
+                                                                  child: TextButton(
+                                                                    onPressed: () {
+                                                                      Navigator.of(context).pushAndRemoveUntil(
+                                                                          MaterialPageRoute(
+                                                                              builder:
+                                                                                  (context) =>
+                                                                              const HomePage()),
+                                                                              (Route route) =>
+                                                                          false);
+                                                                    },
+                                                                    style: TextButton
+                                                                        .styleFrom(
+                                                                      minimumSize:
+                                                                      const Size(70,
+                                                                          40), //<-- SEE HERE
+                                                                      side:
+                                                                      const BorderSide(
+                                                                        color: Color
+                                                                            .fromARGB(
+                                                                            255,
+                                                                            0,
+                                                                            110,
+                                                                            195),
+                                                                        width: 3,
+                                                                      ),
+                                                                    ),
+                                                                    child: const Text(
+                                                                        'Done'),
+                                                                  ))
+                                                            ]))
+                                                  ]))))));
+                            }
+                            return const Center(
+                                child: CircularProgressIndicator.adaptive());
+                          })
+                    ]))));
   }
 
   List<ChartSeries<dynamic, dynamic>> getData(context) {
@@ -385,12 +387,12 @@ class SyncLineChart extends StatelessWidget {
     double secondfinal = firstmonth + secondmonth;
     dummyData1 = List.generate(
         12,
-        (index) => ChartData(
+            (index) => ChartData(
             months: DateFormat('MMM').format(DateTime(0, index + 1)).toString(),
             cost: oneTimeCostResult));
     dummyData2 = List.generate(
         12,
-        (index) => ChartData(
+            (index) => ChartData(
             months: DateFormat('MMM').format(DateTime(1, index + 1)).toString(),
             cost: (sec * index) + firstmonth));
     dummyData2[0] = ChartData(months: "Jan", cost: firstmonth);
@@ -470,10 +472,10 @@ Future showSnack(context, ChartPointDetails details) async {
 
 Future<void> _renderChartAsImage(context, _cartesianChartKey) async {
   final ui.Image data =
-      await _cartesianChartKey.currentState!.toImage(pixelRatio: 3.0);
+  await _cartesianChartKey.currentState!.toImage(pixelRatio: 3.0);
   final ByteData? bytes = await data.toByteData(format: ui.ImageByteFormat.png);
   final Uint8List imageBytes =
-      bytes!.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
+  bytes!.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
 
   final PdfBitmap bitmap = PdfBitmap(imageBytes);
 
@@ -482,8 +484,48 @@ Future<void> _renderChartAsImage(context, _cartesianChartKey) async {
       Size(bitmap.width.toDouble(), bitmap.height.toDouble());
   final PdfPage page = document.pages.add();
   final Size pageSize = page.getClientSize();
+  page.graphics.drawString("Forecasted Growth Revenue (1 Year)",
+    PdfStandardFont(PdfFontFamily.helvetica, 40, style: PdfFontStyle.bold),
+    brush: PdfSolidBrush(PdfColor(0, 0, 0)),
+    bounds: const Rect.fromLTWH(0, 10, 950, 2000),
+    format: PdfStringFormat(alignment: PdfTextAlignment.center),
+  );
   page.graphics
-      .drawImage(bitmap, Rect.fromLTWH(0, 0, pageSize.width, pageSize.height));
+      .drawImage(bitmap, Rect.fromLTWH(-12, 60, 930, 490));
+  page.graphics.drawString(
+    "The graph shows the potential growth of the chose business starting with the first month"
+        "up to the last month of the year with the use of venture's Average algorithm\n and Parameters\n\n"
+        "The Blue line dot in the graph represents the One Time Cost in establishing the business.\n\n"
+        "The Red line dot represents the daily revenue of the business\n\n"
+    // yung parameters siguro gray nalang to and mas maliit para maempasize na parang legend lang sya or meaning ganun
+        "Parameters includes the following\n"
+        "*Daily Cost (Man power, Supplies, Marketing Cost, Lease and Utilities and lastly Miscella-\nneous)\n"
+        "*One Time Cost (Stalls, Equipment and Permit)\n"
+        "*Assumed Sales (Sample Items and Sales per day)\n"
+        "*Daily Revenue (Assumed Sales - Daily Cost)\n"
+    // ito di normal text na ulit
+        "The First month as state in the graph shows a lower revenue unlike the following year for "
+        "the reason because the first month of the business there is a allocation of Marketing Cost "
+        "for the advertisement and promotion of business The intersection of the Red and Blue line in\n "
+        "the Graph states the ROI (Return of investment) that let you visualize the Timespan in which\n "
+        "the the revenue will surpass the one time cost in simpler term the month in which you can \n get "
+        "your investment back after \n\n",
+    PdfStandardFont(PdfFontFamily.helvetica, 20),
+    brush: PdfSolidBrush(PdfColor(0, 0, 0)),
+    bounds: const Rect.fromLTWH(0, 550, 850, 2000),
+    format: PdfStringFormat(alignment: PdfTextAlignment.justify),
+  );
+  document.pages.add().graphics.drawString(
+    // ito same gray ulit na maliit nalang
+    "\n*ROI (Return of Investment) Return on investment or return on costs is a Computation between "
+        "net income and investment. The Early the ROI reach means the faster the investment can be back "
+        "to the owner. As a performance measure, ROI is used to evaluate the efficiency of"
+        "an investment or to compare the efficiencies of several different investments",
+    PdfStandardFont(PdfFontFamily.helvetica, 20),
+    brush: PdfSolidBrush(PdfColor(0, 0, 0)),
+    bounds: const Rect.fromLTWH(0, 10, 850, 2000),
+    format: PdfStringFormat(alignment: PdfTextAlignment.justify),
+  );
   final List<int> bits = document.saveSync();
   document.dispose();
   //Get external storage directory
@@ -498,7 +540,7 @@ Future<void> _renderChartAsImage(context, _cartesianChartKey) async {
   OpenFile.open('$path/Venture_Forecast-Breakeven.pdf');
 
   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-    behavior: SnackBarBehavior.floating,
+   // behavior: SnackBarBehavior.floating,
     content: Text('Processing...'),
   ));
 }

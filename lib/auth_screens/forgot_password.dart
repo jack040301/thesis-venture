@@ -13,12 +13,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final _emailForgotController = TextEditingController();
 
   var tSnackBar = const SnackBar(
-    behavior: SnackBarBehavior.floating,
+    // behavior: SnackBarBehavior.floating,
     content: Text('Email Field Must Fill!'),
   );
 
   var forgotPasswordSnackbar = const SnackBar(
-    behavior: SnackBarBehavior.floating,
+    // behavior: SnackBarBehavior.floating,
     content: Text('We Have Sent an Email to your Account!'),
   );
 

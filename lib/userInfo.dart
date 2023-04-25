@@ -55,7 +55,7 @@ class FunctionAuthentication with GoogleUserStaticInfo {
 class PopSnackbar extends FunctionAuthentication {
   SnackBar popsnackbar(String contentpop) {
     var popContent = SnackBar(
-      behavior: SnackBarBehavior.floating,
+      // behavior: SnackBarBehavior.floating,
       content: Text(contentpop),
     );
 
@@ -155,6 +155,7 @@ class Functio {
   }
 }
 
+
 class DialogShowBusiness {
   List? datalist;
   Future getBusiness() async {
@@ -162,17 +163,20 @@ class DialogShowBusiness {
         .collection("business")
         .get()
         .then((QuerySnapshot snapshot) => {
-              snapshot.docs.forEach((documents) async {
-                //var data = documents.data() as Map;
-                var data = documents.data() as Map;
+      snapshot.docs.forEach((documents) async {
+        //var data = documents.data() as Map;
+        var data = documents.data() as Map;
 
-                datalist = [
-                  DropdownData(
-                    nameofbusiness: data['name'],
-                  )
-                ];
-              })
-            });
+        datalist = [
+          DropdownData(
+            nameofbusiness: data['name'],
+          ),
+          DropdownDataAssumption(
+            budgetassump: data['budgetassump'],
+          )
+        ];
+      })
+    });
   }
 }
 

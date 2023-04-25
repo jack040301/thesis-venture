@@ -32,6 +32,7 @@ class SimuDialog {
                               data: TextButtonThemeData(
                                 style: TextButton.styleFrom(
                                   alignment: Alignment.centerLeft,
+
                                 ),
                               ),
                               child: Column(

@@ -476,6 +476,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
       ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
     }
 
+
     // south
     else if (greatercoordinates.latitude < 14.62) {
       ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
@@ -511,6 +512,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
         }
 
         else {
+
           //  savedClickMarkers(saveClickBusiness);
           //debugPrint(markcount.toString());
           markcount.add(markerparams);

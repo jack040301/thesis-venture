@@ -45,7 +45,7 @@ class _BottomNavState extends State<BottomNav> {
   int _selectedIndex = 0;
 
   TextStyle optionStyle =
-      const TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  const TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   late final List<Widget> _widgetOptions = <Widget>[
     SyncLineChart(
         markerid: widget.markerid, suggestedbusiness: widget.businessname),
@@ -78,7 +78,7 @@ class _BottomNavState extends State<BottomNav> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon:
-                ImageIcon(AssetImage("assets/images/icons/lineChartIcon.png")),
+            ImageIcon(AssetImage("assets/images/icons/lineChartIcon.png")),
             label: 'Line Chart',
           ),
           BottomNavigationBarItem(
@@ -86,7 +86,7 @@ class _BottomNavState extends State<BottomNav> {
             label: 'Bar Chart',
           ),
           BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage("assets/images/icons/pieChartIcon.png")),
+            icon: ImageIcon(AssetImage("assets/images/icons/barChartIcon.png")),
             label: '3 Years',
           ),
           BottomNavigationBarItem(

@@ -33,6 +33,7 @@ class RequestedDialog {
   static int count = 0;
   int countquery = 0;
   bool hasEnd = false;
+  bool hasLimit = false;
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   // static String place = "",id = "",land = "",land_size = "",popu_future = "",popu_past ="",population="",revenue="",request_status="";
 
@@ -118,6 +119,7 @@ class RequestedDialog {
 
   }//savedRequestMarker close
 
+
   Future<int> countPerUserRequest() async {
     await FirebaseFirestore.instance
         .collection("markers")
@@ -136,7 +138,7 @@ class RequestedDialog {
         (element) => element.markerId == MarkerId("marker_$counter"));
 
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        behavior: SnackBarBehavior.floating,
+     //   behavior: SnackBarBehavior.floating,
         content: Text('Tap to another place')));
   }
 
@@ -217,25 +219,30 @@ class RequestedDialog {
                         )),
                     const SizeBoxTen(),
                     const SizeBoxTwenty(),
-                    countquery < 5
-                        ? SizedBox(
-                            width: 200.0,
-                            child: RawMaterialButton(
-                              fillColor: const Color.fromARGB(255, 0, 110, 195),
-                              onPressed: () async {
-                                await savedRequestMarker(context);
-                              },
-                              elevation: 0.0,
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 15.0),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5.0)),
-                              child: const Text("Request",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 15.0)),
-                            ),
-                          )
-                        : const Text("Note: You can only request 5 places"),
+                    SizedBox(
+                      width: 200.0,
+                      child: RawMaterialButton(
+                        fillColor: const Color.fromARGB(255, 0, 110, 195),
+                        onPressed: () async {
+                          if (countquery <= 5) {
+                            await savedRequestMarker(context);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    behavior: SnackBarBehavior.floating,
+                                    content: Text(
+                                        'You have reached the maximum number of request')));
+                          }
+                        },
+                        elevation: 0.0,
+                        padding: const EdgeInsets.symmetric(vertical: 15.0),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0)),
+                        child: const Text("Request",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 15.0)),
+                      ),
+                    ),
                     const SizeBoxTwenty(),
                     SizedBox(
                       width: 200.0,

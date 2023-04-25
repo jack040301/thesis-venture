@@ -22,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool loading = false;
 
   var fSnackBar = const SnackBar(
-    // behavior: SnackBarBehavior.floating,
+
     content: Text('The Email & Password Fields Must Fill!'),
   );
 
@@ -276,7 +276,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         Text("  Signing-In...")
                       ],
                     ),
+
                   ));
+
 
                   await Functio().signInWithGoogle();
                   var usersCheck =
@@ -285,6 +287,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   if (usersCheck.exists) {
                     // Navigator.of(context).push(MaterialPageRoute(
                     //     builder: (context) => const personalinfo()));
+
 
                     // await FirebaseAuth.instance
                     //     .createUserWithEmailAndPassword(
@@ -299,6 +302,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) =>
                         const HomePage()));
+
 
                     // await users.doc(GoogleUserStaticInfo().uid).set({
                     //   'firstname': GoogleUserStaticInfo().firstname,
