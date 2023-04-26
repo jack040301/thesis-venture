@@ -94,6 +94,13 @@ function MapPage() {
   const [pinLimit, setPinLimit] = useState(20);
   const [appDocId, setAppDocId] = useState({
     docId: "none",
+    geoLoc: "none",
+  });
+  const [restrictedPLaces, setRestrictedPlaces] = useState({
+    coors: {
+      lat: "",
+      long: "",
+    },
   });
 
   const toastRef = useRef();
@@ -428,7 +435,7 @@ function MapPage() {
   useEffect(() => {
     const collect = collection(db, "markers");
 
-    const approveReq = query(collect, where("request_status", "==", true),limit(12));
+    const approveReq = query(collect, where("request_status", "==", true));
 
     const unsub = onSnapshot(approveReq, (snapshot) => {
       const markreal = snapshot.docs.map((doc) => ({
@@ -603,7 +610,13 @@ function MapPage() {
     try {
       const updateMarker = await updateDoc(docRef, {
         request_status: true,
+        land: "10000",
+        land_size: "0.1212",
+        popu_past: "20000",
+        popu_present: "23000",
+        revenue: "123123.2",
       });
+
 
       console.log("Success!");
     }catch (e){
@@ -623,18 +636,18 @@ function MapPage() {
 
   const convertGeoPoints = async () => {
     const ReqTrueQuery = query(
-      collection(db, "markers"),where("request_status", "==", true)
+    collection(db, "markers"),where("request_status", "==", true)
     );
     await getDocs(ReqTrueQuery).then((querySnapshot) => {
       const newData = querySnapshot.docs.map((doc) => ({        
         docId: doc.id,
+        geoLoc: doc.data().coords,
       }));
       console.log(newData);
       //setAppDocId({docId: newData[0].docId}); 
       //ApproveAll(newData[0].docId);
       for(let x of newData){
         console.log(x.docId);
-        
       }
     });    
   };
