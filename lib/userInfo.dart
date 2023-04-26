@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:main_venture/auth_screens/login.dart';
-
+import 'package:flutter/cupertino.dart';
 import 'auth_screen.dart';
 
 class GoogleUserStaticInfo {
@@ -55,7 +55,7 @@ class FunctionAuthentication with GoogleUserStaticInfo {
 class PopSnackbar extends FunctionAuthentication {
   SnackBar popsnackbar(String contentpop) {
     var popContent = SnackBar(
-      // behavior: SnackBarBehavior.floating,
+      behavior: SnackBarBehavior.floating,
       content: Text(contentpop),
     );
 
@@ -93,27 +93,29 @@ class PopSnackbar extends FunctionAuthentication {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return AlertDialog(
+        return CupertinoAlertDialog(
           title: const Text("Logout"),
           content: const SingleChildScrollView(
             child: Text("Are you sure you want to logout?"),
           ),
           actions: <Widget>[
-            TextButton(
-              child: const Text('Cancel'),
+            CupertinoDialogAction(
+              child: const Text('Cancel',style: TextStyle(
+                  fontSize: 15.0)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-            TextButton(
-              child: const Text('Logout'),
+            CupertinoDialogAction(
+              child: const Text('Logout',style: TextStyle(
+                  fontSize: 15.0)),
               onPressed: () async {
                 // FunctionAuthentication;
                 await logOut();
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                         builder: (context) => const LoginScreen()),
-                    (Route route) => false);
+                        (Route route) => false);
                 // await logOut().then((value) => Navigator.of(context)
                 //     .pushNamedAndRemoveUntil('/login', (Route route) => false));
 
@@ -140,11 +142,11 @@ class Functio {
   Future signInWithGoogle() async {
     //trigger the authentication flow
     final GoogleSignInAccount? googleUser =
-        await GoogleSignIn(scopes: <String>["email"]).signIn();
+    await GoogleSignIn(scopes: <String>["email"]).signIn();
 
     //obtain the auth details from the internet
     final GoogleSignInAuthentication googleAuth =
-        await googleUser!.authentication;
+    await googleUser!.authentication;
 
     //create a new credential
     final credential = GoogleAuthProvider.credential(
@@ -154,7 +156,6 @@ class Functio {
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }
-
 
 class DialogShowBusiness {
   List? datalist;
@@ -170,9 +171,6 @@ class DialogShowBusiness {
         datalist = [
           DropdownData(
             nameofbusiness: data['name'],
-          ),
-          DropdownDataAssumption(
-            budgetassump: data['budgetassump'],
           )
         ];
       })

@@ -11,6 +11,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:main_venture/userInfo.dart';
 import 'package:main_venture/screens/home_page.dart';
 import 'package:main_venture/screens/home_page.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../providers/search_places.dart';
 
@@ -26,78 +27,28 @@ class RequestedDialog {
 
   var RequestedPop = const SnackBar(
     content:
-        Text('This place is requested please wait for the admin to approve it'),
+    Text('This place is requested please wait for the admin to approve it'),
   );
 
   static const colortext = Color.fromARGB(255, 74, 74, 74);
   static int count = 0;
   int countquery = 0;
-  bool hasEnd = false;
-  bool hasLimit = false;
-  CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   Future savedRequestMarker(context) async {
     count += 1;
 
     GeoPoint geopoint = GeoPoint(lat, lng);
 
-    var docu = GoogleUserStaticInfo().uid.toString();
-    FirebaseFirestore.instance
-        .collection("markers")
-        .where('user_id_requested', isEqualTo: docu)
-        .get()
-        .then((QuerySnapshot querySnapshot) => {
-              querySnapshot.docs.forEach((documents) async {
-                var data = documents.data() as Map;
-                // print(data['user_id_requested']);
-                // print(documents.id);// PRINTING OF DOCUMENT ID
-
-                if (hasEnd == false) {
-                  if (data['user_id_requested'] == docu) {
-                    // print(data['user_id_requested']);
-                    if (data['coords'].latitude == geopoint.latitude &&
-                        data['coords'].longitude == geopoint.longitude) {
-                      print("This location is already pinned");
-                      doublePinnedReq(context);
-                      hasEnd = true;
-                    } else {
-                      // print("ekis");
-                      hasEnd = true;
-                    }
-                  }
-                }
-
-                //
-              }) //for loop
-            });
-
-    // // var getData = GoogleUserStaticInfo().uid.toString();
-    // FirebaseFirestore.instance
-    //     .collection("markers")
-    //     // .where("coords", isLessThanOrEqualTo: geopoint)
-    //     // .where('request_status', isEqualTo: true)
-    //     // .orderBy("coords", descending: true)
-    //     .get()
-    //     .then((QuerySnapshot querySnapshot) => {
-    //   querySnapshot.docs.forEach((documents) async {
-    //     var data = documents.data() as Map;
-    // if (hasEnd == false) {
-    //   print(data['user_id_requested']);
-    //   hasLimit = true;
-    // }
-    //   }) //for loop
-    // });
-
     final pinnedData = {
       "coords": geopoint,
       "place": "None",
       "id": "",
-      "land": 10000,
-      "land_size": "10000",
-      "popu_future": "20000",
-      "popu_past": "10000",
-      "population": "15000",
-      "revenue": "20000",
+      "land": 0,
+      "land_size": "",
+      "popu_future": "",
+      "popu_past": "",
+      "population": "",
+      "revenue": "",
       "user_id_requested": GoogleUserStaticInfo().uid,
       "request_status": false,
     };
@@ -108,9 +59,9 @@ class RequestedDialog {
         .doc(count.toString() + "-" + GoogleUserStaticInfo().email.toString())
         .set(pinnedData)
         .then((documentSnapshot) => {
-              alertmessage(context)
-              //showing if data is saved
-            })
+      alertmessage(context)
+      //showing if data is saved
+    })
         .catchError((error) {
       ScaffoldMessenger.of(context).showSnackBar(error);
     });
@@ -129,12 +80,12 @@ class RequestedDialog {
 
   removeMarkerss(context) {
     markcount.removeWhere(
-        (element) => element.markerId == MarkerId("marker_$counter"));
+            (element) => element.markerId == MarkerId("marker_$counter"));
     markcout.removeWhere(
-        (element) => element.markerId == MarkerId("marker_$counter"));
+            (element) => element.markerId == MarkerId("marker_$counter"));
 
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-     //   behavior: SnackBarBehavior.floating,
+        behavior: SnackBarBehavior.floating,
         content: Text('Tap to another place')));
   }
 
@@ -143,44 +94,20 @@ class RequestedDialog {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return AlertDialog(
+        return CupertinoAlertDialog(
           title: const Text("Request Sent"),
           content: const SingleChildScrollView(
             child: Text(
                 "The request has been sent to the admin successfully. Please wait for the approval of admin."),
           ),
           actions: <Widget>[
-            TextButton(
-              child: const Text('Okay'),
+            CupertinoDialogAction(
+              child: const Text('Okay', style: TextStyle(
+                  fontSize: 15.0)),
               onPressed: () {
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => const HomePage()),
-                    (Route route) => false);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future doublePinnedReq(context) {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Double Pinned Request"),
-          content: const SingleChildScrollView(
-            child: Text("This location is already pinned"),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Got it'),
-              onPressed: () {
-                Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => const HomePage()),
-                    (Route route) => false);
+                        (Route route) => false);
               },
             ),
           ],
@@ -196,95 +123,44 @@ class RequestedDialog {
         context: context,
         builder: (context) {
           return StatefulBuilder(builder: (context, setState) {
-            return AlertDialog(
-              content: Form(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                child: SingleChildScrollView(
-                    child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const SizedBox(
-                      height: 5.0,
-                    ),
-                    const SizeBoxTwenty(),
-                    const Text(
-                        "Do you want to request this place to be ventured out?\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 74, 74, 74),
-                          fontSize: 16.0,
-                        )),
-                    const SizeBoxTen(),
-                    const SizeBoxTwenty(),
-                    SizedBox(
-                      width: 200.0,
-                      child: RawMaterialButton(
-                        fillColor: const Color.fromARGB(255, 0, 110, 195),
-                        onPressed: () async {
-                          if (countquery <= 5) {
-                            await savedRequestMarker(context);
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    behavior: SnackBarBehavior.floating,
-                                    content: Text(
-                                        'You have reached the maximum number of request')));
-                          }
-                        },
-                        elevation: 0.0,
-                        padding: const EdgeInsets.symmetric(vertical: 15.0),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0)),
-                        child: const Text("Request",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 15.0)),
-                      ),
-                    ),
-                    const SizeBoxTwenty(),
-                    SizedBox(
-                      width: 200.0,
-                      child: RawMaterialButton(
-                        fillColor: const Color.fromARGB(255, 0, 110, 195),
+            return CupertinoAlertDialog(
+              title: Text('Do you want to request this place to be ventured out?'),
+              actions: <Widget>[
+                countquery < 5
+                    ?
+                CupertinoDialogAction(
+                  onPressed: () async {
+                    await savedRequestMarker(context);
+                  },
+                  child: const Text("Request",
+                      style: TextStyle(
+                          fontSize: 15.0)),
+                )
+                    : const Text("Note: You can only request 5 places"),
+
+                CupertinoDialogAction(
 //onPressed: null,
 //SAVE USERS' ANSWERS TO THE FIREBASE
 
-                        onPressed: () async {
-                          Navigator.of(context).pop();
-                          // ito yun sana kapag initinallize dapat
-                        },
-                        elevation: 0.0,
-                        padding: const EdgeInsets.symmetric(vertical: 15.0),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0)),
-                        child: const Text("Cancel",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 15.0)),
-                      ),
-                    ),
-                    const SizeBoxTwenty(),
-                    SizedBox(
-                      width: 200.0,
-                      child: RawMaterialButton(
-                        fillColor: const Color.fromARGB(255, 0, 110, 195),
-//onPressed: null,
-//SAVE USERS' ANSWERS TO THE FIREBASE
-
-                        onPressed: () async {
-                          removeMarkerss(context);
-                          Navigator.of(context).pop();
-                          // ito yun sana kapag initinallize dapat
-                        },
-                        elevation: 0.0,
-                        padding: const EdgeInsets.symmetric(vertical: 15.0),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0)),
-                        child: const Text("Replace",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 15.0)),
-                      ),
-                    ),
-                  ],
-                )),
-              ),
+                  onPressed: () async {
+                    removeMarkerss(context);
+                    Navigator.of(context).pop();
+                    // ito yun sana kapag initinallize dapat
+                  },
+                  child: const Text("Replace",
+                      style: TextStyle(
+                          fontSize: 15.0)),
+                ),
+                CupertinoDialogAction(
+                  onPressed: () async {
+                    Navigator.of(context).pop();
+                    // ito yun sana kapag initinallize dapat
+                  },
+                  child: const Text("Cancel",
+                      style: TextStyle(
+                          fontSize: 15.0)),
+                ),
+              ],
             );
           });
         });

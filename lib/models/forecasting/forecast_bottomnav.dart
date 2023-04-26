@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:main_venture/models/forecasting/forecasting_linechart.dart';
 import 'package:main_venture/models/forecasting/forecasting_population.dart';
+import 'package:main_venture/onboarding_screens/quick_guide_graph.dart';
 
 import 'data_threeyears.dart';
 import 'forecasting_piechart.dart';
@@ -21,6 +22,23 @@ class ForecastingNavBar extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         title: const Text('Forecasting Graphs'),
+        actions: <Widget>[
+          IconButton(
+            padding: EdgeInsets.only(right: 20.0),
+            icon: Icon(
+              Icons.info_outline,
+              color: Color.fromARGB(
+                  255, 65, 99, 200),
+            ),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                      const SliderGraphScreen()));
+            },
+          )
+        ],
         foregroundColor: const Color.fromARGB(255, 44, 45, 48),
         elevation: 0.0,
         leading: const BackButton(
@@ -86,7 +104,7 @@ class _BottomNavState extends State<BottomNav> {
             label: 'Bar Chart',
           ),
           BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage("assets/images/icons/barChartIcon.png")),
+            icon: ImageIcon(AssetImage("assets/images/icons/pieChartIcon.png")),
             label: '3 Years',
           ),
           BottomNavigationBarItem(

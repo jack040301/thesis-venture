@@ -25,6 +25,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../feat_screens/requesting_dialog.dart';
 import '../onboarding_screens/discover.dart';
 import '../userInfo.dart';
+import 'package:main_venture/screens/onboarding_screen.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
