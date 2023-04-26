@@ -15,6 +15,8 @@ import ProtectedRoute from "./auth/PrivateRoute";
 
 import { AuthContextProvider } from "./auth/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ManageUser from "./pages/ManageUser";
+import ManageRequest from "./pages/ManageRequest";
 
 function App() {
 
@@ -69,6 +71,33 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+
+        <Route
+            path="/manageruser"
+            element={
+              <ProtectedRoute>
+                {" "}
+                <Header />
+                <Sidenav />
+                <ManageUser />
+              </ProtectedRoute>
+            }
+          />
+
+      <Route
+            path="/managerequest"
+            element={
+              <ProtectedRoute>
+                {" "}
+                <Header />
+                <Sidenav />
+                <ManageRequest />
+              </ProtectedRoute>
+            }
+          />
+
+
           <Route
             path="/addmoderator"
             element={

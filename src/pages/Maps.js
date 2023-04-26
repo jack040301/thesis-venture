@@ -568,7 +568,7 @@ function MapPage() {
 
     try {
       const updateMarker = await updateDoc(docRef, {
-        request_status: false,
+        request_status: true,
         land: "10000",
         land_size: "0.1212",
         popu_past: "20000",
@@ -585,7 +585,7 @@ function MapPage() {
 
   const getDocsIds = async () => {
     const ReqTrueQuery = query(
-      collection(db, "markers"),where("request_status", "==", true),limit(150)     
+      collection(db, "markers"),where("request_status", "==", false),limit(50)     
     );
     await getDocs(ReqTrueQuery).then((querySnapshot) => {
       const newData = querySnapshot.docs.map((doc) => ({        
