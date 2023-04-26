@@ -3,7 +3,7 @@ import {collection, db,onSnapshot, query,where, limit,orderBy, getDoc, doc, upda
 import './global.css';
 import '../components/Toast/cddb.css';
 
-function ManageModerator() {
+function ManageUsers() {
 
   const [data, setData] = useState([]);
    const [search,setSearch] = useState([]);
@@ -23,7 +23,7 @@ function ManageModerator() {
   function fulldata () {
 
   
-    const collect = query(collection(db,"users"),where("role","==","moderator"));
+    const collect = query(collection(db,"users"),where("role","==","user"));
     const unsub = onSnapshot(collect, snapshot =>{
 
       const admintable = snapshot.docs.map(doc=> ({ email:doc.data().email, adminid:doc.id,role:doc.data().role, status:doc.data().status}
@@ -40,11 +40,11 @@ function ManageModerator() {
   }
 
 
- async  function searchModerator(){
+ async  function searchUsers(){
 
   if(search !== null && search !== ""){
 
-    const collect = query(collection(db,"users"),where("role","==","moderator"), where("email",">=",search), orderBy("email"), limit(1));
+    const collect = query(collection(db,"users"),where("role","==","users"), where("email",">=",search), orderBy("email"), limit(1));
     const unsub = onSnapshot(collect, snapshot =>{
 
       const admintable = snapshot.docs.map(doc=> ({ email:doc.data().email, adminid:doc.id, role:doc.data().role, status:doc.data().status}
@@ -115,7 +115,7 @@ function ManageModerator() {
                       onChange={(e) => setSearch(e.target.value)}
                     />
                     <div className="input-group-append">
-                      <button type="submit" onClick={searchModerator} className="btn btn-default">
+                      <button type="submit" onClick={searchUsers} className="btn btn-default">
                         <i className="fas fa-search" />
                       </button>
                     </div>
@@ -163,4 +163,4 @@ function ManageModerator() {
   );
 }
 
-export default ManageModerator;
+export default ManageUsers;
