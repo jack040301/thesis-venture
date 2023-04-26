@@ -621,6 +621,38 @@ function MapPage() {
     );
   };
 
+  const convertGeoPoints = async () => {
+    const ReqTrueQuery = query(
+      collection(db, "markers"),where("request_status", "==", true)
+    );
+    await getDocs(ReqTrueQuery).then((querySnapshot) => {
+      const newData = querySnapshot.docs.map((doc) => ({        
+        docId: doc.id,
+      }));
+      console.log(newData);
+      //setAppDocId({docId: newData[0].docId}); 
+      //ApproveAll(newData[0].docId);
+      for(let x of newData){
+        console.log(x.docId);
+        
+      }
+    });    
+  };
+
+  const getStringGeo = async (docId) => {
+    const docRef = doc(db, "markers", docId);
+
+    try {
+      const updateMarker = await updateDoc(docRef, {
+        request_status: true,
+      });
+
+      console.log("Success!");
+    }catch (e){
+      console.log("Geo funtion:", e);
+    }
+  };
+
   return (
     <>
       <ReactToast ref={toastRef} timeout={2000} />
@@ -910,7 +942,9 @@ function MapPage() {
                 id="formControlLg"
                 type="text"
                 value={coorname}
-                onChange={(e) => setCoorname(e.target.value)}
+                onChange={(e) => {            
+                  setCoorname(e.target.value);
+                }}
                 required
               />
               <label className="labelLat">Land</label>
@@ -920,6 +954,7 @@ function MapPage() {
                 id="formControlLg"
                 type="number"
                 value={coorland}
+                
                 onChange={(e) => setCoorLand(e.target.value)}
                 required
               />

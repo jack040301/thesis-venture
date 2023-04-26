@@ -106,12 +106,21 @@ export default function SideNav({ user, setAuthState, setUser }) {
                     <p>Add Moderators</p>
                   </NavLink>
                 </Moderator>
+
                 <Moderator modId={"mod01"}>
                   <NavLink to="/managemoderator" className="nav-link">
                     <i className="nav-icon fas fa-users" />
                     <p>Manage Moderators</p>
                   </NavLink>
                 </Moderator>
+
+                <li className="nav-item">
+                  <NavLink to="/manageusers" className="nav-link">
+                    <i className="nav-icon fas fa-tools" />
+                    <p>Manage Users</p>
+                  </NavLink>
+                </li>
+
                 {/* <li className="nav-item">
                 <Link to="/request" className="nav-link">
                   <i className="nav-icon fas fa-list" />
@@ -124,6 +133,7 @@ export default function SideNav({ user, setAuthState, setUser }) {
                     <p>Account Configuration</p>
                   </NavLink>
                 </li>
+
                 <li className="nav-item">
                   <a href="#" className="nav-link">
                     <i className="nav-icon fas fa-times" />

@@ -9,6 +9,7 @@ import Header from "./components/Header";
 import Sidenav from "./components/SideNav";
 import AddModerator from "./pages/AddModerator";
 import ManageModerator from "./pages/ManageModerator";
+import ManageUsers from "./pages/ManageUsers";
 import Login from "./auth/Login";
 import Login2 from "./auth/Login2";
 import ProtectedRoute from "./auth/PrivateRoute";
@@ -88,6 +89,17 @@ function App() {
                 <Header />
                 <Sidenav />
                 <ManageModerator />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/manageusers"
+            element={
+              <ProtectedRoute>
+                {" "}
+                <Header />
+                <Sidenav />
+                <ManageUsers />
               </ProtectedRoute>
             }
           />
