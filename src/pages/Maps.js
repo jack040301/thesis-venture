@@ -80,30 +80,23 @@ function MapPage() {
     revenue: "",
   });
 
+  const [reqAp_id, setReqApID] = useState("");
+  const [reqAp_lat, setReqApLat] = useState("");
+  const [reqAp_long, setReqApLong] = useState("");
+  const [reqAp_place, setReqApPlace] = useState("");
+  const [reqAp_land, setReqApLand] = useState("");
+  const [reqAp_land_size, setReqApLandSize] = useState("");
+  const [reqAp_popu_past, setReqApPopuPast] = useState("");
+  const [reqAp_popu_prepsent, setReqApPopuPresent] = useState("");
+  const [reqAp_population, setReqApPopulation] = useState("");
+  const [reqAp_revenue, setReqApRevenue] = useState("");
+
   const [pinLimit, setPinLimit] = useState(20);
   const [appDocId, setAppDocId] = useState({
     docId: "none",
   });
 
   const toastRef = useRef();
-
-  const getDocsIds = async () => {
-    const ReqTrueQuery = query(
-      collection(db, "markers"),where("request_status", "==", false)     
-    );
-    await getDocs(ReqTrueQuery).then((querySnapshot) => {
-      const newData = querySnapshot.docs.map((doc) => ({        
-        docId: doc.id,
-      }));
-      console.log(newData);
-      //setAppDocId({docId: newData[0].docId}); 
-      //ApproveAll(newData[0].docId);
-      for(let x of newData){
-        console.log(x.docId);
-        ApproveAll(x.docId);
-      }
-    });    
-  };
 
   function resetAllFilters() {
     setCoorPopulation("");
@@ -254,11 +247,11 @@ function MapPage() {
     } catch (e) {
       //error
 
-      toastRef.current.showToast("Error adding Marker : ", e);
+      toastRef.current.showToast("Error adding Marker : ", e);      
 
       //alert("Error adding Marker : " , e)
-
       console.error("Error adding document: ", e);
+      console.log('etst');
     }
   };
 
@@ -475,7 +468,7 @@ function MapPage() {
 
 
     return () => {
-      getDocsIds();
+      //getDocsIds();
       unsub();
       unsubReqProcess();
     };
@@ -504,7 +497,7 @@ function MapPage() {
         let parts = data.results[0].address_components;
 
         //setCoorname(data.results[0].formatted_address);
-        setRequestApprove({ place: data.results[0].formatted_address });
+        setReqApPlace(data.results[0].formatted_address);
       })
       .catch((err) => toastRef.current.showToast(err.message));
 
@@ -520,45 +513,55 @@ function MapPage() {
       revenue: revenue,
     });
 
+    setReqApLong(e.latLng.lng());
+    setReqApLat(e.latLng.lat());
+    setReqApID(name);
+    setReqApLand(land);
+    setReqApLandSize(land_size);
+    setReqApPopuPast(popu_past);
+    setReqApPopuPresent(popu_present);
+    setReqApPopulation(population);
+    setReqApRevenue(revenue);
+
     return setRequestModal(!requestModal); //triggering the modal
   };
 
   const ApprovedButtonClick = async () => {
-    const future = requestApprove.popu_present * 0.49;
+    const future = reqAp_popu_prepsent * 0.49;
 
     try {
       if (
-        requestApprove.lat !== null &&
-        requestApprove.lat !== "" &&
-        requestApprove.long !== null &&
-        requestApprove.long !== "" &&
-        requestApprove.place !== null &&
-        requestApprove.place !== "" &&
-        requestApprove.land !== null &&
-        requestApprove.land !== "" &&
-        requestApprove.land_size !== null &&
-        requestApprove.land_size !== "" &&
-        requestApprove.population !== null &&
-        requestApprove.population !== "" &&
-        requestApprove.popu_past !== null &&
-        requestApprove.popu_past !== "" &&
-        requestApprove.popu_present !== null &&
-        requestApprove.popu_present !== "" &&
-        requestApprove.id !== null &&
-        requestApprove.id !== ""
+        reqAp_lat !== null &&
+        reqAp_lat !== "" &&
+        reqAp_long !== null &&
+        reqAp_long !== "" &&
+        reqAp_place !== null &&
+        reqAp_place !== "" &&
+        reqAp_land !== null &&
+        reqAp_land !== "" &&
+        reqAp_land_size !== null &&
+        reqAp_land_size !== "" &&
+        reqAp_population !== null &&
+        reqAp_population !== "" &&
+        reqAp_popu_past !== null &&
+        reqAp_popu_past !== "" &&
+        reqAp_popu_prepsent !== null &&
+        reqAp_popu_prepsent !== "" &&
+        reqAp_id !== null &&
+        reqAp_id !== ""
       ) {
-        const docRef = doc(db, "markers", requestApprove.id);
+        const docRef = doc(db, "markers", reqAp_id);
 
         const updateRequest = await updateDoc(docRef, {
-          coords: new GeoPoint(requestApprove.lat, requestApprove.long),
-          place: requestApprove.place,
-          land: Number(requestApprove.land),
-          popu_present: requestApprove.popu_present,
-          popu_past: requestApprove.popu_past,
+          coords: new GeoPoint(reqAp_lat, reqAp_long),
+          place: reqAp_place,
+          land: Number(reqAp_land),
+          popu_present: reqAp_popu_prepsent,
+          popu_past: reqAp_popu_past,
           popu_future: future,
-          land_size: requestApprove.land_size,
-          population: requestApprove.population,
-          revenue: requestApprove.revenue,
+          land_size: reqAp_land_size,
+          population: reqAp_population,
+          revenue: reqAp_revenue,
           request_status: true,
         });
 
@@ -570,7 +573,26 @@ function MapPage() {
       //error
       toastRef.current.showToast("Error Approving Request : ", e);
       console.log(e);
+      console.log("Request Approve: ", reqAp_id);
     }
+  };
+
+  const getDocsIds = async () => {
+    const ReqTrueQuery = query(
+      collection(db, "markers"),where("request_status", "==", false)
+    );
+    await getDocs(ReqTrueQuery).then((querySnapshot) => {
+      const newData = querySnapshot.docs.map((doc) => ({        
+        docId: doc.id,
+      }));
+      console.log(newData);
+      //setAppDocId({docId: newData[0].docId}); 
+      //ApproveAll(newData[0].docId);
+      for(let x of newData){
+        console.log(x.docId);
+        ApproveAll(x.docId);
+      }
+    });    
   };
 
   const ApproveAll = async (docId) => {
@@ -638,7 +660,7 @@ function MapPage() {
                     zoom={14.4746}
                     onLoad={()=>{
                       fetchPost();
-                      getDocsIds();
+                      //getDocsIds();
                     }}
                   >
                     {data.map((mark) => (
@@ -716,8 +738,8 @@ function MapPage() {
                 placeholder="Marker ID"
                 id="formControlLg"
                 type="text"
-                value={requestApprove.id}
-                onChange={(e) => setRequestApprove({ id: e.target.value })}
+                value={reqAp_id}
+                onChange={(e) => setReqApID(e.target.value)}
                 required
                 disabled
                 hidden
@@ -728,8 +750,8 @@ function MapPage() {
                 placeholder="Coordinates Latitude"
                 id="formControlLg"
                 type="text"
-                value={requestApprove.lat}
-                onChange={(e) => setRequestApprove({ lat: e.target.value })}
+                value={reqAp_lat}
+                onChange={(e) => setReqApLat(e.target.value)}
                 required
               />
               <label className="labelLat">Coordinates Longitude</label>
@@ -738,8 +760,8 @@ function MapPage() {
                 placeholder="Coordinates Longtitude"
                 id="formControlLg"
                 type="text"
-                value={requestApprove.long}
-                onChange={(e) => setRequestApprove({ long: e.target.value })}
+                value={reqAp_long}
+                onChange={(e) => setReqApLong(e.target.value)}
                 required
               />
               <label className="labelLat">Place</label>
@@ -748,8 +770,8 @@ function MapPage() {
                 placeholder="Place"
                 id="formControlLg"
                 type="text"
-                value={requestApprove.place}
-                onChange={(e) => setRequestApprove({ place: e.target.value })}
+                value={reqAp_place}
+                onChange={(e) => setReqApPlace(e.target.value)}
                 required
               />
               <label className="labelLat">Land</label>
@@ -758,8 +780,8 @@ function MapPage() {
                 placeholder="Land"
                 id="formControlLg"
                 type="number"
-                value={requestApprove.land}
-                onChange={(e) => setRequestApprove({ land: e.target.value })}
+                value={reqAp_land}
+                onChange={(e) => setReqApLand(e.target.value)}
                 required
               />
               <label className="labelLat">Land Size</label>
@@ -768,9 +790,9 @@ function MapPage() {
                 placeholder="Land size"
                 id="formControlLg"
                 type="number"
-                value={requestApprove.land_size}
+                value={reqAp_land_size}
                 onChange={(e) =>
-                  setRequestApprove({ land_size: e.target.value })
+                  setReqApLandSize(e.target.value)
                 }
                 required
               />
@@ -780,9 +802,9 @@ function MapPage() {
                 placeholder="Total Population "
                 id="formControlLg"
                 type="number"
-                value={requestApprove.population}
+                value={reqAp_population}
                 onChange={(e) =>
-                  setRequestApprove({ population: e.target.value })
+                  setReqApPopulation(e.target.value)
                 }
                 required
               />
@@ -792,9 +814,9 @@ function MapPage() {
                 placeholder="Past Population "
                 id="formControlLg"
                 type="number"
-                value={requestApprove.popu_past}
+                value={reqAp_popu_past}
                 onChange={(e) =>
-                  setRequestApprove({ popu_past: e.target.value })
+                  setReqApPopuPast(e.target.value)
                 }
                 required
               />
@@ -804,9 +826,9 @@ function MapPage() {
                 placeholder="Present Population "
                 id="formControlLg"
                 type="number"
-                value={requestApprove.popu_present}
+                value={reqAp_popu_prepsent}
                 onChange={(e) =>
-                  setRequestApprove({ popu_present: e.target.value })
+                  setReqApPopuPresent(e.target.value)
                 }
                 required
               />
@@ -816,8 +838,8 @@ function MapPage() {
                 placeholder="Revenue"
                 id="formControlLg"
                 type="number"
-                value={requestApprove.revenue}
-                onChange={(e) => setRequestApprove({ revenue: e.target.value })}
+                value={reqAp_revenue}
+                onChange={(e) => setReqApRevenue(e.target.value)}
                 required
               />
             </MDBModalBody>
@@ -1074,7 +1096,7 @@ function MapPage() {
                   onChange={(e) => setCoorRevenue(e.target.value)}
                   required
                 />
-                <div className="invalid-feedback">Please Revenue</div>
+                <div className="invalid-feedback">Please Input Revenue</div>
               </MDBModalBody>
 
               <MDBModalFooter>
