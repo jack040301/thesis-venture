@@ -353,7 +353,7 @@ function MapPage() {
   const fetchPost = async () => {
     const ReqTrueQuery = query(
       collection(db, "markers"),
-      where("request_status", "==", true),limit(pinLimit)
+      where("request_status", "==", true),limit(2)
     );
     await getDocs(ReqTrueQuery).then((querySnapshot) => {
       const newData = querySnapshot.docs.map((doc) => ({
@@ -435,7 +435,7 @@ function MapPage() {
   useEffect(() => {
     const collect = collection(db, "markers");
 
-    const approveReq = query(collect, where("request_status", "==", true));
+    const approveReq = query(collect, where("request_status", "==", true), limit(1));
 
     const unsub = onSnapshot(approveReq, (snapshot) => {
       const markreal = snapshot.docs.map((doc) => ({
@@ -647,7 +647,7 @@ function MapPage() {
       //setAppDocId({docId: newData[0].docId}); 
       //ApproveAll(newData[0].docId);
       for(let x of newData){
-        console.log(x.docId);
+        //console.log(x.docId);
       }
     });    
   };
