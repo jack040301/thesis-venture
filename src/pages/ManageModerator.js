@@ -2,6 +2,17 @@ import React, {useEffect, useState} from "react";
 import {collection, db,onSnapshot, query,where, limit,orderBy, getDoc, doc, updateDoc } from "../firebase";
 import './global.css';
 import '../components/Toast/cddb.css';
+import {
+  MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalHeader,
+  MDBModalTitle,
+  MDBModalBody,
+  MDBInput,
+  MDBModalFooter,
+  MDBBtn,
+} from "mdb-react-ui-kit";
 
 function ManageModerator() {
 
@@ -10,8 +21,9 @@ function ManageModerator() {
    const [status, setStatus] = useState("Active");
    const [status_s, setStatus_s] = useState("status-active");
    const [status_b, setStatus_b] = useState("Deactivate");
-   const [status_modal, setStatusModal] = useState("");
+   const [status_modal, setStatusModal] = useState(false);
    const [userStat, setUserStat] = useState("");
+   
 
 
   useEffect(()=>{
@@ -26,7 +38,7 @@ function ManageModerator() {
     const collect = query(collection(db,"users"),where("role","==","moderator"));
     const unsub = onSnapshot(collect, snapshot =>{
 
-      const admintable = snapshot.docs.map(doc=> ({ email:doc.data().email, adminid:doc.id,role:doc.data().role, status:doc.data().status}
+      const admintable = snapshot.docs.map(doc=> ({ email:doc.data().email, adminid:doc.id,role:doc.data().role, status:doc.data().status, btn: doc.data().btn}
       ))
 
 
@@ -47,7 +59,7 @@ function ManageModerator() {
     const collect = query(collection(db,"users"),where("role","==","moderator"), where("email",">=",search), orderBy("email"), limit(1));
     const unsub = onSnapshot(collect, snapshot =>{
 
-      const admintable = snapshot.docs.map(doc=> ({ email:doc.data().email, adminid:doc.id, role:doc.data().role, status:doc.data().status}
+      const admintable = snapshot.docs.map(doc=> ({ email:doc.data().email, adminid:doc.id, role:doc.data().role, status:doc.data().status, btn:doc.data().btn}
       ))
 
      setData(admintable)
@@ -70,19 +82,21 @@ function ManageModerator() {
   }
   
   const setModStatus = async (e) => {
-    const docRef = doc(db, "users", e.currentTarget.id);
+    const docRef = doc(db, "users", e);
     const docSnap = await getDoc(docRef);
 
     if(docSnap.data().status == "Active"){
       const updateStatus = await updateDoc(docRef, {
         status: "Deactivated",
+        btn: "Reactivate",
       });
 
       //setStatus_s("status-deactivated");
       console.log(docSnap.data().status);
     }else{
       const updateStatus = await updateDoc(docRef, {
-        status: "Active",        
+        status: "Active",
+        btn: "Deactivate",
       });
       console.log(docSnap.data().status);
       //setStatus_s("status-active");
@@ -143,10 +157,10 @@ function ManageModerator() {
                 <td>{mark.email}</td>
                 <td>{mark.role}</td>
                 <td>
-                  <span className={status_s} id={mark.adminid}>{mark.status}</span>
+                  <span className={mark.btn} id={mark.adminid}>{mark.status}</span>
                 </td>
-                <td>
-                  <button onClick={setModStatus} id={mark.adminid}>{status_b}</button>
+                <td>                 
+                  <button onClick={(e)=>{setStatusModal(true); setUserStat(e.currentTarget.id)}} id={mark.adminid} class="statBtn">{mark.btn}</button>                  
                 </td>
               </tr>
                    
@@ -155,6 +169,19 @@ function ManageModerator() {
                   </tbody>
                 </table>
               </div>
+              <MDBModal show={status_modal} tabIndex='-1' setShow={setStatusModal}>
+              <MDBModalDialog size='sm'>
+                <MDBModalContent>
+                  <MDBModalHeader>
+                    <MDBModalTitle>Sure?</MDBModalTitle>                    
+                  </MDBModalHeader>
+                  <MDBModalBody>
+                    <MDBBtn className='btn-ok' color='none' onClick={()=>{setModStatus(userStat); setStatusModal(!status_modal);}}>Yes</MDBBtn>
+                    <MDBBtn className='btn-close' color='none' onClick={()=>{setStatusModal(!status_modal)}}>No</MDBBtn>
+                  </MDBModalBody>
+                </MDBModalContent>
+              </MDBModalDialog>
+            </MDBModal>
             </div>
           </div>
         </div>
