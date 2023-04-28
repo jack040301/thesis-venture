@@ -656,7 +656,7 @@ collection(db, "markers"),where("request_status", "==", false)
   };
 
 
-  const ApproveAll = async (docId) => {
+  /* const ApproveAll = async (docId) => {
     const appAll = query(collection(db, "markers"), where("request_status", "==", false));
     const docRef = doc(db, "markers", docId);
 
@@ -670,7 +670,7 @@ collection(db, "markers"),where("request_status", "==", false)
     }catch (e){
       console.log("Approve all funtion:", e);
     }
-  };  
+  };   */
 
 
   const getStringGeo = async (docId) => {
