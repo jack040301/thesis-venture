@@ -580,6 +580,7 @@ function MapPage() {
       //error
       toastRef.current.showToast("Error Approving Request : ", e);
       console.log(e);
+
       console.log("Request Approve: ", reqAp_id);
     }
   };
@@ -636,7 +637,9 @@ function MapPage() {
 
   const convertGeoPoints = async () => {
     const ReqTrueQuery = query(
-    collection(db, "markers"),where("request_status", "==", true)
+
+collection(db, "markers"),where("request_status", "==", false)
+
     );
     await getDocs(ReqTrueQuery).then((querySnapshot) => {
       const newData = querySnapshot.docs.map((doc) => ({        
@@ -651,6 +654,24 @@ function MapPage() {
       }
     });    
   };
+
+
+  const ApproveAll = async (docId) => {
+    const appAll = query(collection(db, "markers"), where("request_status", "==", false));
+    const docRef = doc(db, "markers", docId);
+
+
+    try {
+      const updateMarker = await updateDoc(docRef, {
+        request_status: true,
+      });
+
+      console.log("Success!");
+    }catch (e){
+      console.log("Approve all funtion:", e);
+    }
+  };  
+
 
   const getStringGeo = async (docId) => {
     const docRef = doc(db, "markers", docId);
