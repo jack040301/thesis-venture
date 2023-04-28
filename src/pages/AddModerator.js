@@ -59,7 +59,8 @@ const [emailtwo, setEmailtwo] = useState("");
               uid: usersinfo.user.uid,
               authProvider: "local",
               email: emailtwo,
-              role: "admin",
+              role: "moderator",
+              status: "active",
             });
 
           //  alert("Successfull create admin");

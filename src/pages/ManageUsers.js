@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {collection, db,onSnapshot, query,where, limit,orderBy, doc, updateDoc,getDoc } from "../firebase";
+import {collection, db,onSnapshot, query,where, limit,orderBy, getDoc, doc, updateDoc } from "../firebase";
+import './global.css';
+import '../components/Toast/cddb.css';
 import {
   MDBModal,
   MDBModalDialog,
@@ -7,17 +9,20 @@ import {
   MDBModalHeader,
   MDBModalTitle,
   MDBModalBody,
-
+  MDBInput,
+  MDBModalFooter,
   MDBBtn,
 } from "mdb-react-ui-kit";
 
-function ManageRequest() {
+function ManageUsers() {
 
   const [data, setData] = useState([]);
    const [search,setSearch] = useState([]);
+   const [status, setStatus] = useState("Active");
+   const [status_s, setStatus_s] = useState("status-active");
+   const [status_b, setStatus_b] = useState("Deactivate");
    const [status_modal, setStatusModal] = useState(false);
    const [userStat, setUserStat] = useState("");
-
 
 
   useEffect(()=>{
@@ -29,19 +34,11 @@ function ManageRequest() {
   function fulldata () {
 
   
-    const collect = query(collection(db,"markers"),where("request_status","==",false), where("user_id_requested","==","NLz3guI5pEOXKJEyDzz1tsdcEtF2"));
+    const collect = query(collection(db,"users"),where("role","==","user"));
     const unsub = onSnapshot(collect, snapshot =>{
 
-
-      
-
-      const admintable = snapshot.docs.map(doc=> ({ place:doc.data().place, adminid:doc.id, data: doc.data().createdAt,
-        user_id_requested : doc.data().user_id_requested,
-    }
+      const admintable = snapshot.docs.map(doc=> ({ email:doc.data().email, adminid:doc.id,role:doc.data().role, status:doc.data().status, btn: doc.data().btn}
       ))
-
-      
-   
 
 
      setData(admintable)
@@ -54,14 +51,14 @@ function ManageRequest() {
   }
 
 
- async  function searchModerator(){
+ async  function searchUsers(){
 
   if(search !== null && search !== ""){
 
-const collect = query(collection(db,"markers"),where("request_status","==",false), where("user_id_requested",">=",search), orderBy("user_id_requested"), limit(2));
+    const collect = query(collection(db,"users"),where("role","==","users"), where("email",">=",search), orderBy("email"), limit(1));
     const unsub = onSnapshot(collect, snapshot =>{
 
-      const admintable = snapshot.docs.map(doc=> ({ email:doc.data().email, adminid:doc.id}
+      const admintable = snapshot.docs.map(doc=> ({ email:doc.data().email, adminid:doc.id, role:doc.data().role, status:doc.data().status}
       ))
 
      setData(admintable)
@@ -80,26 +77,15 @@ const collect = query(collection(db,"markers"),where("request_status","==",false
     
   }
 
-
   
-  } 
-
-
-  const setApproveRequest = async (e) => {
-    const docRef = doc(db, "markers", e);
+  }
+  
+  const setModStatus = async (e) => {
+    const docRef = doc(db, "users", e);
     const docSnap = await getDoc(docRef);
 
-    const updateStatus = await updateDoc(docRef, {
-        
-request_status: true,
-    });
-
-    alert("Successfull");
-    
-
- /*    if(docSnap.data().status == "Active"){
+    if(docSnap.data().status == "Active"){
       const updateStatus = await updateDoc(docRef, {
-        
         status: "Deactivated",
         btn: "Reactivate",
       });
@@ -109,14 +95,13 @@ request_status: true,
     }else{
       const updateStatus = await updateDoc(docRef, {
         status: "Active",
-        btn: "Deactivate",
+        btn: "Deactivate",      
       });
-      console.log(docSnap.data().status); */
+      console.log(docSnap.data().status);
       //setStatus_s("status-active");
-      
+    }    
     
   };
-
 
 
 
@@ -128,7 +113,7 @@ request_status: true,
           <div className="col-12">
             <div className="card">
               <div className="card-header">
-                <h3 className="card-title">Manage Request' Account</h3>
+                <h3 className="card-title">Manage Moderators' Account</h3>
                 <div className="card-tools">
                   <div
                     className="input-group input-group-sm"
@@ -143,7 +128,7 @@ request_status: true,
                       onChange={(e) => setSearch(e.target.value)}
                     />
                     <div className="input-group-append">
-                      <button type="submit" onClick={searchModerator} className="btn btn-default">
+                      <button type="submit" onClick={searchUsers} className="btn btn-default">
                         <i className="fas fa-search" />
                       </button>
                     </div>
@@ -155,36 +140,27 @@ request_status: true,
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Place</th>
-                      <th>Timestamp</th>
-                      <th>User Request</th>
+                      <th>Email</th>
+                      <th>Role</th>
                       <th>Status</th>
-                      <th>Action</th>
-
                     </tr>
                   </thead>
                   <tbody id="tbody1">
 
-        { 
-              data.map( (markers_request) => (
+                  { 
+              data.map( (mark) => (
                    
-             
-
-                <tr key={markers_request.adminid}>
-                <td>{markers_request.adminid}</td>
-
-                <td>{markers_request.place}</td>
-                <td>{markers_request.data.seconds}, {markers_request.data.nanoseconds}</td>
-                <td>{markers_request.user_id_requested}</td>
-
-
-                <td>
-                  <span className="tag tag-success">Approved</span>
-                </td>
-                <td>                 
-                  <button onClick={(e)=>{setStatusModal(true); setUserStat(e.currentTarget.id)}} id={markers_request.adminid} class="statBtn">Approve Request</button>                  
-                </td>
                 
+                <tr key={mark.adminid}>
+                <td>{mark.adminid}</td>
+                <td>{mark.email}</td>
+                <td>{mark.role}</td>
+                <td>
+                  <span className={mark.btn} id={mark.adminid}>{mark.status}</span>
+                </td>
+                <td>
+                <button onClick={(e)=>{setStatusModal(true); setUserStat(e.currentTarget.id)}} id={mark.adminid} class="statBtn">{mark.btn}</button>                  
+                </td>
               </tr>
                    
                     ))}   
@@ -199,7 +175,7 @@ request_status: true,
                     <MDBModalTitle>Sure?</MDBModalTitle>                    
                   </MDBModalHeader>
                   <MDBModalBody>
-                    <MDBBtn className='btn-ok' color='none' onClick={()=>{setApproveRequest(userStat); setStatusModal(!status_modal);}}>Yes</MDBBtn>
+                    <MDBBtn className='btn-ok' color='none' onClick={()=>{setModStatus(userStat); setStatusModal(!status_modal);}}>Yes</MDBBtn>
                     <MDBBtn className='btn-close' color='none' onClick={()=>{setStatusModal(!status_modal)}}>No</MDBBtn>
                   </MDBModalBody>
                 </MDBModalContent>
@@ -213,4 +189,4 @@ request_status: true,
   );
 }
 
-export default ManageRequest;
+export default ManageUsers;

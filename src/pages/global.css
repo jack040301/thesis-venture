@@ -1,0 +1,41 @@
+.Deactivate {
+    color: rgba(0, 200, 0, 1);
+}
+
+.Reactivate {
+    color: rgba(250, 0, 0, 0.5);
+}
+
+.statBtn {
+    border-radius: 5px;
+    border: 1px solid rgba(40, 71, 211, 0.7);
+    background-color: #007bff;
+    transition: 0.3s;
+    color: white;
+}
+
+.statBtn:hover {
+    background-color: #439eff;
+    color: white;
+    transition: 0.4s;
+}
+
+.statBtn:active {
+    background-color: rgba(8, 45, 124, 0.7);
+}
+
+/*----------modal------------*/
+.statMod td{
+    border: 1px solid red;
+    
+}
+
+.statMod_show {
+    position: absolute;
+}
+
+.statMod_show button {
+    width: 5vw;
+    height: 3vh;
+    margin-left: 2px;
+}

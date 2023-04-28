@@ -353,7 +353,7 @@ function MapPage() {
   const fetchPost = async () => {
     const ReqTrueQuery = query(
       collection(db, "markers"),
-      where("request_status", "==", true),limit(pinLimit)
+      where("request_status", "==", true),limit(2)
     );
     await getDocs(ReqTrueQuery).then((querySnapshot) => {
       const newData = querySnapshot.docs.map((doc) => ({
@@ -435,7 +435,7 @@ function MapPage() {
   useEffect(() => {
     const collect = collection(db, "markers");
 
-    const approveReq = query(collect, where("request_status", "==", true));
+    const approveReq = query(collect, where("request_status", "==", true), limit(1));
 
     const unsub = onSnapshot(approveReq, (snapshot) => {
       const markreal = snapshot.docs.map((doc) => ({
@@ -585,6 +585,24 @@ function MapPage() {
     }
   };
 
+  const getDocsIds = async () => {
+    const ReqTrueQuery = query(
+      collection(db, "markers"),where("request_status", "==", false)
+    );
+    await getDocs(ReqTrueQuery).then((querySnapshot) => {
+      const newData = querySnapshot.docs.map((doc) => ({        
+        docId: doc.id,
+      }));
+      console.log(newData);
+      //setAppDocId({docId: newData[0].docId}); 
+      //ApproveAll(newData[0].docId);
+      for(let x of newData){
+        console.log(x.docId);
+        ApproveAll(x.docId);
+      }
+    });    
+  };
+
   const ApproveAll = async (docId) => {
     const appAll = query(collection(db, "markers"), where("request_status", "==", false));
     const docRef = doc(db, "markers", docId);
@@ -605,11 +623,23 @@ function MapPage() {
     }catch (e){
       console.log("Approve all funtion:", e);
     }
+  };  
+
+  const TestFetch = () => {
+    
+
+    return(
+      <>
+        <button onClick={()=>{fetchPost()}}>Pinned locations on map is limited to {pinLimit}</button>
+      </>
+    );
   };
 
-  const getDocsIds = async () => {
+  const convertGeoPoints = async () => {
     const ReqTrueQuery = query(
+
 collection(db, "markers"),where("request_status", "==", false)
+
     );
     await getDocs(ReqTrueQuery).then((querySnapshot) => {
       const newData = querySnapshot.docs.map((doc) => ({        
@@ -620,13 +650,11 @@ collection(db, "markers"),where("request_status", "==", false)
       //setAppDocId({docId: newData[0].docId}); 
       //ApproveAll(newData[0].docId);
       for(let x of newData){
-        console.log(x.docId);
-        console.log(x.geoLoc._lat);
-        console.log(x.geoLoc._long);
-        ApproveAll(x.docId);
+        //console.log(x.docId);
       }
     });    
   };
+
 
   const ApproveAll = async (docId) => {
     const appAll = query(collection(db, "markers"), where("request_status", "==", false));
@@ -644,14 +672,19 @@ collection(db, "markers"),where("request_status", "==", false)
     }
   };  
 
-  const TestFetch = () => {
-    
 
-    return(
-      <>
-        <button onClick={()=>{fetchPost()}}>Pinned locations on map is limited to {pinLimit}</button>
-      </>
-    );
+  const getStringGeo = async (docId) => {
+    const docRef = doc(db, "markers", docId);
+
+    try {
+      const updateMarker = await updateDoc(docRef, {
+        request_status: true,
+      });
+
+      console.log("Success!");
+    }catch (e){
+      console.log("Geo funtion:", e);
+    }
   };
 
   return (
@@ -943,7 +976,9 @@ collection(db, "markers"),where("request_status", "==", false)
                 id="formControlLg"
                 type="text"
                 value={coorname}
-                onChange={(e) => setCoorname(e.target.value)}
+                onChange={(e) => {            
+                  setCoorname(e.target.value);
+                }}
                 required
               />
               <label className="labelLat">Land</label>
@@ -953,6 +988,7 @@ collection(db, "markers"),where("request_status", "==", false)
                 id="formControlLg"
                 type="number"
                 value={coorland}
+                
                 onChange={(e) => setCoorLand(e.target.value)}
                 required
               />
