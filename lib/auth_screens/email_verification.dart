@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl'
     'utter/material.dart';
+import 'package:main_venture/feat_screens/personalInfo.dart';
 
 import 'package:main_venture/screens/home_page.dart';
 import '../screens/onboarding_screen.dart';
+import '../userInfo.dart';
 import 'login.dart';
 import 'package:main_venture/auth_screens/signup.dart';
 
@@ -20,6 +23,7 @@ class EmailverificationscreenState extends State<Emailverificationscreen> {
   bool isEmailVerified = false;
   bool canResendEmail = false;
   Timer? timer;
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   @override
   void initState() {
@@ -66,10 +70,53 @@ class EmailverificationscreenState extends State<Emailverificationscreen> {
     }
   }
 
+  Future navigateToIntroductionScreen() async {
+
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) =>
+        const IntroductionScreens()));
+
+
+  }
+
+  func() async{
+    var usersCheck =
+        await users.doc(GoogleUserStaticInfo().uid).get();
+    // var checkuser = usersCheck.exists;
+
+
+    if (usersCheck.exists) {
+
+
+      navigateToIntroductionScreen();
+    }else{
+
+      users.doc(GoogleUserStaticInfo().uid).set({
+        "email": GoogleUserStaticInfo().email.toString(),
+        "firstname": GoogleUserStaticInfo().firstname,
+        "lastname": GoogleUserStaticInfo().lastname,
+      });
+
+      navigateToIntroductionScreen();
+    }
+
+  }
+
   @override
-  Widget build(BuildContext context) => isEmailVerified
-      ? const HomePage()
-      : Scaffold(
+  Widget build(BuildContext context) {
+
+  if(isEmailVerified){
+
+    // Navigator.of(context).push(MaterialPageRoute(
+    //     builder: (context) =>
+    //     const IntroductionScreens()));
+
+    return func();
+
+
+  }else {
+
+  return  Scaffold(
     appBar: AppBar(
       title: const Text('Verify Email'),
     ),
@@ -116,4 +163,10 @@ class EmailverificationscreenState extends State<Emailverificationscreen> {
       ),
     ),
   );
-}
+
+
+  // const personalinfo()
+
+  //google
+
+}}}

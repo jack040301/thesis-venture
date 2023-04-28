@@ -11,6 +11,7 @@ import 'package:main_venture/userInfo.dart';
 import 'package:flutter/services.dart';
 
 import '../screens/home_page.dart';
+import '../screens/onboarding_screen.dart';
 
 class personalinfo extends StatefulWidget {
   const personalinfo({Key? key}) : super(key: key);
@@ -54,9 +55,9 @@ class _personalinfoState extends State<personalinfo> {
 
   @override
   void dispose() {
-    firstNameController.dispose();
-    lastNameController.dispose();
-    emailController.dispose();
+    // firstNameController.dispose();
+    // lastNameController.dispose();
+    // emailController.dispose();
     passwordController.dispose();
     super.dispose();
   }
@@ -95,173 +96,173 @@ class _personalinfoState extends State<personalinfo> {
             const SizedBox(
               height: 20.0,
             ),
-            const Text("Email Address",
-                style: TextStyle(
-                  color: Color.fromARGB(255, 74, 74, 74),
-                  fontSize: 14.0,
-                )),
-            const SizedBox(
-              height: 4.0,
-            ),
+            // const Text("Email Address",
+            //     style: TextStyle(
+            //       color: Color.fromARGB(255, 74, 74, 74),
+            //       fontSize: 14.0,
+            //     )),
+            // const SizedBox(
+            //   height: 4.0,
+            // ),
             Form(
                 key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextFormField(
-                      // validator: (val) {
-                      //   if (val == null || val.isEmpty) {
-                      //     return 'Field cannot be empty';
-                      //   }
-                      //   return null;
-                      // },
-                      controller: emailController,
-                      keyboardType: TextInputType.none,
-                      textCapitalization: TextCapitalization.words,
-                      enableInteractiveSelection: false,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                            RegExp('[a-zA-Z0-9.-]')),
-                        //FilteringTextInputFormatter.deny(RegExp(r'[/\\]')),
-                      ],
-                      enabled: false,
-                      decoration: InputDecoration(
-                        // hintText: "example@gmail.com",
-                        hintText: GoogleUserStaticInfo().email,
-                        filled: true,
-                        fillColor: const Color.fromARGB(255, 230, 230, 230),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(
-                              color: const Color.fromARGB(255, 230, 230, 230)
-                                  .withOpacity(0.5),
-                              width: 2),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(
-                              color: const Color.fromARGB(255, 230, 230, 230)
-                                  .withOpacity(0.5)),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(
-                              color: Colors.redAccent.withOpacity(0.5)),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    const Text("First Name",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 74, 74, 74),
-                          fontSize: 14.0,
-                        )),
-                    const SizedBox(
-                      height: 4.0,
-                    ),
-                    TextFormField(
-                      // validator: (val) {
-                      //   if (val == null || val.isEmpty) {
-                      //     return 'Field cannot be empty';
-                      //   }
-                      //   return null;
-                      // },
-                      controller: firstNameController,
-                      keyboardType: TextInputType.name,
-                      textCapitalization: TextCapitalization.words,
-                      enableInteractiveSelection: false,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                            RegExp('[a-zA-Z0-9.-]')),
-                        //FilteringTextInputFormatter.deny(RegExp(r'[/\\]')),
-                      ],
-                      enabled: false,
-                      decoration: InputDecoration(
-                        hintText: GoogleUserStaticInfo().firstname,
-                        filled: true,
-                        fillColor: const Color.fromARGB(255, 230, 230, 230),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(
-                              color: const Color.fromARGB(255, 230, 230, 230)
-                                  .withOpacity(0.5),
-                              width: 2),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(
-                              color: const Color.fromARGB(255, 230, 230, 230)
-                                  .withOpacity(0.5)),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(
-                              color: Colors.redAccent.withOpacity(0.5)),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    const Text("Last Name",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 74, 74, 74),
-                          fontSize: 14.0,
-                        )),
-                    const SizedBox(
-                      height: 4.0,
-                    ),
-                    TextFormField(
-                      // validator: (val) {
-                      //   if (val == null || val.isEmpty) {
-                      //     return 'Field cannot be empty';
-                      //   }
-                      //   return null;
-                      // },
-                      controller: lastNameController,
-                      keyboardType: TextInputType.emailAddress,
-                      enableInteractiveSelection: false,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                            RegExp('[a-zA-Z0-9_.@]')),
-                        //FilteringTextInputFormatter.deny(RegExp(r'[/\\]')),
-                      ],
-                      enabled: false,
-                      decoration: InputDecoration(
-                        hintText: GoogleUserStaticInfo().lastname,
-                        filled: true,
-                        fillColor: const Color.fromARGB(255, 230, 230, 230),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(
-                              color: const Color.fromARGB(255, 230, 230, 230)
-                                  .withOpacity(0.5),
-                              width: 2),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(
-                              color: const Color.fromARGB(255, 230, 230, 230)
-                                  .withOpacity(0.5)),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(
-                              color: Colors.redAccent.withOpacity(0.5)),
-                        ),
-                      ),
-                    ),
+                    // TextFormField(
+                    //   // validator: (val) {
+                    //   //   if (val == null || val.isEmpty) {
+                    //   //     return 'Field cannot be empty';
+                    //   //   }
+                    //   //   return null;
+                    //   // },
+                    //   controller: emailController,
+                    //   keyboardType: TextInputType.none,
+                    //   textCapitalization: TextCapitalization.words,
+                    //   enableInteractiveSelection: false,
+                    //   inputFormatters: [
+                    //     FilteringTextInputFormatter.allow(
+                    //         RegExp('[a-zA-Z0-9.-]')),
+                    //     //FilteringTextInputFormatter.deny(RegExp(r'[/\\]')),
+                    //   ],
+                    //   enabled: false,
+                    //   decoration: InputDecoration(
+                    //     // hintText: "example@gmail.com",
+                    //     hintText: GoogleUserStaticInfo().email,
+                    //     filled: true,
+                    //     fillColor: const Color.fromARGB(255, 230, 230, 230),
+                    //     enabledBorder: OutlineInputBorder(
+                    //       borderRadius:
+                    //           const BorderRadius.all(Radius.circular(5.0)),
+                    //       borderSide: BorderSide(
+                    //           color: const Color.fromARGB(255, 230, 230, 230)
+                    //               .withOpacity(0.5),
+                    //           width: 2),
+                    //     ),
+                    //     focusedBorder: OutlineInputBorder(
+                    //       borderRadius:
+                    //           const BorderRadius.all(Radius.circular(5.0)),
+                    //       borderSide: BorderSide(
+                    //           color: const Color.fromARGB(255, 230, 230, 230)
+                    //               .withOpacity(0.5)),
+                    //     ),
+                    //     errorBorder: OutlineInputBorder(
+                    //       borderRadius:
+                    //           const BorderRadius.all(Radius.circular(5.0)),
+                    //       borderSide: BorderSide(
+                    //           color: Colors.redAccent.withOpacity(0.5)),
+                    //     ),
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   height: 20.0,
+                    // ),
+                    // const Text("First Name",
+                    //     style: TextStyle(
+                    //       color: Color.fromARGB(255, 74, 74, 74),
+                    //       fontSize: 14.0,
+                    //     )),
+                    // const SizedBox(
+                    //   height: 4.0,
+                    // ),
+                    // TextFormField(
+                    //   // validator: (val) {
+                    //   //   if (val == null || val.isEmpty) {
+                    //   //     return 'Field cannot be empty';
+                    //   //   }
+                    //   //   return null;
+                    //   // },
+                    //   controller: firstNameController,
+                    //   keyboardType: TextInputType.name,
+                    //   textCapitalization: TextCapitalization.words,
+                    //   enableInteractiveSelection: false,
+                    //   inputFormatters: [
+                    //     FilteringTextInputFormatter.allow(
+                    //         RegExp('[a-zA-Z0-9.-]')),
+                    //     //FilteringTextInputFormatter.deny(RegExp(r'[/\\]')),
+                    //   ],
+                    //   enabled: false,
+                    //   decoration: InputDecoration(
+                    //     hintText: GoogleUserStaticInfo().firstname,
+                    //     filled: true,
+                    //     fillColor: const Color.fromARGB(255, 230, 230, 230),
+                    //     enabledBorder: OutlineInputBorder(
+                    //       borderRadius:
+                    //           const BorderRadius.all(Radius.circular(5.0)),
+                    //       borderSide: BorderSide(
+                    //           color: const Color.fromARGB(255, 230, 230, 230)
+                    //               .withOpacity(0.5),
+                    //           width: 2),
+                    //     ),
+                    //     focusedBorder: OutlineInputBorder(
+                    //       borderRadius:
+                    //           const BorderRadius.all(Radius.circular(5.0)),
+                    //       borderSide: BorderSide(
+                    //           color: const Color.fromARGB(255, 230, 230, 230)
+                    //               .withOpacity(0.5)),
+                    //     ),
+                    //     errorBorder: OutlineInputBorder(
+                    //       borderRadius:
+                    //           const BorderRadius.all(Radius.circular(5.0)),
+                    //       borderSide: BorderSide(
+                    //           color: Colors.redAccent.withOpacity(0.5)),
+                    //     ),
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   height: 20.0,
+                    // ),
+                    // const Text("Last Name",
+                    //     style: TextStyle(
+                    //       color: Color.fromARGB(255, 74, 74, 74),
+                    //       fontSize: 14.0,
+                    //     )),
+                    // const SizedBox(
+                    //   height: 4.0,
+                    // ),
+                    // TextFormField(
+                    //   // validator: (val) {
+                    //   //   if (val == null || val.isEmpty) {
+                    //   //     return 'Field cannot be empty';
+                    //   //   }
+                    //   //   return null;
+                    //   // },
+                    //   controller: lastNameController,
+                    //   keyboardType: TextInputType.emailAddress,
+                    //   enableInteractiveSelection: false,
+                    //   inputFormatters: [
+                    //     FilteringTextInputFormatter.allow(
+                    //         RegExp('[a-zA-Z0-9_.@]')),
+                    //     //FilteringTextInputFormatter.deny(RegExp(r'[/\\]')),
+                    //   ],
+                    //   enabled: false,
+                    //   decoration: InputDecoration(
+                    //     hintText: GoogleUserStaticInfo().lastname,
+                    //     filled: true,
+                    //     fillColor: const Color.fromARGB(255, 230, 230, 230),
+                    //     enabledBorder: OutlineInputBorder(
+                    //       borderRadius:
+                    //           const BorderRadius.all(Radius.circular(5.0)),
+                    //       borderSide: BorderSide(
+                    //           color: const Color.fromARGB(255, 230, 230, 230)
+                    //               .withOpacity(0.5),
+                    //           width: 2),
+                    //     ),
+                    //     focusedBorder: OutlineInputBorder(
+                    //       borderRadius:
+                    //           const BorderRadius.all(Radius.circular(5.0)),
+                    //       borderSide: BorderSide(
+                    //           color: const Color.fromARGB(255, 230, 230, 230)
+                    //               .withOpacity(0.5)),
+                    //     ),
+                    //     errorBorder: OutlineInputBorder(
+                    //       borderRadius:
+                    //           const BorderRadius.all(Radius.circular(5.0)),
+                    //       borderSide: BorderSide(
+                    //           color: Colors.redAccent.withOpacity(0.5)),
+                    //     ),
+                    //   ),
+                    // ),
                     const SizedBox(
                       height: 20.0,
                     ),
@@ -355,9 +356,9 @@ class _personalinfoState extends State<personalinfo> {
 
     try {
       final String password = passwordController.text;
-      final String email = GoogleUserStaticInfo().email.toString();
-      final String firstname = GoogleUserStaticInfo().firstname;
-      final String lastname = GoogleUserStaticInfo().lastname;
+      // final String email = GoogleUserStaticInfo().email.toString();
+      // final String firstname = GoogleUserStaticInfo().firstname;
+      // final String lastname = GoogleUserStaticInfo().lastname;
 
       // await users.doc(GoogleUserStaticInfo().uid).set({
       //   'firstname': GoogleUserStaticInfo().firstname,
@@ -365,8 +366,10 @@ class _personalinfoState extends State<personalinfo> {
       //   'email': GoogleUserStaticInfo().email,
       // }).onError((error, stackTrace) => (error.toString()));
 
-      users.doc(GoogleUserStaticInfo().uid).update({
-        "password": password,
+      users.doc(GoogleUserStaticInfo().uid).set({
+        "email": GoogleUserStaticInfo().email.toString(),
+            "firstname": GoogleUserStaticInfo().firstname,
+            "lastname": GoogleUserStaticInfo().lastname,
       });
 
       // await FirebaseAuth.instance
@@ -378,6 +381,9 @@ class _personalinfoState extends State<personalinfo> {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Successfully Created your account')));
 
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) =>
+          const IntroductionScreens()));
       // await FirebaseAuth.instance.currentUser!.updatePassword(password);
     } on FirebaseAuthException catch (e) {
       /// Showing Error with AlertDialog if the user enter the wrong Email and Password
@@ -408,40 +414,40 @@ class _personalinfoState extends State<personalinfo> {
       );
     }
 
-    try {
-      FirebaseAuth.instance.currentUser?.email ?? 'no current user';
-      FirebaseAuth.instance.authStateChanges().listen((User? user) {
-        if (user == null) {
-          //   print('***************************************** User is null');
-          // print('Current User: $curUser');
-        } else {
-          //print('User: ${user.email}');
-          rmSignup(context);
-        }
-      });
-    } on FirebaseAuthException catch (e) {
-      FirebaseAuth.instance.currentUser?.email ?? 'no current user';
-      //print('User Exeption: ${e.message}');
-      log(e as String);
-      //print('Current User: $curUser');
-    }
+    // try {
+    //   FirebaseAuth.instance.currentUser?.email ?? 'no current user';
+    //   FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    //     if (user == null) {
+    //       //   print('***************************************** User is null');
+    //       // print('Current User: $curUser');
+    //     } else {
+    //       //print('User: ${user.email}');
+    //       rmSignup(context);
+    //     }
+    //   });
+    // } on FirebaseAuthException catch (e) {
+    //   FirebaseAuth.instance.currentUser?.email ?? 'no current user';
+    //   //print('User Exeption: ${e.message}');
+    //   log(e as String);
+    //   //print('Current User: $curUser');
+    // }
   }
 } // class close
 
-Future<void> rmSignup(BuildContext context) async {
-  try {
-    Navigator.push(
-      context,
-      //MaterialPageRoute(builder: (context) => const ProfileScreen()),
-      MaterialPageRoute(builder: (context) => const Emailverificationscreen()),
-    );
-
-    /*Navigator.removeRoute(
-      context,
-      MaterialPageRoute(builder: (context) => const SignupWidget()),
-    );*/
-  } catch (e) {
-    log(e as String);
-    // print('Routing: removing signup screen exception => $e');
-  }
-}
+// Future<void> rmSignup(BuildContext context) async {
+//   try {
+//     Navigator.push(
+//       context,
+//       //MaterialPageRoute(builder: (context) => const ProfileScreen()),
+//       MaterialPageRoute(builder: (context) => const Emailverificationscreen()),
+//     );
+//
+//     /*Navigator.removeRoute(
+//       context,
+//       MaterialPageRoute(builder: (context) => const SignupWidget()),
+//     );*/
+//   } catch (e) {
+//     log(e as String);
+//     // print('Routing: removing signup screen exception => $e');
+//   }
+// }

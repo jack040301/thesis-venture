@@ -279,51 +279,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   ));
 
+    //google code
 
                   await Functio().signInWithGoogle();
-                  var usersCheck =
-                  await users.doc(GoogleUserStaticInfo().uid).get();
 
-                  if (usersCheck.exists) {
-                    // Navigator.of(context).push(MaterialPageRoute(
-                    //     builder: (context) => const personalinfo()));
-
-
-                    // await FirebaseAuth.instance
-                    //     .createUserWithEmailAndPassword(
-                    //   email: GoogleUserStaticInfo().email.toString(),
-                    //   password: "",
-                    // )
-                    //     .then((value) => users.doc(value.user!.uid).set({
-                    //   'firstname': GoogleUserStaticInfo().firstname,
-                    //   'lastname': GoogleUserStaticInfo().lastname,
-                    //   'email': value.user!.email,
-                    // })); pushAndRemoveUntil
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                        const HomePage()));
-
-
-                    // await users.doc(GoogleUserStaticInfo().uid).set({
-                    //   'firstname': GoogleUserStaticInfo().firstname,
-                    //   'lastname': GoogleUserStaticInfo().lastname,
-                    //   'email': GoogleUserStaticInfo().email,
-                    // }).onError((error, stackTrace) => (error.toString()));
-                  } else {
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                            builder: (context) => const personalinfo()),
-                            (Route route) => false);
-
-                    await users.doc(GoogleUserStaticInfo().uid).set({
-                      'firstname': GoogleUserStaticInfo().firstname,
-                      'lastname': GoogleUserStaticInfo().lastname,
-                      'email': GoogleUserStaticInfo().email,
-                    }).onError((error, stackTrace) => (error.toString()));
-                    // pushAndRemoveUntil
-                    // Navigator.of(context).push(MaterialPageRoute(
-                    //     builder: (context) => const HomePage()));
-                  }
                 },
                 child: Material(
                   color: const Color.fromARGB(255, 0, 110, 195),
@@ -361,7 +320,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return user.is;
   }
  */
-
+//manual login
   Future signIn() async {
     try {
       /// In the below, with if statement we have some simple validate
