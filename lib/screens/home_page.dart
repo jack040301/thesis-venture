@@ -25,6 +25,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../feat_screens/requesting_dialog.dart';
 import '../onboarding_screens/discover.dart';
 import '../userInfo.dart';
+import 'package:main_venture/screens/onboarding_screen.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -476,7 +477,6 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
       ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
     }
 
-
     // south
     else if (greatercoordinates.latitude < 14.62) {
       ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
@@ -512,7 +512,6 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
         }
 
         else {
-
           //  savedClickMarkers(saveClickBusiness);
           //debugPrint(markcount.toString());
           markcount.add(markerparams);

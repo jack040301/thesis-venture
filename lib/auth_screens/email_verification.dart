@@ -66,9 +66,11 @@ class EmailverificationscreenState extends State<Emailverificationscreen> {
     }
   }
 
+
+
   @override
   Widget build(BuildContext context) => isEmailVerified
-      ? const HomePage()
+      ? const IntroductionScreens()
       : Scaffold(
     appBar: AppBar(
       title: const Text('Verify Email'),
