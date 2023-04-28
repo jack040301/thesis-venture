@@ -88,53 +88,53 @@ class _SignupWidgetState extends State<SignupWidget> {
                 ),
                 /*    const Align(
                 alignment: Alignment.topRight, child: Icon(Icons.close)), */
-                Ink.image(
-                    image: const AssetImage('assets/images/VentureLogo.png'),
-                    height: 50),
-                const Text("Sign Up",
-                    style: TextStyle(
-                        fontSize: 28.0,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Questrial',
-                        height: 1.5)),
-                const SizedBox(
-                  height: 20.0,
-                ),
-                const Text("First Name",
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 74, 74, 74),
-                      fontSize: 14.0,
-                    )),
-                const SizedBox(
-                  height: 4.0,
-                ),
-                Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextFormField(
-                          validator: (val) {
-                            if (val == null || val.isEmpty) {
-                              return 'Field cannot be empty';
-                            }
-                            return null;
-                          },
-                          controller: firstNameController,
-                          keyboardType: TextInputType.name,
-                          textCapitalization: TextCapitalization.words,
-                          enableInteractiveSelection: false,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp('[ a-zA-Z0-9.-]')),
-                            //FilteringTextInputFormatter.deny(RegExp(r'[/\\]')),
-                          ],
-                          decoration: InputDecoration(
-                            hintText: "Firstname",
-                            filled: true,
-                            fillColor: const Color.fromARGB(255, 230, 230, 230),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius:
+            Ink.image(
+                image: const AssetImage('assets/images/VentureLogo.png'),
+                height: 50),
+            const Text("Sign Up",
+                style: TextStyle(
+                    fontSize: 28.0,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Questrial',
+                    height: 1.5)),
+            const SizedBox(
+              height: 20.0,
+            ),
+            const Text("First Name",
+                style: TextStyle(
+                  color: Color.fromARGB(255, 74, 74, 74),
+                  fontSize: 14.0,
+                )),
+            const SizedBox(
+              height: 4.0,
+            ),
+            Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      validator: (val) {
+                        if (val == null || val.isEmpty) {
+                          return 'Field cannot be empty';
+                        }
+                        return null;
+                      },
+                      controller: firstNameController,
+                      keyboardType: TextInputType.name,
+                      textCapitalization: TextCapitalization.words,
+                      enableInteractiveSelection: false,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp('[ a-zA-Z.-]')),
+                        //FilteringTextInputFormatter.deny(RegExp(r'[/\\]')),
+                      ],
+                      decoration: InputDecoration(
+                        hintText: "Firstname",
+                        filled: true,
+                        fillColor: const Color.fromARGB(255, 230, 230, 230),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius:
                               const BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(
                                   color: const Color.fromARGB(255, 230, 230, 230)
@@ -156,39 +156,41 @@ class _SignupWidgetState extends State<SignupWidget> {
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 20.0,
-                        ),
-                        const Text("Last Name",
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 74, 74, 74),
-                              fontSize: 14.0,
-                            )),
-                        const SizedBox(
-                          height: 4.0,
-                        ),
-                        TextFormField(
-                          validator: (val) {
-                            if (val == null || val.isEmpty) {
-                              return 'Field cannot be empty';
-                            }
-                            return null;
-                          },
-                          controller: lastNameController,
-                          keyboardType: TextInputType.name,
-                          textCapitalization: TextCapitalization.words,
-                          enableInteractiveSelection: false,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp('[ a-zA-Z0-9.-]')),
-                            //FilteringTextInputFormatter.deny(RegExp(r'[/\\]')),
-                          ],
-                          decoration: InputDecoration(
-                            hintText: "Lastname",
-                            filled: true,
-                            fillColor: const Color.fromARGB(255, 230, 230, 230),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius:
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    const Text("Last Name",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 74, 74, 74),
+                          fontSize: 14.0,
+                        )),
+                    const SizedBox(
+                      height: 4.0,
+                    ),
+                    TextFormField(
+                      validator: (val) {
+                        if (val == null || val.isEmpty) {
+                          return 'Field cannot be empty';
+                        }
+                        return null;
+                      },
+                      controller: lastNameController,
+                      keyboardType: TextInputType.name,
+                      textCapitalization: TextCapitalization.words,
+                      enableInteractiveSelection: false,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp('[ a-zA-Z.-]')),
+                        //FilteringTextInputFormatter.deny(RegExp(r'[/\\]')),
+                      ],
+                      decoration: InputDecoration(
+                        hintText: "Lastname",
+                        filled: true,
+                        fillColor: const Color.fromARGB(255, 230, 230, 230),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius:
                               const BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(
                                   color: const Color.fromARGB(255, 230, 230, 230)

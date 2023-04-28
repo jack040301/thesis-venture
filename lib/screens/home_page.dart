@@ -477,6 +477,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
       ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
     }
 
+
     // south
     else if (greatercoordinates.latitude < 14.62) {
       ScaffoldMessenger.of(context).showSnackBar(map_pinnedLoc);
@@ -504,14 +505,15 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
           // debugPrint(markcount.length.toString());
           showAlertDialog(context);
         }
-          else if(markcount.length>= 6){
-            markcount.removeWhere((element) =>
-            element.markerId == MarkerId(markcount.first.markerId.value));
+        else if(markcount.length>= 6){
+          markcount.removeWhere((element) =>
+          element.markerId == MarkerId(markcount.first.markerId.value));
 
-            allmarkers.clear();
-          }
+          allmarkers.clear();
+        }
 
-       else {
+        else {
+
           //  savedClickMarkers(saveClickBusiness);
           //debugPrint(markcount.toString());
           markcount.add(markerparams);

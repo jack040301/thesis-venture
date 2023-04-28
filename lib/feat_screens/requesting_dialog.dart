@@ -33,39 +33,93 @@ class RequestedDialog {
   static const colortext = Color.fromARGB(255, 74, 74, 74);
   static int count = 0;
   int countquery = 0;
+  bool hasEnd = false;
+  bool hasLimit = false;
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  // static String place = "",id = "",land = "",land_size = "",popu_future = "",popu_past ="",population="",revenue="",request_status="";
+
+
 
   Future savedRequestMarker(context) async {
     count += 1;
-
     GeoPoint geopoint = GeoPoint(lat, lng);
 
-    final pinnedData = {
-      "coords": geopoint,
-      "place": "None",
-      "id": "",
-      "land": 0,
-      "land_size": "",
-      "popu_future": "",
-      "popu_past": "",
-      "population": "",
-      "revenue": "",
-      "user_id_requested": GoogleUserStaticInfo().uid,
-      "request_status": false,
-    };
 
-    var db = FirebaseFirestore.instance;
-    db
+    var docu = GoogleUserStaticInfo().uid.toString();
+    FirebaseFirestore.instance
         .collection("markers")
-        .doc(count.toString() + "-" + GoogleUserStaticInfo().email.toString())
-        .set(pinnedData)
-        .then((documentSnapshot) => {
-      alertmessage(context)
-      //showing if data is saved
-    })
-        .catchError((error) {
-      ScaffoldMessenger.of(context).showSnackBar(error);
-    });
-  }
+        .where('user_id_requested', isEqualTo: docu)
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((documents) async {
+                var data = documents.data() as Map;
+                // print(data['user_id_requested']);
+                // print(documents.id);// PRINTING OF DOCUMENT ID
+
+                if (hasEnd == false) {
+                  if (data['user_id_requested'] == docu) {
+                    // print(data['user_id_requested']);
+                    if (data['coords'].latitude == geopoint.latitude &&
+                        data['coords'].longitude == geopoint.longitude) {
+                      print("This location is already pinned");
+                      doublePinnedReq(context);
+                      hasEnd = true;
+                    } else {
+                      // TESTING
+                      FirebaseFirestore.instance
+                          .collection("markers")
+                          .where("coords", isGreaterThanOrEqualTo: geopoint)
+                          .orderBy("coords", descending: true)
+                          .limit(1)
+                          .get()
+                          .then((QuerySnapshot querySnapshot) => {
+                        querySnapshot.docs.forEach((documents) async {
+                          var data = documents.data() as Map;
+
+                          if (data['request_status'] == true) {
+
+                            final pinnedData = {
+                              "coords": geopoint,
+                              "place": "pinned-request by " + GoogleUserStaticInfo().name.toString(),
+                              "id":  data['id'],
+                              "land":  data['land'],
+                              "land_size": data['land_size'],
+                              "popu_future": data['popu_future'],
+                              "popu_past": data['popu_past'],
+                              "population": data['population'],
+                              "revenue": data['revenue'],
+                              "user_id_requested": GoogleUserStaticInfo().uid,
+                              "request_status": false,
+                            };
+
+                            var db = FirebaseFirestore.instance;
+                            db
+                                .collection("markers")
+                                .doc(count.toString() + "-" + GoogleUserStaticInfo().email.toString())
+                                .set(pinnedData)
+                                .then((documentSnapshot) => {
+                              alertmessage(context)
+                              //showing if data is saved
+                            })
+                                .catchError((error) {
+                              ScaffoldMessenger.of(context).showSnackBar(error);
+                            });
+                          }
+                        }) //for loop
+                      });
+                      // print("ekis");
+                      hasEnd = true;
+                    }
+                  }
+                }
+
+                //
+              }) //for loop
+            });
+    
+
+  }//savedRequestMarker close
+
 
   Future<int> countPerUserRequest() async {
     await FirebaseFirestore.instance

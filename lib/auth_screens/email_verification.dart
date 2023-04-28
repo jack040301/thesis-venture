@@ -31,7 +31,7 @@ class EmailverificationscreenState extends State<Emailverificationscreen> {
 
       timer = Timer.periodic(
         const Duration(seconds: 5),
-        (_) => checkEmailVerified(),
+            (_) => checkEmailVerified(),
       );
     }
   }
@@ -70,50 +70,50 @@ class EmailverificationscreenState extends State<Emailverificationscreen> {
   Widget build(BuildContext context) => isEmailVerified
       ? const HomePage()
       : Scaffold(
-          appBar: AppBar(
-            title: const Text('Verify Email'),
+    appBar: AppBar(
+      title: const Text('Verify Email'),
+    ),
+    body: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text(
+            'A Verification email has been sent to Your Email.',
+            style: TextStyle(fontSize: 20),
+            textAlign: TextAlign.center,
           ),
-          body: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  'A Verification email has been sent to Your Email.',
-                  style: TextStyle(fontSize: 20),
-                  textAlign: TextAlign.center,
-                ),
-                // resend email
-                const SizedBox(height: 24),
-                ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(50),
-                  ),
-                  icon: const Icon(Icons.email, size: 32),
-                  label: const Text(
-                    'Resend Email',
-                    style: TextStyle(fontSize: 15),
-                  ),
-                  onPressed: canResendEmail ? sendEmailVerification : null,
-                ),
-                //cancel
-                const SizedBox(height: 24),
-                ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(50),
-                    ),
-                    icon: const Icon(Icons.cancel, size: 32),
-                    label: const Text(
-                      'Cancel',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => const SignupWidget(),
-                      ));
-                    }),
-              ],
+          // resend email
+          const SizedBox(height: 24),
+          ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size.fromHeight(50),
             ),
+            icon: const Icon(Icons.email, size: 32),
+            label: const Text(
+              'Resend Email',
+              style: TextStyle(fontSize: 15),
+            ),
+            onPressed: canResendEmail ? sendEmailVerification : null,
           ),
-        );
+          //cancel
+          const SizedBox(height: 24),
+          ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size.fromHeight(50),
+              ),
+              icon: const Icon(Icons.cancel, size: 32),
+              label: const Text(
+                'Cancel',
+                style: TextStyle(fontSize: 15),
+              ),
+              onPressed: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => const SignupWidget(),
+                ));
+              }),
+        ],
+      ),
+    ),
+  );
 }

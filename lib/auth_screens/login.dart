@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:main_venture/auth_screens/forgot_password.dart';
 import 'package:main_venture/auth_screens/signup.dart';
+import 'package:main_venture/screens/onboarding_screen.dart';
 import 'package:main_venture/userInfo.dart';
 import 'package:main_venture/screens/home_page.dart';
 import 'package:main_venture/feat_screens/personalInfo.dart';
-
-import '../screens/onboarding_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -23,19 +22,19 @@ class _LoginScreenState extends State<LoginScreen> {
   bool loading = false;
 
   var fSnackBar = const SnackBar(
-    behavior: SnackBarBehavior.floating,
+
     content: Text('The Email & Password Fields Must Fill!'),
   );
 
   /// Email Fill & Password Empty
   var sSnackBar = const SnackBar(
-    behavior: SnackBarBehavior.floating,
+    //behavior: SnackBarBehavior.floating,
     content: Text('Password Field Must Fill!'),
   );
 
   /// Email Empty & Password Fill
   var tSnackBar = const SnackBar(
-    behavior: SnackBarBehavior.floating,
+    //behavior: SnackBarBehavior.floating,
     content: Text('Email Field Must Fill!'),
   );
 
@@ -220,28 +219,20 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 15.0,
               ),
-              Row(children: [
-                const Text("Don't have an account yet? ",
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SignupWidget()),
+                  );
+                },
+                child: const Text("Don't have an account yet? Sign up",
                     style: TextStyle(
                       color: Color.fromARGB(255, 74, 74, 74),
                       fontSize: 14.0,
                     )),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const SignupWidget()),
-                    );
-                  },
-
-
-                  child: const Text("Sign up",
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 0, 110, 195),
-                        fontSize: 14.0,
-                      )),
-                )]),
+              ),
               RawMaterialButton(
                 onPressed: () => Navigator.push(
                     context,
@@ -277,7 +268,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 onTap: () async {
                   // const AuthScreen().signInWithGoogle();
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    behavior: SnackBarBehavior.floating,
+                    //    behavior: SnackBarBehavior.floating,
                     duration: const Duration(seconds: 2),
                     content: Row(
                       children: const <Widget>[
@@ -285,7 +276,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         Text("  Signing-In...")
                       ],
                     ),
+
                   ));
+
 
                   await Functio().signInWithGoogle();
                   var usersCheck =
@@ -294,6 +287,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   if (usersCheck.exists) {
                     // Navigator.of(context).push(MaterialPageRoute(
                     //     builder: (context) => const personalinfo()));
+
 
                     // await FirebaseAuth.instance
                     //     .createUserWithEmailAndPassword(
@@ -306,7 +300,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     //   'email': value.user!.email,
                     // })); pushAndRemoveUntil
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const IntroductionScreens()));
+                        builder: (context) =>
+                        const HomePage()));
+
 
                     // await users.doc(GoogleUserStaticInfo().uid).set({
                     //   'firstname': GoogleUserStaticInfo().firstname,
