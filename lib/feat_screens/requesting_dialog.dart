@@ -12,7 +12,7 @@ import 'package:main_venture/userInfo.dart';
 import 'package:main_venture/screens/home_page.dart';
 import 'package:main_venture/screens/home_page.dart';
 import 'package:flutter/cupertino.dart';
-
+import 'package:intl/intl.dart';
 import '../providers/search_places.dart';
 
 class RequestedDialog {
@@ -34,9 +34,13 @@ class RequestedDialog {
   static int count = 0;
   int countquery = 0;
   bool hasEnd = false;
+  var now = DateTime.now();
+
 
   Future savedRequestMarker(context) async {
     count += 1;
+    var formattedTimestamp = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
+    // print(formattedTimestamp);
 
     GeoPoint geopoint = GeoPoint(lat, lng);
 
@@ -86,6 +90,7 @@ class RequestedDialog {
                       "population": data['population'],
                       "revenue": data['revenue'],
                       "user_id_requested": GoogleUserStaticInfo().uid,
+                      "date_and_time": formattedTimestamp,
                       "request_status": false,
                     };
 
@@ -179,6 +184,7 @@ class RequestedDialog {
                     ?
                 CupertinoDialogAction(
                   onPressed: () async {
+
                     await savedRequestMarker(context);
                   },
                   child: const Text("Request",
