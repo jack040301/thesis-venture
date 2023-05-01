@@ -9,6 +9,8 @@ import 'package:main_venture/auth_screens/login.dart';
 import 'package:main_venture/auth_screens/email_verification.dart';
 import 'package:main_venture/userInfo.dart';
 import 'package:flutter/services.dart';
+import '../screens/onboarding_screen.dart';
+
 
 import '../screens/home_page.dart';
 
@@ -374,7 +376,8 @@ class _personalinfoState extends State<personalinfo> {
       //   email: email,
       //   password: password,
       // );
-
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const IntroductionScreens()));
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Successfully Created your account')));
 

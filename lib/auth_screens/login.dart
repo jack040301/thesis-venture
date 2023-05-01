@@ -299,6 +299,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     //   'lastname': GoogleUserStaticInfo().lastname,
                     //   'email': value.user!.email,
                     // })); pushAndRemoveUntil
+
+
+                    // print("with account");
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) =>
                         const HomePage()));
@@ -310,6 +313,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     //   'email': GoogleUserStaticInfo().email,
                     // }).onError((error, stackTrace) => (error.toString()));
                   } else {
+
+                    // print("no account");
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
                             builder: (context) => const personalinfo()),
@@ -320,6 +325,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       'lastname': GoogleUserStaticInfo().lastname,
                       'email': GoogleUserStaticInfo().email,
                     }).onError((error, stackTrace) => (error.toString()));
+
+
                     // pushAndRemoveUntil
                     // Navigator.of(context).push(MaterialPageRoute(
                     //     builder: (context) => const HomePage()));
