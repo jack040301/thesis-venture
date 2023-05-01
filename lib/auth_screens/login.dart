@@ -279,10 +279,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   ));
 
+    //google code
 
                   await Functio().signInWithGoogle();
-                  var usersCheck =
-                  await users.doc(GoogleUserStaticInfo().uid).get();
+
 
                   if (usersCheck.exists) {
                     // Navigator.of(context).push(MaterialPageRoute(
@@ -331,6 +331,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     // Navigator.of(context).push(MaterialPageRoute(
                     //     builder: (context) => const HomePage()));
                   }
+
                 },
                 child: Material(
                   color: const Color.fromARGB(255, 0, 110, 195),
@@ -368,7 +369,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return user.is;
   }
  */
-
+//manual login
   Future signIn() async {
     try {
       /// In the below, with if statement we have some simple validate
