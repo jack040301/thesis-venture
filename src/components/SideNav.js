@@ -116,7 +116,7 @@ export default function SideNav({ user, setAuthState, setUser }) {
 
                 <li className="nav-item">
                   <NavLink to="/manageusers" className="nav-link">
-                    <i className="nav-icon fas fa-tools" />
+                    <i className="nav-icon fas fa-user" />
                     <p>Manage Users</p>
                   </NavLink>
                 </li>
@@ -129,17 +129,18 @@ export default function SideNav({ user, setAuthState, setUser }) {
               </li> */}
                    <li className="nav-item">
                   <NavLink to="/managerequest" className="nav-link">
-                    <i className="nav-icon fas fa-tools" />
+                    <i className="nav-icon fas fa-inbox" />
+                
                     <p>Manage Request</p>
                   </NavLink>
                 </li>
                 
-                <li className="nav-item">
+           {/*      <li className="nav-item">
                   <NavLink to="/manageruser" className="nav-link">
                     <i className="nav-icon fas fa-tools" />
                     <p>Manage User</p>
                   </NavLink>
-                </li>
+                </li> */}
            
 
                 <li className="nav-item">
