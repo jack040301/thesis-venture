@@ -29,16 +29,23 @@ function ManageRequest() {
   function fulldata () {
 
   
-    const collect = query(collection(db,"markers"),where("request_status","==",false), where("user_id_requested","==","NLz3guI5pEOXKJEyDzz1tsdcEtF2"));
+    const collect = query(collection(db,"markers"),where("request_status","==",false), where("user_id_requested","==","05N8q9xhGPS0H9gaBSxi"));
     const unsub = onSnapshot(collect, snapshot =>{
 
 
       
 
-      const admintable = snapshot.docs.map(doc=> ({ place:doc.data().place, adminid:doc.id, data: doc.data().createdAt,
+      const admintable = snapshot.docs.map(doc=> ({ 
+        
+        place:doc.data().place,
+        adminid:doc.id, 
+        data: Date(doc.data().createdAt),
         user_id_requested : doc.data().user_id_requested,
     }
+
+    
       ))
+    //  const date = Date(data.nanoseconds / 1000000);
 
       
    
@@ -53,6 +60,42 @@ function ManageRequest() {
     }
   }
 
+  /* async function dateget(){
+    const collect = query(collection(db,"markers"),where("request_status","==",false), where("user_id_requested","==","05N8q9xhGPS0H9gaBSxi"));
+
+
+    const unsub = onSnapshot(collect, snapshot =>{
+
+
+      snapshot.docs.forEach((doc) => {
+        const timestamp = doc.data().createdAt;
+        const converdate = Date(timestamp)
+
+       //  console.log(converdate);
+           
+          // console.log(doc.data())// outputs the timestamp value in nanoseconds
+          });
+        }, (error) => {
+          console.log('Error getting documents:', error);
+        });
+      
+   
+
+
+///     setData(admintable)
+
+
+    return () =>{
+        unsub()
+    }
+ 
+    
+
+
+
+
+  }
+*/
 
  async  function searchModerator(){
 
@@ -65,6 +108,7 @@ const collect = query(collection(db,"markers"),where("request_status","==",false
       ))
 
      setData(admintable)
+
 
     })
 
@@ -168,13 +212,14 @@ request_status: true,
         { 
               data.map( (markers_request) => (
                    
-             
+
+                  
 
                 <tr key={markers_request.adminid}>
                 <td>{markers_request.adminid}</td>
 
                 <td>{markers_request.place}</td>
-                <td>{markers_request.data.seconds}, {markers_request.data.nanoseconds}</td>
+                <td>{markers_request.data}</td>
                 <td>{markers_request.user_id_requested}</td>
 
 
