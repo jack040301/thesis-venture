@@ -170,15 +170,20 @@ function ManageModerator() {
                 </table>
               </div>
               <MDBModal show={status_modal} tabIndex='-1' setShow={setStatusModal}>
-              <MDBModalDialog size='sm'>
+              <MDBModalDialog >
                 <MDBModalContent>
                   <MDBModalHeader>
-                    <MDBModalTitle>Sure?</MDBModalTitle>                    
+                    <MDBModalTitle>
+                Are you sure?</MDBModalTitle>                    
                   </MDBModalHeader>
-                  <MDBModalBody>
-                    <MDBBtn className='btn-ok' color='none' onClick={()=>{setModStatus(userStat); setStatusModal(!status_modal);}}>Yes</MDBBtn>
-                    <MDBBtn className='btn-close' color='none' onClick={()=>{setStatusModal(!status_modal)}}>No</MDBBtn>
-                  </MDBModalBody>
+                    
+                  <MDBModalFooter>
+
+                  <MDBBtn className='btn-ok btn-primary' onClick={()=>{setModStatus(userStat); setStatusModal(!status_modal);}}>Yes</MDBBtn>
+                    <MDBBtn className='btn-close btn-danger'  onClick={()=>{setStatusModal(!status_modal)}}>No</MDBBtn>
+                  
+                  
+                  </MDBModalFooter>
                 </MDBModalContent>
               </MDBModalDialog>
             </MDBModal>

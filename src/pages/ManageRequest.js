@@ -7,9 +7,17 @@ import {
   MDBModalHeader,
   MDBModalTitle,
   MDBModalBody,
+  MDBDropdown,
+  MDBDropdownToggle,
+  MDBDropdownItem,
+  MDBDropdownMenu,
 
   MDBBtn,
+  MDBModalFooter,
 } from "mdb-react-ui-kit";
+
+import { CusDropDown, TopFullWidthModal } from "../components/Toast/customDropDownBtn";
+
 
 function ManageRequest() {
 
@@ -29,7 +37,7 @@ function ManageRequest() {
   function fulldata () {
 
   
-    const collect = query(collection(db,"markers"),where("request_status","==",false), where("user_id_requested","==","05N8q9xhGPS0H9gaBSxi"));
+    const collect = query(collection(db,"markers"),where("request_status","==",false),limit(10));
     const unsub = onSnapshot(collect, snapshot =>{
 
 
@@ -38,7 +46,9 @@ function ManageRequest() {
       const admintable = snapshot.docs.map(doc=> ({ 
         
         place:doc.data().place,
-        adminid:doc.id, 
+        adminid:doc.id,
+        status:"Waiting To Approve",
+        user_email_requested: doc.data().user_email_requested, 
         data: Date(doc.data().createdAt),
         user_id_requested : doc.data().user_id_requested,
     }
@@ -97,7 +107,7 @@ function ManageRequest() {
   }
 */
 
- async  function searchModerator(){
+ /* async  function searchModerator(){
 
   if(search !== null && search !== ""){
 
@@ -127,7 +137,7 @@ const collect = query(collection(db,"markers"),where("request_status","==",false
 
   
   } 
-
+ */
 
   const setApproveRequest = async (e) => {
     const docRef = doc(db, "markers", e);
@@ -138,7 +148,7 @@ const collect = query(collection(db,"markers"),where("request_status","==",false
 request_status: true,
     });
 
-    alert("Successfull");
+    alert("Successfully update");
     
 
  /*    if(docSnap.data().status == "Active"){
@@ -178,19 +188,37 @@ request_status: true,
                     className="input-group input-group-sm"
                     style={{ width: 300 }}
                   >
-                    <input
+              {/*       <input
                       type="text"
                       name="table_search"
                       className="form-control float-right"
                       placeholder="Search"
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
-                    />
+                    /> */}
+
+
                     <div className="input-group-append">
-                      <button type="submit" onClick={searchModerator} className="btn btn-default">
+                    <CusDropDown
+                       btnName={"Filter"}>
+                    <button >Weekly</button>
+                    <button>Monthly</button>
+                    <button>Yearly</button>
+                   </CusDropDown>
+
+      {/*                 <button type="submit" onClick={searchModerator} className="btn btn-default">
                         <i className="fas fa-search" />
                       </button>
-                    </div>
+       */}              </div>
+
+          <div className="input-group-append">
+                  
+
+      {/*                 <button type="submit" onClick={searchModerator} className="btn btn-default">
+                        <i className="fas fa-search" />
+                      </button>
+       */}              </div>
+
                   </div>
                 </div>
               </div>
@@ -198,7 +226,8 @@ request_status: true,
                 <table className="table table-hover text-nowrap">
                   <thead>
                     <tr>
-                      <th>ID</th>
+                    <th>ID</th>
+
                       <th>Place</th>
                       <th>Timestamp</th>
                       <th>User Request</th>
@@ -220,11 +249,13 @@ request_status: true,
 
                 <td>{markers_request.place}</td>
                 <td>{markers_request.data}</td>
-                <td>{markers_request.user_id_requested}</td>
+                <td>{markers_request.user_email_requested}</td>
 
 
                 <td>
-                  <span className="tag tag-success">Approved</span>
+                  <span className="tag tag-success">
+                    {markers_request.status}
+                    </span>
                 </td>
                 <td>                 
                   <button onClick={(e)=>{setStatusModal(true); setUserStat(e.currentTarget.id)}} id={markers_request.adminid} class="statBtn">Approve Request</button>                  
@@ -238,15 +269,21 @@ request_status: true,
                 </table>
               </div>
               <MDBModal show={status_modal} tabIndex='-1' setShow={setStatusModal}>
-              <MDBModalDialog size='sm'>
+              <MDBModalDialog >
                 <MDBModalContent>
                   <MDBModalHeader>
-                    <MDBModalTitle>Sure?</MDBModalTitle>                    
+                    <MDBModalTitle>Approval Request</MDBModalTitle>                    
                   </MDBModalHeader>
                   <MDBModalBody>
-                    <MDBBtn className='btn-ok' color='none' onClick={()=>{setApproveRequest(userStat); setStatusModal(!status_modal);}}>Yes</MDBBtn>
-                    <MDBBtn className='btn-close' color='none' onClick={()=>{setStatusModal(!status_modal)}}>No</MDBBtn>
+
+                  Do you want to approve this place to be venture out ?
+                    
                   </MDBModalBody>
+                  <MDBModalFooter>
+                  <MDBBtn className='btn-ok btn-primary'  onClick={()=>{setApproveRequest(userStat); setStatusModal(!status_modal);}}>Approve</MDBBtn>
+                    <MDBBtn className='btn-close btn-danger'  onClick={()=>{setStatusModal(!status_modal)}}>Cancel</MDBBtn>
+
+                  </MDBModalFooter>
                 </MDBModalContent>
               </MDBModalDialog>
             </MDBModal>
