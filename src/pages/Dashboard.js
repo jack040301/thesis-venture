@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link, NavLink } from "react-router-dom";
 
 import { collection, db, onSnapshot, query, where} from "../firebase";
 
@@ -120,9 +121,9 @@ export default function Dashboard({ user, setAuthState, setUser }) {
                   <div className="icon">
                     <i className="fas fa-users" />
                   </div>
-                  <a href="#" className="small-box-footer">
+                  <NavLink to="/manageusers" className="small-box-footer">
                     More info <i className="fas fa-arrow-circle-right" />
-                  </a>
+                  </NavLink>
                 </div>
               </div>
               <div className="col-lg-3 col-6">
@@ -136,9 +137,13 @@ export default function Dashboard({ user, setAuthState, setUser }) {
                   <div className="icon">
                     <i className="fas fa-user" />
                   </div>
-                  <a href="#" className="small-box-footer">
+                  <NavLink to="/managemoderator" className="small-box-footer">
+
+              
                     More info <i className="fas fa-arrow-circle-right" />
-                  </a>
+           
+                  </NavLink>
+
                 </div>
               </div>
               <div className="col-lg-3 col-6">
@@ -150,9 +155,9 @@ export default function Dashboard({ user, setAuthState, setUser }) {
                   <div className="icon">
                     <i className="fas fa-building" />
                   </div>
-                  <a href="#" className="small-box-footer">
+                  <NavLink to="/managerequest" className="small-box-footer">
                     More info <i className="fas fa-arrow-circle-right" />
-                  </a>
+                  </NavLink>
                 </div>
               </div>
 
@@ -165,9 +170,10 @@ export default function Dashboard({ user, setAuthState, setUser }) {
                   <div className="icon">
                     <i className="fas fa-building" />
                   </div>
-                  <a href="#" className="small-box-footer">
+                  <NavLink to="/managerequest" className="small-box-footer">
                     More info <i className="fas fa-arrow-circle-right" />
-                  </a>
+                  </NavLink>
+
                 </div>
               </div>
 
