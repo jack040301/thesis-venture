@@ -29,14 +29,14 @@ function ManageRequest() {
   function fulldata () {
 
   
-    const collect = query(collection(db,"markers"),where("request_status","==",false), where("user_id_requested","==","NLz3guI5pEOXKJEyDzz1tsdcEtF2"));
+    const collect = query(collection(db,"markers"),where("request_status","==",false), where("user_id_requested","==","0zbNifBbcuayb1W0jLsRa8UbPA03"));
     const unsub = onSnapshot(collect, snapshot =>{
 
 
       
 
       const admintable = snapshot.docs.map(doc=> ({ place:doc.data().place, adminid:doc.id, data: doc.data().createdAt,
-        user_id_requested : doc.data().user_id_requested,
+        user_id_requested : doc.data().user_id_requested, timestamp: doc.data().timestamp,
     }
       ))
 
@@ -174,7 +174,7 @@ request_status: true,
                 <td>{markers_request.adminid}</td>
 
                 <td>{markers_request.place}</td>
-                <td>{markers_request.data.seconds}, {markers_request.data.nanoseconds}</td>
+                <td>{console.log(markers_request.timestamp)}, {"nano"}</td>
                 <td>{markers_request.user_id_requested}</td>
 
 

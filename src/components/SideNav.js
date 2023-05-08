@@ -132,14 +132,7 @@ export default function SideNav({ user, setAuthState, setUser }) {
                     <i className="nav-icon fas fa-tools" />
                     <p>Manage Request</p>
                   </NavLink>
-                </li>
-                
-                <li className="nav-item">
-                  <NavLink to="/manageruser" className="nav-link">
-                    <i className="nav-icon fas fa-tools" />
-                    <p>Manage User</p>
-                  </NavLink>
-                </li>
+                </li>                                
            
 
                 <li className="nav-item">
