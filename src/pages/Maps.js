@@ -353,7 +353,7 @@ function MapPage() {
   const fetchPost = async () => {
     const ReqTrueQuery = query(
       collection(db, "markers"),
-      where("request_status", "==", true),limit(2)
+      where("request_status", "==", true),limit(pinLimit)
     );
     await getDocs(ReqTrueQuery).then((querySnapshot) => {
       const newData = querySnapshot.docs.map((doc) => ({

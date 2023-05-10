@@ -74,7 +74,7 @@ function App() {
           />
 
 
-        <Route
+        {/*<Route
             path="/manageruser"
             element={
               <ProtectedRoute>
@@ -84,7 +84,7 @@ function App() {
                 <ManageUser />
               </ProtectedRoute>
             }
-          />
+          />*/}
 
       <Route
             path="/managerequest"

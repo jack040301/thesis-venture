@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import { getDocs } from "../firebase";
 import {collection, db,onSnapshot, query,where, limit,orderBy, doc, updateDoc,getDoc } from "../firebase";
 import {
   MDBModal,
@@ -30,7 +31,7 @@ function ManageRequest() {
 
   useEffect(()=>{
     
-    fulldata()
+    fulldata()    
   },[]) 
 
 
@@ -69,6 +70,151 @@ function ManageRequest() {
         unsub()
     }
   }
+
+  const Weekly = () => {
+    const collect = query(collection(db,"markers"),where("tstag","==","week"),limit(10));
+    const unsub = onSnapshot(collect, snapshot =>{
+
+
+      
+
+      const admintable = snapshot.docs.map(doc=> ({ 
+        
+        place:doc.data().place,
+        adminid:doc.id,
+        status:"Waiting To Approve",
+        user_email_requested: doc.data().user_email_requested, 
+        data: Date(doc.data().createdAt),
+        user_id_requested : doc.data().user_id_requested,
+    }
+
+    
+      ))
+    //  const date = Date(data.nanoseconds / 1000000);
+
+      
+   
+
+
+     setData(admintable)
+
+    })
+    
+    return () => {
+      unsub();          
+    }  
+  };
+
+  const Monthly = () => {
+    const collect = query(collection(db,"markers"),where("tstag","==","month"),limit(10));
+    const unsub = onSnapshot(collect, snapshot =>{
+
+
+      
+
+      const admintable = snapshot.docs.map(doc=> ({ 
+        
+        place:doc.data().place,
+        adminid:doc.id,
+        status:"Waiting To Approve",
+        user_email_requested: doc.data().user_email_requested, 
+        data: Date(doc.data().createdAt),
+        user_id_requested : doc.data().user_id_requested,
+    }
+
+    
+      ))
+    //  const date = Date(data.nanoseconds / 1000000);
+
+      
+   
+
+
+     setData(admintable)
+
+    })
+    
+    return () => {
+      unsub();      
+    }  
+  };
+
+  const Yearly = () => {
+    const collect = query(collection(db,"markers"),where("tstag","==","year"),limit(10));
+    const unsub = onSnapshot(collect, snapshot =>{
+
+
+      
+
+      const admintable = snapshot.docs.map(doc=> ({ 
+        
+        place:doc.data().place,
+        adminid:doc.id,
+        status:"Waiting To Approve",
+        user_email_requested: doc.data().user_email_requested, 
+        data: Date(doc.data().createdAt),
+        user_id_requested : doc.data().user_id_requested,
+    }
+
+    
+      ))
+    //  const date = Date(data.nanoseconds / 1000000);
+
+      
+   
+
+
+     setData(admintable)
+
+    })
+    
+    return () => {
+      unsub();      
+    }  
+  };
+
+  const setTSTAG = async (e) => {
+    const docRef = doc(db, "markers", e);
+    const docSnap = await getDoc(docRef);
+
+    if(docSnap.data().request_status == false){
+      const updateStatus = await updateDoc(docRef, {
+        tstag: "week",        
+      });
+
+      //setStatus_s("status-deactivated");
+      console.log(docSnap.data().status);
+    }else{
+      const updateStatus = await updateDoc(docRef, {
+        tstag: "month",   
+      });
+      console.log(docSnap.data().status);
+      //setStatus_s("status-active");
+    }    
+    
+  };
+
+  const setAllTSTAG = async () => {
+    const ReqTrueQuery = query(
+
+collection(db, "markers"),where("request_status", "==", false)
+
+    );
+    await getDocs(ReqTrueQuery).then((querySnapshot) => {
+      const newData = querySnapshot.docs.map((doc) => ({        
+        docId: doc.id,        
+      }));
+      console.log(newData);
+      //setAppDocId({docId: newData[0].docId}); 
+      //ApproveAll(newData[0].docId);
+      for(let x of newData){
+        console.log(x.docId);
+        setTSTAG(x.docId);    
+      }
+    });    
+  };
+
+  
 
   /* async function dateget(){
     const collect = query(collection(db,"markers"),where("request_status","==",false), where("user_id_requested","==","05N8q9xhGPS0H9gaBSxi"));
@@ -201,9 +347,10 @@ request_status: true,
                     <div className="input-group-append">
                     <CusDropDown
                        btnName={"Filter"}>
-                    <button >Weekly</button>
-                    <button>Monthly</button>
-                    <button>Yearly</button>
+                    <button onClick={()=>{Weekly();}}>Weekly</button>
+                    <button onClick={()=>{Monthly()}}>Monthly</button>
+                    <button onClick={()=>{Yearly()}}>Yearly</button>
+                    <button onClick={()=>{setAllTSTAG()}}>set tag</button>
                    </CusDropDown>
 
       {/*                 <button type="submit" onClick={searchModerator} className="btn btn-default">
