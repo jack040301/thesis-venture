@@ -14,6 +14,7 @@ class BarChartModel {
   });
 }
 
+<<<<<<< Updated upstream
 class BarDataThreeYears {
   String year;
   double revenue;
@@ -26,6 +27,8 @@ class BarDataThreeYears {
   });
 }
 
+=======
+>>>>>>> Stashed changes
 class SalesData {
   double months;
   double sales;

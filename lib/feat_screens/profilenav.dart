@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+<<<<<<< Updated upstream
 import 'package:main_venture/feat_screens/contactus.dart';
 //import 'package:main_venture/feat_screens/pinnedlocationshistory.dart';
 import 'package:main_venture/feat_screens/termscondi.dart';
+=======
+
+>>>>>>> Stashed changes
 import 'package:main_venture/feat_screens/pinnedlocation_new.dart';
 import 'package:main_venture/feat_screens/upgrade_account.dart';
 
@@ -23,8 +27,11 @@ class ProfileNav {
   ProfileNav(
       {required this.firstname,
         required this.lastname}); //get the firstname lastname in the homepage.dart
+<<<<<<< Updated upstream
 
   // late final fname = firstname.length > 1;
+=======
+>>>>>>> Stashed changes
 
   Future<void> showProfileNav(BuildContext context) async {
     return await showDialog(
@@ -34,6 +41,7 @@ class ProfileNav {
           return StatefulBuilder(builder: (context, setState) {
             return AlertDialog(
                 content: Form(
+<<<<<<< Updated upstream
                     child: SingleChildScrollView(
                         child: Column(mainAxisSize: MainAxisSize.min, children: [
                           const SizedBox(
@@ -290,6 +298,156 @@ class ProfileNav {
                             ),
                           )
                         ]))));
+=======
+                    child: Column(mainAxisSize: MainAxisSize.min, children: [
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      // const Align(
+                      // alignment: Alignment.topRight,
+                      //child: Icon(Icons.close)),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      /*     const Align(
+                  alignment: Alignment.topRight, child: Icon(Icons.close),
+                  ), */
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      SizedBox(
+                        width: double.maxFinite,
+                        child: TextButtonTheme(
+                          data: TextButtonThemeData(
+                            style: TextButton.styleFrom(
+                              alignment: Alignment.centerLeft,
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              TextButton.icon(
+                                onPressed: () {},
+                                icon: Profile().profile == null
+                                    ? const Image(
+                                    image: AssetImage('assets/images/pic.png'),
+                                    height: 50.0,
+                                    width: 50.0)
+                                    : Image.network(
+                                  Profile().profile ?? "",
+                                  height: 50.0,
+                                  width: 50.0,
+                                ),
+                                label: Text(
+                                    "${firstname.toUpperCase()} ${lastname.toUpperCase()}", //display firstname and lastname from the firestore
+                                    style: const TextStyle(
+                                        color: Colors.black, fontSize: 22.0)),
+                              ),
+                              const SizedBox(
+                                height: 20.0,
+                              ),
+                              TextButton.icon(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                          const PinnedLocationScreen()));
+                                },
+                                icon: const ImageIcon(
+                                  AssetImage("assets/images/icons/savedpin.png"),
+                                  size: 25.0,
+                                ),
+                                label: const Text('Pinned Locations',
+                                    style:
+                                    TextStyle(color: Colors.black, fontSize: 15.0)),
+                              ),
+                              TextButton.icon(
+                                onPressed: () {
+                                  SetDialog().showMyDialog(context);
+                                },
+                                icon: const ImageIcon(
+                                  AssetImage("assets/images/icons/settings.png"),
+                                  size: 25.0,
+                                ),
+                                label: const Text('Settings',
+                                    style:
+                                    TextStyle(color: Colors.black, fontSize: 15.0)),
+                              ),
+                              /*      TextButton(
+                        child: Text(
+                          'Customize Account',
+                          style: TextStyle(
+                              fontFamily: 'Questrial',
+                              color: Colors.grey.shade900,
+                              fontSize: 18),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const CustomizeAccScreen()));
+                        },
+                      ), */
+                              TextButton.icon(
+                                onPressed: () async {
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => CustomizeAccScreen(
+                                          firstname: firstname,
+                                          lastname: lastname,
+                                        )),
+                                  );
+                                },
+                                icon: const ImageIcon(
+                                  AssetImage("assets/images/icons/team.png"),
+                                  size: 25.0,
+                                ),
+                                label: const Text('Customize Account',
+                                    style:
+                                    TextStyle(color: Colors.black, fontSize: 15.0)),
+                              ),
+                              TextButton.icon(
+                                onPressed: () async {
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const UpgradeAccScreen()),
+                                  );
+                                },
+                                icon: const ImageIcon(
+                                  AssetImage("assets/images/icons/upgrade.png"),
+                                  size: 25.0,
+                                ),
+                                label: const Text('Upgrade Account',
+                                    style:
+                                    TextStyle(color: Colors.black, fontSize: 15.0)),
+                              ),
+                              TextButton.icon(
+                                onPressed: () async {
+                                  singingOut(context);
+                                  /*   await singingOut().then((value) =>
+                              Navigator.of(context, rootNavigator: true)
+                                  .pushReplacement(MaterialPageRoute(
+                                      builder: (context) =>
+                                          const AuthScreen()))); */
+                                },
+                                icon: const ImageIcon(
+                                  AssetImage("assets/images/icons/logout.png"),
+                                  size: 25.0,
+                                ),
+                                label: const Text('Log out',
+                                    style:
+                                    TextStyle(color: Colors.black, fontSize: 15.0)),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    ])));
+>>>>>>> Stashed changes
           });
         });
   }

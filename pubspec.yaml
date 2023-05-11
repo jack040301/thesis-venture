@@ -74,6 +74,7 @@ dependencies:
   cloud_firestore: ^4.0.5
   flutter_password_strength: ^0.1.6
   geocoding: ^2.0.5
+<<<<<<< Updated upstream
   image_gallery_saver:
   permission_handler:
   syncfusion_flutter_charts:
@@ -86,6 +87,15 @@ dependencies:
   # pdf: ^3.8.4
   share_plus:
   flutter_native_screenshot: ^1.1.2
+=======
+
+  custom_marker: ^1.0.0
+>>>>>>> Stashed changes
+
+  image_gallery_saver:
+  permission_handler:
+
+  syncfusion_flutter_charts:
 
 dev_dependencies:
   flutter_launcher_icons: ^0.10.0

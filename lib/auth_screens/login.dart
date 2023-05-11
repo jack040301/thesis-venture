@@ -6,7 +6,10 @@ import 'package:main_venture/auth_screens/signup.dart';
 import 'package:main_venture/screens/onboarding_screen.dart';
 import 'package:main_venture/userInfo.dart';
 import 'package:main_venture/screens/home_page.dart';
+<<<<<<< Updated upstream
 import 'package:main_venture/feat_screens/personalInfo.dart';
+=======
+>>>>>>> Stashed changes
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -22,18 +25,25 @@ class _LoginScreenState extends State<LoginScreen> {
   bool loading = false;
 
   var fSnackBar = const SnackBar(
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     content: Text('The Email & Password Fields Must Fill!'),
   );
 
   /// Email Fill & Password Empty
   var sSnackBar = const SnackBar(
+<<<<<<< Updated upstream
     //behavior: SnackBarBehavior.floating,
+=======
+>>>>>>> Stashed changes
     content: Text('Password Field Must Fill!'),
   );
 
   /// Email Empty & Password Fill
   var tSnackBar = const SnackBar(
+<<<<<<< Updated upstream
     //behavior: SnackBarBehavior.floating,
     content: Text('Email Field Must Fill!'),
   );
@@ -51,6 +61,11 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
+=======
+    content: Text('Email Field Must Fill!'),
+  );
+
+>>>>>>> Stashed changes
   @override
   Widget build(BuildContext context) {
     return loading
@@ -122,7 +137,10 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 15.0,
               ),
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
               const Text("Password",
                   style: TextStyle(
                     color: Color.fromARGB(255, 74, 74, 74),
@@ -131,6 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 4.0,
               ),
+<<<<<<< Updated upstream
               // password
               // TextField(
               //   enableSuggestions: false,
@@ -195,6 +214,43 @@ class _LoginScreenState extends State<LoginScreen> {
                             ? Icons.visibility
                             : Icons.visibility_off_rounded,
                         color: const Color.fromARGB(255, 74, 74, 74)),
+=======
+              TextField(
+                enableSuggestions: false,
+                autocorrect: false,
+                controller: _passwordController,
+                obscureText: true,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Password",
+                  filled: true,
+                  fillColor: const Color.fromARGB(255, 230, 230, 230),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius:
+                    const BorderRadius.all(Radius.circular(5.0)),
+                    borderSide: BorderSide(
+                        color: const Color.fromARGB(255, 230, 230, 230)
+                            .withOpacity(0.5),
+                        width: 2),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius:
+                    const BorderRadius.all(Radius.circular(5.0)),
+                    borderSide: BorderSide(
+                        color: const Color.fromARGB(255, 230, 230, 230)
+                            .withOpacity(0.5)),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius:
+                    const BorderRadius.all(Radius.circular(5.0)),
+                    borderSide: BorderSide(
+                        color: Colors.redAccent.withOpacity(0.5)),
+                  ),
+                  suffix: InkWell(
+                    onTap: () {},
+                    child: const Icon(Icons.visibility,
+                        color: Color.fromARGB(255, 74, 74, 74)),
+>>>>>>> Stashed changes
                   ),
                 ),
               ),
@@ -215,7 +271,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextStyle(color: Colors.white, fontSize: 15.0)),
                 ),
               ),
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
               const SizedBox(
                 height: 15.0,
               ),
@@ -268,22 +327,32 @@ class _LoginScreenState extends State<LoginScreen> {
                 onTap: () async {
                   // const AuthScreen().signInWithGoogle();
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+<<<<<<< Updated upstream
                     //    behavior: SnackBarBehavior.floating,
                     duration: const Duration(seconds: 2),
+=======
+                    duration: const Duration(seconds: 4),
+>>>>>>> Stashed changes
                     content: Row(
                       children: const <Widget>[
                         CircularProgressIndicator(),
                         Text("  Signing-In...")
                       ],
                     ),
+<<<<<<< Updated upstream
 
                   ));
 
 
+=======
+                  ));
+
+>>>>>>> Stashed changes
                   await Functio().signInWithGoogle();
                   var usersCheck =
                   await users.doc(GoogleUserStaticInfo().uid).get();
 
+<<<<<<< Updated upstream
                   if (usersCheck.exists) {
                     // Navigator.of(context).push(MaterialPageRoute(
                     //     builder: (context) => const personalinfo()));
@@ -320,16 +389,22 @@ class _LoginScreenState extends State<LoginScreen> {
                             builder: (context) => const personalinfo()),
                             (Route route) => false);
 
+=======
+                  if (!usersCheck.exists) {
+>>>>>>> Stashed changes
                     await users.doc(GoogleUserStaticInfo().uid).set({
                       'firstname': GoogleUserStaticInfo().firstname,
                       'lastname': GoogleUserStaticInfo().lastname,
                       'email': GoogleUserStaticInfo().email,
                     }).onError((error, stackTrace) => (error.toString()));
+<<<<<<< Updated upstream
 
 
                     // pushAndRemoveUntil
                     // Navigator.of(context).push(MaterialPageRoute(
                     //     builder: (context) => const HomePage()));
+=======
+>>>>>>> Stashed changes
                   }
                 },
                 child: Material(
@@ -389,11 +464,18 @@ class _LoginScreenState extends State<LoginScreen> {
             loading = false;
           });
           // logOut();
+<<<<<<< Updated upstream
         } else {
           Navigator.of(context).pushReplacement(MaterialPageRoute(
             builder: (context) => const HomePage(),
           ));
+=======
+>>>>>>> Stashed changes
         }
+
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => const HomePage(),
+        ));
       } else if (_emailController.text.isNotEmpty &
       _passwordController.text.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(sSnackBar);
@@ -421,9 +503,21 @@ class _LoginScreenState extends State<LoginScreen> {
               TextButton(
                 child: const Text('Got it'),
                 onPressed: () {
+<<<<<<< Updated upstream
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => const LoginScreen(),
                   ));
+=======
+                  // const LoginScreen();
+
+                  // Navigator.of(context).pop();
+
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const LoginScreen(),
+                  ));
+                  // _emailController.clear();
+                  // _passwordController.clear();
+>>>>>>> Stashed changes
                 },
               ),
             ],

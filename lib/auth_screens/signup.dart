@@ -88,6 +88,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                 ),
                 /*    const Align(
                 alignment: Alignment.topRight, child: Icon(Icons.close)), */
+<<<<<<< Updated upstream
             Ink.image(
                 image: const AssetImage('assets/images/VentureLogo.png'),
                 height: 50),
@@ -135,6 +136,48 @@ class _SignupWidgetState extends State<SignupWidget> {
                         fillColor: const Color.fromARGB(255, 230, 230, 230),
                         enabledBorder: OutlineInputBorder(
                           borderRadius:
+=======
+                Ink.image(
+                    image: const AssetImage('assets/images/VentureLogo.png'),
+                    height: 50),
+                const Text("Sign Up",
+                    style: TextStyle(
+                        fontSize: 28.0,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Questrial',
+                        height: 1.5)),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                const Text("First Name",
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 74, 74, 74),
+                      fontSize: 14.0,
+                    )),
+                const SizedBox(
+                  height: 4.0,
+                ),
+                Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextFormField(
+                          validator: (val) {
+                            if (val == null || val.isEmpty) {
+                              return 'Field cannot be empty';
+                            }
+                            return null;
+                          },
+                          controller: firstNameController,
+                          keyboardType: TextInputType.name,
+                          decoration: InputDecoration(
+                            hintText: "Firstname",
+                            filled: true,
+                            fillColor: const Color.fromARGB(255, 230, 230, 230),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+>>>>>>> Stashed changes
                               const BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(
                                   color: const Color.fromARGB(255, 230, 230, 230)
@@ -156,6 +199,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                             ),
                           ),
                         ),
+<<<<<<< Updated upstream
                       ),
                     ),
                     const SizedBox(
@@ -191,6 +235,34 @@ class _SignupWidgetState extends State<SignupWidget> {
                         fillColor: const Color.fromARGB(255, 230, 230, 230),
                         enabledBorder: OutlineInputBorder(
                           borderRadius:
+=======
+                        const SizedBox(
+                          height: 20.0,
+                        ),
+                        const Text("Last Name",
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 74, 74, 74),
+                              fontSize: 14.0,
+                            )),
+                        const SizedBox(
+                          height: 4.0,
+                        ),
+                        TextFormField(
+                          validator: (val) {
+                            if (val == null || val.isEmpty) {
+                              return 'Field cannot be empty';
+                            }
+                            return null;
+                          },
+                          controller: lastNameController,
+                          keyboardType: TextInputType.name,
+                          decoration: InputDecoration(
+                            hintText: "Lastname",
+                            filled: true,
+                            fillColor: const Color.fromARGB(255, 230, 230, 230),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+>>>>>>> Stashed changes
                               const BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(
                                   color: const Color.fromARGB(255, 230, 230, 230)
@@ -232,12 +304,15 @@ class _SignupWidgetState extends State<SignupWidget> {
                           },
                           controller: emailController,
                           keyboardType: TextInputType.emailAddress,
+<<<<<<< Updated upstream
                           enableInteractiveSelection: false,
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(
                                 RegExp('[a-zA-Z0-9_.@]')),
                             //FilteringTextInputFormatter.deny(RegExp(r'[/\\]')),
                           ],
+=======
+>>>>>>> Stashed changes
                           decoration: InputDecoration(
                             hintText: "email@gmail.com",
                             filled: true,
@@ -312,13 +387,19 @@ class _SignupWidgetState extends State<SignupWidget> {
                               if (_formKey.currentState!.validate()) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
+<<<<<<< Updated upstream
                                         behavior: SnackBarBehavior.floating,
+=======
+>>>>>>> Stashed changes
                                         content: Text('Processing Data')));
                                 createAccount();
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
+<<<<<<< Updated upstream
                                         behavior: SnackBarBehavior.floating,
+=======
+>>>>>>> Stashed changes
                                         content:
                                         Text('Fill out the required field')));
                               }
@@ -337,12 +418,24 @@ class _SignupWidgetState extends State<SignupWidget> {
                 const SizedBox(
                   height: 15.0,
                 ),
+<<<<<<< Updated upstream
                 Row(children: [
                   const Text("Already have an account? ",
+=======
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const LoginScreen()),
+                    );
+                  },
+                  child: const Text("Already have an account? Login",
+>>>>>>> Stashed changes
                       style: TextStyle(
                         color: Color.fromARGB(255, 74, 74, 74),
                         fontSize: 14.0,
                       )),
+<<<<<<< Updated upstream
 
                   GestureDetector(
                     onTap: () {
@@ -411,6 +504,62 @@ class _SignupWidgetState extends State<SignupWidget> {
                 //                     TextStyle(color: Colors.white, fontSize: 14.0)),
                 //           ]),
                 //     ))
+=======
+                ),
+                Row(children: const <Widget>[
+                  Expanded(
+                    child: Divider(
+                        color: Color.fromARGB(255, 105, 105, 105), endIndent: 20),
+                  ),
+                  Text(
+                    "or",
+                    style: TextStyle(color: Color.fromARGB(255, 74, 74, 74)),
+                  ),
+                  SizedBox(
+                    height: 50.0,
+                  ),
+                  Expanded(
+                    child: Divider(
+                        color: Color.fromARGB(255, 105, 105, 105), indent: 20),
+                  ),
+                ]),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                GestureDetector(
+                    onTap: () async {
+                      await Functio().signInWithGoogle();
+                      var usersCheck =
+                      await users.doc(GoogleUserStaticInfo().uid).get();
+
+                      if (!usersCheck.exists) {
+                        await users.doc(GoogleUserStaticInfo().uid).set({
+                          'firstname': GoogleUserStaticInfo().firstname,
+                          'lastname': GoogleUserStaticInfo().lastname,
+                          'email': GoogleUserStaticInfo().email,
+                        }).onError((error, stackTrace) => (error.toString()));
+                      }
+                    },
+                    child: Material(
+                      color: const Color.fromARGB(255, 0, 110, 195),
+                      elevation: 8,
+                      borderRadius: BorderRadius.circular(5.0),
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Ink.image(
+                                image:
+                                const AssetImage('assets/images/google2.png'),
+                                height: 40,
+                                width: 30),
+                            const SizedBox(width: 10.0, height: 50),
+                            const Text('Continue With Google',
+                                style:
+                                TextStyle(color: Colors.white, fontSize: 14.0)),
+                          ]),
+                    ))
+>>>>>>> Stashed changes
               ],
             ),
           ),
@@ -438,7 +587,10 @@ class _SignupWidgetState extends State<SignupWidget> {
           'lastname': lastNameController.text.trim(),
           'email': value.user!.email,
           'password': passwordController.text.trim(),
+<<<<<<< Updated upstream
           'role': user,
+=======
+>>>>>>> Stashed changes
         }));
       } else {
         //    print('Fields are empty');

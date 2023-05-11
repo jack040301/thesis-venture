@@ -17,6 +17,7 @@ import 'package:main_venture/models/auto_complete_results.dart';
 import 'package:main_venture/providers/search_places.dart';
 import 'package:main_venture/services/maps_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+<<<<<<< Updated upstream
 import 'package:geocoding/geocoding.dart';
 import 'package:google_geocoding/google_geocoding.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -24,6 +25,9 @@ import 'package:url_launcher/url_launcher.dart';
 // import 'package:place_picker/place_picker.dart';
 import '../feat_screens/requesting_dialog.dart';
 import '../onboarding_screens/discover.dart';
+=======
+
+>>>>>>> Stashed changes
 import '../userInfo.dart';
 import 'package:main_venture/screens/onboarding_screen.dart';
 
@@ -55,6 +59,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
   bool getDirections = false;
   // bool getmarker = true;
 
+<<<<<<< Updated upstream
   // for boundary error
   var warning = const SnackBar(
     content: Text(
@@ -74,6 +79,12 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
   Set<Marker> _markers = <Marker>{};
   final Set<Marker> markcount = <Marker>{};
 
+=======
+// Markers set
+  Set<Marker> allmarkers = <Marker>{};
+  Set<Marker> _markers = <Marker>{};
+
+>>>>>>> Stashed changes
   // Set<Marker> allmarkers = HashSet<Marker>();
 
   Map<MarkerId, Marker> _mapmarker = <MarkerId, Marker>{};
@@ -99,7 +110,11 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
   void initState() {
     userinfoFirestore();
     addCustomIconMarker();
+<<<<<<< Updated upstream
     // getBusiness();
+=======
+    getBusiness();
+>>>>>>> Stashed changes
     //run the function before the map loads
     super.initState();
   }
@@ -138,6 +153,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
         .then((icon) => setState(() {
       markerIcon = icon;
     }));
+<<<<<<< Updated upstream
 
     BitmapDescriptor.fromAssetImage(const ImageConfiguration(), assetspin)
         .then((primaryicon) => setState(() {
@@ -148,12 +164,18 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
   List<DropdownData> dropdownDatas = [];
   List<DropdownDataAssumption> dropdownAssumption = [];
 
+=======
+  }
+
+  List<DropdownData> dropdownDatas = [];
+>>>>>>> Stashed changes
   Future getBusiness() async {
     await FirebaseFirestore.instance
         .collection("business")
         .get()
         .then((QuerySnapshot snapshot) => {
       snapshot.docs.forEach((documents) async {
+<<<<<<< Updated upstream
         var data = documents.data() as Map;
 
         //var data = documents.data() as Map;
@@ -167,6 +189,13 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
     });
 
     //  await FirebaseFirestore.instance.collection("assumptions").doc("budgetassump").get();
+=======
+        //var data = documents.data() as Map;
+
+        dropdownDatas.add(DropdownData(nameofbusiness: documents.id));
+      })
+    });
+>>>>>>> Stashed changes
   }
 
   //this is the function for getting the users info in firestore
@@ -175,6 +204,10 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
         .collection('users')
         .doc(GoogleUserStaticInfo().uid)
         .snapshots();
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     usersStream.map(
       (DocumentSnapshot doc) {
         final data = doc.data() as Map<String, dynamic>;
@@ -203,9 +236,14 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
         .then((QuerySnapshot snapshot) => {
               snapshot.docs.forEach((documents) async {
                 var data = documents.data() as Map;
+
                 allmarkers.add(Marker(
                     onTap: () async {
+<<<<<<< Updated upstream
                       await DialogQuestion(documents.id).showMyDialog(context);
+=======
+                      await DialogQuestion(documents.id, dropdownDatas).showMyDialog(context);
+>>>>>>> Stashed changes
                     },
                     infoWindow: InfoWindow(
                       title: data["place"],
@@ -452,6 +490,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
     return allmarkers;
   }
 
+<<<<<<< Updated upstream
   final StreamController<Set<Marker>> _markerStreamController =
   StreamController<Set<Marker>>.broadcast();
   Stream<Set<Marker>> get markerStream => _markerStreamController.stream;
@@ -548,6 +587,67 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
 
 
 
+=======
+  Future testMarker() async {
+
+    await FirebaseFirestore.instance
+        .collection("testmarkers")
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+      querySnapshot.docs.forEach((documents) async {
+        var data = documents.data() as Map;
+
+        /*   print(data["coords"].latitude);
+                print(data["coords"].longitude); */
+
+        allmarkers.add(Marker(
+            onTap: () async {
+              await DialogQuestion(documents.id, dropdownDatas)
+                  .showMyDialog(context);
+            },
+            infoWindow: InfoWindow(
+              title: data["place"],
+            ),
+            markerId: MarkerId(documents.id),
+            icon: markerIcon,
+            position: LatLng(
+                data["coords"].latitude, data["coords"].longitude)));
+      })
+    });
+
+    setState(() {
+      allmarkers;
+    });
+
+    return allmarkers;
+
+    /*    await FirebaseFirestore.instance
+        .collection("markers")
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((documents) async {
+                var data = documents.data() as Map;
+
+                await allmarkers.add(Marker(
+                    onTap: () async {
+                      await DialogQuestion(data['id']).showMyDialog(context);
+                    },
+                    infoWindow: InfoWindow(title: data["place"]),
+                    markerId: MarkerId(data["id"]),
+                    icon: markerIcon,
+                    position: LatLng(
+                        data["coords"]!.latitude, data["coords"]!.longitude)));
+              })
+
+            });
+
+    setState(() {
+      allmarkers;
+      print(allmarkers.toString());
+    }); */
+  }
+
+>>>>>>> Stashed changes
   Widget builds(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(15.0, 150.0, 15.0, 5.0),
@@ -580,7 +680,11 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
     //Providers
     final allSearchResults = ref.watch(placeResultsProvider);
     final searchFlag = ref.watch(searchToggleProvider);
+<<<<<<< Updated upstream
     /* return FutureBuilder(
+=======
+    return FutureBuilder(
+>>>>>>> Stashed changes
       future: testMarker(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasError) {
@@ -590,6 +694,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
           return const Center(child: CircularProgressIndicator.adaptive());
         } */
 
+<<<<<<< Updated upstream
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -642,19 +747,84 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
                           }
                           _debounce =
                               Timer(const Duration(milliseconds: 700),
+=======
+        if (snapshot.hasData == false) {
+          return const Center(child: CircularProgressIndicator.adaptive());
+        }
+
+        return Scaffold(
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    HomeGoogleMap(
+                        screenHeight: screenHeight,
+                        screenWidth: screenWidth,
+                        allmarkers: allmarkers,
+                        polylines: _polylines,
+                        kGooglePlex: _kGooglePlex,
+                        controller: _controller),
+                    pressedNear
+                        ? builds(context)
+                        : searchToggle
+                        ? Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                          15.0, 40.0, 15.0, 5.0),
+                      child: Column(children: [
+                        Container(
+                          height: 50.0,
+                          width: 280,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: Colors.white,
+                          ),
+                          child: TextFormField(
+                            controller: searchController,
+                            decoration: InputDecoration(
+                                contentPadding:
+                                const EdgeInsets.symmetric(
+                                    horizontal: 20.0,
+                                    vertical: 15.0),
+                                border: InputBorder.none,
+                                prefixIcon: const Icon(Icons.search),
+                                hintText: 'Search',
+                                suffixIcon: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        searchToggle = false;
+                                        searchController.text = '';
+                                        _markers = {};
+                                        searchFlag.toggleSearch();
+                                      });
+                                    },
+                                    icon: const Icon(Icons.close))),
+                            onChanged: (value) {
+                              if (_debounce?.isActive ?? false) {
+                                _debounce?.cancel();
+                              }
+                              _debounce = Timer(
+                                  const Duration(milliseconds: 700),
+>>>>>>> Stashed changes
                                       () async {
                                     if (value.length > 2) {
                                       if (!searchFlag.searchToggle) {
                                         searchFlag.toggleSearch();
                                         _markers = {};
                                       }
+<<<<<<< Updated upstream
                                       List<AutoCompleteResult> searchResults =
+=======
+                                      List<AutoCompleteResult>
+                                      searchResults =
+>>>>>>> Stashed changes
                                       await MapServices()
                                           .searchPlaces(value);
 
                                       allSearchResults
                                           .setResults(searchResults);
                                     } else {
+<<<<<<< Updated upstream
                                       List<AutoCompleteResult> emptyList = [];
                                       allSearchResults.setResults(emptyList);
                                     }
@@ -663,6 +833,129 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
                       ),
                     ),
                   ]),
+=======
+                                      List<AutoCompleteResult> emptyList =
+                                      [];
+                                      allSearchResults
+                                          .setResults(emptyList);
+                                    }
+                                  });
+                            },
+                          ),
+                        ),
+                      ]),
+                    )
+                        : Container(),
+                    searchFlag.searchToggle
+                        ? allSearchResults.allReturnedResults.isNotEmpty
+                        ? Positioned(
+                        top: 100.0,
+                        left: 15.0,
+                        child: Container(
+                          height: 200.0,
+                          width: screenWidth - 30.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: Colors.white.withOpacity(0.7),
+                          ),
+                          child: ListView(
+                            children: [
+                              ...allSearchResults.allReturnedResults
+                                  .map((e) =>
+                                  buildListItem(e, searchFlag))
+                            ],
+                          ),
+                        ))
+                        : Positioned(
+                        top: 100.0,
+                        left: 15.0,
+                        child: HomeNoResultToShow(
+                            screenWidth: screenWidth,
+                            searchFlag: searchFlag))
+                        : Container(),
+
+                    //    getmarker(context), //to automatically show marker to map
+                    getDirections
+                        ? Padding(
+                      padding:
+                      const EdgeInsets.fromLTRB(15.0, 40.0, 15.0, 5),
+                      child: Column(
+                        children: [
+                          HomeOriginController(
+                              originController: _originController),
+                          const SizedBox(height: 3.0),
+                          Container(
+                            height: 50.0,
+                            width: 280,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Colors.white,
+                            ),
+                            child: TextFormField(
+                              controller: _destinationController,
+                              decoration: InputDecoration(
+                                  contentPadding:
+                                  const EdgeInsets.symmetric(
+                                      horizontal: 20.0,
+                                      vertical: 15.0),
+                                  border: InputBorder.none,
+                                  hintText: 'Destination',
+                                  suffixIcon: Container(
+                                    width: 96.8,
+                                    child: Row(
+                                      children: [
+                                        IconButton(
+                                            onPressed: () async {
+                                              var directions =
+                                              await MapServices()
+                                                  .getDirections(
+                                                  _originController
+                                                      .text,
+                                                  _destinationController
+                                                      .text);
+                                              _markers = {};
+                                              _polylines = {};
+                                              gotoPlace(
+                                                directions[
+                                                'start_location']
+                                                ['lat'],
+                                                directions[
+                                                'start_location']
+                                                ['lng'],
+                                                directions['end_location']
+                                                ['lng'],
+                                                directions['end_location']
+                                                ['lat'],
+                                                directions['bounds_ne'],
+                                                directions['bounds_sw'],
+                                              );
+                                              _setPolyline(directions[
+                                              'polyline_deoded']);
+                                            },
+                                            icon:
+                                            const Icon(Icons.search)),
+                                        IconButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                getDirections = false;
+                                                _originController.text =
+                                                '';
+                                                _destinationController
+                                                    .text = '';
+                                              });
+                                            },
+                                            icon: const Icon(Icons.close))
+                                      ],
+                                    ),
+                                  )),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                        : Container()
+                  ],
+>>>>>>> Stashed changes
                 )
                     : Container(),
                 searchFlag.searchToggle
@@ -719,6 +1012,7 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
               Discover().showDiscover(context);
             },
           ),
+<<<<<<< Updated upstream
           FloatingActionButton(
             disabledElevation: 0,
             elevation: 0.0,
@@ -732,6 +1026,54 @@ class _HomePageState extends ConsumerState<HomePage> with Userinformation {
                   "https://play.unity.com/mg/other/webgl-builds-329405");
               // Discover().showDiscover(context);
             },
+=======
+          floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
+          floatingActionButton: Column(
+            children: [
+              const SizedBox(height: 12),
+              FloatingButtonUserProfile(
+                  UserInfofirstname: UserInfofirstname,
+                  UserInfolastname:
+                  UserInfolastname), //breaking the Widget of floating button and passing the data from the stateless widget below
+              const HomeFloatingDialog(),
+              FloatingActionButton(
+                disabledElevation: 0,
+                elevation: 0.0,
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                mini: true,
+                heroTag: null,
+                child: const Icon(Icons.search),
+                onPressed: () {
+                  setState(() {
+                    searchToggle = true;
+                    radiusSlider = false;
+                    pressedNear = false;
+                    cardTapped = false;
+                    getDirections = false;
+                  });
+                },
+              ),
+              FloatingActionButton(
+                disabledElevation: 0,
+                elevation: 0.0,
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                mini: true,
+                heroTag: null,
+                child: const Icon(Icons.navigation),
+                onPressed: () {
+                  setState(() {
+                    searchToggle = false;
+                    radiusSlider = false;
+                    pressedNear = false;
+                    cardTapped = false;
+                    getDirections = true;
+                  });
+                },
+              ),
+            ],
+>>>>>>> Stashed changes
           ),
         ],
       ),
@@ -943,8 +1285,11 @@ class FloatingButtonUserProfile extends StatelessWidget {
             elevation: 0.0,
             backgroundColor: Colors.white,
             foregroundColor: Colors.black,
+<<<<<<< Updated upstream
             shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+=======
+>>>>>>> Stashed changes
             heroTag: null,
             mini: true,
             child: Profile().profile == null

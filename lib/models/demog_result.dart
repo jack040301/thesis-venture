@@ -2,17 +2,25 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+<<<<<<< Updated upstream
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
+=======
+
+>>>>>>> Stashed changes
 import 'dart:typed_data';
 import 'package:screenshot/screenshot.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
+<<<<<<< Updated upstream
 import 'forecasting/forecast_bottomnav.dart';
+=======
+>>>>>>> Stashed changes
 import 'forecasting/forecasting_linechart.dart';
 import 'package:main_venture/models/forecasting/forecasting_linechart.dart';
 import 'forecasting/forecasting_population.dart';
 import 'package:main_venture/userInfo.dart';
+<<<<<<< Updated upstream
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -22,13 +30,15 @@ import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart'; */
+=======
+>>>>>>> Stashed changes
 
 class DemogResult extends StatefulWidget {
   const DemogResult(
       {super.key,
-      required this.marker,
-      required this.budget,
-      required this.ideal});
+        required this.marker,
+        required this.budget,
+        required this.ideal});
   final String marker, ideal, budget;
   @override
   State<DemogResult> createState() => _DemogResultState();
@@ -37,8 +47,12 @@ class DemogResult extends StatefulWidget {
 class _DemogResultState extends State<DemogResult> {
   //Create an instance of ScreenshotController
   ScreenshotController screenshotController = ScreenshotController();
+<<<<<<< Updated upstream
   RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
   String Function(Match) mathFunc = (Match match) => '${match[1]},';
+=======
+
+>>>>>>> Stashed changes
   String popstrA = '';
   String landbudgetstrA = '';
   String revstrA = '';
@@ -51,6 +65,7 @@ class _DemogResultState extends State<DemogResult> {
 
   void initState() {
     getBusinessData();
+<<<<<<< Updated upstream
     super.initState();
   }
 
@@ -89,6 +104,10 @@ class _DemogResultState extends State<DemogResult> {
 
 //Dispose the document
     document.dispose();
+=======
+
+    super.initState();
+>>>>>>> Stashed changes
   }
 
   // ignore: non_constant_identifier_names
@@ -96,14 +115,20 @@ class _DemogResultState extends State<DemogResult> {
     await Navigator.push(
       context,
       MaterialPageRoute(
+<<<<<<< Updated upstream
         builder: (context) => ForecastingNavBar(
           markerid: widget.marker,
           businessname: businessname,
+=======
+        builder: (context) => BarchartPop(
+          // markerid: widget.marker,
+>>>>>>> Stashed changes
         ),
       ),
     );
   }
 
+<<<<<<< Updated upstream
   Future saveDatePinned(pinnedData) async {
     var db = FirebaseFirestore.instance;
     db
@@ -118,25 +143,39 @@ class _DemogResultState extends State<DemogResult> {
     });
   }
 
+=======
+>>>>>>> Stashed changes
   Future<void> ChartForecasting(BuildContext context) async {
     await Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => SyncLineChart(
+<<<<<<< Updated upstream
                   markerid: widget.marker,
                   suggestedbusiness: businessname,
                   //         markerid: widget.budget,
                 )));
+=======
+              //         markerid: widget.budget,
+            )));
+>>>>>>> Stashed changes
   }
 
   Future getBusinessData() async {
     CollectionReference business =
+<<<<<<< Updated upstream
         FirebaseFirestore.instance.collection("business");
     // var bud = widget.budget.trim();
     String budgetf = widget.budget.toString();
     final docRef = business.where("budgetassump", isEqualTo: budgetf);
+=======
+    FirebaseFirestore.instance.collection("business");
+    var bud = widget.budget.trim();
+    String budgetf = bud.toString();
+    final docRef = business.where("budget", isEqualTo: budgetf);
+>>>>>>> Stashed changes
     await docRef.get().then(
-      (QuerySnapshot doc) {
+          (QuerySnapshot doc) {
         doc.docs.forEach((documents) async {
           var data = documents.data() as Map;
           //  debugPrint(data);
@@ -146,10 +185,18 @@ class _DemogResultState extends State<DemogResult> {
           landrevenue = data['revenue'];
           landpop = data['population'];
           //landbudget = data['land value'];
+<<<<<<< Updated upstream
           //    landrevenue = data['revenue'];
           //landpop = data['population'];
 // for coversion of var to String
           // landbudgetstrA = data['land value'].toString();
+=======
+          landrevenue = data['revenue'];
+          //landpop = data['population'];
+
+// for coversion of var to String
+          landbudgetstrA = data['land value'].toString();
+>>>>>>> Stashed changes
           revstrA = data['revenue_standard'].toString();
           popstrA = data['population'].toString();
         });
@@ -160,15 +207,24 @@ class _DemogResultState extends State<DemogResult> {
 
   Future<String> savingImage(Uint8List bytes) async {
     PopSnackbar popSnackbar = PopSnackbar();
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     await [Permission.storage].request();
     final time = DateTime.now()
         .toIso8601String()
         .replaceAll('.', '-')
         .replaceAll(':', '-');
     final filename = 'screenshot_$time';
+<<<<<<< Updated upstream
 
     _createPDF(bytes);
     final result = await ImageGallerySaver.saveImage(bytes, name: filename);
+=======
+    final result = await ImageGallerySaver.saveImage(bytes, name: filename);
+
+>>>>>>> Stashed changes
     // ignore: use_build_context_synchronously
     ScaffoldMessenger.of(context)
         .showSnackBar(popSnackbar.popsnackbar("Sucessfully Downloaded Result"));
@@ -177,7 +233,8 @@ class _DemogResultState extends State<DemogResult> {
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference mark = FirebaseFirestore.instance.collection("markers");
+    CollectionReference mark =
+    FirebaseFirestore.instance.collection("testmarkers");
     final String con = widget.marker.trim(); //this still has problem
     return FutureBuilder<DocumentSnapshot>(
       future: mark.doc(con).get(),
@@ -191,8 +248,13 @@ class _DemogResultState extends State<DemogResult> {
         }
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
+<<<<<<< Updated upstream
               snapshot.data!.data() as Map<String, dynamic>;
           String placename = data['place'];
+=======
+          snapshot.data!.data() as Map<String, dynamic>;
+
+>>>>>>> Stashed changes
           //for land size
           String landstr = data['land_size'].toString();
           //  String landstrfinal = '${landstr}sqm';
@@ -215,14 +277,23 @@ class _DemogResultState extends State<DemogResult> {
           // for budget
           String landbudgetstrB = data['land'].toString();
           double landbudgetdblB = double.parse(landbudgetstrB);
+<<<<<<< Updated upstream
           double landbudgetdblA = double.parse(landbudget);
+=======
+
+          double landbudgetdblA = double.parse(landbudgetstrA);
+>>>>>>> Stashed changes
           /*  double landbudgetdblfinalA = landbudgetdblB - landbudgetdblB;
           double landbudgetdblfinalB = landbudgetdblB - landbudgetdblfinalA;
           double landbudgetdblfinalC =
               (landbudgetdblfinalB / landbudgetdblB) * 100; */
           double landbudgetdblfinalA = landbudgetdblB - landbudgetdblA; //2600
+<<<<<<< Updated upstream
           double landbudgetdblfinalB =
               landbudgetdblA - landbudgetdblfinalA; // 2800
+=======
+          double landbudgetdblfinalB = landbudgetdblA - landbudgetdblfinalA; // 2800
+>>>>>>> Stashed changes
           double landbudgetdblfinalC =
               (landbudgetdblfinalB / landbudgetdblA) * 100;
           if (landbudgetdblfinalC > 100) {
@@ -231,6 +302,7 @@ class _DemogResultState extends State<DemogResult> {
           double result = (popdblfinal + revdblfinal + landbudgetdblfinalC) / 3;
           String resultA = result.toStringAsFixed(2);
           String resultfinal = '${resultA}%';
+<<<<<<< Updated upstream
           final pinnedData = {
             "place_name": placename,
             "percentage": resultfinal,
@@ -242,10 +314,19 @@ class _DemogResultState extends State<DemogResult> {
             "user_id": GoogleUserStaticInfo().uid,
             "marker_id": widget.marker,
           };
+=======
+
+
+
+>>>>>>> Stashed changes
           return Scaffold(
               backgroundColor: const Color.fromARGB(255, 241, 242, 242),
               appBar: AppBar(
                 backgroundColor: Colors.transparent,
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
                 title: const Text("Demographical Result"),
                 //  title: Text(widget.ideal),
                 foregroundColor: const Color.fromARGB(255, 44, 45, 48),
@@ -254,6 +335,7 @@ class _DemogResultState extends State<DemogResult> {
                   color: Color.fromARGB(255, 44, 45, 48),
                 ),
               ),
+<<<<<<< Updated upstream
               body: RepaintBoundary(
                   key: _globalKey,
                   child: Padding(
@@ -701,6 +783,8 @@ class _DemogResultState extends State<DemogResult> {
                   color: Color.fromARGB(255, 44, 45, 48),
                 ),
               ),
+=======
+>>>>>>> Stashed changes
               body: Screenshot(
                   controller: screenshotController,
                   child: Padding(
@@ -715,7 +799,11 @@ class _DemogResultState extends State<DemogResult> {
                                 ),
                                 DemogPlace(data: data),
                                 Container(
+<<<<<<< Updated upstream
                                   padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
+=======
+                                  padding: const EdgeInsets.fromLTRB(35, 2, 35, 2),
+>>>>>>> Stashed changes
                                   color: Colors.white,
                                   child: const Center(
                                     child: Text("Population", //POPULATION
@@ -726,10 +814,17 @@ class _DemogResultState extends State<DemogResult> {
                                 ),
                                 DemogPopulation(popstrB: popstrB),
                                 Container(
+<<<<<<< Updated upstream
                                   padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
                                   color: Colors.white,
                                   child: const Center(
                                    child: Text(
+=======
+                                  padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
+                                  color: Colors.white,
+                                  child: const Center(
+                                    child: Text(
+>>>>>>> Stashed changes
                                         "Revenue per year", //REVENUE PER YEAR
                                         style: TextStyle(
                                             color: Color.fromARGB(255, 44, 45, 48),
@@ -747,7 +842,11 @@ class _DemogResultState extends State<DemogResult> {
                                   ),
                                 ),
                                 Container(
+<<<<<<< Updated upstream
                                   padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
+=======
+                                  padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
+>>>>>>> Stashed changes
                                   color: Colors.white,
                                   child: const Center(
                                     child: Text("Land per SqM", //LAND PER SQ
@@ -758,7 +857,11 @@ class _DemogResultState extends State<DemogResult> {
                                 ),
                                 LandPerSQM(landstr: landstr),
                                 Container(
+<<<<<<< Updated upstream
                                   padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
+=======
+                                  padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
+>>>>>>> Stashed changes
                                   color: Colors.white,
                                   child: const Center(
                                     child: Text("Budget required for the area",
@@ -770,12 +873,19 @@ class _DemogResultState extends State<DemogResult> {
                                 ),
                                 BudgetRequiredArea(landbudgetstrB: landbudgetstrB),
                                 Container(
+<<<<<<< Updated upstream
                                   padding: const EdgeInsets.fromLTRB(35, 10, 35, 5),
                                   color: Colors.white,
                                   child: const Center(
                                     child: Text(
                                         textAlign: TextAlign.justify,
                                         "The Feasibilty (%) of your ideal \n business is",
+=======
+                                  padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
+                                  color: Colors.white,
+                                  child: const Center(
+                                    child: Text("The Feasibilty (%) of your ideal business is",
+>>>>>>> Stashed changes
                                         style: TextStyle(
                                             color: Color.fromARGB(255, 65, 99, 200),
                                             fontSize: 16.0)), // <-- Text
@@ -783,6 +893,7 @@ class _DemogResultState extends State<DemogResult> {
                                 ),
                                 IdealBusinessResult(resultfinal: resultfinal),
                                 Container(
+<<<<<<< Updated upstream
                                   padding: const EdgeInsets.fromLTRB(35, 5, 35, 10),
                                   color: Colors.white,
                                   child: const Center(
@@ -790,11 +901,24 @@ class _DemogResultState extends State<DemogResult> {
                                         // ideal ni user
                                         style: TextStyle(
                                             color: Color.fromARGB(255, 65, 99, 200),
+=======
+                                  padding: const EdgeInsets.fromLTRB(35, 0, 35, 5),
+                                  color: Colors.white,
+                                  child: Center(
+                                    child: Text("ideal",
+                                        // ideal ni user
+                                        style: const TextStyle(
+                                            color: Color.fromARGB(255, 44, 45, 48),
+>>>>>>> Stashed changes
                                             fontSize: 21.0)), // <-- Text
                                   ),
                                 ),
                                 Container(
+<<<<<<< Updated upstream
                                   padding: const EdgeInsets.fromLTRB(35, 2, 35, 5),
+=======
+                                  padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
+>>>>>>> Stashed changes
                                   color: Colors.white,
                                   child: const Center(
                                     child: Text("Business Type",
@@ -806,16 +930,27 @@ class _DemogResultState extends State<DemogResult> {
                                 Container(
                                   padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
                                   color: Colors.white,
+<<<<<<< Updated upstream
                                   child: Center(
                                     child: Text(widget.ideal,
                                         //BUDGET REQUIRED FOR THE AREA
                                         style: const TextStyle(
+=======
+                                  child: const Center(
+                                    child: Text("Coffee Shop",
+                                        //BUDGET REQUIRED FOR THE AREA
+                                        style: TextStyle(
+>>>>>>> Stashed changes
                                             color: Color.fromARGB(255, 44, 45, 48),
                                             fontSize: 20.0)), // <-- Text
                                   ),
                                 ),
                                 Container(
+<<<<<<< Updated upstream
                                   padding: const EdgeInsets.fromLTRB(35, 2, 35, 5),
+=======
+                                  padding: const EdgeInsets.fromLTRB(35, 2, 35, 0),
+>>>>>>> Stashed changes
                                   color: Colors.white,
                                   child: const Center(
                                     child: Text("Suggested business for you",
@@ -825,7 +960,11 @@ class _DemogResultState extends State<DemogResult> {
                                   ),
                                 ),
                                 Container(
+<<<<<<< Updated upstream
                                   padding: const EdgeInsets.fromLTRB(35, 0, 35, 10),
+=======
+                                  padding: const EdgeInsets.fromLTRB(35, 0, 35, 5),
+>>>>>>> Stashed changes
                                   color: Colors.white,
                                   child: Center(
                                     child: GestureDetector(
@@ -843,7 +982,11 @@ class _DemogResultState extends State<DemogResult> {
                                 ),
                                 Container(
                                     padding:
+<<<<<<< Updated upstream
                                     const EdgeInsets.fromLTRB(10, 5, 10, 20),
+=======
+                                    const EdgeInsets.fromLTRB(10, 0, 10, 10),
+>>>>>>> Stashed changes
                                     color: Colors.white,
                                     child: Row(
                                         mainAxisAlignment:
@@ -876,17 +1019,29 @@ class _DemogResultState extends State<DemogResult> {
                                                             milliseconds:
                                                             10),
                                                         pixelRatio: 1.5);
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
                                                     if (image == null) return;
                                                     await savingImage(image);
                                                     int count = 0;
                                                     Navigator.of(context).popUntil(
                                                             (_) => count++ >= 2);
                                                   },
+<<<<<<< Updated upstream
                                                   icon: const Icon(
                                                     Icons.file_download_outlined,
                                                     size: 18.0,
                                                   ),
                                                   label: const Text(
+=======
+                                                  icon: Icon(
+                                                    Icons.file_download_outlined,
+                                                    size: 18.0,
+                                                  ),
+                                                  label: Text(
+>>>>>>> Stashed changes
                                                     "Download",
                                                     style: TextStyle(
                                                         color: Colors.white),
@@ -895,6 +1050,10 @@ class _DemogResultState extends State<DemogResult> {
                                           const SizedBox(
                                             width: 10.0,
                                           ),
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
                                           Expanded(
                                               child: TextButton(
                                                 onPressed: () {
@@ -902,9 +1061,13 @@ class _DemogResultState extends State<DemogResult> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) =>
+<<<<<<< Updated upstream
                                                               SyncLineChart(
                                                                 markerid: widget.marker,
                                                               )));
+=======
+                                                              SyncLineChart()));
+>>>>>>> Stashed changes
                                                   //getMarkerData();
                                                   //   getBusinessData();
                                                 },
@@ -921,11 +1084,18 @@ class _DemogResultState extends State<DemogResult> {
                                               ))
                                         ]))
                               ])))));
+<<<<<<< Updated upstream
       */
+=======
+>>>>>>> Stashed changes
         }
         return const Center(
             child:
+<<<<<<< Updated upstream
                 CircularProgressIndicator.adaptive()); //while loading the data
+=======
+            CircularProgressIndicator.adaptive()); //while loading the data
+>>>>>>> Stashed changes
       },
     );
   }
@@ -1029,7 +1199,6 @@ class IdealBusinessResult extends StatelessWidget {
     );
   }
 }
-
 class BudgetRequiredArea extends StatelessWidget {
   const BudgetRequiredArea({
     super.key,

@@ -18,6 +18,7 @@ import 'dart:ui' as ui;
 import 'dart:io';
 
 class BarchartPop extends StatelessWidget {
+<<<<<<< Updated upstream
   final String markerid;
   BarchartPop({super.key, required this.markerid});
   //const BarchartPop({super.key});
@@ -39,6 +40,19 @@ class BarchartPop extends StatelessWidget {
 
     return FutureBuilder<DocumentSnapshot>(
       future: population.doc(markerid).get(),
+=======
+ // final String markerid;
+  //const BarchartPop({super.key, required this.markerid});
+ const BarchartPop({super.key});
+  @override
+  Widget build(BuildContext context) {
+ //   String docuid = markerid;
+    CollectionReference population =
+        FirebaseFirestore.instance.collection("testmarkers");
+
+    return FutureBuilder<DocumentSnapshot>(
+      future: population.doc("SZRH2HoNBjRGpY4RuaoD").get(),
+>>>>>>> Stashed changes
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {
           return const Text("Error");
@@ -75,7 +89,11 @@ class BarchartPop extends StatelessWidget {
             ),
           ];
 
+<<<<<<< Updated upstream
           /*  List<charts.Series<BarChartModel, String>> series = [
+=======
+           List<charts.Series<BarChartModel, String>> series = [
+>>>>>>> Stashed changes
             charts.Series(
               id: "population",
               data: data,
@@ -88,6 +106,7 @@ class BarchartPop extends StatelessWidget {
           ]; */
 
           return Scaffold(
+<<<<<<< Updated upstream
               backgroundColor: const Color.fromARGB(255, 241, 242, 242),
               body: Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -251,6 +270,25 @@ class BarchartPop extends StatelessWidget {
                           )
                         ])),
               ));
+=======
+
+
+
+            body: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
+              child: charts.BarChart(
+                series,
+                animate: true,
+                barRendererDecorator: charts.BarLabelDecorator<String>(),
+                domainAxis: const charts.OrdinalAxisSpec(),
+              ),
+            ),
+
+
+
+
+          );
+>>>>>>> Stashed changes
         }
         return const Center(child: CircularProgressIndicator.adaptive());
       },
