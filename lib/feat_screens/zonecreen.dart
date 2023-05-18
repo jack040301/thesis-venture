@@ -1,19 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:main_venture/feat_screens/dialogbutton.dart';
+import 'package:main_venture/onboarding_screens/quick_guide_zone.dart';
 
 import '../userInfo.dart';
 
 class ZoneScreen extends StatefulWidget {
   const ZoneScreen(
       {super.key,
-      required this.dataID,
-      required this.place,
-      required this.coordinates_latitude,
-      required this.coordinates_longitude,
-      required this.land_size,
-      required this.population,
-      required this.revenue});
+        required this.dataID,
+        required this.place,
+        required this.coordinates_latitude,
+        required this.coordinates_longitude,
+        required this.land_size,
+        required this.population,
+        required this.revenue});
 
   final String dataID, place, land_size, population, revenue;
 
@@ -37,14 +38,14 @@ class _ZoneScreenState extends State<ZoneScreen> {
         .collection("business")
         .get()
         .then((QuerySnapshot snapshot) => {
-              snapshot.docs.forEach((documents) async {
-                var data = documents.data() as Map;
+      snapshot.docs.forEach((documents) async {
+        var data = documents.data() as Map;
 
-                dropdownDatas.add(DropdownData(nameofbusiness: documents.id));
-                dropdownAssumption.add(
-                    DropdownDataAssumption(budgetassump: data['budgetassump']));
-              })
-            });
+        dropdownDatas.add(DropdownData(nameofbusiness: documents.id));
+        dropdownAssumption.add(
+            DropdownDataAssumption(budgetassump: data['budgetassump']));
+      })
+    });
   }
 
   @override
@@ -62,6 +63,23 @@ class _ZoneScreenState extends State<ZoneScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         title: const Text('Pinned Location'),
+        actions: <Widget>[
+          IconButton(
+            padding: EdgeInsets.only(right: 20.0),
+            icon: Icon(
+              Icons.info_outline,
+              color: Color.fromARGB(
+                  255, 65, 99, 200),
+            ),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                      const SliderZoneScreen()));
+            },
+          )
+        ],
         foregroundColor: const Color.fromARGB(255, 44, 45, 48),
         elevation: 0.0,
         leading: const BackButton(
@@ -207,7 +225,7 @@ class _ZoneScreenState extends State<ZoneScreen> {
                   children: <Widget>[
                     const Image(
                         image:
-                            AssetImage('assets/images/icons/LandSizeIcon.png'),
+                        AssetImage('assets/images/icons/LandSizeIcon.png'),
                         height: 80),
                     const SizedBox(
                       width: 15.0,
@@ -267,7 +285,7 @@ class _ZoneScreenState extends State<ZoneScreen> {
                   children: <Widget>[
                     const Image(
                         image:
-                            AssetImage('assets/images/icons/RevenueIcon.png'),
+                        AssetImage('assets/images/icons/RevenueIcon.png'),
                         height: 80),
                     const SizedBox(
                       width: 35.0,
@@ -290,7 +308,7 @@ class _ZoneScreenState extends State<ZoneScreen> {
 // ),
               Container(
                 color: Colors.white,
-                padding: const EdgeInsets.fromLTRB(8, 18, 8, 20),
+                padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -302,7 +320,7 @@ class _ZoneScreenState extends State<ZoneScreen> {
                               borderRadius: BorderRadius.circular(5.0)),
                           onPressed: () async {
                             await DialogQuestion(widget.dataID, dropdownDatas,
-                                    dropdownAssumption)
+                                dropdownAssumption)
                                 .showMyDialog(context);
                           },
                           child: const Text(

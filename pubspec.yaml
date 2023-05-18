@@ -43,6 +43,8 @@ dependencies:
 
   decorated_dropdownbutton: ^0.0.3
 
+  #page indicator - quick guide
+  smooth_page_indicator: ^1.1.0
 
   animated_splash_screen: ^1.3.0
 
@@ -72,18 +74,28 @@ dependencies:
   cloud_firestore: ^4.0.5
   flutter_password_strength: ^0.1.6
   geocoding: ^2.0.5
+<<<<<<< Updated upstream
   image_gallery_saver:
   permission_handler:
   syncfusion_flutter_charts:
   url_launcher: ^6.1.10
- # flutter_pdf:
+  # flutter_pdf:
   pdf:
   path_provider:
   open_file:
   printing:
- # pdf: ^3.8.4
+  # pdf: ^3.8.4
   share_plus:
   flutter_native_screenshot: ^1.1.2
+=======
+
+  custom_marker: ^1.0.0
+>>>>>>> Stashed changes
+
+  image_gallery_saver:
+  permission_handler:
+
+  syncfusion_flutter_charts:
 
 dev_dependencies:
   flutter_launcher_icons: ^0.10.0
@@ -124,6 +136,15 @@ flutter:
     - assets/animassets/Venture_Splash.png
 
     - assets/images/icons/venture.png
+    - assets/images/icons/Welcome.png
+    - assets/images/icons/1TapAnywhere.png
+    - assets/images/icons/2PinnedLocDisplay.png
+    - assets/images/icons/3PinnedLoc.png
+    - assets/images/icons/4PinnedLoc.png
+    - assets/images/icons/5PinnedLoc.png
+    - assets/images/icons/6PinnedLoc.png
+    - assets/images/icons/7PinnedLoc.png
+    - assets/images/icons/8PinnedLoc.png
 
     - assets/images/google.png
     - assets/images/pic.png

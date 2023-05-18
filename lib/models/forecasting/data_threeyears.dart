@@ -30,7 +30,7 @@ class BarThreeYears extends StatelessWidget {
     //   String docuid = markerid;
     initState();
     CollectionReference population =
-        FirebaseFirestore.instance.collection("forecast");
+    FirebaseFirestore.instance.collection("forecast");
 
     return FutureBuilder<DocumentSnapshot>(
       future: population.doc("8gt1T3xZKOfRPZMgkscB").get(),
@@ -44,7 +44,7 @@ class BarThreeYears extends StatelessWidget {
         }
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> datafirebase =
-              snapshot.data!.data() as Map<String, dynamic>;
+          snapshot.data!.data() as Map<String, dynamic>;
 
           double pastPop = datafirebase["firstyear"];
           double presentPop = datafirebase["secondyear"];
@@ -90,51 +90,50 @@ class BarThreeYears extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                      Center(
-                          child: Container(
-                              height: 900,
-                              padding: const EdgeInsets.all(5),
-                              child: Card(
-                                  elevation: 0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(0.0),
-                                  ),
-                                  child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          5, 20, 5, 10),
-                                      child: Column(children: <Widget>[
-                                        const Text(
-                                            "Forecasted Growth Revenue (3 Years)",
-                                            style: TextStyle(fontSize: 19.0)),
-                                        Expanded(
-                                            child: SfCartesianChart(
-                                                key: _cartesianChartKey,
-                                                primaryXAxis: CategoryAxis(),
-                                                series: <ChartSeries<
-                                                    BarDataThreeYears, String>>[
-                                              // Renders column chart
+                          Center(
+                              child: Container(
+                                  height: 1000,
+                                  padding: const EdgeInsets.all(5),
+                                  child: Card(
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(0.0),
+                                      ),
+                                      child: Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              5, 20, 5, 10),
+                                          child: Column(children: <Widget>[
+                                            const Text("Forecasted Growth Revenue (3 Years)",
+                                                style: TextStyle(fontSize: 19.0)),
+                                            Expanded(
+                                                child: SfCartesianChart(
+                                                    key: _cartesianChartKey,
+                                                    primaryXAxis: CategoryAxis(),
+                                                    series: <ChartSeries<
+                                                        BarDataThreeYears, String>>[
+                                                      // Renders column chart
 
-                                              ColumnSeries<BarDataThreeYears,
-                                                  String>(
-                                                dataSource: data,
-                                                xValueMapper:
-                                                    (BarDataThreeYears data,
+                                                      ColumnSeries<BarDataThreeYears,
+                                                          String>(
+                                                        dataSource: data,
+                                                        xValueMapper:
+                                                            (BarDataThreeYears data,
                                                             _) =>
                                                         data.year,
-                                                yValueMapper:
-                                                    (BarDataThreeYears data,
+                                                        yValueMapper:
+                                                            (BarDataThreeYears data,
                                                             _) =>
-                                                        data.revenue.toDouble(),
-                                                pointColorMapper:
-                                                    (BarDataThreeYears data,
+                                                            data.revenue.toDouble(),
+                                                        pointColorMapper:
+                                                            (BarDataThreeYears data,
                                                             _) =>
                                                         data.color,
-                                                dataLabelSettings:
-                                                    const DataLabelSettings(
-                                                        isVisible: true),
-                                              )
-                                            ])
-                                            /*    charts.BarChart(
+                                                        dataLabelSettings:
+                                                        const DataLabelSettings(
+                                                            isVisible: true),
+                                                      )
+                                                    ])
+                                              /*    charts.BarChart(
                                             series,
                                             animate: true,
                                             barRendererDecorator: charts
@@ -143,60 +142,58 @@ class BarThreeYears extends StatelessWidget {
                                                 const charts.OrdinalAxisSpec(),
                                           ), */
                                             ),
-                                        const Padding(
-                                            padding: EdgeInsets.all(8.0),
-                                            child: Text(
-                                              "The graph shows the potential growth of the chose business from its first three years with the use of venture's Average algorithm and Parameters "
-                                              "as shown in the graph the first year of the business displays a typical low revenue it is because the first year of the business is where the"
-                                              "invested money is being subtracted from the initial anual revenue as a result it has a lower income but the following years as foreacsted"
-                                              "with diffrent parameters (excluding the marketing cost and one time cost) as an outcome it has a bigger revenue and at the end of the 3 years forecast"
-                                              "we can interpret that the investement fund is not just returned but also matured and as the buisness progress we can conclude that the chosen business"
-                                              "is feasible and worth to ventured on "
-                                              ""
-                                              // gray and maliit lang din to
-                                              "*Revenue may varies depending on the market factors like inflation",
-                                              textAlign: TextAlign.justify,
-                                              style: TextStyle(
-                                                height: 1.5,
-                                                color: Color.fromARGB(
-                                                    255, 54, 54, 54),
-                                                fontSize: 15,
-                                              ),
-                                            )),
-                                        Container(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                10, 5, 10, 20),
-                                            color: Colors.white,
-                                            child: Row(
-                                                mainAxisAlignment:
+                                            const Padding(
+                                                padding: EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  "The graph shows the potential growth of the chose business from its first three years with the use of venture's Average algorithm and Parameters "
+                                                      "as shown in the graph the first year of the business displays a typical low revenue it is because the first year of the business is where the"
+                                                      "invested money is being subtracted from the initial annual revenue as a result it has a lower income but the following years as forecasted"
+                                                      "with different parameters (excluding the marketing cost and one time cost) as an outcome it has a bigger revenue and at the end of the 3 years forecast"
+                                                      "we can interpret that the investment fund is not just returned but also matured and as the business progress we can conclude that the chosen business"
+                                                      "is feasible and worth to ventured on \n\n"
+                                                      "*Revenue may varies depending on the market factors like inflation",
+                                                  textAlign: TextAlign.justify,
+                                                  style: TextStyle(
+                                                    height: 1.5,
+                                                    color: Color.fromARGB(
+                                                        255, 54, 54, 54),
+                                                    fontSize: 15,
+                                                  ),
+                                                )),
+                                            Container(
+                                                padding: const EdgeInsets.fromLTRB(
+                                                    10, 5, 10, 20),
+                                                color: Colors.white,
+                                                child: Row(
+                                                    mainAxisAlignment:
                                                     MainAxisAlignment
                                                         .spaceEvenly,
-                                                children: <Widget>[
-                                                  Expanded(
-                                                      child:
+                                                    children: <Widget>[
+                                                      Expanded(
+                                                          child:
                                                           ElevatedButton.icon(
                                                               style:
-                                                                  ElevatedButton
-                                                                      .styleFrom(
+                                                              ElevatedButton
+                                                                  .styleFrom(
                                                                 elevation: 0.0,
                                                                 padding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        10.0),
+                                                                const EdgeInsets
+                                                                    .all(
+                                                                    10.0),
                                                                 primary: const Color
-                                                                        .fromARGB(
+                                                                    .fromARGB(
                                                                     255,
                                                                     0,
                                                                     110,
                                                                     195), // background
                                                                 shape: RoundedRectangleBorder(
                                                                     borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            5.0)),
+                                                                    BorderRadius.circular(
+                                                                        5.0)),
                                                                 minimumSize:
-                                                                    const Size(
-                                                                        70,
-                                                                        40), //////// HERE
+                                                                const Size(
+                                                                    70,
+                                                                    40), //////// HERE
                                                               ),
                                                               onPressed: () {
                                                                 _renderChartAsImage(
@@ -214,37 +211,37 @@ class BarThreeYears extends StatelessWidget {
                                                                     color: Colors
                                                                         .white),
                                                               ))),
-                                                  //Spacer(),
-                                                  const SizedBox(
-                                                    width: 10.0,
-                                                  ),
-                                                  Expanded(
-                                                      child: TextButton(
-                                                    onPressed: () {
-                                                      Navigator.of(context)
-                                                          .pushAndRemoveUntil(
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          const HomePage()),
-                                                              (Route route) =>
-                                                                  false);
-                                                    },
-                                                    style: TextButton.styleFrom(
-                                                      minimumSize: const Size(
-                                                          70,
-                                                          40), //<-- SEE HERE
-                                                      side: const BorderSide(
-                                                        color: Color.fromARGB(
-                                                            255, 0, 110, 195),
-                                                        width: 3,
+                                                      //Spacer(),
+                                                      const SizedBox(
+                                                        width: 10.0,
                                                       ),
-                                                    ),
-                                                    child: const Text('Done'),
-                                                  ))
-                                                ]))
-                                      ])))))
-                    ])),
+                                                      Expanded(
+                                                          child: TextButton(
+                                                            onPressed: () {
+                                                              Navigator.of(context)
+                                                                  .pushAndRemoveUntil(
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                      const HomePage()),
+                                                                      (Route route) =>
+                                                                  false);
+                                                            },
+                                                            style: TextButton.styleFrom(
+                                                              minimumSize: const Size(
+                                                                  70,
+                                                                  40), //<-- SEE HERE
+                                                              side: const BorderSide(
+                                                                color: Color.fromARGB(
+                                                                    255, 0, 110, 195),
+                                                                width: 3,
+                                                              ),
+                                                            ),
+                                                            child: const Text('Done'),
+                                                          ))
+                                                    ]))
+                                          ])))))
+                        ])),
               ));
         }
         return const Center(child: CircularProgressIndicator.adaptive());
@@ -255,10 +252,10 @@ class BarThreeYears extends StatelessWidget {
 
 Future<void> _renderChartAsImage(context, _cartesianChartKey) async {
   final ui.Image data =
-      await _cartesianChartKey.currentState!.toImage(pixelRatio: 3.0);
+  await _cartesianChartKey.currentState!.toImage(pixelRatio: 3.0);
   final ByteData? bytes = await data.toByteData(format: ui.ImageByteFormat.png);
   final Uint8List imageBytes =
-      bytes!.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
+  bytes!.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
 
   final PdfBitmap bitmap = PdfBitmap(imageBytes);
 
@@ -267,25 +264,26 @@ Future<void> _renderChartAsImage(context, _cartesianChartKey) async {
       Size(bitmap.width.toDouble(), bitmap.height.toDouble());
   final PdfPage page = document.pages.add();
   final Size pageSize = page.getClientSize();
-  page.graphics.drawString(
-    "Forecasted Growth Revenue (3 Years)",
+  page.graphics.drawString("Forecasted Growth Revenue (3 Years)",
     PdfStandardFont(PdfFontFamily.helvetica, 40, style: PdfFontStyle.bold),
     brush: PdfSolidBrush(PdfColor(0, 0, 0)),
     bounds: const Rect.fromLTWH(0, 10, 950, 2000),
     format: PdfStringFormat(alignment: PdfTextAlignment.center),
   );
-  page.graphics.drawImage(bitmap, Rect.fromLTWH(-12, 80, 930, 490));
+  page.graphics
+      .drawImage(bitmap, Rect.fromLTWH(-12, 80, 930, 490));
   page.graphics.drawString(
+
     "The graph shows the potential growth of the chose business from its first three years with "
-    "the use of venture's Average algorithm and Parameters as shown in the graph the first year "
-    "of the business displays a typical low revenue it is because the first year of the business "
-    "is where the invested money is being subtracted from the initial annual revenue as a result it"
-    " has a lower income but the following years as forecasted with different parameters (excluding "
-    "the marketing cost and one time cost) as an outcome it has a bigger revenue and at the end of "
-    "the 3 years forecast we can interpret that the investment fund is not just returned but also "
-    "matured and as the business progress we can conclude that the chosen business is feasible and "
-    "worth to ventured on\n\n"
-    "*Revenue may varies depending on the market factors like inflation",
+        "the use of venture's Average algorithm and Parameters as shown in the graph the first year "
+        "of the business displays a typical low revenue it is because the first year of the business "
+        "is where the invested money is being subtracted from the initial annual revenue as a result it"
+        " has a lower income but the following years as forecasted with different parameters (excluding "
+        "the marketing cost and one time cost) as an outcome it has a bigger revenue and at the end of "
+        "the 3 years forecast we can interpret that the investment fund is not just returned but also "
+        "matured and as the business progress we can conclude that the chosen business is feasible and "
+        "worth to ventured on\n\n"
+        "*Revenue may varies depending on the market factors like inflation",
     PdfStandardFont(PdfFontFamily.helvetica, 20),
     brush: PdfSolidBrush(PdfColor(0, 0, 0)),
     bounds: const Rect.fromLTWH(0, 580, 850, 2000),
@@ -305,7 +303,7 @@ Future<void> _renderChartAsImage(context, _cartesianChartKey) async {
   OpenFile.open('$path/Venture_Forecast-PieChart.pdf');
 
   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-    behavior: SnackBarBehavior.floating,
+    //behavior: SnackBarBehavior.floating,
     content: Text('Processing...'),
   ));
 }

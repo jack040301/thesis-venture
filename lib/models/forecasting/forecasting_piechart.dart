@@ -53,7 +53,7 @@ class PieChartForecasting extends StatelessWidget {
   List<ChartData> dummyData1 = [];
   List<ChartData> dummyData2 = [];
   CollectionReference forebusiness =
-      FirebaseFirestore.instance.collection("business");
+  FirebaseFirestore.instance.collection("business");
   void _printScreen() {
     /*   Printing.layoutPdf(onLayout: (PdfPageFormat format) async {
       final doc = pw.Document();
@@ -96,75 +96,76 @@ class PieChartForecasting extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                  FutureBuilder<DocumentSnapshot>(
-                      future: forebusiness.doc(suggestedbusiness).get(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<DocumentSnapshot> snapshot) {
-                        if (snapshot.hasError) {
-                          return const Text("Error");
-                        } else if (snapshot.hasData) {
-                          Map<String, dynamic> dataDoc =
+                      FutureBuilder<DocumentSnapshot>(
+                          future: forebusiness.doc(suggestedbusiness).get(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<DocumentSnapshot> snapshot) {
+                            if (snapshot.hasError) {
+                              return const Text("Error");
+                            }
+                            else if (snapshot.hasData) {
+                              Map<String, dynamic> dataDoc =
                               snapshot.data!.data() as Map<String, dynamic>;
-                          //monthly cost
-                          marketcost = double.parse(dataDoc['marketing_cost']);
-                          laborcost = double.parse(dataDoc['labor_cost']);
-                          foodsup = double.parse(dataDoc['food_supply']);
-                          utilLease = double.parse(dataDoc['lease_utilities']);
-                          misc = double.parse(dataDoc['misc']);
-                          monthlyResultCost = marketcost +
-                              laborcost +
-                              foodsup +
-                              utilLease +
-                              misc;
-                          dailyyResultCost = (marketcost +
+                              //monthly cost
+                              marketcost = double.parse(dataDoc['marketing_cost']);
+                              laborcost = double.parse(dataDoc['labor_cost']);
+                              foodsup = double.parse(dataDoc['food_supply']);
+                              utilLease = double.parse(dataDoc['lease_utilities']);
+                              misc = double.parse(dataDoc['misc']);
+                              monthlyResultCost = marketcost +
+                                  laborcost +
+                                  foodsup +
+                                  utilLease +
+                                  misc;
+                              dailyyResultCost = (marketcost +
                                   laborcost +
                                   foodsup +
                                   utilLease +
                                   misc) /
-                              30;
-                          double pieLabor =
-                              (laborcost / monthlyResultCost) * 100;
-                          double pieFoodSup =
-                              (foodsup / monthlyResultCost) * 100;
-                          double pieUtilLease =
-                              (utilLease / monthlyResultCost) * 100;
-                          double pieMarketCost =
-                              (marketcost / monthlyResultCost) * 100;
-                          double pieMisc = (misc / monthlyResultCost) * 100;
-                          piedata = [
-                            _ChartData('Labor Cost', pieLabor),
-                            _ChartData('Food Supply', pieFoodSup),
-                            _ChartData('Utility and Lease', pieUtilLease),
-                            _ChartData('Market Cost', pieMarketCost),
-                            _ChartData('Miscellaneous', pieMisc)
-                          ];
-                          //one time cost
-                          permit = double.parse(dataDoc['permit']);
-                          equipment = double.parse(dataDoc['equipment']);
-                          stall = double.parse(dataDoc["stall"]);
-                          oneTimeCostResult = permit + equipment + stall;
-                          return RepaintBoundary(
-                              key: _printKey,
-                              child: Center(
-                                  child: Container(
-                                      height: 950,
-                                      padding: const EdgeInsets.all(5),
-                                      child: Card(
-                                          elevation: 0,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
+                                  30;
+                              double pieLabor =
+                                  (laborcost / monthlyResultCost) * 100;
+                              double pieFoodSup =
+                                  (foodsup / monthlyResultCost) * 100;
+                              double pieUtilLease =
+                                  (utilLease / monthlyResultCost) * 100;
+                              double pieMarketCost =
+                                  (marketcost / monthlyResultCost) * 100;
+                              double pieMisc = (misc / monthlyResultCost) * 100;
+                              piedata = [
+                                _ChartData('Labor Cost', pieLabor),
+                                _ChartData('Food Supply', pieFoodSup),
+                                _ChartData('Utility and Lease', pieUtilLease),
+                                _ChartData('Market Cost', pieMarketCost),
+                                _ChartData('Miscellaneous', pieMisc)
+                              ];
+                              //one time cost
+                              permit = double.parse(dataDoc['permit']);
+                              equipment = double.parse(dataDoc['equipment']);
+                              stall = double.parse(dataDoc["stall"]);
+                              oneTimeCostResult = permit + equipment + stall;
+                              return RepaintBoundary(
+                                  key: _printKey,
+                                  child: Center(
+                                      child: Container(
+                                          height: 1250,
+                                          padding: const EdgeInsets.all(5),
+                                          child: Card(
+                                              elevation: 0,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
                                                 BorderRadius.circular(0.0),
-                                          ),
-                                          child: Padding(
-                                              padding:
+                                              ),
+                                              child: Padding(
+                                                  padding:
                                                   const EdgeInsets.fromLTRB(
                                                       5, 20, 5, 10),
-                                              child: Column(children: <Widget>[
-                                                /*   const Text(
+                                                  child: Column(children: <Widget>[
+                                                    /*   const Text(
                                                     "Line Graph Forecast",
                                                     style: TextStyle(
                                                         fontSize: 19.0)), */
-                                                /*   Expanded(
+                                                    /*   Expanded(
                                                     child: SfCartesianChart(
                                                         legend: Legend(
                                                             isVisible: true),
@@ -174,7 +175,7 @@ class PieChartForecasting extends StatelessWidget {
                                                             CategoryAxis(),
                                                         series:
                                                             getData(context))), */
-                                                /*     const Padding(
+                                                    /*     const Padding(
                                                     padding:
                                                         EdgeInsets.all(7.0),
                                                     child: Text(
@@ -213,85 +214,88 @@ class PieChartForecasting extends StatelessWidget {
                                                         fontSize: 15,
                                                       ),
                                                     )), */
-                                                const Text(
-                                                    "Monthly Cost Chart Forecast",
-                                                    style: TextStyle(
-                                                        fontSize: 19.0)),
-                                                Expanded(
-                                                    child: SfCircularChart(
-                                                        key: _cartesianChartKey,
-                                                        tooltipBehavior:
+                                                    const Text("Monthly Cost Chart Forecast",
+                                                        style: TextStyle(
+                                                            fontSize: 19.0)),
+                                                    Expanded(
+                                                        child: SfCircularChart(
+                                                            key: _cartesianChartKey,
+                                                            tooltipBehavior:
                                                             _tooltip,
-                                                        series: <CircularSeries>[
-                                                      DoughnutSeries<_ChartData,
-                                                              String>(
-                                                          dataSource: piedata,
-                                                          xValueMapper:
-                                                              (_ChartData data,
+                                                            series: <CircularSeries>[
+                                                              DoughnutSeries<_ChartData,
+                                                                  String>(
+                                                                  dataSource: piedata,
+                                                                  xValueMapper:
+                                                                      (_ChartData data,
                                                                       _) =>
                                                                   data.x,
-                                                          yValueMapper:
-                                                              (_ChartData data,
+                                                                  yValueMapper:
+                                                                      (_ChartData data,
                                                                       _) =>
                                                                   data.y,
-                                                          dataLabelMapper:
-                                                              (_ChartData data,
+                                                                  dataLabelMapper:
+                                                                      (_ChartData data,
                                                                       _) =>
                                                                   data.x,
-                                                          dataLabelSettings:
-                                                              const DataLabelSettings(
-                                                                  isVisible:
+                                                                  dataLabelSettings:
+                                                                  const DataLabelSettings(
+                                                                      isVisible:
                                                                       true,
-                                                                  labelPosition:
+                                                                      labelPosition:
                                                                       ChartDataLabelPosition
                                                                           .outside,
-                                                                  // Renders background rectangle and fills it with series color
-                                                                  useSeriesColor:
+                                                                      // Renders background rectangle and fills it with series color
+                                                                      useSeriesColor:
                                                                       true),
-                                                          // Explode the segments on tap
-                                                          explode: true,
-                                                          explodeIndex: 1)
-                                                    ])),
-                                                const Padding(
-                                                    padding:
+                                                                  // Explode the segments on tap
+                                                                  explode: true,
+                                                                  explodeIndex: 1)
+                                                            ])),
+                                                    const Padding(
+                                                        padding:
                                                         EdgeInsets.all(8.0),
-                                                    child: Text(
-                                                      "The graph shows the allocation of monthly cost into following categories such as Labor Cost, Food Supply, Utility/Lease and Miscellaneous excluding the one time cost\n"
-                                                      "As state in the Chart we can visualize the partition of the Monthly Cost of your chosen business in terms of given parameters\n\n"
-                                                      "the Labor Cost and Food Supplies are the two major factors to be considered in establishing your business mostly of the stalls are maneuver or are functioned by at least two people and about the supplies it includes not just the raw material or staple it also other necessities like the Gas etc\n\n"
-                                                      "The Marketing Cost includes the promotional materials needed to promote or engage people into your business\n\n"
-                                                      "The Utility and Lease Cost is the budget required for the renting and other billings such as Electricity and Water that is needed for alll the businesses today\n\n"
-                                                      "The Miscellaneous Cost is for the other costing like the employees benefits and also it acts as emergency fund for other uncertain cases\n\n"
-                                                      // nakagray din ito and maliit
-                                                      "*Cost may varies depending on the market factors like inflation",
-                                                      textAlign:
+                                                        child: Text(
+                                                          "The graph shows the allocation of monthly cost into following categories such as Labor Cost, Food Supply, Utility/Lease and Miscellaneous excluding the one time cost\n"
+                                                              "As state in the Chart we can visualize the partition of the Monthly Cost of your chosen business in terms of given parameters\n\n"
+
+                                                              "the Labor Cost and Food Supplies are the two major factors to be considered in establishing your business mostly of the stalls are maneuver or are functioned by at least two people and about the supplies it includes not just the raw material or staple it also other necessities like the Gas etc\n\n"
+
+                                                              "The Marketing Cost includes the promotional materials needed to promote or engage people into your business\n\n"
+
+                                                              "The Utility and Lease Cost is the budget required for the renting and other billings such as Electricity and Water that is needed for alll the businesses today\n\n"
+
+                                                              "The Miscellaneous Cost is for the other costing like the employees benefits and also it acts as emergency fund for other uncertain cases\n\n"
+                                                          // nakagray din ito and maliit
+                                                              "*Cost may varies depending on the market factors like inflation",
+                                                          textAlign:
                                                           TextAlign.justify,
-                                                      style: TextStyle(
-                                                        height: 1.5,
-                                                        color: Color.fromARGB(
-                                                            255, 54, 54, 54),
-                                                        fontSize: 15,
-                                                      ),
-                                                    )),
-                                                Container(
-                                                    padding: const EdgeInsets
+                                                          style: TextStyle(
+                                                            height: 1.5,
+                                                            color: Color.fromARGB(
+                                                                255, 54, 54, 54),
+                                                            fontSize: 15,
+                                                          ),
+                                                        )),
+                                                    Container(
+                                                        padding: const EdgeInsets
                                                             .fromLTRB(
-                                                        10, 5, 10, 20),
-                                                    color: Colors.white,
-                                                    child: Row(
-                                                        mainAxisAlignment:
+                                                            10, 5, 10, 20),
+                                                        color: Colors.white,
+                                                        child: Row(
+                                                            mainAxisAlignment:
                                                             MainAxisAlignment
                                                                 .spaceEvenly,
-                                                        children: <Widget>[
-                                                          Expanded(
-                                                              child: ElevatedButton
-                                                                  .icon(
+                                                            children: <Widget>[
+                                                              Expanded(
+                                                                  child: ElevatedButton
+                                                                      .icon(
                                                                       style: ElevatedButton
                                                                           .styleFrom(
                                                                         elevation:
-                                                                            0.0,
+                                                                        0.0,
                                                                         padding:
-                                                                            const EdgeInsets.all(10.0),
+                                                                        const EdgeInsets.all(10.0),
                                                                         primary: const Color.fromARGB(
                                                                             255,
                                                                             0,
@@ -299,7 +303,7 @@ class PieChartForecasting extends StatelessWidget {
                                                                             195), // background
                                                                         shape: RoundedRectangleBorder(
                                                                             borderRadius:
-                                                                                BorderRadius.circular(5.0)),
+                                                                            BorderRadius.circular(5.0)),
                                                                         minimumSize: const Size(
                                                                             70,
                                                                             40), //////// HERE
@@ -313,60 +317,60 @@ class PieChartForecasting extends StatelessWidget {
                                                                             _cartesianChartKey);
                                                                       },
                                                                       icon:
-                                                                          const Icon(
+                                                                      const Icon(
                                                                         Icons
                                                                             .file_download_outlined,
                                                                         size:
-                                                                            18.0,
+                                                                        18.0,
                                                                       ),
                                                                       label:
-                                                                          const Text(
+                                                                      const Text(
                                                                         "Download",
                                                                         style: TextStyle(
                                                                             color:
-                                                                                Colors.white),
+                                                                            Colors.white),
                                                                       ))),
-                                                          //Spacer(),
-                                                          const SizedBox(
-                                                            width: 10.0,
-                                                          ),
-                                                          Expanded(
-                                                              child: TextButton(
-                                                            onPressed: () {
-                                                              Navigator.of(context).pushAndRemoveUntil(
-                                                                  MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) =>
-                                                                              const HomePage()),
-                                                                  (Route route) =>
-                                                                      false);
-                                                            },
-                                                            style: TextButton
-                                                                .styleFrom(
-                                                              minimumSize:
-                                                                  const Size(70,
-                                                                      40), //<-- SEE HERE
-                                                              side:
-                                                                  const BorderSide(
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        0,
-                                                                        110,
-                                                                        195),
-                                                                width: 3,
+                                                              //Spacer(),
+                                                              const SizedBox(
+                                                                width: 10.0,
                                                               ),
-                                                            ),
-                                                            child: const Text(
-                                                                'Done'),
-                                                          ))
-                                                        ]))
-                                              ]))))));
-                        }
-                        return const Center(
-                            child: CircularProgressIndicator.adaptive());
-                      })
-                ]))));
+                                                              Expanded(
+                                                                  child: TextButton(
+                                                                    onPressed: () {
+                                                                      Navigator.of(context).pushAndRemoveUntil(
+                                                                          MaterialPageRoute(
+                                                                              builder:
+                                                                                  (context) =>
+                                                                              const HomePage()),
+                                                                              (Route route) =>
+                                                                          false);
+                                                                    },
+                                                                    style: TextButton
+                                                                        .styleFrom(
+                                                                      minimumSize:
+                                                                      const Size(70,
+                                                                          40), //<-- SEE HERE
+                                                                      side:
+                                                                      const BorderSide(
+                                                                        color: Color
+                                                                            .fromARGB(
+                                                                            255,
+                                                                            0,
+                                                                            110,
+                                                                            195),
+                                                                        width: 3,
+                                                                      ),
+                                                                    ),
+                                                                    child: const Text(
+                                                                        'Done'),
+                                                                  ))
+                                                            ]))
+                                                  ]))))));
+                            }
+                            return const Center(
+                                child: CircularProgressIndicator.adaptive());
+                          })
+                    ]))));
   }
 
   List<ChartSeries<dynamic, dynamic>> getData(context) {
@@ -378,12 +382,12 @@ class PieChartForecasting extends StatelessWidget {
     double secondfinal = firstmonth + secondmonth;
     dummyData1 = List.generate(
         12,
-        (index) => ChartData(
+            (index) => ChartData(
             months: DateFormat('MMM').format(DateTime(0, index + 1)).toString(),
             cost: oneTimeCostResult));
     dummyData2 = List.generate(
         12,
-        (index) => ChartData(
+            (index) => ChartData(
             months: DateFormat('MMM').format(DateTime(1, index + 1)).toString(),
             cost: (sec * index) + firstmonth));
     dummyData2[0] = ChartData(months: "Jan", cost: firstmonth);
@@ -444,10 +448,10 @@ Future showSnack(context, ChartPointDetails details) async {
 
 Future<void> _renderChartAsImage(context, _cartesianChartKey) async {
   final ui.Image data =
-      await _cartesianChartKey.currentState!.toImage(pixelRatio: 3.0);
+  await _cartesianChartKey.currentState!.toImage(pixelRatio: 3.0);
   final ByteData? bytes = await data.toByteData(format: ui.ImageByteFormat.png);
   final Uint8List imageBytes =
-      bytes!.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
+  bytes!.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
 
   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
     content: Text('Processing...'),
@@ -460,36 +464,37 @@ Future<void> _renderChartAsImage(context, _cartesianChartKey) async {
       Size(bitmap.width.toDouble(), bitmap.height.toDouble());
   final PdfPage page = document.pages.add();
   final Size pageSize = page.getClientSize();
-  page.graphics.drawString(
-    "Cost Chart Forecast",
+  page.graphics.drawString("Cost Chart Forecast",
     PdfStandardFont(PdfFontFamily.helvetica, 40, style: PdfFontStyle.bold),
     brush: PdfSolidBrush(PdfColor(0, 0, 0)),
     bounds: const Rect.fromLTWH(0, 10, 950, 2000),
     format: PdfStringFormat(alignment: PdfTextAlignment.center),
   );
-  page.graphics.drawImage(bitmap, Rect.fromLTWH(-12, 60, 850, 430));
+  page.graphics
+      .drawImage(bitmap, Rect.fromLTWH(-12, 60, 850, 430));
   page.graphics.drawString(
     "The graph shows the allocation of monthly cost into following categories such as Labor Cost\n"
-    "Food Supply, Utility/Lease and Miscellaneous excluding the one time cost\n"
-    "As state in the Chart we can visualize the partition of the Monthly Cost of your chosen\n"
-    "business in terms of given parameters\n\n"
-    "the Labor Cost and Food Supplies are the two major factors to be considered in establishing\n"
-    "your business mostly of the stalls are maneuver or are functioned by at least two people and\n"
-    "about the supplies it includes not just the raw material or staple it also other necessities\n"
-    "like the Gas etc\n\n"
-    "The Marketing Cost includes the promotional materials needed to promote or engage people\n"
-    "into your business\n\n"
-    "The Utility and Lease  Cost is  the budget required for  the renting and other billings such as\n"
-    "Electricity and Water that is needed for alll the businesses today\n\n"
-    "The Miscellaneous Cost is for the  other costing like the employees benefits and also it acts\n"
-    "as emergency fund for other uncertain cases\n\n"
+        "Food Supply, Utility/Lease and Miscellaneous excluding the one time cost\n"
+        "As state in the Chart we can visualize the partition of the Monthly Cost of your chosen\n"
+        "business in terms of given parameters\n\n"
+        "the Labor Cost and Food Supplies are the two major factors to be considered in establishing\n"
+        "your business mostly of the stalls are maneuver or are functioned by at least two people and\n"
+        "about the supplies it includes not just the raw material or staple it also other necessities\n"
+        "like the Gas etc\n\n"
+        "The Marketing Cost includes the promotional materials needed to promote or engage people\n"
+        "into your business\n\n"
+        "The Utility and Lease  Cost is  the budget required for  the renting and other billings such as\n"
+        "Electricity and Water that is needed for alll the businesses today\n\n"
+        "The Miscellaneous Cost is for the  other costing like the employees benefits and also it acts\n"
+        "as emergency fund for other uncertain cases\n\n"
     // nakagray din ito and maliit
-    "*Cost may varies depending on the market factors like inflation",
+        "*Cost may varies depending on the market factors like inflation",
     PdfStandardFont(PdfFontFamily.helvetica, 20),
     brush: PdfSolidBrush(PdfColor(0, 0, 0)),
     bounds: const Rect.fromLTWH(0, 530, 850, 2000),
     format: PdfStringFormat(alignment: PdfTextAlignment.justify),
   );
+
 
   final List<int> bits = document.saveSync();
   document.dispose();

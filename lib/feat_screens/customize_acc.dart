@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:main_venture/screens/home_page.dart';
 import 'package:main_venture/auth_screens/login.dart';
+<<<<<<< Updated upstream
 import 'package:flutter/services.dart';
+=======
+>>>>>>> Stashed changes
 
 import '../userInfo.dart';
 
@@ -19,7 +22,11 @@ class CustomizeAccScreen extends StatefulWidget {
 }
 
 final CollectionReference _users =
+<<<<<<< Updated upstream
     FirebaseFirestore.instance.collection('users');
+=======
+FirebaseFirestore.instance.collection('users');
+>>>>>>> Stashed changes
 
 class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
   final _firstnameController = TextEditingController();
@@ -175,6 +182,7 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
                   ),
                 ),
               ), */
+<<<<<<< Updated upstream
 
               //NEW PASSWORD
               // Container(
@@ -185,6 +193,59 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               //       height: 1.5,
               //       fontSize: 18,
               //     ),
+=======
+              const SizedBox(
+                height: 20.0,
+              ),
+              Container(
+                width: 350,
+                child: const Text(
+                  "New Password",
+                  style: TextStyle(
+                    height: 1.5,
+                    fontSize: 18,
+                  ),
+
+                  textAlign: TextAlign.left, // has impact
+                ),
+              ),
+              TextField(
+                controller: _passwordController,
+                obscureText: _obscured,
+                focusNode: textFieldFocusNode,
+                decoration: InputDecoration(
+                  hintText: '************',
+                  labelStyle: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 25,
+                  ),
+                  fillColor: Colors.grey.shade200,
+                  filled: true,
+                  border: const OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                  ),
+                  suffix: InkWell(
+                    onTap: _toggleObscured,
+                    child: Icon(
+                        _obscured
+                            ? Icons.visibility
+                            : Icons.visibility_off_rounded,
+                        color: const Color.fromARGB(255, 74, 74, 74)),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20.0,
+              ),
+              Container(
+                width: 350,
+                child: const Text(
+                  "Confirm Password",
+                  style: TextStyle(
+                    height: 1.5,
+                    fontSize: 18,
+                  ),
+>>>>>>> Stashed changes
 
               //     textAlign: TextAlign.left, // has impact
               //   ),
@@ -270,6 +331,7 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
               const SizedBox(
                 height: 10.0,
               ),
+<<<<<<< Updated upstream
           Container(
             padding: const EdgeInsets.all(5.0),
             child: Row(
@@ -290,6 +352,20 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
                     fontSize: 16, color: Colors.white),
               ))
                 ]),
+=======
+              SizedBox(
+                width: 480,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    updateAccount();
+                  },
+                  child: const Text(
+                    'Save Changes',
+                    style: TextStyle(height: 1.5, fontSize: 18),
+                  ),
+                ),
+>>>>>>> Stashed changes
               ),
             ],
           ),
@@ -304,6 +380,7 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
 
     final String fname = _firstnameController.text;
     final String lname = _lastnameController.text;
+<<<<<<< Updated upstream
     // final String password = _passwordController.text;
     // final String confirmPassword = _confirmPasswordController.text;
     // if (lname != null) {
@@ -311,6 +388,33 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
     if (fname.isNotEmpty && lname.isNotEmpty) {
       if (user != null) {
         _changeName(user, lname, fname, displayName, context, popSnackbar);
+=======
+    final String password = _passwordController.text;
+    final String confirmPassword = _confirmPasswordController.text;
+    // if (lname != null) {
+    final String displayName = fname + lname;
+    if (fname.isNotEmpty &&
+        lname.isNotEmpty &&
+        password.isNotEmpty &&
+        confirmPassword.isNotEmpty) {
+      if (user != null) {
+        if (confirmPassword == password) {
+          // await _users.doc(GoogleUserStaticInfo().uid).update({
+          //   "firstname": _firstnameController.text,
+          //   "lastname": _lastnameController.text,
+          //   //"password": _passwordController.text,
+          // });
+          _changePassword(user, password, confirmPassword, lname, fname,
+              displayName, context, popSnackbar);
+
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //     popSnackbar.popsnackbar("Successfully update your account"));
+          //   Navigator.of(context).popUntil((_) => count++ >= 2);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(popSnackbar
+              .popsnackbar("Password and Confirm Password are not the same"));
+        }
+>>>>>>> Stashed changes
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(popSnackbar.popsnackbar("User is null"));
@@ -318,8 +422,13 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
       // print("Password isnt match");
     } else {
       //print("Please fill out all Fields");
+<<<<<<< Updated upstream
       popSnackbar.showErrorDialog(_firstnameController, _lastnameController,
           context, "Please fill out all the fields");
+=======
+      popSnackbar.showErrorDialog(_confirmPasswordController,
+          _passwordController, context, "Please fill out all the fields");
+>>>>>>> Stashed changes
       /*  showDialog<void>(
         context: context,
         barrierDismissible: false,
@@ -344,6 +453,58 @@ class _CustomizeAccScreenState extends State<CustomizeAccScreen> {
       ); */
     }
   }
+<<<<<<< Updated upstream
+=======
+}
+
+void _changePassword(
+    User user,
+    String password,
+    String confirmPassword,
+    String lname,
+    String fname,
+    String displayName,
+    context,
+    PopSnackbar popSnackbar) async {
+  user.updatePassword(password).then((_) {
+    PopSnackbar popSnackbar = PopSnackbar();
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //     popSnackbar.popsnackbar("Successfully update the password"));
+
+    //if (confirmPassword == password) {
+    _users.doc(GoogleUserStaticInfo().uid).update({
+      "firstname": fname,
+      "lastname": lname,
+      "password": password,
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+        popSnackbar.popsnackbar("Successfully updated your account"));
+    //   Navigator.of(context).popUntil((_) => count++ >= 2);
+    // } else {
+    //   ScaffoldMessenger.of(context).showSnackBar(popSnackbar
+    //       .popsnackbar("Password and Confirm Password are not the same"));
+    // }
+
+    Future.delayed(const Duration(seconds: 4)).then((value) =>
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const HomePage())));
+  }).catchError((error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+        popSnackbar.popsnackbar("Password cant be changed due to $error"));
+  });
+
+/*   await user
+      .updateDisplayName(displayName)
+      .then((_) => {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(popSnackbar.popsnackbar("Updated Displayname"))
+          })
+      .catchError((error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+        popSnackbar.popsnackbar("User didnt use Google Sign in $error"));
+  }); */
+>>>>>>> Stashed changes
 }
 
 void _changeName(

@@ -6,20 +6,44 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_sign_in/google_sign_in.dart';
+<<<<<<< Updated upstream
 import 'package:main_venture/auth_screens/login.dart';
+import 'package:flutter/cupertino.dart';
+import 'auth_screen.dart';
+=======
 
 import 'auth_screen.dart';
+
+// final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+// final CollectionReference _collection = _firestore.collection('users');
+>>>>>>> Stashed changes
 
 class GoogleUserStaticInfo {
   final name = FirebaseAuth.instance.currentUser!.displayName;
   final uid = FirebaseAuth.instance.currentUser!.uid;
   final email = FirebaseAuth.instance.currentUser!.email;
+<<<<<<< Updated upstream
 
   final names = FirebaseAuth.instance.currentUser!.displayName?.split(' ');
   late final lastname = names![0];
   late final firstname = names!.length > 1 ? names![1] : '';
 }
 
+=======
+  // final names = FirebaseAuth.instance.currentUser!.displayName.split(' ');
+  //  f(String? name){
+  //   if(name != null && name.length > 1){
+  //       final Name = FirebaseAuth.instance.currentUser?.displayName.split(' ');
+  //     late final lastname = Name?[0];
+  //     late final firstname = Name?.length;
+  //     }
+  // }
+  final names = FirebaseAuth.instance.currentUser!.displayName?.split(' ');
+  late final lastname = names![0];
+  late final firstname = names!.length > 1 ? names![1] : '';
+}
+
+>>>>>>> Stashed changes
 class Profile {
   final profile = FirebaseAuth.instance.currentUser!.photoURL;
 } //end class
@@ -55,7 +79,10 @@ class FunctionAuthentication with GoogleUserStaticInfo {
 class PopSnackbar extends FunctionAuthentication {
   SnackBar popsnackbar(String contentpop) {
     var popContent = SnackBar(
+<<<<<<< Updated upstream
       behavior: SnackBarBehavior.floating,
+=======
+>>>>>>> Stashed changes
       content: Text(contentpop),
     );
 
@@ -93,27 +120,40 @@ class PopSnackbar extends FunctionAuthentication {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return AlertDialog(
+<<<<<<< Updated upstream
+        return CupertinoAlertDialog(
           title: const Text("Logout"),
+=======
+        return AlertDialog(
+          title: const Text("LOGOUT"),
+>>>>>>> Stashed changes
           content: const SingleChildScrollView(
             child: Text("Are you sure you want to logout?"),
           ),
           actions: <Widget>[
+<<<<<<< Updated upstream
+            CupertinoDialogAction(
+              child: const Text('Cancel',style: TextStyle(
+                  fontSize: 15.0)),
+=======
             TextButton(
               child: const Text('Cancel'),
+>>>>>>> Stashed changes
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-            TextButton(
-              child: const Text('Logout'),
+<<<<<<< Updated upstream
+            CupertinoDialogAction(
+              child: const Text('Logout',style: TextStyle(
+                  fontSize: 15.0)),
               onPressed: () async {
                 // FunctionAuthentication;
                 await logOut();
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                         builder: (context) => const LoginScreen()),
-                    (Route route) => false);
+                        (Route route) => false);
                 // await logOut().then((value) => Navigator.of(context)
                 //     .pushNamedAndRemoveUntil('/login', (Route route) => false));
 
@@ -127,6 +167,15 @@ class PopSnackbar extends FunctionAuthentication {
                 //     .pushAndRemoveUntil(
                 //         MaterialPageRoute(builder: (context) => LoginScreen()),
                 //         (route) => false));
+=======
+            TextButton(
+              child: const Text('Logout'),
+              onPressed: () async {
+                await logOut().then((value) =>
+                    Navigator.of(context, rootNavigator: true).pushReplacement(
+                        MaterialPageRoute(
+                            builder: (context) => const AuthScreen())));
+>>>>>>> Stashed changes
               },
             ),
           ],
@@ -140,15 +189,24 @@ class Functio {
   Future signInWithGoogle() async {
     //trigger the authentication flow
     final GoogleSignInAccount? googleUser =
-        await GoogleSignIn(scopes: <String>["email"]).signIn();
+    await GoogleSignIn(scopes: <String>["email"]).signIn();
 
     //obtain the auth details from the internet
     final GoogleSignInAuthentication googleAuth =
-        await googleUser!.authentication;
+    await googleUser!.authentication;
 
     //create a new credential
     final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+
+    // await users.doc(uid).set({
+    //   'firstname': 'Firstname',
+    //   'lastname': 'Lastname',
+    //   'email': 'Email',
+    // }).onError((error, stackTrace) => Println(error.toString()));
+
+    // final FirebaseFirestore  user =
+    //     (await FirebaseAuth.instance.signInWithCredential(credential)).user;
 
     //once signed in, return the user credential
     return await FirebaseAuth.instance.signInWithCredential(credential);
@@ -162,17 +220,21 @@ class DialogShowBusiness {
         .collection("business")
         .get()
         .then((QuerySnapshot snapshot) => {
-              snapshot.docs.forEach((documents) async {
-                //var data = documents.data() as Map;
-                var data = documents.data() as Map;
+      snapshot.docs.forEach((documents) async {
+        //var data = documents.data() as Map;
+        var data = documents.data() as Map;
 
-                datalist = [
-                  DropdownData(
-                    nameofbusiness: data['name'],
-                  )
-                ];
-              })
-            });
+<<<<<<< Updated upstream
+        datalist = [
+          DropdownData(
+            nameofbusiness: data['name'],
+          )
+        ];
+=======
+        datalist = [DropdownData(nameofbusiness: data['budgetassump'])];
+>>>>>>> Stashed changes
+      })
+    });
   }
 }
 
@@ -181,9 +243,12 @@ class DropdownData {
 
   DropdownData({required this.nameofbusiness});
 }
+<<<<<<< Updated upstream
 
 class DropdownDataAssumption {
   final String budgetassump;
 
   DropdownDataAssumption({required this.budgetassump});
 }
+=======
+>>>>>>> Stashed changes

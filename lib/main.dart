@@ -7,14 +7,21 @@ import 'package:flutter/material.dart';
 import 'package:main_venture/auth_screen.dart';
 import 'package:main_venture/feat_screens/zonecreen.dart';
 import 'package:main_venture/global_objects/ui_class.dart';
-
+//import 'package:onboarding/onboarding.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:main_venture/screens/home_page.dart';
 
+<<<<<<< Updated upstream
 // import 'models/forecasting/Linechartsync.dart';
 // import 'models/forecasting/forecasting_linechart.dart';S
 // import 'screens/home_page.dart';
 //My copy
+=======
+import 'models/forecasting/Linechartsync.dart';
+import 'models/forecasting/forecasting_linechart.dart';
+import 'screens/home_page.dart';
+
+>>>>>>> Stashed changes
 void main() async {
   /// initialize FireBase App
   ///
